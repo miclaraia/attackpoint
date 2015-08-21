@@ -70,8 +70,10 @@ public class AuthCookie {
         setCookie(token, e);
     }
 
+    //checks if oken and expire are valid and whether it has already expired
+    //before setting the object variables
     public void setCookie(String token, Date expire) {
-        if (checkVals(token, expire)) {
+        if (checkVals(token, expire) && checkTime(expire)) {
             this.token = token;
             this.expire = expire;
         }
@@ -79,12 +81,14 @@ public class AuthCookie {
 
     // saves cookie to preferences
     public void save() {
-        try {
-            prefs.saveCookie(this.serialize());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(Singleton.getInstance().getContext(),
-                    DEBUG_TAG + "JSONException saving cookie", Toast.LENGTH_LONG).show();
+        if (checkTime(expire)) {
+            try {
+                prefs.saveCookie(this.serialize());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(Singleton.getInstance().getContext(),
+                        DEBUG_TAG + "JSONException saving cookie", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -110,12 +114,13 @@ public class AuthCookie {
         }
     }
 
+    // removes cookie from preferences
     private void expire() {
         prefs.removeCookie();
     }
 
     // finds cookie in the header map
-    public String parseHeader(Map<String, List<String>> headers) {
+    private String parseHeader(Map<String, List<String>> headers) {
         List<String> cookies = headers.get("Set-Cookie");
         if (cookies != null) {
             for (String cookie : cookies) {
@@ -128,7 +133,7 @@ public class AuthCookie {
     }
 
     // checks if time now is past expiration date
-    public boolean checkTime(Date exp) {
+    private boolean checkTime(Date exp) {
         Date now = Calendar.getInstance().getTime();
         int x = now.compareTo(exp);
         if (x > 0) {
@@ -143,7 +148,7 @@ public class AuthCookie {
     }
 
     //pulls token out of cookie string
-    public String parseCookie(String cookie) {
+    private String parseCookie(String cookie) {
         if (cookie != null && !cookie.equals("")) {
             String[] c = cookie.split(";");
             String token = c[0].substring(6);
@@ -152,7 +157,7 @@ public class AuthCookie {
     }
 
     //pulls expiration date from cookie string
-    public Date parseExpire(String cookie) {
+    private Date parseExpire(String cookie) {
         if (cookie != null && !cookie.equals("")) {
             String[] c = cookie.split(";");
             String time = c[3].split("=")[1];
@@ -182,7 +187,7 @@ public class AuthCookie {
         } else return null;
     }
 
-    public int parseMonth(String month) {
+    private int parseMonth(String month) {
         switch (month) {
             case "Jan":
                 return 1;
@@ -214,7 +219,7 @@ public class AuthCookie {
     }
 
     //cookie string to be stored in preferences
-    public String serialize() throws JSONException {
+    private String serialize() throws JSONException {
         JSONObject json = new JSONObject();
         json.put("key", token);
         json.put("expire", new SimpleDateFormat(EXPIRE_FORMAT).format(expire));
@@ -222,7 +227,7 @@ public class AuthCookie {
     }
 
     public String toString() {
-        if (checkTime(this.expire)) return key + "=" +  token + "; ";
+        if (checkTime(this.expire)) return key + "=" +  token + ";";
         return "";
     }
 
