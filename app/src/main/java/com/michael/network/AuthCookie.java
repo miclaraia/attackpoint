@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -169,6 +170,11 @@ public class AuthCookie {
         json.put("key", token);
         json.put("expire", new SimpleDateFormat(EXPIRE_FORMAT).format(expire));
         return json.toString();
+    }
+
+    public JSONObject deserialize(String ser) throws JSONException {
+        JSONObject json = new JSONObject(ser);
+        return json;
     }
 
     public String toString() {
