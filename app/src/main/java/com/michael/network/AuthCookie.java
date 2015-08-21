@@ -60,8 +60,8 @@ public class AuthCookie {
     }
 
     public void setCookie(String token, Date expire) {
-        this.token = token;
-        this.expire = expire;
+            this.token = token;
+            this.expire = expire;
     }
 
     public String getCookie() {
@@ -85,8 +85,11 @@ public class AuthCookie {
         try {
             JSONObject json = new JSONObject(prefs.getCookie());
             String token = (String) json.get("key");
-            String expire = (String) json.get("expire");
-            setCookie(token, parseExpire(expire));
+            String e = (String) json.get("expire");
+            Date expire = parseExpire(e);
+            if (checkTime(expire)) {
+                setCookie(token, expire);
+            } else expire();
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(Singleton.getInstance().getContext(),
@@ -103,7 +106,7 @@ public class AuthCookie {
         List<String> cookies = headers.get("Set-Cookie");
         if (cookies != null) {
             for (String cookie : cookies) {
-                //todo remore temp string
+                //todo remove temp string
                 String temp = cookie.split("=")[0];
                 if (cookie.split("=")[0].equals("login")) return cookie;
             }
@@ -112,9 +115,9 @@ public class AuthCookie {
     }
 
     // checks if cookie has expired
-    public boolean checkTime() {
+    public boolean checkTime(Date exp) {
         Date now = Calendar.getInstance().getTime();
-        int x = now.compareTo(expire);
+        int x = now.compareTo(exp);
         if (x > 0) {
             Log.d(DEBUG_TAG, "cookie expired");
             return false;
@@ -189,7 +192,7 @@ public class AuthCookie {
     }
 
     public String toString() {
-        if (checkTime()) return key + "=" +  token + "; ";
+        if (checkTime(this.expire)) return key + "=" +  token + "; ";
         return "";
     }
 
