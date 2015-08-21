@@ -66,10 +66,12 @@ public class AuthCookie {
             if (checkVals(t, e) && checkTime(e) && e.compareTo(expire) > 0) {
                 token = t;
                 expire = e;
+                save();
             }
         } else if (checkVals(t, e) && checkTime(e)) {
             token = t;
             expire = e;
+            save();
         } else {
             token = "";
             expire = null;
