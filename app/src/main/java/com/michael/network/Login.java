@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Created by michael on 8/18/15.
  */
-public class Login extends AsyncTask<String, Void, String> {
+public class Login extends AsyncTask<String, Void, Map<String, List<String>>> {
     private static final String DEBUG_TAG = "attackpoint.Login";
     private Singleton singleton = Singleton.getInstance();
 
@@ -89,8 +89,10 @@ public class Login extends AsyncTask<String, Void, String> {
     }*/
 
     @Override
-    protected String doInBackground(String... params) {
-        InputStream is = connect();
+    protected Map<String, List<String>> doInBackground(String... params) {
+        return connect();
+
+        /*InputStream is = connect();
         String s = null;
         try {
             s = InputStreamtoString(is);
@@ -98,18 +100,22 @@ public class Login extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         } finally {
             return s;
-        }
+        }*/
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(Map<String, List<String>> result) {
         // todo write cookie to preferences
         Log.d(DEBUG_TAG,"onPostExecute");
         Log.d(DEBUG_TAG,"" + result);
+
+        singleton.getCookie().setCookie(result);
     }
 
-    private InputStream connect() {
+    //logs in to attackpoint and returns response header
+    private Map<String, List<String>> connect() {
         try {
+            //creates connection object and points to attackpoint URL
             URL url = new URL("http://www.attackpoint.org/dologin.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
@@ -119,42 +125,37 @@ public class Login extends AsyncTask<String, Void, String> {
             conn.setDoOutput(true);
             conn.setInstanceFollowRedirects(false);
 
+            //login form data
+            //TODO get login info from user input
             List<NameValuePair> form = new ArrayList<NameValuePair>();
             form.add(new BasicNameValuePair("username", "miclaraia"));
             form.add(new BasicNameValuePair("password", "123456"));
 
+            //writes form data to connection
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
+            //close writer and outputstream
             writer.write(getQuery(form));
             writer.flush();
             writer.close();
             os.close();
 
+            //connect
             conn.connect();
             Map<String, List<String>> headers = conn.getHeaderFields();
+            return headers;
 
             //TODO REMOVE TEMP
-            singleton.getCookie().setCookie(headers);
+            //singleton.getCookie().setCookie(headers);
             //TODO REMOVE
 
-            return conn.getInputStream();
+            //return conn.getInputStream();
         } catch (Exception e) {
+            Log.e(DEBUG_TAG, "Exception in Login.doInBackground");
             e.printStackTrace();
             return null;
         }
-    }
-
-    private String findCookie(Map<String, List<String>> headers) {
-        List<String> cookies = headers.get("Set-Cookie");
-        if (cookies != null) {
-            for (String cookie : cookies) {
-                //todo remove temp string
-                String temp = cookie.split("=")[0];
-                if (cookie.split("=")[0] == "login") return cookie;
-            }
-        }
-        return null;
     }
 
     private String InputStreamtoString(InputStream is) throws IOException {
@@ -173,6 +174,11 @@ public class Login extends AsyncTask<String, Void, String> {
         return s;
     }
 
+    /** takes form input data and encodes it for the request header
+     * @param params items to be written as form data
+     * @return form data to be put in header
+     * @throws UnsupportedEncodingException
+     */
     private String getQuery(List<NameValuePair> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
