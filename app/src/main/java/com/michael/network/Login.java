@@ -42,16 +42,25 @@ public class Login {
     private static final String DEBUG_TAG = "attackpoint.Login";
     //private Singleton singleton = Singleton.getInstance();
     private AuthCookie cookie;
+    private Async async;
 
     public Login() {
         cookie = new AuthCookie();
+        async = new Async();
     }
 
     public void login() {
-        new Async().execute();
+        Log.d(DEBUG_TAG, "Logging in");
+        if (!cookie.state()) {
+            if (!async.state) {
+                Log.d(DEBUG_TAG, "no previous login found, spawning new asynd");
+                new Async().execute();
+            } else Log.d(DEBUG_TAG, "no previous login found but async already running \n will wait");
+        } else Log.d(DEBUG_TAG, "previous login found, must logout first");
     }
 
     public void logout() {
+        Log.d(DEBUG_TAG, "logging out; clearing cookie");
         cookie.expire();
     }
 
@@ -66,9 +75,11 @@ public class Login {
 
     private class Async extends AsyncTask<String, Void, Map<String, List<String>>> {
         private static final String AP_URL = "http://www.attackpoint.org/dologin.jsp";
+        public boolean state;
 
         @Override
         protected Map<String, List<String>> doInBackground(String... params) {
+            state = true;
             return connect();
 
         /*InputStream is = connect();
@@ -84,6 +95,7 @@ public class Login {
 
         @Override
         protected void onPostExecute(Map<String, List<String>> result) {
+            state = false;
             // todo write cookie to preferences
             Log.d(DEBUG_TAG,"onPostExecute");
             Log.d(DEBUG_TAG,"" + result);

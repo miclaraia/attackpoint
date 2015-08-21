@@ -77,7 +77,7 @@ public class AuthCookie {
     public void setCookie(String t, Date e, boolean save) {
         Log.d(DEBUG_TAG, "setting cookie from vars");
         //if same token is already stored, return
-        if (token.equals(t)) return;
+        if (token != null && token.equals(t)) return;
         if (checkVals(t, e) && checkTime(e)) {
             token = t;
             expire = e;
@@ -114,6 +114,8 @@ public class AuthCookie {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("key", t);
                 map.put("expire", e);
+                Log.d(DEBUG_TAG, "found cookie");
+                Log.d(DEBUG_TAG, map.toString());
                 return map;
             } else {
                 expire();
@@ -139,6 +141,8 @@ public class AuthCookie {
     void expire() {
         Log.d(DEBUG_TAG, "expiring cookie from preferences");
         prefs.removeCookie();
+        expire = null;
+        token = "";
     }
 
     // finds cookie in the header map
