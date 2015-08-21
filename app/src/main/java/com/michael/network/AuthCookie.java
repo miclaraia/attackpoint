@@ -9,13 +9,11 @@ import com.michael.attackpoint.Singleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -146,8 +144,6 @@ public class AuthCookie {
         List<String> cookies = headers.get("Set-Cookie");
         if (cookies != null) {
             for (String cookie : cookies) {
-                //todo remove temp string
-                String temp = cookie.split("=")[0];
                 if (cookie.split("=")[0].equals("login")) return cookie;
             }
         }
@@ -223,6 +219,4 @@ public class AuthCookie {
         if (checkVals(token, expire) && checkTime(this.expire)) return key + "=" +  token + ";";
         return "";
     }
-
-
 }
