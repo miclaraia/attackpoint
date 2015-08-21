@@ -30,17 +30,32 @@ public class AuthCookie {
     private Preferences prefs = Singleton.getInstance().getPreferences();
 
     public AuthCookie() {
-        //TODO load cookie from preferences
+        read();
     }
 
     public AuthCookie(String cookie) {
         //TODO check if cookie already exists in preferences
-        //set cookie
+        if (read()) {
+            String t = parseCookie(cookie);
+            Date e = parseExpire(cookie);
+            if (checkVals(t, e)) {
+                if (e.compareTo(expire) > 1) {
+                    setCookie(t, e);
+                    save();
+                }
+            }
+        }
+        setCookie(cookie);
     }
 
-    public AuthCookie(String token, Date expire) {
+    public AuthCookie(String t, Date e) {
         //TODO check if cookie already exists in preferences
-        //set cookie
+        if (read() && checkVals(t, e)) {
+            if (e.compareTo(expire) > 1) {
+                setCookie(t, e);
+                save();
+            }
+        }
     }
 
     // sets cookie given header map
@@ -50,23 +65,16 @@ public class AuthCookie {
 
     // Sets the objects token and expiration date, assumes right auth cookie was passed
     public void setCookie(String cookie) {
-        String[] c = cookie.split(";");
-        String token = c[0].substring(6);
-        String expire = c[3].split("=")[1];
-
-        Date e = parseExpire(expire);
-
+        String token = parseCookie(cookie);
+        Date e = parseExpire(cookie);
         setCookie(token, e);
     }
 
     public void setCookie(String token, Date expire) {
+        if (checkVals(token, expire)) {
             this.token = token;
             this.expire = expire;
-    }
-
-    public String getCookie() {
-        // TODO
-        return "";
+        }
     }
 
     // saves cookie to preferences
@@ -81,7 +89,7 @@ public class AuthCookie {
     }
 
     // reads cookie from preferences
-    public void read() {
+    private boolean read() {
         try {
             JSONObject json = new JSONObject(prefs.getCookie());
             String token = (String) json.get("key");
@@ -89,15 +97,20 @@ public class AuthCookie {
             Date expire = parseExpire(e);
             if (checkTime(expire)) {
                 setCookie(token, expire);
-            } else expire();
+                return true;
+            } else {
+                expire();
+                return false;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(Singleton.getInstance().getContext(),
                     DEBUG_TAG + "JSONException reading cookie", Toast.LENGTH_LONG).show();
+            return false;
         }
     }
 
-    public void expire() {
+    private void expire() {
         prefs.removeCookie();
     }
 
@@ -114,7 +127,7 @@ public class AuthCookie {
         return null;
     }
 
-    // checks if cookie has expired
+    // checks if time now is past expiration date
     public boolean checkTime(Date exp) {
         Date now = Calendar.getInstance().getTime();
         int x = now.compareTo(exp);
@@ -124,32 +137,49 @@ public class AuthCookie {
         } else return true;
     }
 
-    public Date parseExpire(String time) {
-        /*String day = time.substring(5,7);
-        String month = time.substring(8,11);
-        String year = time.substring(12,16);
-        String hour = time.substring(17,19);
-        String minute = time.substring(20,22);
-        String second = time.substring(23,25);
+    private boolean checkVals(String t, Date e) {
+        if (t == null || t.equals("") || e == null) return false;
+        return true;
+    }
 
-        int D = Integer.parseInt(day);
-        int M = parseMonth(month);
-        int Y = Integer.parseInt(year);
-        int h = Integer.parseInt(hour);import java.util.GregorianCalendar;
-        int m = Integer.parseInt(minute);
-        int s = Integer.parseInt(second);
+    //pulls token out of cookie string
+    public String parseCookie(String cookie) {
+        if (cookie != null && !cookie.equals("")) {
+            String[] c = cookie.split(";");
+            String token = c[0].substring(6);
+            return token;
+        } else return "";
+    }
 
-        Time exp = new Time();*/
-        SimpleDateFormat sdf = new SimpleDateFormat(EXPIRE_FORMAT);
-        try {
-            Date exp = sdf.parse(time);
-            return exp;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
+    //pulls expiration date from cookie string
+    public Date parseExpire(String cookie) {
+        if (cookie != null && !cookie.equals("")) {
+            String[] c = cookie.split(";");
+            String time = c[3].split("=")[1];
+            /*String day = time.substring(5,7);
+            String month = time.substring(8,11);
+            String year = time.substring(12,16);
+            String hour = time.substring(17,19);
+            String minute = time.substring(20,22);
+            String second = time.substring(23,25);
 
-        //exp.set(s,m,h,M,D,Y);
+            int D = Integer.parseInt(day);
+            int M = parseMonth(month);
+            int Y = Integer.parseInt(year);
+            int h = Integer.parseInt(hour);import java.util.GregorianCalendar;
+            int m = Integer.parseInt(minute);
+            int s = Integer.parseInt(second);
+
+            Time exp = new Time();*/
+            SimpleDateFormat sdf = new SimpleDateFormat(EXPIRE_FORMAT);
+            try {
+                Date exp = sdf.parse(time);
+                return exp;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else return null;
     }
 
     public int parseMonth(String month) {
