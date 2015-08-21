@@ -101,9 +101,10 @@ public class AuthCookie {
     // reads cookie from preferences
     private Map<String, Object> read() {
         Log.d(DEBUG_TAG, "reading cookie from preferences");
+        String cookie = "";
         try {
             //gets and parses json from preferences
-            String cookie = prefs.getCookie();
+            cookie = prefs.getCookie();
             JSONObject json = new JSONObject(cookie);
             String t = (String) json.get("key");
             Log.v(DEBUG_TAG, "found cookie token: " + t);
@@ -123,6 +124,7 @@ public class AuthCookie {
             }
         } catch (JSONException e) {
             Log.e(DEBUG_TAG, "JSONException trying to read cookie");
+            Log.e(DEBUG_TAG, cookie);
             e.printStackTrace();
             prefs.removeCookie();
             Toast.makeText(Singleton.getInstance().getContext(),
@@ -130,6 +132,7 @@ public class AuthCookie {
             return null;
         } catch (NullPointerException e) {
             Log.e(DEBUG_TAG, "NullPointer trying to read cookie");
+            Log.e(DEBUG_TAG, cookie);
             e.printStackTrace();
             Toast.makeText(Singleton.getInstance().getContext(),
                     DEBUG_TAG + "NullPointer reading cookie", Toast.LENGTH_LONG).show();
