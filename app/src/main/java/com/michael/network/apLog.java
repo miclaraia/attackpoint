@@ -39,7 +39,6 @@ public class apLog extends apNet {
 
     //gets activities from document and sets them to class list variable
     public void getLog() {
-        new Login().execute();
         AttackpointRequest apRequest = new AttackpointRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

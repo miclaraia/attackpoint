@@ -25,8 +25,7 @@ public class Preferences extends Application{
         editor.commit();
     }
 
-    public String getCookie()
-    {
+    public String getCookie() {
         SharedPreferences prefs = getPreferences();
         String cookie = prefs.getString("cookie", "");
         if (cookie.contains("expires")) {
