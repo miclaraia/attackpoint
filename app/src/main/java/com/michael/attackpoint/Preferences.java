@@ -28,11 +28,6 @@ public class Preferences extends Application{
     public String getCookie() {
         SharedPreferences prefs = getPreferences();
         String cookie = prefs.getString("cookie", "");
-        if (cookie.contains("expires")) {
-/** you might need to make sure that your cookie returns expires when its expired. I also noted that cokephp returns deleted */
-            removeCookie();
-            return "";
-        }
         return cookie;
     }
 
