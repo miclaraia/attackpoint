@@ -40,15 +40,33 @@ import java.util.Map;
  */
 public class Login {
     private static final String DEBUG_TAG = "attackpoint.Login";
-    private Singleton singleton = Singleton.getInstance();
+    //private Singleton singleton = Singleton.getInstance();
+    private AuthCookie cookie;
+
+    public Login() {
+        cookie = new AuthCookie();
+    }
+
+    public void login() {
+        new Async().execute();
+    }
+
+    public void logout() {
+        cookie.expire();
+    }
+
+    public boolean isLoggedIn() {
+        return cookie.state();
+    }
 
 
 
 
 
-    
 
     private class Async extends AsyncTask<String, Void, Map<String, List<String>>> {
+        private static final String AP_URL = "http://www.attackpoint.org/dologin.jsp";
+
         @Override
         protected Map<String, List<String>> doInBackground(String... params) {
             return connect();
@@ -70,14 +88,14 @@ public class Login {
             Log.d(DEBUG_TAG,"onPostExecute");
             Log.d(DEBUG_TAG,"" + result);
 
-            singleton.getCookie().setCookie(result);
+            cookie.setCookie(result);
         }
 
         //logs in to attackpoint and returns response header
         private Map<String, List<String>> connect() {
             try {
                 //creates connection object and points to attackpoint URL
-                URL url = new URL("http://www.attackpoint.org/dologin.jsp");
+                URL url = new URL(AP_URL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);

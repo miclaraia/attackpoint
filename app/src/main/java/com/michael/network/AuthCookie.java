@@ -45,7 +45,7 @@ public class AuthCookie {
 
     public AuthCookie(String t, Date e) {
         Log.d(DEBUG_TAG, "Initializing AuthCookie, var constructor");
-        setCookie(t, e);
+        setCookie(t, e, false);
     }
 
     // sets cookie given header map
@@ -59,7 +59,7 @@ public class AuthCookie {
         Log.d(DEBUG_TAG, "setting cookie from string");
         String token = parseCookie(cookie);
         Date e = parseExpire(cookie);
-        setCookie(token, e);
+        setCookie(token, e, true);
     }
 
     public void setCookie() {
@@ -68,18 +68,20 @@ public class AuthCookie {
         if (map != null) {
             String t = (String) map.get("key");
             Date e = (Date) map.get("expire");
-            setCookie(t, e);
+            setCookie(t, e, false);
         }
     }
 
     //checks if oken and expire are valid and whether it has already expired
     //before setting the object variables
-    public void setCookie(String t, Date e) {
+    public void setCookie(String t, Date e, boolean save) {
         Log.d(DEBUG_TAG, "setting cookie from vars");
+        //if same token is already stored, return
+        if (token.equals(t)) return;
         if (checkVals(t, e) && checkTime(e)) {
             token = t;
             expire = e;
-            save();
+            if (save) save();
         }
     }
 
@@ -134,7 +136,7 @@ public class AuthCookie {
     }
 
     // removes cookie from preferences
-    private void expire() {
+    void expire() {
         Log.d(DEBUG_TAG, "expiring cookie from preferences");
         prefs.removeCookie();
     }
@@ -218,5 +220,9 @@ public class AuthCookie {
     public String toString() {
         if (checkVals(token, expire) && checkTime(this.expire)) return key + "=" +  token + ";";
         return "";
+    }
+
+    public boolean state() {
+        return checkVals(token, expire);
     }
 }
