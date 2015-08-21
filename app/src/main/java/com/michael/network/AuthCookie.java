@@ -188,13 +188,9 @@ public class AuthCookie {
         return json.toString();
     }
 
-    public JSONObject deserialize(String ser) throws JSONException {
-        JSONObject json = new JSONObject(ser);
-        return json;
-    }
-
     public String toString() {
-        return key + "=" + token + "; ";
+        if (checkTime()) return key + "=" +  token + "; ";
+        return "";
     }
 
 
