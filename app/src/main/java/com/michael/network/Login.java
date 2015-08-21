@@ -42,7 +42,7 @@ public class Login extends AsyncTask<String, Void, String> {
     private static final String DEBUG_TAG = "attackpoint.Login";
     private Singleton singleton = Singleton.getInstance();
 
-    public void login() {
+    /*public void login() {
         String url = "http://www.attackpoint.org/dologin.jsp";
         AttackpointRequest apRequest = new AttackpointRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -86,25 +86,6 @@ public class Login extends AsyncTask<String, Void, String> {
 
         // Add the request to the queue
         singleton.add(apRequest);
-    }
-
-    /*@Override
-    protected String doInBackground(String... params) {
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://www.attackpoint.org/dologin.jsp");
-        try {
-            List<NameValuePair> form = new ArrayList<NameValuePair>(2);
-            form.add(new BasicNameValuePair("username", "miclaraia"));
-            form.add(new BasicNameValuePair("password", "opahans3"));
-            httppost.setEntity(new UrlEncodedFormEntity(form));
-            
-            HttpResponse response = httpclient.execute(httppost);
-            Header[] cookies = response.getHeaders("Set-Cookie");
-            return "success";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "error";
-        }
     }*/
 
     @Override
@@ -154,8 +135,7 @@ public class Login extends AsyncTask<String, Void, String> {
             Map<String, List<String>> headers = conn.getHeaderFields();
 
             //TODO REMOVE TEMP
-            AuthCookie c = new AuthCookie();
-            c.setCookie(headers);
+            singleton.getCookie().setCookie(headers);
             //TODO REMOVE
 
             return conn.getInputStream();
