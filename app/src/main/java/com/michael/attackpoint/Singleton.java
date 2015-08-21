@@ -15,7 +15,6 @@ public class Singleton extends Application {
     private static final String TAG = "com.michael.Attackpoint.request.";
     private RequestQueue mRequestQueue;
     private Preferences mPreferences;
-    private AuthCookie mCookie;
     private Context mContext;
     private static Singleton mInstance;
 
@@ -26,7 +25,6 @@ public class Singleton extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
-        mCookie = new AuthCookie();
     }
 
     public static synchronized Singleton getInstance() {
@@ -35,10 +33,6 @@ public class Singleton extends Application {
 
     public void setContext(Context context) {
         mContext = context;
-    }
-
-    public AuthCookie getCookie() {
-        return mCookie;
     }
 
     public Context getContext() {
