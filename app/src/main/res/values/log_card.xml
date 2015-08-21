@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item type="id" name="log_item" />
+    <item type="id" name="log_text" />
+    <item type="id" name="logInfo" />
+    <item type="id" name="logInfo_top" />
+    <item type="id" name="logInfo_bottom" />
+    <item type="id" name="log_time" />
+    <item type="id" name="log_distance" />
+    <item type="id" name="log_pace" />
+    <item type="id" name="log_type" />
+    <item type="id" name="log_color" />
+    <item type="id" name="log_session" />
+    <item type="id" name="log_comments" />
+	<item type="id" name="log_container" />
+
+	<dimen name="logCard_metaSize">14sp</dimen>
+	<dimen name="logCard_titleSize">18dp</dimen>
+	<dimen name="logCard_textSize">14sp</dimen>
+
+    <dimen name="logCard_colorWidth">40dp</dimen>
+    
+    
+	<dimen name="logCard_marginV">15dp</dimen>
+	<dimen name="logCard_marginH">10dp</dimen>
+	
+	<dimen name="logCardItem_marginH">10dp</dimen>
+	<dimen name="logCardItem_marginV">10dp</dimen>
+	
+	<dimen name="logCardDetail_marginH">5dp</dimen>
+
+	<dimen name="logType_paddingH">5dp</dimen>
+	<dimen name="logType_paddingV">1dp</dimen>
+    <dimen name="logType_marginH">10dp</dimen>
+    <dimen name="logType_marginV">10dp</dimen>
+	<dimen name="logTitle_marginH">20dp</dimen>
+	<dimen name="logTitle_marginV">0dp</dimen>
+    <dimen name="logTitle_barHeight">45dp</dimen>
+	
+	<style name="logCardItem_detail">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:orientation">horizontal</item>
+	    <item name="android:gravity">left</item>
+	</style>
+	
+	<style name="logCardItem_data">
+	    <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:layout_marginLeft">@dimen/logCardDetail_marginH</item>
+		<item name="android:layout_marginRight">@dimen/logCardDetail_marginH</item>
+	</style>
+</resources>

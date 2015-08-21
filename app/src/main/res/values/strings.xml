@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Attackpoint</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="action_search">Search</string>
+
+    <color name="black">#000000</color>
+    <color name="black_button_highlight">#424242</color>
+    <color name="black_1">#141414</color>
+    <color name="black_2">#222222</color>
+    <color name="black_3">#292929</color>
+    <color name="orange_1">#FF9900</color>
+    <color name="white">#FAFAFA</color>
+    <color name="red">#D50000</color>
+    <color name="ripple">#FFAAAAAA</color>
+
+    <string name="content_test">My bike has a really annoying valve mechanism, such that I usually ride my bike to town when I want to pump it up, This ride was just to generally check on the condition of my bike and see if it might put up with a longer ride this afternoon.</string>
+    <string name="log_type">Bike</string>
+    <string name="log_distance">14.36 km</string>
+    <string name="log_pace">2:16 / km</string>
+    <string name="log_time">32:36</string>
+    <string name="log_intensity">3</string>
+    <string name="log_comments">0 comments</string>
+    <string name="log_session">2 AM</string>
+
+</resources>

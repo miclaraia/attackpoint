@@ -1,0 +1,115 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/log_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/logCard_marginV"
+    android:layout_marginLeft="@dimen/logCard_marginH"
+    android:layout_marginRight="@dimen/logCard_marginH"
+    android:clickable="true"
+    android:focusable="true"
+    android:addStatesFromChildren="true"
+    android:foreground="@drawable/ripple_rectangle">
+
+    <LinearLayout
+        android:id="@id/log_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/black_3" >
+
+        <RelativeLayout
+            android:id="@id/logInfo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/logTitle_barHeight"
+            android:background="@color/black_1" >
+
+            <RelativeLayout
+                android:id="@id/log_color"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@id/log_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/logTitle_marginV"
+                    android:paddingTop="@dimen/logTitle_marginV"
+                    android:paddingLeft="@dimen/logTitle_marginH"
+                    android:paddingRight="@dimen/logTitle_marginH"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/logCard_titleSize"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="@string/log_type" />
+
+                <!--TextView
+                    android:id="@id/log_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/logType_marginV"
+                    android:layout_marginTop="@dimen/logType_marginV"
+                    android:layout_marginLeft="@dimen/logType_marginH"
+                    android:layout_marginRight="@dimen/logType_marginH"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/logCard_titleSize"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="@string/log_type" />
+
+                <View
+                    android:id="@id/log_color"
+                    android:layout_width="@dimen/logCard_colorWidth"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"/-->
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@id/log_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/logCard_textSize"
+            android:layout_marginLeft="@dimen/logCardItem_marginH"
+            android:layout_marginRight="@dimen/logCardItem_marginH"
+            android:layout_marginTop="@dimen/logCardItem_marginV"
+            android:layout_marginBottom="@dimen/logCardItem_marginV"
+            android:text="@string/content_test" />
+
+        <LinearLayout
+            android:id="@id/logInfo_top"
+            style="@style/logCardItem_detail"
+            android:padding="10dp"
+            android:background="@color/black_2" >
+
+            <TextView
+                android:id="@id/log_time"
+                style="@style/logCardItem_data"
+                android:textColor="@color/orange_1"
+                android:text="@string/log_time" />
+
+            <TextView
+                android:id="@id/log_distance"
+                style="@style/logCardItem_data"
+                android:textColor="@color/orange_1"
+                android:text="@string/log_distance"/>
+            <TextView
+                android:id="@id/log_pace"
+                style="@style/logCardItem_data"
+                android:textColor="@color/orange_1"
+                android:text="@string/log_pace"/>
+
+            <TextView
+                android:id="@id/log_comments"
+                style="@style/logCardItem_data"
+                android:textColor="@color/white"
+                android:text="@string/log_comments" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
