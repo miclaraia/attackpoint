@@ -33,6 +33,10 @@ public class AuthCookie {
         read();
     }
 
+    public AuthCookie(Map<String, List<String>> headers) {
+
+    }
+
     public AuthCookie(String cookie) {
         //TODO check if cookie already exists in preferences
         if (read()) {
@@ -72,10 +76,18 @@ public class AuthCookie {
 
     //checks if oken and expire are valid and whether it has already expired
     //before setting the object variables
-    public void setCookie(String token, Date expire) {
-        if (checkVals(token, expire) && checkTime(expire)) {
-            this.token = token;
-            this.expire = expire;
+    public void setCookie(String t, Date e) {
+        if (read()) {
+            if (checkVals(t, e) && checkTime(e) && e.compareTo(expire) > 0) {
+                token = t;
+                expire = e;
+            }
+        } else if (checkVals(t, e) && checkTime(e)) {
+            token = t;
+            expire = e;
+        } else {
+            token = "";
+            expire = null;
         }
     }
 
