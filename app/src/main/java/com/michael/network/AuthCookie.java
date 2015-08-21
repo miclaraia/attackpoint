@@ -1,6 +1,7 @@
 package com.michael.network;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
@@ -70,12 +71,27 @@ public class AuthCookie {
 
     // saves cookie to preferences
     public void save() {
-        prefs.saveCookie(this.toString());
+        try {
+            prefs.saveCookie(this.serialize());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(Singleton.getInstance().getContext(),
+                    DEBUG_TAG + "JSONException saving cookie", Toast.LENGTH_LONG).show();
+        }
     }
 
     // reads cookie from preferences
     public void read() {
-        this.setCookie(prefs.getCookie());
+        try {
+            JSONObject json = new JSONObject(prefs.getCookie());
+            String token = (String) json.get("key");
+            String expire = (String) json.get("expire");
+            setCookie(token, parseExpire(expire));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(Singleton.getInstance().getContext(),
+                    DEBUG_TAG + "JSONException reading cookie", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void expire() {
