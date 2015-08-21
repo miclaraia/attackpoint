@@ -94,18 +94,27 @@ public class AuthCookie {
     // reads cookie from preferences
     private boolean read() {
         try {
-            JSONObject json = new JSONObject(prefs.getCookie());
+            String cookie = prefs.getCookie();
+            JSONObject json = new JSONObject(cookie);
             String token = (String) json.get("key");
             String e = (String) json.get("expire");
             Date expire = parseExpire(e);
             if (checkTime(expire)) {
-                setCookie(token, expire);
+                //setCookie(token, expire);
+                this.token = token;
+                this.expire = expire;
                 return true;
             } else {
                 expire();
                 return false;
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+            prefs.removeCookie();
+            Toast.makeText(Singleton.getInstance().getContext(),
+                    DEBUG_TAG + "JSONException reading cookie", Toast.LENGTH_LONG).show();
+            return false;
+        } catch (NullPointerException e) {
             e.printStackTrace();
             Toast.makeText(Singleton.getInstance().getContext(),
                     DEBUG_TAG + "JSONException reading cookie", Toast.LENGTH_LONG).show();
@@ -149,32 +158,34 @@ public class AuthCookie {
     //pulls token out of cookie string
     private String parseCookie(String cookie) {
         if (cookie != null && !cookie.equals("")) {
-            String[] c = cookie.split(";");
-            String token = c[0].substring(6);
-            return token;
+            try {
+                String[] c = cookie.split(";");
+                String token = c[0].substring(6);
+                return token;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                Log.d(DEBUG_TAG, "cookie not valid");
+                e.printStackTrace();
+                return "";
+            }
         } else return "";
     }
 
     //pulls expiration date from cookie string
     private Date parseExpire(String cookie) {
         if (cookie != null && !cookie.equals("")) {
-            String[] c = cookie.split(";");
-            String time = c[3].split("=")[1];
-            /*String day = time.substring(5,7);
-            String month = time.substring(8,11);
-            String year = time.substring(12,16);
-            String hour = time.substring(17,19);
-            String minute = time.substring(20,22);
-            String second = time.substring(23,25);
+            String time = "";
 
-            int D = Integer.parseInt(day);
-            int M = parseMonth(month);
-            int Y = Integer.parseInt(year);
-            int h = Integer.parseInt(hour);import java.util.GregorianCalendar;
-            int m = Integer.parseInt(minute);
-            int s = Integer.parseInt(second);
+            if (cookie.contains(";") || cookie.contains("expires")) {
+                String[] c = cookie.split(";");
+                for (int i = 0; i < c.length; i++) {
+                    if (c[i].contains("expires")) {
+                        time = c[i].split("=")[1];
+                        break;
+                    }
+                }
+                if (time.equals("")) return null;
+            } else time = cookie;
 
-            Time exp = new Time();*/
             SimpleDateFormat sdf = new SimpleDateFormat(EXPIRE_FORMAT);
             try {
                 Date exp = sdf.parse(time);
@@ -226,7 +237,7 @@ public class AuthCookie {
     }
 
     public String toString() {
-        if (checkTime(this.expire)) return key + "=" +  token + ";";
+        if (checkTime(this.expire) && checkVals(token, expire)) return key + "=" +  token + ";";
         return "";
     }
 
