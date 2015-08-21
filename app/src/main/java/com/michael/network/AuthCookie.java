@@ -34,32 +34,17 @@ public class AuthCookie {
     }
 
     public AuthCookie(Map<String, List<String>> headers) {
-
+        setCookie(headers);
     }
 
     public AuthCookie(String cookie) {
         //TODO check if cookie already exists in preferences
-        if (read()) {
-            String t = parseCookie(cookie);
-            Date e = parseExpire(cookie);
-            if (checkVals(t, e)) {
-                if (e.compareTo(expire) > 1) {
-                    setCookie(t, e);
-                    save();
-                }
-            }
-        }
         setCookie(cookie);
     }
 
     public AuthCookie(String t, Date e) {
         //TODO check if cookie already exists in preferences
-        if (read() && checkVals(t, e)) {
-            if (e.compareTo(expire) > 1) {
-                setCookie(t, e);
-                save();
-            }
-        }
+        setCookie(t, e);
     }
 
     // sets cookie given header map
