@@ -54,21 +54,25 @@
         android:orientation="horizontal"
         android:layout_below="@id/login_fields">
         <Button
+            android:id="@id/login_buttonC"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/orange_1"
             android:background="@drawable/ripple_rectangle"
             android:text="Cancel"
+            android:onClick="onClick"
             />
 
         <Button
+            android:id="@id/login_buttonL"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/orange_1"
             android:background="@drawable/ripple_rectangle"
-            android:text="Login"/>
+            android:text="Login"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 
