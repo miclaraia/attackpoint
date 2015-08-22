@@ -11,7 +11,8 @@
         android:layout_height="3dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:background="@color/orange_1" />
+        android:background="@color/orange_1"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@id/login_fields"
@@ -56,16 +57,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
             android:textColor="@color/orange_1"
-            android:text="Cancel"/>
+            android:background="@drawable/ripple_rectangle"
+            android:text="Cancel"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
             android:textColor="@color/orange_1"
+            android:background="@drawable/ripple_rectangle"
             android:text="Login"/>
 
     </LinearLayout>
