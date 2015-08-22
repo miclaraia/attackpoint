@@ -26,14 +26,14 @@ public class AuthCookie {
     private static final String key = "login";
     private Date expire;
     private String token;
-    private Preferences prefs = Singleton.getInstance().getPreferences();
+    private Preferences prefs;
 
     public AuthCookie() {
         Log.d(DEBUG_TAG, "Initializing AuthCookie, no constructor");
-        setCookie();
+        prefs = Singleton.getInstance().getPreferences();
     }
 
-    public AuthCookie(Map<String, List<String>> headers) {
+    /*public AuthCookie(Map<String, List<String>> headers) {
         Log.d(DEBUG_TAG, "Initializing AuthCookie, map constructor");
         setCookie(headers);
     }
@@ -46,7 +46,7 @@ public class AuthCookie {
     public AuthCookie(String t, Date e) {
         Log.d(DEBUG_TAG, "Initializing AuthCookie, var constructor");
         setCookie(t, e, false);
-    }
+    }*/
 
     // sets cookie given header map
     public void setCookie(Map<String, List<String>> headers) {

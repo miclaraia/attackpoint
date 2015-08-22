@@ -22,13 +22,15 @@ public class LoginActivity extends ActionBarActivity {
         switch (view.getId()) {
             // cancel
             case R.id.login_buttonC:
-                Log.d(DEBUG_TAG, "Login dialog canceled");
+                Log.d(DEBUG_TAG, "cancel pressed");
                 finish();
+                break;
             // login
             case R.id.login_buttonL:
-                Log.d(DEBUG_TAG, "logging into attackpoint");
+                Log.d(DEBUG_TAG, "login pressed");
                 singleton.getLogin().login();
                 finish();
+                break;
         }
     }
 

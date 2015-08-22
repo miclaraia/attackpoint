@@ -47,6 +47,7 @@ public class Login {
     public Login() {
         cookie = new AuthCookie();
         async = new Async();
+        login();
     }
 
     public void login() {

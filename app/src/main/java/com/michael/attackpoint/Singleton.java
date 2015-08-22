@@ -25,9 +25,9 @@ public class Singleton extends Application {
         super.onCreate();
         mInstance = this;
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        mLogin = new Login();
         mPreferences = new Preferences();
         mContext = getApplicationContext();
+        mLogin = new Login();
     }
 
     public static synchronized Singleton getInstance() {
