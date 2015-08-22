@@ -5,6 +5,14 @@
     android:orientation="vertical"
     tools:context="com.michael.attackpoint.LoginActivity">
 
+    <View
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/orange_1" />
+
     <LinearLayout
         android:id="@id/login_fields"
         android:layout_width="wrap_content"
@@ -18,34 +26,46 @@
 
         <EditText
             android:id="@id/username"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="textVisiblePassword|textNoSuggestions"
             android:hint="Username"/>
 
         <EditText
             android:id="@id/password"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="textWebPassword"
             android:hint="Password"/>
     </LinearLayout>
 
+    <View
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignTop="@id/login_buttons"
+        android:background="@color/orange_1" />
+
     <LinearLayout
+        android:id="@id/login_buttons"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_below="@id/login_fields">
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@null"
+            android:textColor="@color/orange_1"
             android:text="Cancel"/>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@null"
+            android:textColor="@color/orange_1"
             android:text="Login"/>
 
     </LinearLayout>
