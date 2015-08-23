@@ -51,12 +51,14 @@ public class AuthCookie {
     // sets cookie given header map
     public void setCookie(Map<String, List<String>> headers) {
         Log.d(DEBUG_TAG, "setting cookie from map");
+        Log.d(DEBUG_TAG, "Map: " + headers.toString());
         setCookie(parseHeader(headers));
     }
 
     // Sets the objects token and expiration date, assumes right auth cookie was passed
     public void setCookie(String cookie) {
         Log.d(DEBUG_TAG, "setting cookie from string");
+        Log.d(DEBUG_TAG, "cookie: " + cookie);
         String token = parseCookie(cookie);
         Date e = parseExpire(cookie);
         setCookie(token, e, true);
@@ -72,7 +74,7 @@ public class AuthCookie {
         }
     }
 
-    //checks if oken and expire are valid and whether it has already expired
+    //checks if token and expire are valid and whether it has already expired
     //before setting the object variables
     public void setCookie(String t, Date e, boolean save) {
         Log.d(DEBUG_TAG, "setting cookie from vars");
