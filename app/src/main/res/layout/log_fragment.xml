@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <!-- Date bar -->
+    <RelativeLayout
+        android:id="@id/date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dateBar_height"
+        android:background="@color/black_1"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@id/dateLeft"
+            style="@style/dateButton"
+            android:layout_alignParentStart="true"
+            android:onClick="logout"/>
+
+        <TextView
+            android:id="@id/dateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/date_paddingHorizontal"
+            android:paddingRight="@dimen/date_paddingHorizontal"
+            android:paddingTop="@dimen/date_padding_top"
+            android:paddingBottom="@dimen/date_padding_bottom"
+            android:layout_centerInParent="true"
+
+            android:textColor="@color/orange_1"
+            android:textSize="@dimen/date_text_size"
+            android:textStyle="bold"
+
+            android:text="@string/date_title" />
+
+        <ImageButton
+            android:id="@id/dateRight"
+            style="@style/dateButton"
+            android:layout_alignParentEnd="true"
+            android:scaleX="-1"
+            android:onClick="login"/>
+        <View
+            android:id="@+id/date_rule"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+
+            android:background="@color/orange_1" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>
