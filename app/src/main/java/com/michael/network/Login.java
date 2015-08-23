@@ -47,15 +47,16 @@ public class Login {
     public Login() {
         cookie = new AuthCookie();
         async = new Async();
-        login();
+        Log.d(DEBUG_TAG, "Logging in");
+        cookie.setCookie();
     }
 
-    public void login() {
+    public void login(String user, String password) {
         Log.d(DEBUG_TAG, "Logging in");
         if (!cookie.state()) {
             if (!async.state) {
                 Log.d(DEBUG_TAG, "no previous login found, spawning new asynd");
-                new Async().execute();
+                new Async().execute(user, password);
             } else Log.d(DEBUG_TAG, "no previous login found but async already running \n will wait");
         } else Log.d(DEBUG_TAG, "previous login found, must logout first");
     }
@@ -76,11 +77,15 @@ public class Login {
 
     private class Async extends AsyncTask<String, Void, Map<String, List<String>>> {
         private static final String AP_URL = "http://www.attackpoint.org/dologin.jsp";
+        private String user;
+        private String password;
         public boolean state;
 
         @Override
         protected Map<String, List<String>> doInBackground(String... params) {
             state = true;
+            user = params[0];
+            password = params[1];
             return connect();
 
         /*InputStream is = connect();
@@ -120,8 +125,8 @@ public class Login {
                 //login form data
                 //TODO get login info from user input
                 List<NameValuePair> form = new ArrayList<NameValuePair>();
-                form.add(new BasicNameValuePair("username", "miclaraia"));
-                form.add(new BasicNameValuePair("password", "123456"));
+                form.add(new BasicNameValuePair("username", user));
+                form.add(new BasicNameValuePair("password", password));
 
                 //writes form data to connection
                 OutputStream os = conn.getOutputStream();
