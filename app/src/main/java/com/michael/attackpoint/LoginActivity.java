@@ -6,15 +6,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
+    private EditText username;
+    private EditText password;
     private Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
         singleton = Singleton.getInstance();
     }
 
@@ -28,7 +33,9 @@ public class LoginActivity extends ActionBarActivity {
             // login
             case R.id.login_buttonL:
                 Log.d(DEBUG_TAG, "login pressed");
-                singleton.getLogin().login();
+                String u = username.getText().toString();
+                String p = password.getText().toString();
+                singleton.getLogin().login(u, p);
                 finish();
                 break;
         }
