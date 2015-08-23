@@ -56,6 +56,7 @@ public class Login {
         if (!cookie.state()) {
             if (!async.state) {
                 Log.d(DEBUG_TAG, "no previous login found, spawning new asynd");
+                Log.d(DEBUG_TAG, "user: " + user + "\npassword: " + password);
                 new Async().execute(user, password);
             } else Log.d(DEBUG_TAG, "no previous login found but async already running \n will wait");
         } else Log.d(DEBUG_TAG, "previous login found, must logout first");
