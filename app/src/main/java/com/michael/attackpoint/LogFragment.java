@@ -1,5 +1,6 @@
 package com.michael.attackpoint;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,23 +23,31 @@ public class LogFragment extends Fragment {
     private List<LogInfo> logInfoList;
     private RecyclerView recList;
     private MyAdapter adapter;
+    private LinearLayoutManager linearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.log_fragment, container,false);
+        recList = (RecyclerView) view.findViewById(R.id.cardList);
+        recList.setLayoutManager(linearLayout);
 
-        recList = (RecyclerView) getView().findViewById(R.id.cardList);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-
+        // TODO initialize should actually initialize the network sequence and spawn an animation
         initializeData();
         initializeAdapter();
 
+        //TODO should be handled differently
         new apLog(adapter).getLog();
 
-        return inflater.inflate(R.layout.log_fragment, container, false);
+        return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        linearLayout = new LinearLayoutManager(activity);
+        linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
     }
 
     private void initializeData() {
