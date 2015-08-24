@@ -5,14 +5,14 @@
     android:background="@color/black" >
 
     <ImageView
-        android:id="@+id/item_image"
+        android:id="@id/item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_log_48px"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"/>
     <TextView
-        android:id="@+id/drawer_text"
+        android:id="@id/item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
