@@ -1,15 +1,9 @@
 package com.michael.network;
 
-import android.util.Log;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.michael.attackpoint.MyAdapter;
-import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.adapters.LogAdapter;
 import com.michael.objects.Distance;
 import com.michael.objects.LogInfo;
 
@@ -18,10 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by michael on 8/16/15.
@@ -31,9 +22,9 @@ public class apLog extends apNet {
 
     public Document document;
     private ArrayList<LogInfo> logInfoList;
-    private MyAdapter recycler;
+    private LogAdapter recycler;
 
-    public apLog(MyAdapter recycler) {
+    public apLog(LogAdapter recycler) {
         this.recycler = recycler;
     }
 

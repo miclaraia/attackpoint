@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.adapters;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,17 +11,18 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.michael.attackpoint.R;
 import com.michael.objects.LogInfo;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.LogViewHolder> {
-    private static final String DEBUG_TAG = "attackpoint.MyAdapter";
+public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
+    private static final String DEBUG_TAG = "attackpoint.LogAdapter";
 
     private List<LogInfo> logInfoList;
     private LogViewHolder logViewHolder;
 
-    public MyAdapter(List<LogInfo> logInfoList) {
+    public LogAdapter(List<LogInfo> logInfoList) {
         this.logInfoList = logInfoList;
     }
 

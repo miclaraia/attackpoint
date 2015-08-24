@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.michael.attackpoint.adapters.LogAdapter;
 import com.michael.network.apLog;
 import com.michael.objects.LogInfo;
 
@@ -22,7 +23,7 @@ public class LogFragment extends Fragment {
 
     private List<LogInfo> logInfoList;
     private RecyclerView recList;
-    private MyAdapter adapter;
+    private LogAdapter adapter;
     private LinearLayoutManager linearLayout;
 
     @Override
@@ -63,7 +64,7 @@ public class LogFragment extends Fragment {
     }
 
     private void initializeAdapter() {
-        adapter = new MyAdapter(logInfoList);
+        adapter = new LogAdapter(logInfoList);
         adapter.notifyDataSetChanged();
         recList.setAdapter(adapter);
     }

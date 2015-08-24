@@ -1,34 +1,14 @@
 package com.michael.network;
 
-import android.os.AsyncTask;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.michael.attackpoint.MyAdapter;
 import com.michael.attackpoint.Singleton;
-import com.michael.objects.Distance;
-import com.michael.objects.LogInfo;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by michael on 8/5/15.
