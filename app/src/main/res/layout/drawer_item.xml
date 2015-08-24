@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="50dp"
+    android:layout_width="match_parent"
+    android:background="@color/black" >
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_log_48px"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"/>
+    <TextView
         android:id="@+id/drawer_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:text="Log"
+        android:layout_toRightOf="@id/item_image"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
