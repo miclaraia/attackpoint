@@ -3,4 +3,24 @@
     <item type="id" name="item_icon" />
     <item type="id" name="item_text" />
 
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_names">
+        <item >Log</item>
+        <item >Login</item>
+        <item >Logout</item>
+        <item >Test1</item>
+        <item >Test2</item>
+        <item >Test3</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_log_48px</item>
+    </array>
 </resources>
