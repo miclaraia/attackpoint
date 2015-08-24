@@ -16,11 +16,15 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_log_48px</item>
-        <item>@drawable/ic_log_48px</item>
-        <item>@drawable/ic_log_48px</item>
-        <item>@drawable/ic_log_48px</item>
-        <item>@drawable/ic_log_48px</item>
-        <item>@drawable/ic_log_48px</item>
+        <item>@drawable/ic_logx35</item>
+        <item>@drawable/ic_logx35</item>
+        <item>@drawable/ic_logx35</item>
+        <item>@drawable/ic_logx35</item>
+        <item>@drawable/ic_logx35</item>
+        <item>@drawable/ic_logx35</item>
     </array>
+
+    <color name="drawer_divider">#2F2F2F</color>
+    <color name="drawer_background">#222222</color>
+    <color name="drawer_text">#EEEEEE</color>
 </resources>
