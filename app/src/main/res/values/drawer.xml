@@ -2,13 +2,14 @@
 <resources>
     <item type="id" name="item_icon" />
     <item type="id" name="item_text" />
+    <item type="id" name="item_seperator" />
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_names">
         <item >Log</item>
+        <item >Test1</item>
         <item >Login</item>
         <item >Logout</item>
-        <item >Test1</item>
         <item >Test2</item>
         <item >Test3</item>
     </string-array>
@@ -22,6 +23,15 @@
         <item>@drawable/ic_logx35</item>
         <item>@drawable/ic_logx35</item>
         <item>@drawable/ic_logx35</item>
+    </array>
+
+    <array name="nav_drawer_groups">
+        <item>Attackpoint</item>
+        <item>Attackpoint</item>
+        <item>Account</item>
+        <item>Account</item>
+        <item>Test</item>
+        <item>Test</item>
     </array>
 
     <color name="drawer_divider">#2F2F2F</color>
