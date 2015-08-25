@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="training_activities" >
+        <item>Running</item>
+        <item>Orienteering</item>
+        <item>Track</item>
+        <item>Weight Room</item>
+    </string-array>
+
+</resources>

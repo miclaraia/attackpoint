@@ -3,15 +3,14 @@
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/black">
+    android:orientation="vertical">
 
     <!-- Date bar -->
     <RelativeLayout
         android:id="@id/date"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dateBar_height"
-        android:background="@color/black_1"
+        android:background="@color/dark_darklight"
         android:orientation="horizontal" >
 
         <ImageButton
