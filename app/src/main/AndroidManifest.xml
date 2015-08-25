@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".dialogs.LoginActivity"
             android:theme="@style/Theme.AppCompat.Dialog">
         </activity>
         <meta-data
