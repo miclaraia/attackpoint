@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:paddingTop="5dp"
     android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:background="@color/black_2">
+    android:paddingRight="30dp" >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +51,7 @@
     <Spinner
         android:id="@+id/training_activity_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>
