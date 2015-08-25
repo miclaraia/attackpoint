@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/log_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,20 +9,20 @@
     android:clickable="true"
     android:focusable="true"
     android:addStatesFromChildren="true"
-    android:foreground="@drawable/ripple_rectangle">
+    android:foreground="@drawable/ripple_rectangle" >
 
     <LinearLayout
         android:id="@id/log_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/black_3" >
+        android:background="@color/dark_cardview_background" >
 
         <RelativeLayout
             android:id="@id/logInfo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/logTitle_barHeight"
-            android:background="@color/black_1" >
+            android:background="@color/dark_cardview_highlight" >
 
             <View
                 android:id="@id/log_color"
@@ -72,7 +73,7 @@
             android:id="@id/logInfo_top"
             style="@style/logCardItem_detail"
             android:padding="10dp"
-            android:background="@color/black_2" >
+            android:background="@color/dark_cardview_highlight" >
 
             <TextView
                 android:id="@id/log_time"

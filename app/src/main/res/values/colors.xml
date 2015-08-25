@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="black_button_highlight">#424242</color>
+    <color name="black_1">#141414</color>
+    <color name="black_2">#222222</color>
+    <color name="black_3">#292929</color>
+    <color name="orange_1">#FF9900</color>
+    <color name="white">#FAFAFA</color>
+    <color name="red">#D50000</color>
+    <color name="ripple">#FFAAAAAA</color>
+
+    <color name="dark_accent">#373029</color>
+    <color name="dark_background">#303030</color>
+    <color name="dark_darklight">#141414</color>
+    <color name="dark_highlight">#000000</color>
+    <color name="dark_cardview_background">#4A4A4A</color>
+    <color name="dark_cardview_highlight">#353535</color>
+
+    <style name="AppTheme" parent="android:style/Theme.Material">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/dark_accent</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/dark_darklight</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/orange_1</item>
+    </style>
+</resources>
