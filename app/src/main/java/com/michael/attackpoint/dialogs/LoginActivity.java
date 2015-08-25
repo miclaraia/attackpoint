@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.dialogs;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
