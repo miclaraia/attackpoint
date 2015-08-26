@@ -22,7 +22,7 @@
             android:id="@id/logInfo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/logTitle_barHeight"
-            android:background="@color/dark_cardview_highlight" >
+            android:background="@color/dark_cardview_background" >
 
             <View
                 android:id="@id/log_color"
