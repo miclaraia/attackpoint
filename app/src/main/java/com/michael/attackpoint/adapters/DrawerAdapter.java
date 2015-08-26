@@ -2,6 +2,7 @@ package com.michael.attackpoint.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
  * Created by michael on 8/24/15.
  */
 public class DrawerAdapter extends BaseAdapter {
+    private static final String DEBUG_TAG = "attackpoint.DAdapter";
     private Context context;
     private ArrayList<NavDrawer> navDrawerItems;
     private LayoutInflater inflater;
@@ -145,10 +147,31 @@ public class DrawerAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View v) {
-            switch (item.getGroup()) {
-                case Attackpoint
+            switch (item.getAction()) {
+                case "account":
+                    actionAccount();
+                    break;
+                case "general":
+                    actionGeneral();
+                    break;
+
             }
             Toast.makeText(Singleton.getInstance().getContext(), item.getName(), Toast.LENGTH_LONG).show();
+        }
+
+        private void actionAccount() {
+            switch (item.getName()) {
+                case "Login":
+                    Log.d(DEBUG_TAG, "Login pressed");
+                    break;
+                case "Logout":
+                    Log.d(DEBUG_TAG, "Logout pressed");
+                    break;
+            }
+        }
+
+        private void actionGeneral() {
+
         }
     }
 }
