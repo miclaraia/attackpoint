@@ -162,10 +162,10 @@ public class DrawerAdapter extends BaseAdapter {
         private void actionAccount() {
             switch (item.getName()) {
                 case "Login":
-                    Log.d(DEBUG_TAG, "Login pressed");
+                    Log.i(DEBUG_TAG, "Login pressed");
                     break;
                 case "Logout":
-                    Log.d(DEBUG_TAG, "Logout pressed");
+                    Log.i(DEBUG_TAG, "Logout pressed");
                     break;
             }
         }

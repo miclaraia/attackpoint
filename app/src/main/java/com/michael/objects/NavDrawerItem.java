@@ -13,6 +13,7 @@ public class NavDrawerItem extends NavDrawer {
         super(name, TYPE_REGULAR);
         this.group = group;
         this.icon = icon;
+        this.action = action;
     }
 
     public void setGroup(String group) {
