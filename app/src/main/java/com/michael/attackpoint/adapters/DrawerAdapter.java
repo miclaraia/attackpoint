@@ -74,17 +74,17 @@ public class DrawerAdapter extends BaseAdapter {
             navMenuItemHolder.labelView = labelView ;
             navMenuItemHolder.iconView = iconView ;
 
-            convertView.setTag(navMenuItemHolder);
+            convertView.setTag(R.id.drawer_holder, navMenuItemHolder);
         }
 
         if ( navMenuItemHolder == null ) {
-            navMenuItemHolder = (ItemViewHolder) convertView.getTag();
+            navMenuItemHolder = (ItemViewHolder) convertView.getTag(R.id.drawer_holder);
         }
 
         navMenuItemHolder.labelView.setText(item.getName());
         navMenuItemHolder.iconView.setImageResource(item.getIcon());
 
-        convertView.setOnClickListener(new ItemClickListener(item.getName()));
+        convertView.setOnClickListener(new ItemClickListener(item));
 
         return convertView;
     }
@@ -100,10 +100,10 @@ public class DrawerAdapter extends BaseAdapter {
             sectionHolder = new SectionViewHolder();
             sectionHolder.labelView = label;
 
-            convertView.setTag(sectionHolder);
+            convertView.setTag(R.id.drawer_holder, sectionHolder);
         }
 
-        if (sectionHolder == null) sectionHolder = (SectionViewHolder) convertView.getTag();
+        if (sectionHolder == null) sectionHolder = (SectionViewHolder) convertView.getTag(R.id.drawer_holder);
 
         sectionHolder.labelView.setText(item.getName());
 
@@ -137,15 +137,18 @@ public class DrawerAdapter extends BaseAdapter {
     }
 
     private class ItemClickListener implements View.OnClickListener {
-        private String label;
+        private NavDrawerItem item;
 
-        public ItemClickListener(String label) {
-            this.label = label;
+        public ItemClickListener(NavDrawerItem item) {
+            this.item = item;
         }
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(Singleton.getInstance().getContext(), label, Toast.LENGTH_LONG).show();
+            switch (item.getGroup()) {
+                case Attackpoint
+            }
+            Toast.makeText(Singleton.getInstance().getContext(), item.getName(), Toast.LENGTH_LONG).show();
         }
     }
 }
