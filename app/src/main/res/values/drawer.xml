@@ -34,7 +34,4 @@
         <item>Test</item>
     </array>
 
-    <color name="drawer_divider">#2F2F2F</color>
-    <color name="drawer_background">#222222</color>
-    <color name="drawer_text">#EEEEEE</color>
 </resources>

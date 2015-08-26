@@ -10,7 +10,7 @@
         android:id="@id/date"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dateBar_height"
-        android:background="@color/dark_darklight"
+        android:background="?android:colorBackground"
         android:orientation="horizontal" >
 
         <ImageButton
