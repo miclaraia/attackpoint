@@ -9,7 +9,7 @@ public class NavDrawerItem extends NavDrawer {
     public String action;
 
 
-    public NavDrawerItem(String name, String group, int icon) {
+    public NavDrawerItem(String name, String group, int icon, String action) {
         super(name, TYPE_REGULAR);
         this.group = group;
         this.icon = icon;
