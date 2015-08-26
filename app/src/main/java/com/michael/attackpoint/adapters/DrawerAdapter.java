@@ -5,11 +5,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 import com.michael.objects.NavDrawer;
 import com.michael.objects.NavDrawerItem;
 
@@ -80,6 +84,8 @@ public class DrawerAdapter extends BaseAdapter {
         navMenuItemHolder.labelView.setText(item.getName());
         navMenuItemHolder.iconView.setImageResource(item.getIcon());
 
+        convertView.setOnClickListener(new ItemClickListener(item.getName()));
+
         return convertView;
     }
 
@@ -121,5 +127,25 @@ public class DrawerAdapter extends BaseAdapter {
 
     private class SectionViewHolder {
         private TextView labelView;
+    }
+
+    public static class DrawerClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            Toast.makeText(Singleton.getInstance().getContext(), "Drawer item clicked!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class ItemClickListener implements View.OnClickListener {
+        private String label;
+
+        public ItemClickListener(String label) {
+            this.label = label;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(Singleton.getInstance().getContext(), label, Toast.LENGTH_LONG).show();
+        }
     }
 }
