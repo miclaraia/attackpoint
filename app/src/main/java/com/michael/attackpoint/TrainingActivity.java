@@ -1,5 +1,6 @@
 package com.michael.attackpoint;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
@@ -16,24 +17,23 @@ import com.michael.attackpoint.dialogs.TrainingDatePicker;
 /**
  * Created by michael on 8/25/15.
  */
-public class TrainingActivity extends Fragment {
+public class TrainingActivity extends Activity {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_training, container, false);
-        view.findViewById(R.id.training_date).setOnClickListener(trainingListener);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_training);
+
+        findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
         // TODO create custom adapter to load activities from attackpoint
-        Spinner spinner = (Spinner) view.findViewById(R.id.training_activity_spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.training_activity_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.training_activities, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-
-        return view;
     }
 
     private View.OnClickListener trainingListener = new View.OnClickListener() {
