@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ public class NumberPickerDialog extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("Select Intensity Level");
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.number_picker);
         np = (NumberPicker) findViewById(R.id.np_picker);
         np.setMaxValue(5);
