@@ -2,6 +2,7 @@
 <resources>
 
     <item type="id" name="training_intensity_label"/>
+    <item type="id" name="training_intensity_text"/>
     <item type="id" name="training_intensity"/>
     <item type="id" name="training_workout_label"/>
     <item type="id" name="training_activity_spinner"/>

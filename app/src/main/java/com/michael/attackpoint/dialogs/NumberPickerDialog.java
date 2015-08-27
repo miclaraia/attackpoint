@@ -24,6 +24,7 @@ public class NumberPickerDialog extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Select Intensity Level");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.number_picker);
         np = (NumberPicker) findViewById(R.id.np_picker);
