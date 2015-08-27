@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/training_parent"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="5dp"
@@ -20,38 +21,75 @@
         android:layout_height="3dp"
         android:background="@color/orange_1" />
     <RelativeLayout
-        android:id="@+id/training_date"
+        android:id="@id/training_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/training_item_height"
         android:layout_marginTop="10dp"
-        android:padding="10dp"
         android:background="@drawable/ripple_rectangle">
         <TextView
-            android:id="@+id/training_date_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date: "
-            android:textSize="20dp"
-            android:textColor="@color/white"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
+            style="@style/training_label"
+            android:id="@id/training_date_label"
+            android:text="Date"/>
         <TextView
-            android:id="@+id/training_date_text"
+            android:id="@id/training_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
             android:text="Aug 16, 2015"
-            android:textSize="20dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="@dimen/training_item_size"
             android:textColor="@color/white"
             android:layout_toRightOf="@id/training_date_label"/>
     </RelativeLayout>
 
-    <Spinner
-        android:id="@+id/training_activity_spinner"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="@dimen/training_item_height">
+
+        <TextView
+            style="@style/training_label"
+            android:id="@id/training_activity_label"
+            android:text="Activity"/>
+        <Spinner
+            style="@style/training_spinner"
+            android:id="@id/training_activity_spinner"
+            android:layout_toEndOf="@id/training_activity_label"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/training_item_height">
+
+        <TextView
+            style="@style/training_label"
+            android:id="@id/training_workout_label"
+            android:text="Workout"/>
+        <Spinner
+            style="@style/training_spinner"
+            android:id="@+id/training_workout_spinner"
+            android:layout_toEndOf="@id/training_workout_label"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/training_item_height">
+
+        <TextView
+            style="@style/training_label"
+            android:id="@id/training_intensity_label"
+            android:text="Intensity"/>
+        <TextView
+            android:id="@id/training_intensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="@dimen/training_item_size"
+            android:text="1"
+            android:layout_toRightOf="@id/training_intensity_label"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

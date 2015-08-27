@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <item type="id" name="training_intensity_label"/>
+    <item type="id" name="training_intensity"/>
+    <item type="id" name="training_workout_label"/>
+    <item type="id" name="training_activity_spinner"/>
+    <item type="id" name="training_activity_label"/>
+    <item type="id" name="training_date_text"/>
+    <item type="id" name="training_date_label"/>
+    <item type="id" name="training_date"/>
+    <item type="id" name="training_parent"/>
+
+    <dimen name="training_item_height">55dp</dimen>
+    <dimen name="training_label_width">80dp</dimen>
+    <dimen name="training_label_size">20dp</dimen>
+    <dimen name="training_item_size">17dp</dimen>
+    <dimen name="training_label_marginR">10dp</dimen>
+    
+    <style name="training_label">
+        <item name="android:layout_width">@dimen/training_label_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/training_label_marginR</item>
+        <item name="android:textSize">@dimen/training_label_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+    
+    <style name="training_spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/ripple_rectangle</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
     <string-array name="training_activities" >
         <item>Running</item>
         <item>Orienteering</item>
         <item>Track</item>
         <item>Weight Room</item>
+    </string-array>
+
+    <string-array name="training_workout">
+        <item>Training</item>
+        <item>Race</item>
+        <item>Long</item>
+        <item>Intervals</item>
+        <item>Hills</item>
+        <item>Tempo</item>
+        <item>Warmup/Warmdown</item>
+        <item>None</item>
     </string-array>
 
 </resources>

@@ -22,18 +22,22 @@ public class TrainingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training);
+        findViewById(R.id.training_parent).
 
         findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
-        // TODO create custom adapter to load activities from attackpoint
-        Spinner spinner = (Spinner) findViewById(R.id.training_activity_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        // TODO create single custom adapter for all spinners and load from attackpoint
+        Spinner activity = (Spinner) findViewById(R.id.training_activity_spinner);
+        ArrayAdapter<CharSequence> activityAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_activities, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        activity.setAdapter(activityAdapter);
+
+        Spinner workout = (Spinner) findViewById(R.id.training_workout_spinner);
+        ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
+                R.array.training_workout, android.R.layout.simple_spinner_item);
+        workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        workout.setAdapter(workoutAdapter);
     }
 
     private View.OnClickListener trainingListener = new View.OnClickListener() {
