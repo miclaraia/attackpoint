@@ -71,10 +71,10 @@ public class TrainingActivity extends Activity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.training_activity:
-                    view.findViewById(R.id.training_activity_spinner).callOnClick();
+                    view.findViewById(R.id.training_activity_spinner).performClick();
                     break;
                 case R.id.training_workout:
-                    view.findViewById(R.id.training_workout_spinner).callOnClick();
+                    view.findViewById(R.id.training_workout_spinner).performClick();
             }
         }
     }
