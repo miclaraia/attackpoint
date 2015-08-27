@@ -43,9 +43,12 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@id/training_activity"
         android:layout_width="match_parent"
         android:layout_height="@dimen/training_item_height"
-        android:background="@drawable/ripple_rectangle">
+        android:background="@drawable/ripple_rectangle"
+        android:clickable="true"
+        android:focusable="true" >
 
         <TextView
             style="@style/training_label"
@@ -59,9 +62,12 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@id/training_workout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/training_item_height"
-        android:background="@drawable/ripple_rectangle">
+        android:background="@drawable/ripple_rectangle"
+        android:clickable="true"
+        android:focusable="true" >
 
         <TextView
             style="@style/training_label"
