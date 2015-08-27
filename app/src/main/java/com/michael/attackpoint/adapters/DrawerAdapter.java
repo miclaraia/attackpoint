@@ -60,6 +60,7 @@ public class DrawerAdapter extends BaseAdapter {
         } else if (item.getType() == NavDrawer.TYPE_REGULAR) {
             view = getItemView(convertView, parent, (NavDrawerItem) item);
         }
+        view.setTag(R.id.drawer_info, "test");
 
         return view;
     }
@@ -86,7 +87,7 @@ public class DrawerAdapter extends BaseAdapter {
         navMenuItemHolder.labelView.setText(item.getName());
         navMenuItemHolder.iconView.setImageResource(item.getIcon());
 
-        convertView.setOnClickListener(new ItemClickListener(item));
+        //convertView.setOnClickListener(new ItemClickListener(item));
 
         return convertView;
     }
@@ -131,14 +132,7 @@ public class DrawerAdapter extends BaseAdapter {
         private TextView labelView;
     }
 
-    public static class DrawerClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            Toast.makeText(Singleton.getInstance().getContext(), "Drawer item clicked!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private class ItemClickListener implements View.OnClickListener {
+    /*private class ItemClickListener implements View.OnClickListener {
         private NavDrawerItem item;
 
         public ItemClickListener(NavDrawerItem item) {
@@ -156,7 +150,7 @@ public class DrawerAdapter extends BaseAdapter {
                     break;
 
             }
-            Toast.makeText(Singleton.getInstance().getContext(), item.getName(), Toast.LENGTH_LONG).show();
+            Log.i(DEBUG_TAG, item.getName());
         }
 
         private void actionAccount() {
@@ -173,5 +167,5 @@ public class DrawerAdapter extends BaseAdapter {
         private void actionGeneral() {
 
         }
-    }
+    }*/
 }
