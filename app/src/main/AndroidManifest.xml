@@ -38,6 +38,7 @@
             android:name=".dialogs.LoginActivity"
             android:theme="@style/Theme.AppCompat.Dialog">
         </activity>
+        <activity android:name=".TrainingActivity"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
