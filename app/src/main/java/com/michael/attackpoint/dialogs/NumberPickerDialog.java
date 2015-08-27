@@ -25,8 +25,12 @@ public class NumberPickerDialog extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.number_picker);
         np = (NumberPicker) findViewById(R.id.np_picker);
+        np.setMaxValue(5);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+        np.setValue(3);
     }
 
     public void onClick(View view) {
@@ -39,7 +43,7 @@ public class NumberPickerDialog extends Activity {
             // login
             case R.id.dialog_buttonA:
                 Log.d(DEBUG_TAG, "accept pressed");
-                TextView intensity = (TextView) findViewById(R.id.training_intensity);
+                TextView intensity = (TextView) findViewById(R.id.training_intensity_text);
                 intensity.setText("" + np.getValue());
                 finish();
                 break;

@@ -73,15 +73,18 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@id/training_intensity"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/training_item_height">
+        android:layout_height="@dimen/training_item_height"
+        android:background="@drawable/ripple_rectangle"
+        >
 
         <TextView
             style="@style/training_label"
             android:id="@id/training_intensity_label"
             android:text="Intensity"/>
         <TextView
-            android:id="@id/training_intensity"
+            android:id="@id/training_intensity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
