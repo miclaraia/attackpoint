@@ -1,5 +1,7 @@
 package com.michael.attackpoint;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,31 +11,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.michael.attackpoint.dialogs.NumberPickerDialog;
 import com.michael.attackpoint.dialogs.TrainingDatePicker;
 
 /**
  * Created by michael on 8/25/15.
  */
-public class TrainingActivity extends Fragment {
+public class TrainingActivity extends Activity {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_training, container, false);
-        view.findViewById(R.id.training_date).setOnClickListener(trainingListener);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_training);
+        findViewById(R.id.training_parent).
 
-        // TODO create custom adapter to load activities from attackpoint
-        Spinner spinner = (Spinner) view.findViewById(R.id.training_activity_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        findViewById(R.id.training_date).setOnClickListener(trainingListener);
+
+        // TODO create single custom adapter for all spinners and load from attackpoint
+        RelativeLayout activity = (RelativeLayout) findViewById(R.id.training_activity);
+        activity.setOnClickListener(new RelativeClickListener());
+        Spinner activitySpinner = (Spinner) activity.findViewById(R.id.item);
+        ArrayAdapter<CharSequence> activityAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_activities, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        activitySpinner.setAdapter(activityAdapter);
 
-        return view;
+        RelativeLayout workout = (RelativeLayout) findViewById(R.id.training_workout);
+        workout.setOnClickListener(new RelativeClickListener());
+        Spinner workoutSpinner = (Spinner) workout.findViewById(R.id.item);
+        ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
+                R.array.training_workout, android.R.layout.simple_spinner_item);
+        workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        workoutSpinner.setAdapter(workoutAdapter);
+
+        //// TODO: 8/27/15
+        findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment intensity = new NumberPickerDialog();
+                intensity.show(getFragmentManager(), "numberpicker");
+            }
+        });
     }
 
     private View.OnClickListener trainingListener = new View.OnClickListener() {
@@ -46,4 +67,12 @@ public class TrainingActivity extends Fragment {
             }
         }
     };
+
+    private class RelativeClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            view.findViewById(R.id.item).performClick();
+        }
+    }
 }

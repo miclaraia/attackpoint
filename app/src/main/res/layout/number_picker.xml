@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.michael.attackpoint.dialogs.LoginActivity">
+
+    <View
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/orange_1"
+        android:visibility="gone"/>
+
+    <NumberPicker
+        android:id="@+id/np_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        />
+
+    <View
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignTop="@+id/dialog_buttons"
+        android:background="@color/orange_1" />
+
+    <LinearLayout
+        android:id="@+id/dialog_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/np_picker">
+        <Button
+            android:id="@+id/dialog_buttonC"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/orange_1"
+            android:background="@drawable/ripple_rectangle"
+            android:text="Cancel"
+            android:onClick="onClick"
+            />
+
+        <Button
+            android:id="@+id/dialog_buttonA"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/orange_1"
+            android:background="@drawable/ripple_rectangle"
+            android:text="Select"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

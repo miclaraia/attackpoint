@@ -50,7 +50,8 @@ public class TrainingDatePicker extends DialogFragment
         cal.set(year, monthOfYear, dayOfMonth);
         Date date = cal.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        TextView dateView = (TextView) getActivity().findViewById(R.id.training_date_text);
+        TextView dateView = (TextView) getActivity()
+                .findViewById(R.id.training_date).findViewById(R.id.item);
         dateView.setText(sdf.format(date));
         dateView.setTag(date);
     }
