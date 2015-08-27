@@ -30,14 +30,14 @@ public class TrainingActivity extends Activity {
         findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
         // TODO create single custom adapter for all spinners and load from attackpoint
-        //findViewById(R.id.training_activity).setOnClickListener(new RelativeClickListener());
+        findViewById(R.id.training_activity).setOnClickListener(new RelativeClickListener());
         Spinner activity = (Spinner) findViewById(R.id.training_activity_spinner);
         ArrayAdapter<CharSequence> activityAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_activities, android.R.layout.simple_spinner_item);
         activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activity.setAdapter(activityAdapter);
 
-        //findViewById(R.id.training_workout).setOnClickListener(new RelativeClickListener());
+        findViewById(R.id.training_workout).setOnClickListener(new RelativeClickListener());
         Spinner workout = (Spinner) findViewById(R.id.training_workout_spinner);
         ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_workout, android.R.layout.simple_spinner_item);
@@ -65,7 +65,7 @@ public class TrainingActivity extends Activity {
         }
     };
 
-    /*private class RelativeClickListener implements View.OnClickListener {
+    private class RelativeClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
@@ -77,5 +77,5 @@ public class TrainingActivity extends Activity {
                     view.findViewById(R.id.training_workout_spinner).callOnClick();
             }
         }
-    }*/
+    }
 }
