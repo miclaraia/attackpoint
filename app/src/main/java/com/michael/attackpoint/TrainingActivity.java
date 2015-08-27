@@ -1,6 +1,7 @@
 package com.michael.attackpoint;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+import com.michael.attackpoint.dialogs.NumberPickerDialog;
 import com.michael.attackpoint.dialogs.TrainingDatePicker;
 
 /**
@@ -38,6 +41,14 @@ public class TrainingActivity extends Activity {
                 R.array.training_workout, android.R.layout.simple_spinner_item);
         workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         workout.setAdapter(workoutAdapter);
+
+        //// TODO: 8/27/15
+        findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private View.OnClickListener trainingListener = new View.OnClickListener() {
