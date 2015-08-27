@@ -5,8 +5,10 @@
     <item type="id" name="training_intensity_text"/>
     <item type="id" name="training_intensity"/>
     <item type="id" name="training_workout_label"/>
+    <item type="id" name="training_workout"/>
     <item type="id" name="training_activity_spinner"/>
     <item type="id" name="training_activity_label"/>
+    <item type="id" name="training_activity"/>
     <item type="id" name="training_date_text"/>
     <item type="id" name="training_date_label"/>
     <item type="id" name="training_date"/>
@@ -30,7 +32,6 @@
     <style name="training_spinner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/ripple_rectangle</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
         <item name="android:paddingTop">10dp</item>
