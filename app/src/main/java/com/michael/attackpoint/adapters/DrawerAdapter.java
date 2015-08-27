@@ -2,6 +2,7 @@ package com.michael.attackpoint.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
  * Created by michael on 8/24/15.
  */
 public class DrawerAdapter extends BaseAdapter {
+    private static final String DEBUG_TAG = "attackpoint.DAdapter";
     private Context context;
     private ArrayList<NavDrawer> navDrawerItems;
     private LayoutInflater inflater;
@@ -58,6 +60,7 @@ public class DrawerAdapter extends BaseAdapter {
         } else if (item.getType() == NavDrawer.TYPE_REGULAR) {
             view = getItemView(convertView, parent, (NavDrawerItem) item);
         }
+        view.setTag(R.id.drawer_info, "test");
 
         return view;
     }
@@ -74,17 +77,17 @@ public class DrawerAdapter extends BaseAdapter {
             navMenuItemHolder.labelView = labelView ;
             navMenuItemHolder.iconView = iconView ;
 
-            convertView.setTag(navMenuItemHolder);
+            convertView.setTag(R.id.drawer_holder, navMenuItemHolder);
         }
 
         if ( navMenuItemHolder == null ) {
-            navMenuItemHolder = (ItemViewHolder) convertView.getTag();
+            navMenuItemHolder = (ItemViewHolder) convertView.getTag(R.id.drawer_holder);
         }
 
         navMenuItemHolder.labelView.setText(item.getName());
         navMenuItemHolder.iconView.setImageResource(item.getIcon());
 
-        convertView.setOnClickListener(new ItemClickListener(item.getName()));
+        //convertView.setOnClickListener(new ItemClickListener(item));
 
         return convertView;
     }
@@ -100,10 +103,10 @@ public class DrawerAdapter extends BaseAdapter {
             sectionHolder = new SectionViewHolder();
             sectionHolder.labelView = label;
 
-            convertView.setTag(sectionHolder);
+            convertView.setTag(R.id.drawer_holder, sectionHolder);
         }
 
-        if (sectionHolder == null) sectionHolder = (SectionViewHolder) convertView.getTag();
+        if (sectionHolder == null) sectionHolder = (SectionViewHolder) convertView.getTag(R.id.drawer_holder);
 
         sectionHolder.labelView.setText(item.getName());
 
@@ -129,23 +132,40 @@ public class DrawerAdapter extends BaseAdapter {
         private TextView labelView;
     }
 
-    public static class DrawerClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            Toast.makeText(Singleton.getInstance().getContext(), "Drawer item clicked!", Toast.LENGTH_LONG).show();
-        }
-    }
+    /*private class ItemClickListener implements View.OnClickListener {
+        private NavDrawerItem item;
 
-    private class ItemClickListener implements View.OnClickListener {
-        private String label;
-
-        public ItemClickListener(String label) {
-            this.label = label;
+        public ItemClickListener(NavDrawerItem item) {
+            this.item = item;
         }
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(Singleton.getInstance().getContext(), label, Toast.LENGTH_LONG).show();
+            switch (item.getAction()) {
+                case "account":
+                    actionAccount();
+                    break;
+                case "general":
+                    actionGeneral();
+                    break;
+
+            }
+            Log.i(DEBUG_TAG, item.getName());
         }
-    }
+
+        private void actionAccount() {
+            switch (item.getName()) {
+                case "Login":
+                    Log.i(DEBUG_TAG, "Login pressed");
+                    break;
+                case "Logout":
+                    Log.i(DEBUG_TAG, "Logout pressed");
+                    break;
+            }
+        }
+
+        private void actionGeneral() {
+
+        }
+    }*/
 }

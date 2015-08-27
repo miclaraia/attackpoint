@@ -6,11 +6,14 @@ package com.michael.objects;
 public class NavDrawerItem extends NavDrawer {
     public int icon;
     public String group;
+    public String action;
 
-    public NavDrawerItem(String name, String group, int icon) {
+
+    public NavDrawerItem(String name, String group, int icon, String action) {
         super(name, TYPE_REGULAR);
         this.group = group;
         this.icon = icon;
+        this.action = action;
     }
 
     public void setGroup(String group) {
@@ -21,11 +24,19 @@ public class NavDrawerItem extends NavDrawer {
         this.icon = icon;
     }
 
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     public String getGroup() {
         return this.group;
     }
 
     public int getIcon() {
         return this.icon;
+    }
+
+    public String getAction() {
+        return this.action;
     }
 }

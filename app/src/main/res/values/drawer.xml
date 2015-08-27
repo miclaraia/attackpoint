@@ -34,4 +34,16 @@
         <item>Test</item>
     </array>
 
+    <array name="nav_drawer_action">
+        <item>general</item>
+        <item>general</item>
+        <item>account</item>
+        <item>account</item>
+        <item>general</item>
+        <item>general</item>
+    </array>
+
+
+    <item type="id" name="drawer_holder"/>
+    <item type="id" name="drawer_info"/>
 </resources>
