@@ -44,7 +44,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/training_item_height">
+        android:layout_height="@dimen/training_item_height"
+        android:background="@drawable/ripple_rectangle">
 
         <TextView
             style="@style/training_label"
@@ -59,7 +60,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/training_item_height">
+        android:layout_height="@dimen/training_item_height"
+        android:background="@drawable/ripple_rectangle">
 
         <TextView
             style="@style/training_label"
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textSize="@dimen/training_item_size"
-            android:text="1"
+            android:text="3"
             android:layout_toRightOf="@id/training_intensity_label"
             android:layout_centerVertical="true"
             />

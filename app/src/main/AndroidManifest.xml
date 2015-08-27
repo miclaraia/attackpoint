@@ -37,9 +37,6 @@
         <activity
             android:name=".dialogs.LoginActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity
-            android:name=".dialogs.NumberPickerDialog"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
 
         <activity android:name=".TrainingActivity"/>
         <meta-data

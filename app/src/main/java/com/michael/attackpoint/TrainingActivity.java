@@ -46,8 +46,8 @@ public class TrainingActivity extends Activity {
         findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TrainingActivity.this, NumberPickerDialog.class);
-                startActivity(intent);
+                DialogFragment intensity = new NumberPickerDialog();
+                intensity.show(getFragmentManager(), "numberpicker");
             }
         });
     }
