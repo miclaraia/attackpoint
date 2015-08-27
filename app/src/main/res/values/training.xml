@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item type="id" name="training_intensity_label"/>
-    <item type="id" name="training_intensity_text"/>
+    <item type="id" name="label" />
+    <item type="id" name="item" />
     <item type="id" name="training_intensity"/>
-    <item type="id" name="training_workout_label"/>
     <item type="id" name="training_workout"/>
-    <item type="id" name="training_activity_spinner"/>
-    <item type="id" name="training_activity_label"/>
     <item type="id" name="training_activity"/>
-    <item type="id" name="training_date_text"/>
-    <item type="id" name="training_date_label"/>
     <item type="id" name="training_date"/>
     <item type="id" name="training_parent"/>
 

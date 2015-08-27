@@ -28,10 +28,10 @@
         android:background="@drawable/ripple_rectangle">
         <TextView
             style="@style/training_label"
-            android:id="@id/training_date_label"
+            android:id="@id/label"
             android:text="Date"/>
         <TextView
-            android:id="@id/training_date_text"
+            android:id="@id/item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -39,7 +39,7 @@
             android:layout_marginLeft="15dp"
             android:textSize="@dimen/training_item_size"
             android:textColor="@color/white"
-            android:layout_toRightOf="@id/training_date_label"/>
+            android:layout_toRightOf="@id/label"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -50,12 +50,12 @@
 
         <TextView
             style="@style/training_label"
-            android:id="@id/training_activity_label"
+            android:id="@id/label"
             android:text="Activity"/>
         <Spinner
             style="@style/training_spinner"
-            android:id="@id/training_activity_spinner"
-            android:layout_toEndOf="@id/training_activity_label"
+            android:id="@id/item"
+            android:layout_toEndOf="@id/label"
             />
     </RelativeLayout>
 
@@ -67,12 +67,12 @@
 
         <TextView
             style="@style/training_label"
-            android:id="@id/training_workout_label"
+            android:id="@id/label"
             android:text="Workout"/>
         <Spinner
             style="@style/training_spinner"
-            android:id="@+id/training_workout_spinner"
-            android:layout_toEndOf="@id/training_workout_label"
+            android:id="@id/item"
+            android:layout_toEndOf="@id/label"
             />
     </RelativeLayout>
 
@@ -85,16 +85,39 @@
 
         <TextView
             style="@style/training_label"
-            android:id="@id/training_intensity_label"
+            android:id="@id/label"
             android:text="Intensity"/>
         <TextView
-            android:id="@id/training_intensity_text"
+            android:id="@id/item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textSize="@dimen/training_item_size"
             android:text="3"
-            android:layout_toRightOf="@id/training_intensity_label"
+            android:layout_toRightOf="@id/label"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/training_intensity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/training_item_height"
+        android:background="@drawable/ripple_rectangle"
+        >
+
+        <TextView
+            style="@style/training_label"
+            android:id="@id/label"
+            android:text="Duration"/>
+        <TextView
+            android:id="@id/item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="@dimen/training_item_size"
+            android:text="55:03"
+            android:layout_toRightOf="@id/label"
             android:layout_centerVertical="true"
             />
     </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.michael.attackpoint.dialogs.NumberPickerDialog;
@@ -30,19 +31,21 @@ public class TrainingActivity extends Activity {
         findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
         // TODO create single custom adapter for all spinners and load from attackpoint
-        findViewById(R.id.training_activity).setOnClickListener(new RelativeClickListener());
-        Spinner activity = (Spinner) findViewById(R.id.training_activity_spinner);
+        RelativeLayout activity = (RelativeLayout) findViewById(R.id.training_activity);
+        activity.setOnClickListener(new RelativeClickListener());
+        Spinner activitySpinner = (Spinner) activity.findViewById(R.id.item);
         ArrayAdapter<CharSequence> activityAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_activities, android.R.layout.simple_spinner_item);
         activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        activity.setAdapter(activityAdapter);
+        activitySpinner.setAdapter(activityAdapter);
 
-        findViewById(R.id.training_workout).setOnClickListener(new RelativeClickListener());
-        Spinner workout = (Spinner) findViewById(R.id.training_workout_spinner);
+        RelativeLayout workout = (RelativeLayout) findViewById(R.id.training_workout);
+        workout.setOnClickListener(new RelativeClickListener());
+        Spinner workoutSpinner = (Spinner) workout.findViewById(R.id.item);
         ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
                 R.array.training_workout, android.R.layout.simple_spinner_item);
         workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        workout.setAdapter(workoutAdapter);
+        workoutSpinner.setAdapter(workoutAdapter);
 
         //// TODO: 8/27/15
         findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
@@ -69,13 +72,7 @@ public class TrainingActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.training_activity:
-                    view.findViewById(R.id.training_activity_spinner).performClick();
-                    break;
-                case R.id.training_workout:
-                    view.findViewById(R.id.training_workout_spinner).performClick();
-            }
+            view.findViewById(R.id.item).performClick();
         }
     }
 }

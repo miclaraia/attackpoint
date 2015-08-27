@@ -52,7 +52,8 @@ public class NumberPickerDialog extends DialogFragment {
         private TextView intensity;
 
         public ClickListener(Activity activity) {
-            intensity = (TextView) activity.findViewById(R.id.training_intensity_text);
+            intensity = (TextView) activity
+                    .findViewById(R.id.training_intensity).findViewById(R.id.item);
         }
 
         @Override
