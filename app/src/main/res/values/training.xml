@@ -4,6 +4,7 @@
     <item type="id" name="label" />
     <item type="id" name="item" />
     <item type="id" name="training_intensity"/>
+    <item type="id" name="training_duration"/>
     <item type="id" name="training_workout"/>
     <item type="id" name="training_activity"/>
     <item type="id" name="training_date"/>

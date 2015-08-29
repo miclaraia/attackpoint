@@ -100,7 +100,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@id/training_intensity"
+        android:id="@id/training_duration"
         android:layout_width="match_parent"
         android:layout_height="@dimen/training_item_height"
         android:background="@drawable/ripple_rectangle"

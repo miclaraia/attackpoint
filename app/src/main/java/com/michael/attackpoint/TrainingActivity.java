@@ -14,9 +14,11 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.michael.attackpoint.dialogs.NumberPickerDialog;
 import com.michael.attackpoint.dialogs.TrainingDatePicker;
+import com.michael.attackpoint.dialogs.TrainingDurationPicker;
 
 /**
  * Created by michael on 8/25/15.
@@ -51,8 +53,24 @@ public class TrainingActivity extends Activity {
         findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment intensity = new NumberPickerDialog();
-                intensity.show(getFragmentManager(), "numberpicker");
+                DialogFragment dialog = new NumberPickerDialog();
+                dialog.show(getFragmentManager(), "numberpicker");
+            }
+        });
+
+        View duration = findViewById(R.id.training_duration);
+        duration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView time = (TextView) v.findViewById(R.id.item);
+                String timeString = time.getText().toString();
+
+                TrainingDurationPicker dialog = new TrainingDurationPicker();
+                Bundle bundle = new Bundle();
+                bundle.putString("time_string", timeString);
+                dialog.setArguments(bundle);
+                dialog.setResultView(time);
+                dialog.show(getFragmentManager(), "durationpicker");
             }
         });
     }
@@ -64,6 +82,17 @@ public class TrainingActivity extends Activity {
                 case R.id.training_date:
                     DialogFragment newFragment = new TrainingDatePicker();
                     newFragment.show(getFragmentManager(), "timePicker");
+                    break;
+                case R.id.training_duration:
+                    TextView time = (TextView) v.findViewById(R.id.item);
+                    String timeString = time.getText().toString();
+
+                    DialogFragment dialog = new TrainingDurationPicker();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("time_string", timeString);
+                    dialog.setArguments(bundle);
+                    dialog.show(getFragmentManager(), "durationpicker");
+
             }
         }
     };
