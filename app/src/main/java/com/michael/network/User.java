@@ -1,5 +1,6 @@
 package com.michael.network;
 
+import android.content.ContentValues;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -86,6 +87,10 @@ public class User {
         return dateToString(expire);
     }
 
+    public void setId(long id) {
+        this.id = (int) id;
+    }
+
     public boolean isExpired() {
         Date now = Calendar.getInstance().getTime();
         int x = now.compareTo(expire);
@@ -95,12 +100,12 @@ public class User {
         } else return true;
     }
 
-    public Map<String, String> storeSQL(UserDbHelper helper) {
-        Map<String, String> values = new HashMap<String, String>();
-        String[] columns = helper.insertColumns();
-        values.put(columns[0], user);
-        values.put(columns[1], token);
-        values.put(columns[2], dateToString(expire));
+    public ContentValues storeSQL() {
+        //Map<String, String> values = new HashMap<String, String>();
+        ContentValues values = new ContentValues();
+        values.put(UserDbHelper.COLUMN_NAME, user);
+        values.put(UserDbHelper.COLUMN_TOKEN, token);
+        values.put(UserDbHelper.COLUMN_EXPIRE, dateToString(expire));
         return values;
     }
 
@@ -150,5 +155,9 @@ public class User {
         SimpleDateFormat sdf = new SimpleDateFormat(EXPIRE_FORMAT);
         Date d = sdf.parse(date);
         return d;
+    }
+
+    public String toString() {
+        return "login=" + token;
     }
 }

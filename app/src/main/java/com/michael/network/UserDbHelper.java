@@ -46,11 +46,22 @@ public class UserDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public String[] insertColumns() {
-        String[] columns = new String[3];
-        columns[0] = COLUMN_NAME;
-        columns[1] = COLUMN_TOKEN;
-        columns[2] = COLUMN_EXPIRE;
+    public static String[] insertColumns() {
+        String[] columns = {
+            COLUMN_NAME,
+            COLUMN_TOKEN,
+            COLUMN_EXPIRE
+        };
+        return columns;
+    }
+
+    public static String[] allColumns() {
+        String[] columns = {
+                COLUMN_ID,
+                COLUMN_NAME,
+                COLUMN_TOKEN,
+                COLUMN_EXPIRE
+        };
         return columns;
     }
 }
