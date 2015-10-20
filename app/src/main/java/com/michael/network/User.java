@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class User {
 
-    private static final String DEBUG_TAG = "attackpoint.AuthCookie";
+    private static final String DEBUG_TAG = "attackpoint.User";
     private static final String EXPIRE_FORMAT = "ccc, dd-MMM-yyyy HH:mm:ss zzz";
 
     private int id;

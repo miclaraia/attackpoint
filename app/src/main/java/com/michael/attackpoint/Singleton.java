@@ -8,6 +8,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.michael.network.AuthCookie;
 import com.michael.network.Login;
+import com.michael.network.MyCookieStore;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
 
 /**
  * Created by michael on 8/18/15.
@@ -28,6 +34,8 @@ public class Singleton extends Application {
         mPreferences = new Preferences();
         mContext = getApplicationContext();
         mLogin = new Login();
+
+        initCookies();
     }
 
     public static synchronized Singleton getInstance() {
@@ -52,6 +60,12 @@ public class Singleton extends Application {
 
     public Login getLogin() {
         return mLogin;
+    }
+
+    public void initCookies() {
+        CookieStore cookieStore = new MyCookieStore();
+        CookieManager manager = new CookieManager( cookieStore, CookiePolicy.ACCEPT_ALL );
+        CookieHandler.setDefault(manager);
     }
 
     public <T> void add(Request<T> req) {

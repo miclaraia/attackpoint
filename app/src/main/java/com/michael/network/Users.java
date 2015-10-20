@@ -14,6 +14,8 @@ import java.util.Map;
  * Created by michael on 10/16/15.
  */
 public class Users {
+    private static final String DEBUG_TAG = "attackpoint.User";
+    private static final String EXPIRE_FORMAT = "ccc, dd-MMM-yyyy HH:mm:ss zzz";
 
     private List<User> users;
 
@@ -33,8 +35,9 @@ public class Users {
         dbHelper.close();
     }
 
-    public void addNewUser(String name, Map<String, List<String>> headers) {
+    public void addNewUser(String name, Map<String, List<String>> headers) throws Exception {
         User user = new User(name, headers);
+        if (user.getToken() == null) throw new Exception();
         open();
         long row_id = database.insert(UserDbHelper.TABLE, null, user.storeSQL());
         close();

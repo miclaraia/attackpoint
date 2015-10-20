@@ -10,6 +10,22 @@ import android.content.SharedPreferences;
 public class Preferences extends Application{
     private static final String pFileKey = "com.michael.attackpoint.preferences.sI5Xav";
 
+    public void setUser(String user) {
+        if (user == null) return;
+        SharedPreferences prefs = getPreferences();
+        if (prefs == null) return;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("user", user);
+        editor.commit();
+    }
+
+    public String getUser() {
+        SharedPreferences prefs = getPreferences();
+        String user = prefs.getString("user", "");
+        return user;
+    }
+
     public void saveCookie(String cookie) {
         if (cookie == null) {
             //the server did not return a cookie so we wont have anything to save
