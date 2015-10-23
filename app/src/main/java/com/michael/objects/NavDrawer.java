@@ -47,7 +47,7 @@ public class NavDrawer {
         for (i = 0; i < navMenuItems.size(); i++) {
             String g = navMenuItems.get(i).getGroup();
             if (g != null && g.equals("Account")) {
-                navMenuItems.add(i, item);
+                navMenuItems.add(i + 1, item);
                 break;
             }
         }
