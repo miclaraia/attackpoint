@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +18,8 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.objects.NavDrawer;
 import com.michael.objects.NavDrawerItem;
+
+import org.jsoup.Connection;
 
 import java.util.ArrayList;
 
@@ -34,19 +37,6 @@ public class DrawerAdapter extends BaseAdapter {
         this.navDrawerItems = navDrawerItems;
 
         inflater = LayoutInflater.from(context);
-    }
-
-    public int addUser(String name) {
-        NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
-        int i;
-        for (i = 0; i < navDrawerItems.size(); i++) {
-            String g = navDrawerItems.get(i).getGroup();
-            if (g != null && g.equals("Account")) {
-                navDrawerItems.add(item);
-                break;
-            }
-        }
-        return i;
     }
 
     @Override
