@@ -9,6 +9,7 @@ import com.android.volley.toolbox.Volley;
 import com.michael.network.AuthCookie;
 import com.michael.network.Login;
 import com.michael.network.MyCookieStore;
+import com.michael.objects.NavDrawer;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -24,6 +25,7 @@ public class Singleton extends Application {
     private Login mLogin;
     private Preferences mPreferences;
     private Context mContext;
+    private NavDrawer mDrawer;
     private static Singleton mInstance;
 
     @Override
@@ -75,5 +77,13 @@ public class Singleton extends Application {
 
     public void cancel() {
         mRequestQueue.cancelAll(TAG);
+    }
+
+    public void setDrawer(NavDrawer drawer) {
+        this.mDrawer = drawer;
+    }
+
+    public NavDrawer getDrawer() {
+        return mDrawer;
     }
 }
