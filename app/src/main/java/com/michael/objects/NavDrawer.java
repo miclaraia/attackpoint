@@ -42,19 +42,22 @@ public class NavDrawer {
         drawerList.setOnItemClickListener(l);
     }
 
+    public void notifyUpdate() {
+        adapter = new DrawerAdapter(activity, navMenuItems);
+        drawerList.setAdapter(adapter);
+    }
+
     public int addUser(String name) {
         NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
         int i;
         for (i = 0; i < navMenuItems.size(); i++) {
             String g = navMenuItems.get(i).getGroup();
             if (g != null && g.equals("Account")) {
-                navMenuItems.add(i + 1, item);
+                navMenuItems.add(i, item);
                 break;
             }
         }
-
-        adapter = new DrawerAdapter(activity, navMenuItems);
-        drawerList.setAdapter(adapter);
+        notifyUpdate();
         return i;
     }
 
@@ -62,6 +65,8 @@ public class NavDrawer {
         for (int i = 0; i < navMenuItems.size(); i++) {
             if (navMenuItems.get(i).equals(item)) {
                 navMenuItems.remove(i);
+                notifyUpdate();
+                drawer.closeDrawer(Gravity.LEFT);
                 break;
             }
         }
@@ -72,7 +77,7 @@ public class NavDrawer {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             view.getTag(R.id.drawer_info);
             Log.d(DEBUG_TAG, navMenuItems.get(position).getName());
-            NavDrawerItem item = (NavDrawerItem) navMenuItems.get(position);
+            NavDrawerItem item = navMenuItems.get(position);
             if (item.getType() == NavDrawerItem.TYPE_REGULAR) {
                 drawer.closeDrawer(Gravity.LEFT);
                 switch (item.getAction()) {

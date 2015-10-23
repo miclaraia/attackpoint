@@ -1,5 +1,7 @@
 package com.michael.objects;
 
+import com.michael.attackpoint.R;
+
 /**
  * Created by michael on 8/24/15.
  */
@@ -30,7 +32,7 @@ public class NavDrawerItem {
         if (type == TYPE_USER) {
             this.group = "Account";
             this.action = "user";
-            this.icon = android.R.drawable.ic_menu_info_details;
+            this.icon = R.drawable.ic_person;
         }
     }
 

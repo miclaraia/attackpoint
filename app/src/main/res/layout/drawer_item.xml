@@ -6,8 +6,8 @@
     <ImageView
         android:id="@id/item_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_log_48px"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_log"
         android:layout_marginLeft="20dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"/>
