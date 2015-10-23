@@ -22,14 +22,14 @@ import java.util.List;
 public class MyCookieStore implements CookieStore {
 
     private SQLiteDatabase database;
-    private UserDbHelper dbHelper;
+    private CookieDBHelper dbHelper;
     private Singleton singleton;
     private Preferences prefs;
 
     public MyCookieStore() {
         singleton = Singleton.getInstance();
         prefs = singleton.getPreferences();
-        dbHelper = new UserDbHelper(singleton.getContext());
+        dbHelper = new CookieDBHelper(singleton.getContext());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MyCookieStore implements CookieStore {
         sql.put(CookieDBHelper.COLUMN_COOKIE, value);
 
         open();
-        long row_id = database.insert(UserDbHelper.TABLE, null, sql);
+        long row_id = database.insert(CookieDBHelper.TABLE, null, sql);
         close();
     }
 
@@ -56,10 +56,11 @@ public class MyCookieStore implements CookieStore {
     @Override
     public List<HttpCookie> getCookies() {
         List<HttpCookie> cookies = new ArrayList<HttpCookie>();
-        String select = CookieDBHelper.COLUMN_USER + "LIKE ?";
+        String select = CookieDBHelper.COLUMN_USER + " LIKE ?";
         String[] selectionArgs = {prefs.getUser()};
 
-        Cursor cursor = database.query(UserDbHelper.TABLE,
+        open();
+        Cursor cursor = database.query(CookieDBHelper.TABLE,
                 CookieDBHelper.COLUMNS, select, selectionArgs, null, null, null);
 
         cursor.moveToFirst();
@@ -73,6 +74,7 @@ public class MyCookieStore implements CookieStore {
         }
         // make sure to close the cursor
         cursor.close();
+        close();
         return cookies;
     }
 
@@ -83,8 +85,8 @@ public class MyCookieStore implements CookieStore {
 
     @Override
     public boolean remove(URI uri, HttpCookie cookie) {
-        String where = CookieDBHelper.COLUMN_NAME + "LIKE ?"
-                + CookieDBHelper.COLUMN_COOKIE + "LIKE ?";
+        String where = CookieDBHelper.COLUMN_NAME + " LIKE ?"
+                + CookieDBHelper.COLUMN_COOKIE + " LIKE ?";
         String[] whereArgs = {cookie.getName(), cookie.getValue()};
         open();
         int result = database.delete(CookieDBHelper.TABLE, where, whereArgs);

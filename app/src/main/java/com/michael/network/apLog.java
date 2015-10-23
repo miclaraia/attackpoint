@@ -3,6 +3,7 @@ package com.michael.network;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.adapters.LogAdapter;
 import com.michael.objects.Distance;
 import com.michael.objects.LogInfo;
@@ -30,7 +31,26 @@ public class apLog extends apNet {
 
     //gets activities from document and sets them to class list variable
     public void getLog() {
-        AttackpointRequest apRequest = new AttackpointRequest(Request.Method.GET, url,
+        /*AttackpointRequest apRequest = new AttackpointRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        ArrayList<LogInfo> li = getActivities(Jsoup.parse(response));
+                        logInfoList = li;
+                        System.out.println(response.substring(0,100));
+                        recycler.updateList(li);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Error handling
+                System.out.println("Something went wrong!");
+                error.printStackTrace();
+            }
+        });*/
+
+        StringRequest apRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -48,6 +68,7 @@ public class apLog extends apNet {
                 error.printStackTrace();
             }
         });
+
 
 // Add the request to the queue
         singleton.add(apRequest);
