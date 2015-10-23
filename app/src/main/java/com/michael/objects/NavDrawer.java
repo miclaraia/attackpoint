@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.TrainingActivity;
@@ -55,6 +56,15 @@ public class NavDrawer {
         adapter = new DrawerAdapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
         return i;
+    }
+
+    public void removeUser(NavDrawerItem item) {
+        for (int i = 0; i < navMenuItems.size(); i++) {
+            if (navMenuItems.get(i).equals(item)) {
+                navMenuItems.remove(i);
+                break;
+            }
+        }
     }
 
     public class DrawerClickListener implements ListView.OnItemClickListener {

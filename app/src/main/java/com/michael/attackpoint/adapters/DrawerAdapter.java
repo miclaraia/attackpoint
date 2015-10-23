@@ -106,10 +106,12 @@ public class DrawerAdapter extends BaseAdapter {
             ImageView iconView = (ImageView) convertView.findViewById(R.id.item_icon);
             ImageView removeView = (ImageView) convertView.findViewById(R.id.item_remove);
 
+            removeView.setTag(item);
+
             viewHolder = new UserViewHolder();
-            viewHolder.labelView = labelView ;
-            viewHolder.iconView = iconView ;
-            viewHolder.removeView = removeView ;
+            viewHolder.labelView = labelView;
+            viewHolder.iconView = iconView;
+            viewHolder.removeView = removeView;
 
             convertView.setTag(R.id.drawer_holder, viewHolder);
         }
@@ -119,6 +121,12 @@ public class DrawerAdapter extends BaseAdapter {
         }
 
         viewHolder.labelView.setText(item.getName());
+        viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Singleton.getInstance().getDrawer().removeUser((NavDrawerItem) v.getTag());
+            }
+        });
 
         //convertView.setOnClickListener(new ItemClickListener(item));
 
