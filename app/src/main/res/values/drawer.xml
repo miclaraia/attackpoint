@@ -2,6 +2,7 @@
 <resources>
     <item type="id" name="item_icon" />
     <item type="id" name="item_text" />
+    <item type="id" name="item_remove" />
     <item type="id" name="item_seperator" />
 
     <!-- Nav Drawer Menu Items -->
@@ -10,8 +11,8 @@
         <item >Add Training</item>
         <item >Login</item>
         <item >Logout</item>
+        <item >Test1</item>
         <item >Test2</item>
-        <item >Test3</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -30,7 +31,7 @@
         <item>Attackpoint</item>
         <item>Account</item>
         <item>Account</item>
-        <item>Test</item>
+        <item>Account</item>
         <item>Test</item>
     </array>
 
@@ -39,7 +40,7 @@
         <item>general</item>
         <item>account</item>
         <item>account</item>
-        <item>general</item>
+        <item>user</item>
         <item>general</item>
     </array>
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 import com.michael.objects.LogInfo;
 
 import java.util.List;

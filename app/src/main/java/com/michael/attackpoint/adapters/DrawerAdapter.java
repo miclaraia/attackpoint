@@ -26,14 +26,27 @@ import java.util.ArrayList;
 public class DrawerAdapter extends BaseAdapter {
     private static final String DEBUG_TAG = "attackpoint.DAdapter";
     private Context context;
-    private ArrayList<NavDrawer> navDrawerItems;
+    private ArrayList<NavDrawerItem> navDrawerItems;
     private LayoutInflater inflater;
 
-    public DrawerAdapter(Context context, ArrayList<NavDrawer> navDrawerItems){
+    public DrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
         inflater = LayoutInflater.from(context);
+    }
+
+    public int addUser(String name) {
+        NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
+        int i;
+        for (i = 0; i < navDrawerItems.size(); i++) {
+            String g = navDrawerItems.get(i).getGroup();
+            if (g != null && g.equals("Account")) {
+                navDrawerItems.add(item);
+                break;
+            }
+        }
+        return i;
     }
 
     @Override
@@ -53,12 +66,14 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NavDrawer item = navDrawerItems.get(position);
+        NavDrawerItem item = navDrawerItems.get(position);
         View view = null;
-        if (item.getType() == NavDrawer.TYPE_SEPERATOR)  {
+        if (item.getType() == NavDrawerItem.TYPE_SEPERATOR)  {
             view = getSepView(convertView, parent, item);
-        } else if (item.getType() == NavDrawer.TYPE_REGULAR) {
-            view = getItemView(convertView, parent, (NavDrawerItem) item);
+        } else if (item.getType() == NavDrawerItem.TYPE_REGULAR) {
+            view = getItemView(convertView, parent, item);
+        } else if (item.getType() == NavDrawerItem.TYPE_USER) {
+            view = getUserView(convertView, parent, item);
         }
         view.setTag(R.id.drawer_info, "test");
 
@@ -92,7 +107,35 @@ public class DrawerAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public View getSepView(View convertView, ViewGroup parent, NavDrawer item) {
+    public View getUserView(View convertView, ViewGroup parent, NavDrawerItem item) {
+        UserViewHolder viewHolder = null;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.drawer_user, null);
+
+            TextView labelView = (TextView) convertView.findViewById(R.id.item_text);
+            ImageView iconView = (ImageView) convertView.findViewById(R.id.item_icon);
+            ImageView removeView = (ImageView) convertView.findViewById(R.id.item_remove);
+
+            viewHolder = new UserViewHolder();
+            viewHolder.labelView = labelView ;
+            viewHolder.iconView = iconView ;
+            viewHolder.removeView = removeView ;
+
+            convertView.setTag(R.id.drawer_holder, viewHolder);
+        }
+
+        if ( viewHolder == null ) {
+            viewHolder = (UserViewHolder) convertView.getTag(R.id.drawer_holder);
+        }
+
+        viewHolder.labelView.setText(item.getName());
+
+        //convertView.setOnClickListener(new ItemClickListener(item));
+
+        return convertView;
+    }
+
+    public View getSepView(View convertView, ViewGroup parent, NavDrawerItem item) {
         SectionViewHolder sectionHolder = null;
 
         if (convertView == null) {
@@ -128,44 +171,13 @@ public class DrawerAdapter extends BaseAdapter {
         private ImageView iconView;
     }
 
+    private static class UserViewHolder {
+        private TextView labelView;
+        private ImageView iconView;
+        private ImageView removeView;
+    }
+
     private class SectionViewHolder {
         private TextView labelView;
     }
-
-    /*private class ItemClickListener implements View.OnClickListener {
-        private NavDrawerItem item;
-
-        public ItemClickListener(NavDrawerItem item) {
-            this.item = item;
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (item.getAction()) {
-                case "account":
-                    actionAccount();
-                    break;
-                case "general":
-                    actionGeneral();
-                    break;
-
-            }
-            Log.i(DEBUG_TAG, item.getName());
-        }
-
-        private void actionAccount() {
-            switch (item.getName()) {
-                case "Login":
-                    Log.i(DEBUG_TAG, "Login pressed");
-                    break;
-                case "Logout":
-                    Log.i(DEBUG_TAG, "Logout pressed");
-                    break;
-            }
-        }
-
-        private void actionGeneral() {
-
-        }
-    }*/
 }

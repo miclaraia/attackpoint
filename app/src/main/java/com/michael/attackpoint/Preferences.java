@@ -23,7 +23,8 @@ public class Preferences extends Application{
     public String getUser() {
         SharedPreferences prefs = getPreferences();
         String user = prefs.getString("user", "");
-        return user;
+        return "test";
+        //return user;
     }
 
     public void saveCookie(String cookie) {
