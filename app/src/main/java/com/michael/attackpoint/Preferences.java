@@ -3,15 +3,17 @@ package com.michael.attackpoint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by michael on 8/18/15.
  */
 public class Preferences extends Application{
+    private static final String DEBUG_TAG = "ap.preferences";
     private static final String pFileKey = "com.michael.attackpoint.preferences.sI5Xav";
 
     public void setUser(String user) {
-        if (user == null) return;
+        if (user == null) user = "";
         SharedPreferences prefs = getPreferences();
         if (prefs == null) return;
 
@@ -23,8 +25,9 @@ public class Preferences extends Application{
     public String getUser() {
         SharedPreferences prefs = getPreferences();
         String user = prefs.getString("user", "");
-        return "test";
-        //return user;
+
+        Log.d(DEBUG_TAG, "user in preferences: " + user);
+        return user;
     }
 
     public void saveCookie(String cookie) {

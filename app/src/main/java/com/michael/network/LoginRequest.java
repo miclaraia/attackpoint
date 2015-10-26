@@ -6,6 +6,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.michael.attackpoint.Preferences;
+import com.michael.attackpoint.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,9 @@ public class LoginRequest extends StringRequest {
     private static final String RETURL = "http://www.attackpoint.org";
     private Map<String, String> mParams;
     private Response.Listener mListener;
+    private String user;
+    private String oldUser;
+    private Singleton singleton;
 
     public LoginRequest(String user, String pass,
                         Response.Listener<String> listener,
@@ -30,6 +35,11 @@ public class LoginRequest extends StringRequest {
         mParams.put("password", pass);
         mParams.put("returl", RETURL);
 
+        singleton = Singleton.getInstance();
+        Preferences prefs = singleton.getPreferences();
+        oldUser = prefs.getUser();
+        prefs.setUser(user);
+
     }
 
     @Override
@@ -40,14 +50,19 @@ public class LoginRequest extends StringRequest {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         Map headers = response.headers;
+        Log.d(DEBUG_TAG, headers.toString());
 
         Object obj = headers.get("Location");
         if (obj != null) {
             String location = obj.toString();
+            String username = mParams.get("username");
             if (location.equals(RETURL)) {
                 Log.d(DEBUG_TAG, "login successfull");
+                singleton.getDrawer().addUser(username);
             } else {
                 Log.d(DEBUG_TAG, "login unsuccessful");
+                singleton.getPreferences().setUser(oldUser);
+                singleton.getCookieStore().removeUser(username);
             }
         }
         return super.parseNetworkResponse(response);

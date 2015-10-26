@@ -53,7 +53,7 @@ public class LoginActivity extends ActionBarActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.d(DEBUG_TAG, response);
+                                //Log.d(DEBUG_TAG, response);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -63,6 +63,7 @@ public class LoginActivity extends ActionBarActivity {
                         error.printStackTrace();
                     }
                 });
+                singleton.add(request);
                 finish();
                 break;
         }

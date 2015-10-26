@@ -124,7 +124,11 @@ public class DrawerAdapter extends BaseAdapter {
         viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Singleton.getInstance().getDrawer().removeUser((NavDrawerItem) v.getTag());
+                try {
+                    Singleton.getInstance().getDrawer().removeUser((NavDrawerItem) v.getTag());
+                } catch (NavDrawer.UserException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

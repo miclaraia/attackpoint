@@ -35,9 +35,11 @@ public class MyCookieStore implements CookieStore {
 
     @Override
     public void add(URI uri, HttpCookie cookie) {
+        String user = prefs.getUser();
+        if (user.equals("")) return;
+
         String name = cookie.getName();
         String value = cookie.getValue();
-        String user = prefs.getUser();
 
         ContentValues sql = new ContentValues();
         sql.put(CookieDBHelper.COLUMN_USER, user);
@@ -54,11 +56,10 @@ public class MyCookieStore implements CookieStore {
         return getCookies();
     }
 
-    @Override
-    public List<HttpCookie> getCookies() {
+    public List<HttpCookie> getCookies(String currentUser) {
         List<HttpCookie> cookies = new ArrayList<HttpCookie>();
         String select = CookieDBHelper.COLUMN_USER + " LIKE ?";
-        String[] selectionArgs = {prefs.getUser()};
+        String[] selectionArgs = {currentUser};
 
         open();
         Cursor cursor = database.query(CookieDBHelper.TABLE,
@@ -77,6 +78,12 @@ public class MyCookieStore implements CookieStore {
         cursor.close();
         close();
         return cookies;
+    }
+
+    @Override
+    public List<HttpCookie> getCookies() {
+        String currentUser = prefs.getUser();
+        return getCookies(currentUser);
     }
 
     @Override
@@ -129,12 +136,12 @@ public class MyCookieStore implements CookieStore {
     public List<String> getAllUsers() {
         List<String> users = new ArrayList<>();
 
-        String sql = "SELECT ? FROM ? GROUP BY ?";
-        String[] sqlArgs = {CookieDBHelper.COLUMN_USER,
-                CookieDBHelper.TABLE,
-                CookieDBHelper.COLUMN_USER};
+        String sql = "SELECT " + CookieDBHelper.COLUMN_USER
+                + " FROM " + CookieDBHelper.TABLE
+                + " GROUP BY " + CookieDBHelper.COLUMN_USER;
 
-        Cursor cursor = database.rawQuery(sql, sqlArgs);
+        open();
+        Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String user = cursor.getString(0);
@@ -148,11 +155,41 @@ public class MyCookieStore implements CookieStore {
     }
 
     public void removeUser(String user) {
-        String where = "? = ?";
+        String where = "user LIKE \"" + user + "\"";
         String[] whereArgs = {CookieDBHelper.COLUMN_USER, user};
 
         open();
-        database.delete(CookieDBHelper.TABLE, where, whereArgs);
+        database.delete(CookieDBHelper.TABLE, where, null);
         close();
+    }
+
+    public String getAllCookies() {
+        Log.d(DEBUG_TAG, "getTableAsString called");
+        String tableString = String.format("Table %s:\n", CookieDBHelper.TABLE);
+        open();
+        Cursor cursor  = database.rawQuery("SELECT * FROM " + CookieDBHelper.TABLE, null);
+        if (cursor.moveToFirst() ){
+            String[] columnNames = cursor.getColumnNames();
+            do {
+                for (String name: columnNames) {
+                    tableString += String.format("%s: %s\n", name,
+                            cursor.getString(cursor.getColumnIndex(name)));
+                }
+                tableString += "\n";
+
+            } while (cursor.moveToNext());
+        }
+
+        return tableString;
+    }
+
+    public boolean checkValid(String user) {
+        Log.d(DEBUG_TAG, "checking if login was valid");
+        List<HttpCookie> cookies = getCookies(user);
+
+        for (HttpCookie cookie : cookies) {
+            if (cookie.getName().equals("login")) return true;
+        }
+        return false;
     }
 }

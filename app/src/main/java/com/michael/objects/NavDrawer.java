@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
@@ -33,6 +34,7 @@ public class NavDrawer {
     private DrawerLayout drawer;
     private Singleton singleton;
     private MyCookieStore cookieStore;
+    private Preferences prefs;
 
     private int userFirst;
     private int userCount;
@@ -47,6 +49,7 @@ public class NavDrawer {
 
         this.singleton = Singleton.getInstance();
         this.cookieStore = singleton.getCookieStore();
+        this.prefs = singleton.getPreferences();
 
         this.userFirst = getFirstUser();
         this.userCount = initUsers();
@@ -80,12 +83,21 @@ public class NavDrawer {
         List<String> users = cookieStore.getAllUsers();
         List<NavDrawerItem> userItems = new ArrayList<>();
         int count = users.size();
+        if (count > 0) {
+            for (String user : users) {
+                NavDrawerItem item = new NavDrawerItem(user, NavDrawerItem.TYPE_USER);
+                userItems.add(item);
+            }
+            navMenuItems.addAll(userFirst, userItems);
 
-        for (String user : users) {
-            NavDrawerItem item = new NavDrawerItem(user, NavDrawerItem.TYPE_USER);
-            userItems.add(item);
+            String currentUser = prefs.getUser();
+            if (currentUser != "") {
+                int index = findUser(currentUser);
+                NavDrawerItem item = navMenuItems.get(index);
+                navMenuItems.remove(index);
+                navMenuItems.add(userFirst, item);
+            }
         }
-        navMenuItems.addAll(userFirst, userItems);
         return count;
     }
 
@@ -102,6 +114,9 @@ public class NavDrawer {
         }
 
         userCount = countUsers();
+
+        if (userCount <= 0) prefs.setUser(null);
+        else prefs.setUser(navMenuItems.get(userFirst).getName());
 
         adapter = new DrawerAdapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
@@ -211,7 +226,7 @@ public class NavDrawer {
                 case "Test2":
                     addUser("miclaraia");
                 case "Check Cookies":
-                    //String d = CookieHandler.getDefault().
+                    Log.d(DEBUG_TAG, cookieStore.getAllCookies());
 
             }
         }
