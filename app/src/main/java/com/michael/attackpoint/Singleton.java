@@ -31,13 +31,13 @@ public class Singleton extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initCookies();
+
         mInstance = this;
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
         mLogin = new Login();
-
-        initCookies();
     }
 
     public static synchronized Singleton getInstance() {

@@ -8,8 +8,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
+import com.michael.network.LoginRequest;
+import com.michael.objects.LogInfo;
+
+import org.jsoup.Jsoup;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
@@ -38,7 +48,21 @@ public class LoginActivity extends ActionBarActivity {
                 Log.d(DEBUG_TAG, "login pressed");
                 String u = username.getText().toString();
                 String p = password.getText().toString();
-                singleton.getLogin().login(u, p);
+                //singleton.getLogin().login(u, p);
+                LoginRequest request = new LoginRequest(u, p,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d(DEBUG_TAG, response);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error handling
+                        System.out.println("Something went wrong!");
+                        error.printStackTrace();
+                    }
+                });
                 finish();
                 break;
         }

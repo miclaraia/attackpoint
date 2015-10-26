@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.adapters.DrawerAdapter;
+import com.michael.attackpoint.dialogs.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -95,7 +96,6 @@ public class NavDrawer {
             switch (item.getName()) {
                 case "Login":
                     Log.i(DEBUG_TAG, "Login pressed");
-                    //activity.login();
                     break;
                 case "Logout":
                     Log.i(DEBUG_TAG, "Logout pressed");
@@ -114,6 +114,11 @@ public class NavDrawer {
                     addUser("miclaraia");
 
             }
+        }
+
+        private void login() {
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
         }
     }
 
