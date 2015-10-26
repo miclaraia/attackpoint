@@ -2,6 +2,7 @@ package com.michael.network;
 
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,22 +50,20 @@ public class LoginRequest extends StringRequest {
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
-        Map headers = response.headers;
-        Log.d(DEBUG_TAG, headers.toString());
-
-        Object obj = headers.get("Location");
-        if (obj != null) {
-            String location = obj.toString();
-            String username = mParams.get("username");
-            if (location.equals(RETURL)) {
-                Log.d(DEBUG_TAG, "login successfull");
-                singleton.getDrawer().addUser(username);
-            } else {
-                Log.d(DEBUG_TAG, "login unsuccessful");
-                singleton.getPreferences().setUser(oldUser);
-                singleton.getCookieStore().removeUser(username);
-            }
+        String username = mParams.get("username");
+        Map<String, Object> loginResponse = new HashMap<>();
+        if (singleton.getCookieStore().checkValid(username)) {
+            Log.d(DEBUG_TAG, "login successfull");
+            loginResponse.put("success", true);
+            loginResponse.put("username", username);
+        } else {
+            Log.d(DEBUG_TAG, "login unsuccessful");
+            singleton.getPreferences().setUser(oldUser);
+            singleton.getCookieStore().removeUser(username);
+            loginResponse.put("success", false);
         }
+        singleton.setLoginResponse(loginResponse);
+
         return super.parseNetworkResponse(response);
     }
 }

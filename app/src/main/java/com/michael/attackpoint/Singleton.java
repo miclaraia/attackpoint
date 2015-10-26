@@ -15,6 +15,8 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by michael on 8/18/15.
@@ -28,6 +30,7 @@ public class Singleton extends Application {
     private NavDrawer mDrawer;
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
+    private Map<String, Object> mLoginResponse;
 
     @Override
     public void onCreate() {
@@ -38,6 +41,7 @@ public class Singleton extends Application {
         mPreferences = new Preferences();
         mContext = getApplicationContext();
         mLogin = new Login();
+        mLoginResponse = new HashMap<>();
 
         initCookies();
     }
@@ -77,6 +81,14 @@ public class Singleton extends Application {
     public <T> void add(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
+    }
+
+    public Map<String, Object> getLoginResponse() {
+        return mLoginResponse;
+    }
+
+    public void setLoginResponse(Map<String, Object> loginResponse) {
+        this.mLoginResponse = loginResponse;
     }
 
     public void cancel() {
