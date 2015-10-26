@@ -27,17 +27,19 @@ public class Singleton extends Application {
     private Context mContext;
     private NavDrawer mDrawer;
     private static Singleton mInstance;
+    private MyCookieStore mCookieStore;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initCookies();
 
         mInstance = this;
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
         mLogin = new Login();
+
+        initCookies();
     }
 
     public static synchronized Singleton getInstance() {
@@ -60,13 +62,15 @@ public class Singleton extends Application {
         return mRequestQueue;
     }
 
+    public MyCookieStore getCookieStore() { return mCookieStore; }
+
     public Login getLogin() {
         return mLogin;
     }
 
     public void initCookies() {
-        CookieStore cookieStore = new MyCookieStore();
-        CookieManager manager = new CookieManager( cookieStore, CookiePolicy.ACCEPT_ALL );
+        mCookieStore = new MyCookieStore();
+        CookieManager manager = new CookieManager( mCookieStore, CookiePolicy.ACCEPT_ALL );
         CookieHandler.setDefault(manager);
     }
 

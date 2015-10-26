@@ -45,10 +45,10 @@ public class Login {
     private Async async;
 
     public Login() {
-        cookie = new AuthCookie();
+        /*cookie = new AuthCookie();
         async = new Async();
         Log.d(DEBUG_TAG, "Logging in");
-        cookie.setCookie();
+        cookie.setCookie();*/
     }
 
     public void login(String user, String password) {

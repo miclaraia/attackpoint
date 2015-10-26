@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by michael on 10/20/15.
  */
 public class MyCookieStore implements CookieStore {
-
+    private static final String DEBUG_TAG = "ap.MyCookieStore";
     private SQLiteDatabase database;
     private CookieDBHelper dbHelper;
     private Singleton singleton;
@@ -110,5 +111,48 @@ public class MyCookieStore implements CookieStore {
 
     public void close() {
         dbHelper.close();
+    }
+
+    public int getUserCount() {
+        String sql = "SELECT COUNT(*) FROM " + CookieDBHelper.TABLE
+                + "GROUP BY " + CookieDBHelper.COLUMN_USER;
+        open();
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        close();
+        Log.d(DEBUG_TAG, "found " + count + "users in db");
+        return count;
+    }
+
+    public List<String> getAllUsers() {
+        List<String> users = new ArrayList<>();
+
+        String sql = "SELECT ? FROM ? GROUP BY ?";
+        String[] sqlArgs = {CookieDBHelper.COLUMN_USER,
+                CookieDBHelper.TABLE,
+                CookieDBHelper.COLUMN_USER};
+
+        Cursor cursor = database.rawQuery(sql, sqlArgs);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String user = cursor.getString(0);
+            users.add(user);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        close();
+        return users;
+    }
+
+    public void removeUser(String user) {
+        String where = "? = ?";
+        String[] whereArgs = {CookieDBHelper.COLUMN_USER, user};
+
+        open();
+        database.delete(CookieDBHelper.TABLE, where, whereArgs);
+        close();
     }
 }

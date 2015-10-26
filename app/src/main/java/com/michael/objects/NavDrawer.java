@@ -11,11 +11,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.adapters.DrawerAdapter;
 import com.michael.attackpoint.dialogs.LoginActivity;
+import com.michael.network.MyCookieStore;
 
+import java.net.CookieHandler;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by michael on 8/24/15.
@@ -27,6 +31,11 @@ public class NavDrawer {
     private ListView drawerList;
     private ArrayList<NavDrawerItem> navMenuItems;
     private DrawerLayout drawer;
+    private Singleton singleton;
+    private MyCookieStore cookieStore;
+
+    private int userFirst;
+    private int userCount;
 
     public NavDrawer(Activity activity, DrawerLayout drawer,
                      ArrayList<NavDrawerItem> navMenuItems,
@@ -36,6 +45,12 @@ public class NavDrawer {
         this.drawerList = drawerList;
         this.drawer = drawer;
 
+        this.singleton = Singleton.getInstance();
+        this.cookieStore = singleton.getCookieStore();
+
+        this.userFirst = getFirstUser();
+        this.userCount = initUsers();
+
         this.adapter = new DrawerAdapter(activity, navMenuItems);
         this.drawerList.setAdapter(adapter);
 
@@ -43,33 +58,115 @@ public class NavDrawer {
         drawerList.setOnItemClickListener(l);
     }
 
+    private int getFirstUser() {
+        for (int i = 0; i < navMenuItems.size(); i++) {
+            String g = navMenuItems.get(i).getGroup();
+            if (g != null && g.equals("Account")) {
+                return i;
+            }
+        }
+        return navMenuItems.size();
+    }
+
+    private int countUsers() {
+        int count = -1;
+        for (int i = userFirst; i < navMenuItems.size(); i++) {
+            if (navMenuItems.get(i).getGroup().equals("Account")) count++;
+        }
+        return count;
+    }
+
+    private int initUsers() {
+        List<String> users = cookieStore.getAllUsers();
+        List<NavDrawerItem> userItems = new ArrayList<>();
+        int count = users.size();
+
+        for (String user : users) {
+            NavDrawerItem item = new NavDrawerItem(user, NavDrawerItem.TYPE_USER);
+            userItems.add(item);
+        }
+        navMenuItems.addAll(userFirst, userItems);
+        return count;
+    }
+
     public void notifyUpdate() {
+        boolean bUserFirst = false;
+
+        for (int i = 0; i < navMenuItems.size(); i++) {
+            NavDrawerItem item = navMenuItems.get(i);
+            String g = item.getGroup();
+            if (!bUserFirst && g != null && g.equals("Account")) {
+                userFirst = i;
+                bUserFirst = true;
+            }
+        }
+
+        userCount = countUsers();
+
         adapter = new DrawerAdapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
     }
 
-    public int addUser(String name) {
-        NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
-        int i;
-        for (i = 0; i < navMenuItems.size(); i++) {
-            String g = navMenuItems.get(i).getGroup();
-            if (g != null && g.equals("Account")) {
-                navMenuItems.add(i, item);
-                break;
-            }
+    public int findUser(String user) {
+        for (int i = userFirst; i < navMenuItems.size(); i++) {
+            NavDrawerItem item = navMenuItems.get(i);
+            if (item.getName().equals(user)) return i;
         }
-        notifyUpdate();
-        return i;
+        return -1;
     }
 
-    public void removeUser(NavDrawerItem item) {
-        for (int i = 0; i < navMenuItems.size(); i++) {
-            if (navMenuItems.get(i).equals(item)) {
-                navMenuItems.remove(i);
-                notifyUpdate();
-                drawer.closeDrawer(Gravity.LEFT);
-                break;
-            }
+    public int findUser(NavDrawerItem item) {
+        for (int i = userFirst; i < navMenuItems.size(); i++) {
+            if (navMenuItems.get(i).equals(item)) return i;
+        }
+        return -1;
+    }
+
+    public void setUser(String user) throws UserException {
+        int index = findUser(user);
+        if (index < 0) {
+            throw new UserException("Error finding user");
+        } else {
+            setUser(index);
+        }
+    }
+
+    public void setUser(int index) {
+        NavDrawerItem item = navMenuItems.get(index);
+        navMenuItems.remove(index);
+        navMenuItems.add(userFirst, item);
+        singleton.getPreferences().setUser(item.getName());
+        notifyUpdate();
+    }
+
+    public void addUser(String name) {
+        NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
+        navMenuItems.add(userFirst, item);
+        notifyUpdate();
+        singleton.getPreferences().setUser(name);
+    }
+
+    public void removeUser(NavDrawerItem item) throws UserException {
+        String user = singleton.getPreferences().getUser();
+        int index = findUser(item);
+
+        cookieStore.removeUser(item.getName());
+        navMenuItems.remove(index);
+        notifyUpdate();
+        drawer.closeDrawer(Gravity.LEFT);
+
+        if (user.equals(item.getName())) {
+            setUser(userFirst);
+        }
+    }
+
+    public class UserException extends Exception {
+        public UserException(String message) {
+            super(message);
+        }
+
+        public UserException(String message, Throwable throwable) {
+            super(message, throwable);
         }
     }
 
@@ -94,8 +191,9 @@ public class NavDrawer {
 
         private void actionAccount(NavDrawerItem item) {
             switch (item.getName()) {
-                case "Login":
+                case "Add User":
                     Log.i(DEBUG_TAG, "Login pressed");
+                    login();
                     break;
                 case "Logout":
                     Log.i(DEBUG_TAG, "Logout pressed");
@@ -112,6 +210,8 @@ public class NavDrawer {
                     break;
                 case "Test2":
                     addUser("miclaraia");
+                case "Check Cookies":
+                    //String d = CookieHandler.getDefault().
 
             }
         }
