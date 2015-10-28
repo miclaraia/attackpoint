@@ -1,4 +1,4 @@
-package com.michael.network;
+package com.michael.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,29 +10,9 @@ import android.util.Log;
  */
 public class CookieDBHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE = "users";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_USER = "user";
-    public static final String COLUMN_NAME = "name2";
-    public static final String COLUMN_COOKIE = "cookie";
-
 
     private static final String DATABASE_NAME = "userdata.db";
-    private static final int DATABASE_VERSION = 4;
-
-    // Database creation sql statement
-    private static final String DATABASE_CREATE = "CREATE TABLE "
-            + TABLE + "(" + COLUMN_ID
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER
-            + " TEXT NOT NULL, " + COLUMN_NAME
-            + " TEXT NOT NULL, " + COLUMN_COOKIE
-            + " TEXT NOT NULL);";
-
-    public static final String[] COLUMNS = {
-            COLUMN_USER,
-            COLUMN_NAME,
-            COLUMN_COOKIE
-    };
+    private static final int DATABASE_VERSION = 1;
 
     public CookieDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,7 +26,8 @@ public class CookieDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+        database.execSQL(CookieTable.TABLE_CREATE);
+        database.execSQL(UserTable.TABLE_CREATE);
     }
 
     @Override
@@ -54,7 +35,9 @@ public class CookieDBHelper extends SQLiteOpenHelper {
         Log.w(CookieDBHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE);
+
+        db.execSQL("DROP TABLE IF EXISTS " + CookieTable.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
         onCreate(db);
     }
 }

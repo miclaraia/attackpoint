@@ -8,13 +8,12 @@ import android.util.Log;
 
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
+import com.michael.database.CookieDBHelper;
 
 import java.net.CookieStore;
 import java.net.HttpCookie;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
