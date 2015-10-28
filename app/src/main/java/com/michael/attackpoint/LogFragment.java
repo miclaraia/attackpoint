@@ -53,14 +53,6 @@ public class LogFragment extends Fragment {
 
     private void initializeData() {
         logInfoList = new ArrayList<>();
-        /*logInfoList.add(new LogInfo("Test 1<br>Test2<strong>test3</strong>", "Bike", "13.44", "km", "44:56"));
-        logInfoList.add(new LogInfo("Test 2", "Run", "1.2", "km", "13:33"));
-        logInfoList.add(new LogInfo("Test 3", "Core","1","b","10:00"));
-        logInfoList.add(new LogInfo("Test 4", "Core","1","b","10:00"));
-        logInfoList.add(new LogInfo("Test 5", "Core","1","b","10:00"));
-        logInfoList.add(new LogInfo("Test 6", "Core","1","b","10:00"));
-        logInfoList.add(new LogInfo("Test 7", "Core","1","b","10:00"));
-        logInfoList.add(new LogInfo("Test 8", "Core","1","b","10:00"));*/
     }
 
     private void initializeAdapter() {

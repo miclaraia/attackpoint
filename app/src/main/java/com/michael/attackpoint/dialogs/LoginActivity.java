@@ -20,6 +20,7 @@ import com.michael.objects.LogInfo;
 import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
@@ -53,7 +54,11 @@ public class LoginActivity extends ActionBarActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                //Log.d(DEBUG_TAG, response);
+                                Map<String, Object> loginResponse = singleton.getLoginResponse();
+                                if ((boolean) loginResponse.get("success")) {
+                                    String sUsername = (String) loginResponse.get("username");
+                                    singleton.getDrawer().addUser(sUsername);
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override

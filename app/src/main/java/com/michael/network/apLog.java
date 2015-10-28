@@ -31,25 +31,6 @@ public class apLog extends apNet {
 
     //gets activities from document and sets them to class list variable
     public void getLog() {
-        /*AttackpointRequest apRequest = new AttackpointRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        ArrayList<LogInfo> li = getActivities(Jsoup.parse(response));
-                        logInfoList = li;
-                        System.out.println(response.substring(0,100));
-                        recycler.updateList(li);
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Error handling
-                System.out.println("Something went wrong!");
-                error.printStackTrace();
-            }
-        });*/
-
         StringRequest apRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -133,24 +114,5 @@ public class apLog extends apNet {
         color = color.split(":")[1];
         return color;
     }
-
-    /*@Override
-    protected Void doInBackground(Void... params) {
-        try {
-            this.document = connect(this.url);
-            getLog();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-
-    @Override
-    protected void onPostExecute(Void result) {
-        recycler.updateList(this.logInfoList);
-    }*/
 }
 
