@@ -1,10 +1,14 @@
 package com.michael.network;
 
+import android.text.TextUtils;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.adapters.LogAdapter;
+import com.michael.database.CookieTable;
 import com.michael.objects.Distance;
 import com.michael.objects.LogInfo;
 
@@ -13,46 +17,62 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.CookieManager;
 import java.util.ArrayList;
 
 /**
  * Created by michael on 8/16/15.
  */
-public class apLog extends apNet {
+public class apLog {
     private static final String DEBUG_TAG = "attackpoint.apLog";
+    private static final String BASE_URL = "http://www.attackpoint.org";
+
+    private static final String TYPE_LOG = "viewlog.jsp";
 
     public Document document;
     private ArrayList<LogInfo> logInfoList;
     private LogAdapter recycler;
+    private Singleton singleton;
+    private static CookieManager cookies;
 
     public apLog(LogAdapter recycler) {
         this.recycler = recycler;
+        this.singleton = Singleton.getInstance();
     }
 
     //gets activities from document and sets them to class list variable
     public void getLog() {
-        StringRequest apRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        ArrayList<LogInfo> li = getActivities(Jsoup.parse(response));
-                        logInfoList = li;
-                        System.out.println(response.substring(0,100));
-                        recycler.updateList(li);
+        String userID = CookieTable.getCurrentID();
+        if (userID != null) {
+            String url = buildURL(TYPE_LOG, userID);
+            StringRequest apRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            ArrayList<LogInfo> li = getActivities(Jsoup.parse(response));
+                            logInfoList = li;
+                            System.out.println(response.substring(0, 100));
+                            recycler.updateList(li);
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Error handling
-                System.out.println("Something went wrong!");
-                error.printStackTrace();
-            }
-        });
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Error handling
+                    System.out.println("Something went wrong!");
+                    error.printStackTrace();
+                }
+            });
 
 
-// Add the request to the queue
-        singleton.add(apRequest);
+            // Add the request to the queue
+            singleton.add(apRequest);
+        }
+    }
+
+    public String buildURL(String type, String id) {
+        String[] pieces = {BASE_URL, type, id};
+        return TextUtils.join("/", pieces);
     }
 
     //gets meta data and text from an activity in the html
