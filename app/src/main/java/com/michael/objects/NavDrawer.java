@@ -204,10 +204,8 @@ public class NavDrawer {
                     case "general":
                         actionGeneral(item);
                         break;
-                    case "user":
-                        actionUser(item);
                 }
-            }
+            } else if (item.getType() == NavDrawerItem.TYPE_USER) actionUser(item);
         }
 
         private void actionAccount(NavDrawerItem item) {
