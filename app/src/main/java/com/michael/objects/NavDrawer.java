@@ -150,8 +150,12 @@ public class NavDrawer {
         NavDrawerItem item = navMenuItems.get(index);
         navMenuItems.remove(index);
         navMenuItems.add(userFirst, item);
+
         singleton.getPreferences().setUser(item.getName());
+        singleton.getLogManager().getLog();
         notifyUpdate();
+
+        drawer.closeDrawer(Gravity.LEFT);
     }
 
     public void addUser(String name) {
@@ -200,6 +204,8 @@ public class NavDrawer {
                     case "general":
                         actionGeneral(item);
                         break;
+                    case "user":
+                        actionUser(item);
                 }
             }
         }
@@ -223,11 +229,17 @@ public class NavDrawer {
                     Intent intent = new Intent(activity, TrainingActivity.class);
                     activity.startActivity(intent);
                     break;
-                case "Test2":
-                    addUser("miclaraia");
                 case "Check Cookies":
                     Log.d(DEBUG_TAG, cookieStore.getAllCookies());
 
+            }
+        }
+
+        private void actionUser(NavDrawerItem item) {
+            try {
+                setUser(item.getName());
+            } catch (UserException e) {
+                e.printStackTrace();
             }
         }
 

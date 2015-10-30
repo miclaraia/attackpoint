@@ -39,7 +39,9 @@ public class LogFragment extends Fragment {
         initializeAdapter();
 
         //TODO should be handled differently
-        new apLog(adapter).getLog();
+        apLog log = new apLog(adapter);
+        Singleton.getInstance().setLogManager(log);
+        log.getLog();
 
         return view;
     }
