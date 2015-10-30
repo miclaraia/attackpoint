@@ -32,6 +32,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         this.notifyDataSetChanged();
     }
 
+    public void setList(List<LogInfo> update) {
+        logInfoList = update;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return logInfoList.size();

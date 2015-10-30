@@ -52,7 +52,7 @@ public class apLog {
                             ArrayList<LogInfo> li = getActivities(Jsoup.parse(response));
                             logInfoList = li;
                             System.out.println(response.substring(0, 100));
-                            recycler.updateList(li);
+                            recycler.setList(li);
 
                         }
                     }, new Response.ErrorListener() {
