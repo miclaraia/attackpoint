@@ -68,7 +68,7 @@ public class CookieTable {
         cursor.moveToFirst();
         String cookie = cursor.getString(0);
         String id = cookie.split(":")[0];
-        
+
         close();
         return id;
     }

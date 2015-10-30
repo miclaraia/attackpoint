@@ -71,7 +71,7 @@ public class apLog {
     }
 
     public String buildURL(String type, String id) {
-        String[] pieces = {BASE_URL, type, id};
+        String[] pieces = {BASE_URL, type, "user_" + id};
         return TextUtils.join("/", pieces);
     }
 
@@ -81,32 +81,38 @@ public class apLog {
         Element meta = activity.getElementsByTag("p").first();
 
         String type = meta.getElementsByTag("b").first().text();
-        String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
-        String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
-        Distance distance = getMetaDistance(meta);
-
         String text = activity.select(".descrow:not(.privatenote)").first().html();
-        String color = getActivityColor(activity);
+        // TODO fix this
+        if (type.equals("Note")) {
+            LogInfo details = new LogInfo(type);
+            details.setText(text);
+            return details;
+        } else {
+            String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
+            String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
+            Distance distance = getMetaDistance(meta);
 
+            String color = getActivityColor(activity);
 
-        LogInfo details = new LogInfo(type);
-        details.time.set(time);
-        details.intensity.set(intensity);
-        details.distance.set(distance);
-        if (distance != null) {
-            details.pace.set(details.time.get(), distance);
+            LogInfo details = new LogInfo(type);
+            details.time.set(time);
+            details.intensity.set(intensity);
+            details.distance.set(distance);
+            if (distance != null) {
+                details.pace.set(details.time.get(), distance);
+            }
+            details.setText(text);
+            details.color.set(color);
+
+            return details;
         }
-        details.setText(text);
-        details.color.set(color);
-
-        return details;
     }
 
     //splits document into activity entries and strips of confounding elements
     //returns list of LogInfo objects
     public ArrayList<LogInfo> getActivities(Document soup) {
         ArrayList<LogInfo> li = new ArrayList<LogInfo>();
-        Elements activities = soup.getElementsByAttributeValue("class","tlactivity");
+        Elements activities = soup.getElementsByAttributeValue("class", "tlactivity");
         for (Element activity : activities) {
             if (activity.select(".descrowtype1").size() > 0) continue;
             li.add(getActivity(activity));
