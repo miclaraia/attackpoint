@@ -23,8 +23,8 @@ import java.util.ArrayList;
 /**
  * Created by michael on 8/16/15.
  */
-public class apLog {
-    private static final String DEBUG_TAG = "attackpoint.apLog";
+public class NetworkLog {
+    private static final String DEBUG_TAG = "attackpoint.NetworkLog";
     private static final String BASE_URL = "http://www.attackpoint.org";
 
     private static final String TYPE_LOG = "viewlog.jsp";
@@ -35,7 +35,7 @@ public class apLog {
     private Singleton singleton;
     private static CookieManager cookies;
 
-    public apLog(LogAdapter recycler) {
+    public NetworkLog(LogAdapter recycler) {
         this.recycler = recycler;
         this.singleton = Singleton.getInstance();
     }

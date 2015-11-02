@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.network.apLog;
+import com.michael.network.NetworkLog;
 import com.michael.objects.LogInfo;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class LogFragment extends Fragment {
         initializeAdapter();
 
         //TODO should be handled differently
-        apLog log = new apLog(adapter);
+        NetworkLog log = new NetworkLog(adapter);
         Singleton.getInstance().setLogManager(log);
         log.getLog();
 

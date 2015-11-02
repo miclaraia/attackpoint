@@ -6,15 +6,13 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.michael.network.AuthCookie;
 import com.michael.network.MyCookieStore;
-import com.michael.network.apLog;
+import com.michael.network.NetworkLog;
 import com.michael.objects.NavDrawer;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-import java.net.CookieStore;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +28,7 @@ public class Singleton extends Application {
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
     private Map<String, Object> mLoginResponse;
-    private apLog mLogManager;
+    private NetworkLog mLogManager;
 
     @Override
     public void onCreate() {
@@ -98,11 +96,11 @@ public class Singleton extends Application {
         return mDrawer;
     }
 
-    public apLog getLogManager() {
+    public NetworkLog getLogManager() {
         return mLogManager;
     }
 
-    public void setLogManager(apLog logManager) {
+    public void setLogManager(NetworkLog logManager) {
         this.mLogManager = logManager;
     }
 }
