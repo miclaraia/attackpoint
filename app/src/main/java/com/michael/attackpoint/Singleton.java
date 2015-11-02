@@ -7,7 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.michael.network.AuthCookie;
-import com.michael.network.Login;
 import com.michael.network.MyCookieStore;
 import com.michael.network.apLog;
 import com.michael.objects.NavDrawer;
@@ -25,7 +24,6 @@ import java.util.Map;
 public class Singleton extends Application {
     private static final String TAG = "com.michael.Attackpoint.request.";
     private RequestQueue mRequestQueue;
-    private Login mLogin;
     private Preferences mPreferences;
     private Context mContext;
     private NavDrawer mDrawer;
@@ -42,7 +40,6 @@ public class Singleton extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
-        mLogin = new Login();
         mLoginResponse = new HashMap<>();
 
         initCookies();
@@ -69,10 +66,6 @@ public class Singleton extends Application {
     }
 
     public MyCookieStore getCookieStore() { return mCookieStore; }
-
-    public Login getLogin() {
-        return mLogin;
-    }
 
     public void initCookies() {
         mCookieStore = new MyCookieStore();
