@@ -67,37 +67,3 @@ public class LoginRequest extends StringRequest {
         return super.parseNetworkResponse(response);
     }
 }
-
-/**
- * StringRequest postRequest = new StringRequest(Request.Method.POST, url,
- new Response.Listener<String>() {
-@Override
-public void onResponse(String response) {
-try {
-JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
-String site = jsonResponse.getString("site"),
-network = jsonResponse.getString("network");
-System.out.println("Site: "+site+"\nNetwork: "+network);
-} catch (JSONException e) {
-e.printStackTrace();
-}
-}
-},
- new Response.ErrorListener() {
-@Override
-public void onErrorResponse(VolleyError error) {
-error.printStackTrace();
-}
-}
- ) {
-@Override
-protected Map<String, String> getParams()
-{
-Map<String, String>  params = new HashMap<>();
-// the POST parameters:
-params.put("site", "code");
-params.put("network", "tutsplus");
-return params;
-}
-};
- */
