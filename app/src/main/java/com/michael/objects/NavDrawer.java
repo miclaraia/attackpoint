@@ -1,6 +1,7 @@
 package com.michael.objects;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
@@ -152,9 +154,14 @@ public class NavDrawer {
         navMenuItems.add(userFirst, item);
 
         singleton.getPreferences().setUser(item.getName());
-        singleton.getLogManager().getLog();
-        notifyUpdate();
 
+        // TODO spawns log if different fragment currently used?
+        Fragment fragment = singleton.getFragment();
+        if (fragment instanceof LogFragment) {
+            ((LogFragment) fragment).getLog();
+        }
+
+        notifyUpdate();
         drawer.closeDrawer(Gravity.LEFT);
     }
 

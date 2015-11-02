@@ -13,7 +13,7 @@
 
     <color name="dark_accent">#373029</color>
     <color name="dark_background">#303030</color>
-    <color name="dark_darklight">#141414</color>
+    <color name="dark_notification_bar">#3a3a3a</color>
     <color name="dark_highlight">#515151</color>
     <color name="dark_barBackground">#4a4a4a</color>
     <color name="dark_cardview_background">#515151</color>
@@ -27,7 +27,7 @@
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
         <item name="android:colorPrimary">@color/dark_highlight</item>
-        <item name="android:colorPrimaryDark">@color/orange_2</item>
+        <item name="android:colorPrimaryDark">@color/dark_notification_bar</item>
 
         <item name="android:windowBackground">@color/dark_background</item>
         <!--   darker variant for the status bar and contextual app bars -->

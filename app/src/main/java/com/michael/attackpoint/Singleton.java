@@ -1,6 +1,7 @@
 package com.michael.attackpoint;
 
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ public class Singleton extends Application {
     private MyCookieStore mCookieStore;
     private Map<String, Object> mLoginResponse;
     private NetworkLog mLogManager;
+    private Fragment mFragment;
 
     @Override
     public void onCreate() {
@@ -100,7 +102,11 @@ public class Singleton extends Application {
         return mLogManager;
     }
 
-    public void setLogManager(NetworkLog logManager) {
-        this.mLogManager = logManager;
+    public void setFragment(Fragment fragment) {
+        this.mFragment = fragment;
+    }
+
+    public Fragment getFragment() {
+        return mFragment;
     }
 }
