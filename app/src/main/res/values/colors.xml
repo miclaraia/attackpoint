@@ -13,7 +13,7 @@
 
     <color name="dark_accent">#373029</color>
     <color name="dark_background">#303030</color>
-    <color name="dark_notification_bar">#3a3a3a</color>
+    <color name="dark_notification_bar">#414141</color>
     <color name="dark_highlight">#515151</color>
     <color name="dark_barBackground">#4a4a4a</color>
     <color name="dark_cardview_background">#515151</color>
