@@ -17,5 +17,6 @@
     <string name="log_intensity">3</string>
     <string name="log_comments">0 comments</string>
     <string name="log_session">2 AM</string>
+    <string name="title_activity_log_detail">LogDetailActivity</string>
 
 </resources>
