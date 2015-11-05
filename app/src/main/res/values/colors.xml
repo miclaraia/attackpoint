@@ -22,16 +22,4 @@
     <color name="drawer_divider">#4a4a4a</color>
     <color name="drawer_background">@color/dark_background</color>
     <color name="drawer_text">#EEEEEE</color>
-
-    <style name="AppTheme" parent="android:style/Theme.Material">
-        <!-- Main theme colors -->
-        <!--   your app branding color for the app bar -->
-        <item name="android:colorPrimary">@color/dark_highlight</item>
-        <item name="android:colorPrimaryDark">@color/dark_notification_bar</item>
-
-        <item name="android:windowBackground">@color/dark_background</item>
-        <!--   darker variant for the status bar and contextual app bars -->
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">@color/orange_1</item>
-    </style>
 </resources>

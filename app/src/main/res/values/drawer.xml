@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="drawer_close">Attackpoint</string>
+    <string name="drawer_open">Menu</string>
+
     <item type="id" name="item_icon" />
     <item type="id" name="item_text" />
     <item type="id" name="item_remove" />

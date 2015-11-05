@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,7 +32,7 @@ import java.util.List;
  */
 public class NavDrawer {
     private static final String DEBUG_TAG = "NavDrawer";
-    private Activity activity;
+    private AppCompatActivity activity;
     private DrawerAdapter adapter;
     private ListView drawerList;
     private ArrayList<NavDrawerItem> navMenuItems;
@@ -37,17 +40,25 @@ public class NavDrawer {
     private Singleton singleton;
     private MyCookieStore cookieStore;
     private Preferences prefs;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private int userFirst;
     private int userCount;
 
-    public NavDrawer(Activity activity, DrawerLayout drawer,
+    public NavDrawer(AppCompatActivity activity, DrawerLayout drawer,
                      ArrayList<NavDrawerItem> navMenuItems,
                      ListView drawerList) {
         this.activity = activity;
         this.navMenuItems = navMenuItems;
         this.drawerList = drawerList;
         this.drawer = drawer;
+
+        mDrawerToggle = new ActionBarDrawerToggle(activity, drawer,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.setDrawerListener(mDrawerToggle);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerToggle.syncState();
 
         this.singleton = Singleton.getInstance();
         this.cookieStore = singleton.getCookieStore();
