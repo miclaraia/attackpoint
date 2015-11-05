@@ -53,13 +53,14 @@ public class LogInfo {
             setType((String) json.get(JSON_TYPE));
             setText((String) json.get(JSON_TEXT));
 
+            this.time.set((String) json.get(JSON_TIME));
             if(!json.isNull(JSON_DISTANCE)) {
                 Distance d = new Distance((String) json.get(JSON_DISTANCE));
                 distance.set(d);
-                this.pace.calc(this.time.get(), this.distance.get());
+
+                this.pace.set(this.time.get(), this.distance.get());
             }
 
-            this.time.set((String) json.get(JSON_TIME));
             this.intensity.set((int) json.get(JSON_INTENSITY));
             this.color.set((int) json.get(JSON_COLOR));
 
@@ -77,7 +78,8 @@ public class LogInfo {
     }
 
     public void setText(String text) {
-        text = Html.fromHtml(text).toString().replace('\n',' ');
+        // TODO preserve line breaks
+        text = Html.fromHtml(text).toString();
         this.text = text;
         setSnippet(text);
     }
@@ -88,7 +90,7 @@ public class LogInfo {
         if (index > 0) {
             snippet = snippet.substring(0, index);
         }
-        this.snippet = snippet;
+        this.snippet = snippet.replace('\n',' ');
     }
 
     public String toString() {
