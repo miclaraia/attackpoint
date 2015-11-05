@@ -23,6 +23,12 @@ public class Distance {
         this.unit = unit;
     }
 
+    public Distance(String distance) {
+        String[] items = distance.split(" ");
+        this.distance = Float.parseFloat(items[0]);
+        this.unit = items[1];
+    }
+
     public String toString() {
         return Float.toString(distance) + " " + unit;
     }

@@ -4,11 +4,23 @@ import android.graphics.Color;
 import android.text.Html;
 import android.text.format.Time;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by michael on 8/4/15.
  */
 public class LogInfo {
     private static final int SNIPPET_MAX = 50;
+
+    public static final String JSON_TYPE = "type";
+    public static final String JSON_TEXT = "text";
+    public static final String JSON_DISTANCE = "distance";
+    public static final String JSON_UNIT = "unit";
+    public static final String JSON_TIME = "time";
+    public static final String JSON_PACE = "pace";
+    public static final String JSON_INTENSITY = "intensity";
+    public static final String JSON_COLOR = "color";
 
     public String type;
     public String text;
@@ -22,6 +34,10 @@ public class LogInfo {
     public Distances distance = new Distances();
     public Colors color = new Colors();
 
+    public LogInfo() {
+
+    }
+
     public LogInfo(String text, String type, String distance, String unit, String time) {
         this.text = text;
         this.type = type;
@@ -30,17 +46,38 @@ public class LogInfo {
         this.time.set(time);
 
         this.pace.set(this.time.get(), this.distance.get());
-    }
+    };
+    public LogInfo(String jsonString) {
+        try {
+            JSONObject json = new JSONObject(jsonString);
+            setType((String) json.get(JSON_TYPE));
+            setText((String) json.get(JSON_TEXT));
 
-    public LogInfo(String type) {
-        this.type = type;
+            if(!json.isNull(JSON_DISTANCE)) {
+                Distance d = new Distance((String) json.get(JSON_DISTANCE));
+                distance.set(d);
+                this.pace.calc(this.time.get(), this.distance.get());
+            }
+
+            this.time.set((String) json.get(JSON_TIME));
+            this.intensity.set((int) json.get(JSON_INTENSITY));
+            this.color.set((int) json.get(JSON_COLOR));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public Strings strings() {
         return new Strings(this);
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setText(String text) {
+        text = Html.fromHtml(text).toString().replace('\n',' ');
         this.text = text;
         setSnippet(text);
     }
@@ -51,7 +88,24 @@ public class LogInfo {
         if (index > 0) {
             snippet = snippet.substring(0, index);
         }
-        this.snippet = Html.fromHtml(snippet).toString().replace('\n',' ');
+        this.snippet = snippet;
+    }
+
+    public String toString() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(JSON_TYPE, this.type);
+            json.put(JSON_TEXT, this.text);
+            json.put(JSON_TIME, this.time.toString());
+            json.put(JSON_DISTANCE, this.distance.toString());
+            json.put(JSON_INTENSITY, this.intensity.get());
+            json.put(JSON_COLOR, this.color.get());
+
+            return json.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public class Distances {
@@ -220,6 +274,10 @@ public class LogInfo {
 
         public void set(String color) {
             this.color = Color.parseColor(color);
+        }
+
+        public void set(int color) {
+            this.color = color;
         }
 
         public int get() {

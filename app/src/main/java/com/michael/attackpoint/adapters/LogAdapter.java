@@ -1,5 +1,8 @@
 package com.michael.attackpoint.adapters;
 
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOverlay;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.michael.attackpoint.LogDetailActivity;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.objects.LogInfo;
@@ -21,10 +26,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     private static final String DEBUG_TAG = "attackpoint.LogAdapter";
 
     private List<LogInfo> logInfoList;
+    private Fragment fragment;
     private LogViewHolder logViewHolder;
 
-    public LogAdapter(List<LogInfo> logInfoList) {
+    public LogAdapter(Fragment fragment, List<LogInfo> logInfoList) {
         this.logInfoList = logInfoList;
+        this.fragment = fragment;
     }
 
     public void updateList(List<LogInfo> update) {
@@ -68,16 +75,22 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
         // TODO proper animation for click
         //Attach click listener to each card and define click behavior
+        logViewHolder.vCard.setTag(i);
         logViewHolder.vCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "card clicked", Toast.LENGTH_SHORT).show();
                 ViewOverlay mask = v.getOverlay();
                 int h = v.getHeight();
                 int w = v.getWidth();
                 ColorDrawable overlay = new ColorDrawable(Color.parseColor("#AAFFFFFF"));
-                overlay.setBounds(0,h,w,0);
+                overlay.setBounds(0, h, w, 0);
                 mask.add(overlay);
+
+                Intent intent = new Intent(fragment.getActivity(), LogDetailActivity.class);
+                LogInfo loginfo = logInfoList.get((int) v.getTag());
+                intent.putExtra(LogDetailActivity.DETAILS, loginfo.toString());
+                fragment.startActivity(intent);
+
             }
         });
     }
@@ -97,16 +110,16 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     }
 
     public static class LogViewHolder extends RecyclerView.ViewHolder {
-        protected TextView vTitle;
-        protected View vColor;
-        protected TextView vText;
-        protected TextView vTime;
-        protected TextView vDist;
-        protected TextView vPace;
-        protected TextView vSession;
-        protected TextView vComments;
+        public TextView vTitle;
+        public View vColor;
+        public TextView vText;
+        public TextView vTime;
+        public TextView vDist;
+        public TextView vPace;
+        public TextView vSession;
+        public TextView vComments;
 
-        protected FrameLayout vCard;
+        public FrameLayout vCard;
 
         public LogViewHolder(View v) {
             super(v);

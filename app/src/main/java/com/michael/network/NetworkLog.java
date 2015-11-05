@@ -81,7 +81,8 @@ public class NetworkLog extends Request<List<LogInfo>> {
         String text = activity.select(".descrow:not(.privatenote)").first().html();
         // TODO fix this
         if (type.equals("Note")) {
-            LogInfo details = new LogInfo(type);
+            LogInfo details = new LogInfo();
+            details.setType(type);
             details.setText(text);
             return details;
         } else {
@@ -91,7 +92,8 @@ public class NetworkLog extends Request<List<LogInfo>> {
 
             String color = getActivityColor(activity);
 
-            LogInfo details = new LogInfo(type);
+            LogInfo details = new LogInfo();
+            details.setType(type);
             details.time.set(time);
             details.intensity.set(intensity);
             details.distance.set(distance);

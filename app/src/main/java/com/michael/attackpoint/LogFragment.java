@@ -66,7 +66,7 @@ public class LogFragment extends Fragment {
     }
 
     private void initializeAdapter() {
-        adapter = new LogAdapter(logInfoList);
+        adapter = new LogAdapter(this ,logInfoList);
         adapter.notifyDataSetChanged();
         recList.setAdapter(adapter);
     }
