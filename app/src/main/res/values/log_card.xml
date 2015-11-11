@@ -3,6 +3,7 @@
     
     <item type="id" name="log_item" />
     <item type="id" name="log_text" />
+	<item type="id" name="log_date" />
     <item type="id" name="logInfo" />
     <item type="id" name="logInfo_top" />
     <item type="id" name="logInfo_bottom" />
@@ -18,6 +19,7 @@
 	<dimen name="logCard_metaSize">14sp</dimen>
 	<dimen name="logCard_titleSize">18dp</dimen>
 	<dimen name="logCard_textSize">14sp</dimen>
+	<dimen name="logCard_dateSize">14dp</dimen>
 
     <dimen name="logCard_colorWidth">40dp</dimen>
     

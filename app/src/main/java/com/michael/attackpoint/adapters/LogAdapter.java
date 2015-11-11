@@ -55,7 +55,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
         //Sets title and its colors
         logViewHolder.vTitle.setText(li.type);
-        //logViewHolder.vTitle.setTextColor(li.contrast);
+        logViewHolder.vDate.setText(li.date);
         logViewHolder.vColor.setBackgroundColor(li.color);
         //logViewHolder.vColor.setBackgroundColor(li.color);
 
@@ -113,6 +113,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         public TextView vTitle;
         public View vColor;
         public TextView vText;
+        public TextView vDate;
         public TextView vTime;
         public TextView vDist;
         public TextView vPace;
@@ -126,6 +127,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             vTitle = (TextView) v.findViewById(R.id.log_type);
             vColor = v.findViewById(R.id.log_color);
             vText =  (TextView) v.findViewById(R.id.log_text);
+            vDate = (TextView) v.findViewById(R.id.log_date);
             vTime = (TextView)  v.findViewById(R.id.log_time);
             vDist = (TextView) v.findViewById(R.id.log_distance);
             vPace = (TextView) v.findViewById(R.id.log_pace);

@@ -111,11 +111,20 @@ public class NetworkLog extends Request<List<LogInfo>> {
     //returns list of LogInfo objects
     public ArrayList<LogInfo> getActivities(Document soup) {
         ArrayList<LogInfo> li = new ArrayList<LogInfo>();
-        Elements activities = soup.getElementsByAttributeValue("class", "tlactivity");
-        for (Element activity : activities) {
-            if (activity.select(".descrowtype1").size() > 0) continue;
-            li.add(getActivity(activity));
+        Elements days = soup.getElementsByAttributeValue("class", "tlday");
+
+        for (Element day : days) {
+            String date = day.getElementsByTag("h3").first().text();
+
+            Elements activities = day.getElementsByAttributeValue("class", "tlactivity");
+            for (Element activity : activities) {
+                if (activity.select(".descrowtype1").size() > 0) continue;
+                LogInfo info = getActivity(activity);
+                info.setDate(date);
+                li.add(info);
+            }
         }
+
         return li;
     }
 

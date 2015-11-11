@@ -48,6 +48,21 @@
                 android:textStyle="bold"
                 android:text="@string/log_type" />
 
+            <TextView
+                android:id="@id/log_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/logType_marginV"
+                android:layout_marginTop="@dimen/logType_marginV"
+                android:layout_marginLeft="@dimen/logType_marginH"
+                android:layout_marginRight="@dimen/logType_marginH"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/logCard_dateSize"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:text="Wed Nov 10" />
+
             <!--View
                 android:id="@id/log_color"
                 android:layout_width="@dimen/logCard_colorWidth"

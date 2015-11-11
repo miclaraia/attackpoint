@@ -15,6 +15,7 @@ public class LogInfo {
 
     public static final String JSON_TYPE = "type";
     public static final String JSON_TEXT = "text";
+    public static final String JSON_DATE = "date";
     public static final String JSON_DISTANCE = "distance";
     public static final String JSON_UNIT = "unit";
     public static final String JSON_TIME = "time";
@@ -28,19 +29,26 @@ public class LogInfo {
     public String comments;
     public String session;
 
-    public Times time = new Times();
-    public Paces pace = new Paces();
-    public Intensities intensity = new Intensities();
-    public Distances distance = new Distances();
-    public Colors color = new Colors();
+    public Date date;
+    public Times time;
+    public Paces pace;
+    public Intensities intensity;
+    public Distances distance;
+    public Colors color;
 
     public LogInfo() {
-
+        date = new Date();
+        time = new Times();
+        pace = new Paces();
+        intensity = new Intensities();
+        distance = new Distances();
+        color = new Colors();
     }
 
-    public LogInfo(String text, String type, String distance, String unit, String time) {
+    public LogInfo(String text, String date, String type, String distance, String unit, String time) {
         this.text = text;
         this.type = type;
+        this.date = new Date(date);
 
         this.distance.set(distance, unit);
         this.time.set(time);
@@ -52,6 +60,7 @@ public class LogInfo {
             JSONObject json = new JSONObject(jsonString);
             setType((String) json.get(JSON_TYPE));
             setText((String) json.get(JSON_TEXT));
+            setDate((String) json.get(JSON_DATE));
 
             this.time.set((String) json.get(JSON_TIME));
             if(!json.isNull(JSON_DISTANCE)) {
@@ -77,6 +86,10 @@ public class LogInfo {
         this.type = type;
     }
 
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
     public void setText(String text) {
         // TODO preserve line breaks
         text = Html.fromHtml(text).toString();
@@ -98,6 +111,7 @@ public class LogInfo {
         try {
             json.put(JSON_TYPE, this.type);
             json.put(JSON_TEXT, this.text);
+            json.put(JSON_DATE, this.date.toString());
             json.put(JSON_TIME, this.time.toString());
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.intensity.get());
@@ -309,6 +323,7 @@ public class LogInfo {
         public int contrast;
         public String snippet;
         public String type;
+        public String date;
         public String distance;
         public String pace;
         public String time;
@@ -322,6 +337,7 @@ public class LogInfo {
             this.contrast = li.color.getContrast();
             this.snippet = li.snippet;
             this.type = li.type;
+            this.date = li.date.toString();
             this.distance = li.distance.toString();
             this.pace = li.pace.toString();
             this.time = li.time.toString();
