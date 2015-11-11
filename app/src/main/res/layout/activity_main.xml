@@ -26,8 +26,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@color/drawer_divider"
+        android:divider="@color/dark_colorPrimaryDark"
         android:dividerHeight="3dp"
-        android:background="@color/drawer_background"
+        android:background="@color/dark_window_background"
         android:listSelector="@drawable/ripple_rectangle" />
 </android.support.v4.widget.DrawerLayout>
