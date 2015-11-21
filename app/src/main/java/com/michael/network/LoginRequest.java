@@ -6,6 +6,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
@@ -16,20 +17,20 @@ import java.util.Map;
 /**
  * Created by michael on 10/26/15.
  */
-public class LoginRequest extends StringRequest {
+public class LoginRequest extends Request<String> {
     private static final String DEBUG_TAG = "attackpoint.Login";
     private static final String URL = "http://www.attackpoint.org/dologin.jsp";
     private static final String RETURL = "http://www.attackpoint.org";
+
     private Map<String, String> mParams;
     private Response.Listener mListener;
-    private String user;
     private String oldUser;
     private Singleton singleton;
 
     public LoginRequest(String user, String pass,
                         Response.Listener<String> listener,
                         Response.ErrorListener errorListener) {
-        super(Request.Method.POST, URL, listener, errorListener);
+        super(Request.Method.POST, URL, errorListener);
         mListener = listener;
         mParams = new HashMap<String, String>();
         mParams.put("username", user);
@@ -51,19 +52,21 @@ public class LoginRequest extends StringRequest {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         String username = mParams.get("username");
-        Map<String, Object> loginResponse = new HashMap<>();
+
         if (singleton.getCookieStore().checkValid(username)) {
             Log.d(DEBUG_TAG, "login successfull");
-            loginResponse.put("success", true);
-            loginResponse.put("username", username);
+            return Response.success(username, HttpHeaderParser.parseCacheHeaders(response));
         } else {
             Log.d(DEBUG_TAG, "login unsuccessful");
+
             singleton.getPreferences().setUser(oldUser);
             singleton.getCookieStore().removeUser(username);
-            loginResponse.put("success", false);
+            return Response.error(new AuthFailureError("Login unsuccessfull"));
         }
-        singleton.setLoginResponse(loginResponse);
+    }
 
-        return super.parseNetworkResponse(response);
+    @Override
+    protected void deliverResponse(String s) {
+        mListener.onResponse(s);
     }
 }

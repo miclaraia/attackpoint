@@ -182,8 +182,8 @@ public class NavDrawer {
     public void addUser(String name) {
         NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
         navMenuItems.add(userFirst, item);
-        notifyUpdate();
         singleton.getPreferences().setUser(name);
+        setUser(userFirst);
     }
 
     public void removeUser(NavDrawerItem item) throws UserException {
