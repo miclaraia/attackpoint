@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
@@ -21,6 +23,7 @@ import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.adapters.DrawerAdapter;
 import com.michael.attackpoint.dialogs.LoginActivity;
+import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
 
 import java.net.CookieHandler;
@@ -247,6 +250,24 @@ public class NavDrawer {
                     break;
                 case "Check Cookies":
                     Log.d(DEBUG_TAG, cookieStore.getAllCookies());
+                    break;
+                case "Check Favorites":
+                    Log.d(DEBUG_TAG, "Checking favorites");
+                    FavoriteUsersRequest request = new FavoriteUsersRequest(
+                            new Response.Listener<List<User>>() {
+                                @Override
+                                public void onResponse(List<User> users) {
+                                    Log.d(DEBUG_TAG, "God response");
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    System.out.println("Something went wrong!");
+                                    volleyError.printStackTrace();
+                                }
+                            }
+                    );
+                    singleton.add(request);
 
             }
         }

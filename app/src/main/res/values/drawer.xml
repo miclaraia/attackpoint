@@ -13,6 +13,7 @@
         <item >Log</item>
         <item >Add Training</item>
         <item>Check Cookies</item>
+        <item>Check Favorites</item>
         <item >Add User</item>
     </string-array>
 
@@ -25,9 +26,11 @@
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
+        <item>@drawable/ic_log</item>
     </array>
 
     <array name="nav_drawer_groups">
+        <item>Attackpoint</item>
         <item>Attackpoint</item>
         <item>Attackpoint</item>
         <item>Attackpoint</item>
@@ -35,6 +38,7 @@
     </array>
 
     <array name="nav_drawer_action">
+        <item>general</item>
         <item>general</item>
         <item>general</item>
         <item>general</item>

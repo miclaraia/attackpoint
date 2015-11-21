@@ -37,12 +37,7 @@ public class LogInfo {
     public Colors color;
 
     public LogInfo() {
-        date = new Date();
-        time = new Times();
-        pace = new Paces();
-        intensity = new Intensities();
-        distance = new Distances();
-        color = new Colors();
+        init();
     }
 
     public LogInfo(String text, String date, String type, String distance, String unit, String time) {
@@ -56,6 +51,7 @@ public class LogInfo {
         this.pace.set(this.time.get(), this.distance.get());
     };
     public LogInfo(String jsonString) {
+        init();
         try {
             JSONObject json = new JSONObject(jsonString);
             setType((String) json.get(JSON_TYPE));
@@ -76,6 +72,15 @@ public class LogInfo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void init() {
+        date = new Date();
+        time = new Times();
+        pace = new Paces();
+        intensity = new Intensities();
+        distance = new Distances();
+        color = new Colors();
     }
 
     public Strings strings() {

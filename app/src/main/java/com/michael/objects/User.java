@@ -16,6 +16,8 @@ public class User {
     public User(String username, int id) {
         this.username = username;
         this.id = id;
+
+        // TODO add function to query attackpoint for remaining info
     }
 
     public User(String username, String id) {

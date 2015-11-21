@@ -26,12 +26,22 @@ public class Date {
 
     public void set(String logDate) {
         cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(LOG_FORMAT);
-        try {
-            java.util.Date date = sdf.parse(logDate);
-            cal.setTime(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (logDate.contains("#")) {
+            SimpleDateFormat sdf = new SimpleDateFormat(LOG_FORMAT);
+            try {
+                java.util.Date date = sdf.parse(logDate);
+                cal.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            try {
+                java.util.Date date = sdf.parse(logDate);
+                cal.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
