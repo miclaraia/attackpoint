@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class NavGroupGeneral extends NavDrawerGroup {
     private static final String DEBUG_TAG = "NavGeneral";
-    private static final String GROUP_NAME = "general";
+    private static final String GROUP_NAME = "General";
 
     private Singleton mSingleton;
     private MyCookieStore mCookieStore;

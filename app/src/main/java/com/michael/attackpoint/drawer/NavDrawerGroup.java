@@ -55,14 +55,14 @@ public abstract class NavDrawerGroup {
     }
 
     public void check() {
-        String group = mHeader.getGroup();
+        String group = mHeader.getName();
         for (NavDrawerItem item : mNavItems) {
             item.setGroup(group);
         }
     }
 
     public String name() {
-        return mHeader.getGroup();
+        return mHeader.getName();
     }
 
     public List<NavDrawerItem> getAll() {
