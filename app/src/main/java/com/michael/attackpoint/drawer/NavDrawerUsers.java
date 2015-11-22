@@ -58,6 +58,8 @@ public class NavDrawerUsers extends NavDrawerGroup {
         mSingleton = Singleton.getInstance();
         mCookieStore = mSingleton.getCookieStore();
         mPreferences = mSingleton.getPreferences();
+        mHeader = new NavDrawerItem(GROUP_NAME, NavDrawerItem.TYPE_SEPERATOR);
+        mHeader.setGroup(GROUP_NAME);
     }
 
     public int findUser(String user) {

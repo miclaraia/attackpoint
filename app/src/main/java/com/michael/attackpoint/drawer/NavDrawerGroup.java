@@ -27,8 +27,6 @@ public abstract class NavDrawerGroup {
     public NavDrawerGroup(AppCompatActivity activity) {
         mNavItems = new ArrayList<>();
         mActivity = activity;
-        mHeader = new NavDrawerItem(GROUP_NAME, NavDrawerItem.TYPE_SEPERATOR);
-        mHeader.setGroup(GROUP_NAME);
         loadItems();
     }
 
@@ -68,6 +66,7 @@ public abstract class NavDrawerGroup {
     }
 
     public List<NavDrawerItem> getAll() {
+        check();
         List<NavDrawerItem> items = new ArrayList<>();
         items.add(mHeader);
         items.addAll(1, mNavItems);

@@ -28,7 +28,6 @@ public class NavDrawerItem {
         this.name = name;
         this.type = type;
         if (type == TYPE_USER) {
-            this.group = "Account";
             this.icon = R.drawable.ic_person;
         }
     }
