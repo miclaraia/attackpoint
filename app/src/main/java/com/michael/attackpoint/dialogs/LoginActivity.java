@@ -54,7 +54,7 @@ public class LoginActivity extends ActionBarActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                singleton.getDrawer().addUser(response);
+                                //singleton.getDrawer().getGroup("user").addUser(response);
                             }
                         }, new Response.ErrorListener() {
                     @Override

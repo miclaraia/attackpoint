@@ -113,7 +113,7 @@ public class DrawerAdapter extends BaseAdapter {
         }
 
         viewHolder.labelView.setText(item.getName());
-        viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
+        /*viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -122,7 +122,7 @@ public class DrawerAdapter extends BaseAdapter {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
         //convertView.setOnClickListener(new ItemClickListener(item));
 
