@@ -1,10 +1,8 @@
-package com.michael.objects;
+package com.michael.attackpoint.drawer;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,8 +22,8 @@ import com.michael.attackpoint.adapters.DrawerAdapter;
 import com.michael.attackpoint.dialogs.LoginActivity;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
+import com.michael.objects.User;
 
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 

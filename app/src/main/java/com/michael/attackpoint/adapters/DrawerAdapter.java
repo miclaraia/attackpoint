@@ -1,25 +1,17 @@
 package com.michael.attackpoint.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
-import com.michael.objects.NavDrawer;
-import com.michael.objects.NavDrawerItem;
-
-import org.jsoup.Connection;
+import com.michael.attackpoint.drawer.NavDrawer;
+import com.michael.attackpoint.drawer.NavDrawerItem;
 
 import java.util.ArrayList;
 
