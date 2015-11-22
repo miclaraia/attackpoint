@@ -49,7 +49,6 @@ public class NavGroupGeneral extends NavDrawerGroup {
         ar.recycle();
 
         mNavItems = new ArrayList<>();
-        mHeader = new NavDrawerItem(GROUP_NAME, NavDrawerItem.TYPE_SEPERATOR);
 
         for (int i = 0; i < navNames.length; i++) {
             NavDrawerItem item = new NavDrawerItem(navNames[i],

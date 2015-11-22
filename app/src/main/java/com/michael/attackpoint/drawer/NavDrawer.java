@@ -66,6 +66,7 @@ public class NavDrawer {
         drawerList.setOnItemClickListener(l);
 
         mNavGroups.add(new NavGroupGeneral(mActivity));
+        mNavGroups.add(new NavDrawerUsers(mActivity));
         notifyUpdate();
     }
 
