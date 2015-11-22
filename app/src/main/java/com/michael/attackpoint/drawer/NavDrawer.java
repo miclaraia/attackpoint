@@ -32,26 +32,25 @@ import java.util.List;
  */
 public class NavDrawer {
     private static final String DEBUG_TAG = "NavDrawer";
-    private AppCompatActivity activity;
-    private DrawerAdapter adapter;
-    private ListView drawerList;
-    private ArrayList<NavDrawerItem> navMenuItems;
-    private DrawerLayout drawer;
-    private Singleton singleton;
-    private MyCookieStore cookieStore;
-    private Preferences prefs;
+
+    private AppCompatActivity mActivity;
+    private DrawerAdapter mAdapter;
+    private ListView mDrawerList;
+    private DrawerLayout mDrawer;
+
+    private ArrayList<NavDrawerGroup> mNavGroups;
+    private ArrayList<NavDrawerItem> mNavItems;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private int userFirst;
-    private int userCount;
+    //private int userFirst;
+    //private int userCount;
 
     public NavDrawer(AppCompatActivity activity, DrawerLayout drawer,
-                     ArrayList<NavDrawerItem> navMenuItems,
                      ListView drawerList) {
-        this.activity = activity;
-        this.navMenuItems = navMenuItems;
-        this.drawerList = drawerList;
-        this.drawer = drawer;
+        mActivity = activity;
+        mDrawerList = drawerList;
+        mDrawer = drawer;
 
         mDrawerToggle = new ActionBarDrawerToggle(activity, drawer,
                 R.string.drawer_open, R.string.drawer_close);
@@ -60,61 +59,63 @@ public class NavDrawer {
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
 
-        this.singleton = Singleton.getInstance();
-        this.cookieStore = singleton.getCookieStore();
-        this.prefs = singleton.getPreferences();
-
-        this.userFirst = getFirstUser();
-        this.userCount = initUsers();
-
-        this.adapter = new DrawerAdapter(activity, navMenuItems);
-        this.drawerList.setAdapter(adapter);
+        mNavGroups = new ArrayList<>();
+        mNavItems = new ArrayList<>();
 
         DrawerClickListener l = new DrawerClickListener();
         drawerList.setOnItemClickListener(l);
-    }
 
-    private int getFirstUser() {
-        for (int i = 0; i < navMenuItems.size(); i++) {
-            String g = navMenuItems.get(i).getGroup();
-            if (g != null && g.equals("Account")) {
-                return i;
-            }
-        }
-        return navMenuItems.size();
-    }
-
-    private int countUsers() {
-        int count = -1;
-        for (int i = userFirst; i < navMenuItems.size(); i++) {
-            if (navMenuItems.get(i).getGroup().equals("Account")) count++;
-        }
-        return count;
-    }
-
-    private int initUsers() {
-        List<String> users = cookieStore.getAllUsers();
-        List<NavDrawerItem> userItems = new ArrayList<>();
-        int count = users.size();
-        if (count > 0) {
-            for (String user : users) {
-                NavDrawerItem item = new NavDrawerItem(user, NavDrawerItem.TYPE_USER);
-                userItems.add(item);
-            }
-            navMenuItems.addAll(userFirst, userItems);
-
-            String currentUser = prefs.getUser();
-            if (currentUser != "") {
-                int index = findUser(currentUser);
-                NavDrawerItem item = navMenuItems.get(index);
-                navMenuItems.remove(index);
-                navMenuItems.add(userFirst, item);
-            }
-        }
-        return count;
+        mNavGroups.add(new NavGroupGeneral(mActivity));
+        notifyUpdate();
     }
 
     public void notifyUpdate() {
+        ArrayList<NavDrawerItem> navItems = new ArrayList<>();
+        for (NavDrawerGroup group : mNavGroups) {
+            navItems.addAll(navItems.size(), group.getAll());
+        }
+        mNavItems = navItems;
+
+        mAdapter = new DrawerAdapter(mActivity, navItems);
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    public void addGroup(NavDrawerGroup group) {
+        mNavGroups.add(group);
+    }
+
+    public void addGroup(int position, NavDrawerGroup group) {
+        mNavGroups.add(position, group);
+    }
+
+    public int findGroup(String name) {
+        for (int i = 0; i < mNavGroups.size(); i++) {
+            if (name.equals(mNavGroups.get(i).name())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public NavDrawerGroup getGroup(String name) {
+        int position = findGroup(name);
+        if (position < 0) return null;
+        return mNavGroups.get(position);
+    }
+
+
+    public void removeGroup(String name) {
+        int position = findGroup(name);
+        if (position >= 0) {
+            mNavGroups.remove(position);
+        }
+    }
+
+    public void removeGroup(NavDrawerGroup group) {
+        mNavGroups.remove(group);
+    }
+
+    /*public void notifyUpdate() {
         boolean bUserFirst = false;
 
         for (int i = 0; i < navMenuItems.size(); i++) {
@@ -133,100 +134,35 @@ public class NavDrawer {
 
         adapter = new DrawerAdapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
-    }
 
-    public int findUser(String user) {
-        for (int i = userFirst; i < navMenuItems.size(); i++) {
-            NavDrawerItem item = navMenuItems.get(i);
-            if (item.getName().equals(user)) return i;
-        }
-        return -1;
-    }
 
-    public int findUser(NavDrawerItem item) {
-        for (int i = userFirst; i < navMenuItems.size(); i++) {
-            if (navMenuItems.get(i).equals(item)) return i;
-        }
-        return -1;
-    }
-
-    public void setUser(String user) throws UserException {
-        int index = findUser(user);
-        if (index < 0) {
-            throw new UserException("Error finding user");
-        } else {
-            setUser(index);
-        }
-    }
-
-    public void setUser(int index) {
-        NavDrawerItem item = navMenuItems.get(index);
-        navMenuItems.remove(index);
-        navMenuItems.add(userFirst, item);
-
-        singleton.getPreferences().setUser(item.getName());
-
-        // TODO spawns log if different fragment currently used?
-        Fragment fragment = singleton.getFragment();
-        if (fragment instanceof LogFragment) {
-            ((LogFragment) fragment).getLog();
-        }
-
-        notifyUpdate();
-        drawer.closeDrawer(Gravity.LEFT);
-    }
-
-    public void addUser(String name) {
-        NavDrawerItem item = new NavDrawerItem(name, NavDrawerItem.TYPE_USER);
-        navMenuItems.add(userFirst, item);
-        singleton.getPreferences().setUser(name);
-        setUser(userFirst);
-    }
-
-    public void removeUser(NavDrawerItem item) throws UserException {
-        String user = singleton.getPreferences().getUser();
-        int index = findUser(item);
-
-        cookieStore.removeUser(item.getName());
-        navMenuItems.remove(index);
-        notifyUpdate();
-        drawer.closeDrawer(Gravity.LEFT);
-
-        if (user.equals(item.getName())) {
-            setUser(userFirst);
-        }
-    }
-
-    public class UserException extends Exception {
-        public UserException(String message) {
-            super(message);
-        }
-
-        public UserException(String message, Throwable throwable) {
-            super(message, throwable);
-        }
-    }
+    }*/
 
     public class DrawerClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             view.getTag(R.id.drawer_info);
-            Log.d(DEBUG_TAG, navMenuItems.get(position).getName());
-            NavDrawerItem item = navMenuItems.get(position);
-            if (item.getType() == NavDrawerItem.TYPE_REGULAR) {
-                drawer.closeDrawer(Gravity.LEFT);
-                switch (item.getAction()) {
+            Log.d(DEBUG_TAG, mNavItems.get(position).getName());
+
+            NavDrawerItem item = mNavItems.get(position);
+            String group = item.getGroup();
+
+            if (true || item.getType() == NavDrawerItem.TYPE_REGULAR) {
+                mDrawer.closeDrawer(Gravity.LEFT);
+
+                getGroup(group).action(item);
+                /*switch (item.getAction()) {
                     case "account":
                         actionAccount(item);
                         break;
                     case "general":
                         actionGeneral(item);
                         break;
-                }
-            } else if (item.getType() == NavDrawerItem.TYPE_USER) actionUser(item);
+                }*/
+            } //else if (item.getType() == NavDrawerItem.TYPE_USER) actionUser(item);
         }
 
-        private void actionAccount(NavDrawerItem item) {
+        /*private void actionAccount(NavDrawerItem item) {
             switch (item.getName()) {
                 case "Add User":
                     Log.i(DEBUG_TAG, "Login pressed");
@@ -236,36 +172,6 @@ public class NavDrawer {
                     Log.i(DEBUG_TAG, "Logout pressed");
                     //activity.logout();
                     break;
-            }
-        }
-
-        private void actionGeneral(NavDrawerItem item) {
-            switch (item.getName()) {
-                case "Add Training":
-                    Intent intent = new Intent(activity, TrainingActivity.class);
-                    activity.startActivity(intent);
-                    break;
-                case "Check Cookies":
-                    Log.d(DEBUG_TAG, cookieStore.getAllCookies());
-                    break;
-                case "Check Favorites":
-                    Log.d(DEBUG_TAG, "Checking favorites");
-                    FavoriteUsersRequest request = new FavoriteUsersRequest(
-                            new Response.Listener<List<User>>() {
-                                @Override
-                                public void onResponse(List<User> users) {
-                                    Log.d(DEBUG_TAG, "God response");
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    System.out.println("Something went wrong!");
-                                    volleyError.printStackTrace();
-                                }
-                            }
-                    );
-                    singleton.add(request);
-
             }
         }
 
@@ -280,7 +186,7 @@ public class NavDrawer {
         private void login() {
             Intent intent = new Intent(activity, LoginActivity.class);
             activity.startActivity(intent);
-        }
+        }*/
     }
 
 }

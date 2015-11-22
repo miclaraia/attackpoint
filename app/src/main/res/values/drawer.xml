@@ -9,40 +9,20 @@
     <item type="id" name="item_seperator" />
 
     <!-- Nav Drawer Menu Items -->
-    <string-array name="nav_drawer_names">
+    <string-array name="nav_general_names">
         <item >Log</item>
         <item >Add Training</item>
         <item>Check Cookies</item>
         <item>Check Favorites</item>
-        <item >Add User</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
-    <array name="nav_drawer_icons">
+    <array name="nav_general_icons">
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_person</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
-        <item>@drawable/ic_log</item>
-        <item>@drawable/ic_log</item>
-        <item>@drawable/ic_log</item>
-    </array>
-
-    <array name="nav_drawer_groups">
-        <item>Attackpoint</item>
-        <item>Attackpoint</item>
-        <item>Attackpoint</item>
-        <item>Attackpoint</item>
-        <item>Account</item>
-    </array>
-
-    <array name="nav_drawer_action">
-        <item>general</item>
-        <item>general</item>
-        <item>general</item>
-        <item>general</item>
-        <item>account</item>
     </array>
 
 

@@ -15,15 +15,13 @@ public class NavDrawerItem {
     public int type;
     public int icon;
     public String group;
-    public String action;
 
 
-    public NavDrawerItem(String name, String group, int icon, String action) {
+    public NavDrawerItem(String name, String group, int icon) {
         this.name = name;
         this.type = TYPE_REGULAR;
         this.group = group;
         this.icon = icon;
-        this.action = action;
     }
 
     public NavDrawerItem(String name, int type) {
@@ -31,7 +29,6 @@ public class NavDrawerItem {
         this.type = type;
         if (type == TYPE_USER) {
             this.group = "Account";
-            this.action = "user";
             this.icon = R.drawable.ic_person;
         }
     }
@@ -52,9 +49,6 @@ public class NavDrawerItem {
         this.icon = icon;
     }
 
-    public void setAction(String action) {
-        this.action = action;
-    }
 
     public String getName() {
         return name;
@@ -72,7 +66,4 @@ public class NavDrawerItem {
         return this.icon;
     }
 
-    public String getAction() {
-        return this.action;
-    }
 }
