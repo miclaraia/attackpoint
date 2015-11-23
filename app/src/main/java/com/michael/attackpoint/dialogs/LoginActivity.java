@@ -1,5 +1,7 @@
 package com.michael.attackpoint.dialogs;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.drawer.NavDrawer;
+import com.michael.attackpoint.drawer.NavDrawerUsers;
 import com.michael.network.LoginRequest;
 import com.michael.objects.LogInfo;
 
@@ -24,6 +28,7 @@ import java.util.Map;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
+    public static final String USERNAME = "username";
     private EditText username;
     private EditText password;
     private Singleton singleton;
@@ -53,8 +58,8 @@ public class LoginActivity extends ActionBarActivity {
                 LoginRequest request = new LoginRequest(u, p,
                         new Response.Listener<String>() {
                             @Override
-                            public void onResponse(String response) {
-                                //singleton.getDrawer().getGroup("user").addUser(response);
+                            public void onResponse(String username) {
+                                singleton.getUserGroup().addUser(username);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -90,5 +95,25 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void resultOK(String user) {
+        Intent intent = getIntent();
+        intent.putExtra(USERNAME, user);
+        if (getParent() == null) {
+            setResult(Activity.RESULT_OK, intent);
+        } else {
+            getParent().setResult(Activity.RESULT_OK, intent);
+        }
+        finish();
+    }
+
+    public void resultCancel() {
+        if (getParent() == null) {
+            setResult(Activity.RESULT_CANCELED);
+        } else {
+            getParent().setResult(Activity.RESULT_CANCELED);
+        }
+        finish();
     }
 }

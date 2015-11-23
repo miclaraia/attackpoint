@@ -29,8 +29,8 @@ public class NavGroupGeneral extends NavDrawerGroup {
     private MyCookieStore mCookieStore;
     private Preferences mPreferences;
 
-    public NavGroupGeneral(AppCompatActivity activity) {
-        super(activity);
+    public NavGroupGeneral(NavDrawer drawer, AppCompatActivity activity) {
+        super(drawer, activity);
         mSingleton = Singleton.getInstance();
         mCookieStore = mSingleton.getCookieStore();
         mPreferences = mSingleton.getPreferences();

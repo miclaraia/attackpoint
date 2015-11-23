@@ -23,9 +23,11 @@ public abstract class NavDrawerGroup {
     protected NavDrawerItem mHeader;
 
     protected AppCompatActivity mActivity;
+    protected NavDrawer mNavDrawer;
 
-    public NavDrawerGroup(AppCompatActivity activity) {
+    public NavDrawerGroup(NavDrawer drawer, AppCompatActivity activity) {
         mNavItems = new ArrayList<>();
+        mNavDrawer = drawer;
         mActivity = activity;
         loadItems();
     }

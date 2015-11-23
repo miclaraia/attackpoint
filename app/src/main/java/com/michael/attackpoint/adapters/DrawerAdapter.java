@@ -12,6 +12,7 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.drawer.NavDrawer;
 import com.michael.attackpoint.drawer.NavDrawerItem;
+import com.michael.attackpoint.drawer.NavDrawerUsers;
 
 import java.util.ArrayList;
 
@@ -113,16 +114,16 @@ public class DrawerAdapter extends BaseAdapter {
         }
 
         viewHolder.labelView.setText(item.getName());
-        /*viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Singleton.getInstance().getDrawer().removeUser((NavDrawerItem) v.getTag());
-                } catch (NavDrawer.UserException e) {
+                    Singleton.getInstance().getUserGroup().removeUser((NavDrawerItem) v.getTag());
+                } catch (NavDrawerUsers.UserException e) {
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
 
         //convertView.setOnClickListener(new ItemClickListener(item));
 
