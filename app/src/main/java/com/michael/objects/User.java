@@ -11,6 +11,8 @@ public class User {
     private String username;
     private int year;
     private int id;
+    private String location;
+    private String email;
     private boolean favorite;
 
     public User(String username, int id) {
@@ -38,6 +40,8 @@ public class User {
         this.favorite = favorite;
     }
 
+    //+++++++++++  SET  ++++++++++++++
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,6 +53,16 @@ public class User {
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    //+++++++++++  GET  ++++++++++++++
 
     public String getUsername() {
         return username;
@@ -69,4 +83,15 @@ public class User {
     public boolean isFavorite() {
         return favorite;
     }
+
+
+    public String toString() {
+        String s = "Name: " + name
+                + "\nUsername: " + username
+                + "\nYear: " + year
+                + "\nId: " + id
+                + "\nfavorit: " + favorite;
+        return s;
+    }
+
 }

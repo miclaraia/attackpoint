@@ -14,6 +14,7 @@
         <item >Add Training</item>
         <item>Check Cookies</item>
         <item>Check Favorites</item>
+        <item>User Test</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -21,6 +22,7 @@
     <array name="nav_general_icons">
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_person</item>
+        <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
     </array>

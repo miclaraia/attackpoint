@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.Preferences;
@@ -13,6 +14,7 @@ import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
+import com.michael.network.UserRequest;
 import com.michael.objects.User;
 
 import java.util.ArrayList;
@@ -61,6 +63,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
 
     @Override
     public void action(NavDrawerItem item) {
+        Request request;
         switch (item.getName()) {
             case "Add Training":
                 Intent intent = new Intent(mActivity, TrainingActivity.class);
@@ -71,11 +74,14 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 break;
             case "Check Favorites":
                 Log.d(DEBUG_TAG, "Checking favorites");
-                FavoriteUsersRequest request = new FavoriteUsersRequest(
+                request = new FavoriteUsersRequest(
                         new Response.Listener<List<User>>() {
                             @Override
                             public void onResponse(List<User> users) {
-                                Log.d(DEBUG_TAG, "God response");
+                                Log.d(DEBUG_TAG, "Got response");
+                                for (User user : users) {
+                                    Log.d(DEBUG_TAG, user.toString());
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -85,6 +91,22 @@ public class NavGroupGeneral extends NavDrawerGroup {
                     }
                 }
                 );
+                mSingleton.add(request);
+                break;
+            case "User Test":
+                Log.d(DEBUG_TAG, "Testing user request");
+                request = new UserRequest(11778, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        Log.d(DEBUG_TAG, "Got response");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError e) {
+                        Log.d(DEBUG_TAG, "Got Error");
+                        e.printStackTrace();
+                    }
+                });
                 mSingleton.add(request);
 
         }
