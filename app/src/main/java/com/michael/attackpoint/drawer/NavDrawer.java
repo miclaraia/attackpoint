@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -43,9 +44,6 @@ public class NavDrawer {
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-    //private int userFirst;
-    //private int userCount;
-
     public NavDrawer(AppCompatActivity activity, DrawerLayout drawer,
                      ListView drawerList) {
         mActivity = activity;
@@ -54,6 +52,7 @@ public class NavDrawer {
 
         mDrawerToggle = new ActionBarDrawerToggle(activity, drawer,
                 R.string.drawer_open, R.string.drawer_close);
+
         drawer.setDrawerListener(mDrawerToggle);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
@@ -79,6 +78,10 @@ public class NavDrawer {
 
         mAdapter = new DrawerAdapter(mActivity, navItems);
         mDrawerList.setAdapter(mAdapter);
+    }
+
+    public boolean checkToggleClick(MenuItem item) {
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 
     public void addGroup(NavDrawerGroup group) {
