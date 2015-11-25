@@ -1,5 +1,7 @@
 package com.michael.attackpoint.drawer;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +10,12 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
+import com.michael.attackpoint.UsersFragment;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
 import com.michael.network.UserRequest;
@@ -64,6 +68,9 @@ public class NavGroupGeneral extends NavDrawerGroup {
     @Override
     public void action(NavDrawerItem item) {
         Request request;
+        Fragment fragment;
+        FragmentTransaction transaction;
+
         switch (item.getName()) {
             case "Add Training":
                 Intent intent = new Intent(mActivity, TrainingActivity.class);
@@ -108,6 +115,34 @@ public class NavGroupGeneral extends NavDrawerGroup {
                     }
                 });
                 mSingleton.add(request);
+                break;
+            case "User Fragment":
+                Log.d(DEBUG_TAG, "swapping fragments");
+                fragment = new UsersFragment();
+
+                transaction = mActivity.getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                break;
+            case "Log Fragment":
+                Log.d(DEBUG_TAG, "swapping fragments");
+                fragment = new LogFragment();
+
+                transaction = mActivity.getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
 
         }
     }

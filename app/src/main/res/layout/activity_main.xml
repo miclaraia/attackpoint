@@ -11,12 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
-        android:name="com.michael.attackpoint.LogFragment"
-        android:id="@+id/fragment_place"
+        <RelativeLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-            tools:layout="@layout/fragment_log" />
+        android:layout_height="match_parent" />
 
 
     </LinearLayout>

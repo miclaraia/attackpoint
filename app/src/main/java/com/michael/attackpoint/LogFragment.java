@@ -37,7 +37,10 @@ public class LogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
+        linearLayout = new LinearLayoutManager(getActivity());
+
         View view = inflater.inflate(R.layout.fragment_log, container,false);
         recList = (RecyclerView) view.findViewById(R.id.cardList);
         recList.setLayoutManager(linearLayout);
@@ -54,12 +57,7 @@ public class LogFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        linearLayout = new LinearLayoutManager(activity);
-        linearLayout.setOrientation(LinearLayoutManager.VERTICAL);
-    }
+
 
     private void initializeData() {
         logInfoList = new ArrayList<>();
