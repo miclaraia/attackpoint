@@ -1,43 +1,116 @@
 package com.michael.attackpoint.adapters;
 
+import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewOverlay;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
+import com.michael.objects.User;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * Created by michael on 11/26/15.
  */
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.LogViewHolder> {
+public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+    private static final String DEBUG_TAG = "ap.UserAdapater";
 
-    public static class LogViewHolder extends RecyclerView.ViewHolder {
-        public TextView vTitle;
-        public View vColor;
-        public TextView vText;
-        public TextView vDate;
-        public TextView vTime;
-        public TextView vDist;
-        public TextView vPace;
-        public TextView vSession;
-        public TextView vComments;
+    private List<User> mUserList;
+    private Fragment mFragment;
+
+    public UsersAdapter(Fragment fragment, List<User> userList) {
+        mUserList = userList;
+        mFragment = fragment;
+    }
+
+    public void updateList(int position, User user) {
+        mUserList.set(position, user);
+        this.notifyDataSetChanged();
+    }
+
+    public void setList(List<User> update) {
+        mUserList = update;
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mUserList.size();
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder vh, int i) {
+        User.Strings strings = mUserList.get(i).strings();
+
+        vh.vUser.setText(strings.username);
+        vh.vName.setText(strings.name);
+        vh.vLocation.setText(strings.location);
+        vh.vYear.setText(strings.year);
+
+
+        // TODO proper animation for click
+        //Attach click listener to each card and define click behavior
+        vh.vCard.setTag(i);
+        vh.vCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewOverlay mask = v.getOverlay();
+                int h = v.getHeight();
+                int w = v.getWidth();
+                ColorDrawable overlay = new ColorDrawable(Color.parseColor("#AAFFFFFF"));
+                overlay.setBounds(0, h, w, 0);
+                mask.add(overlay);
+
+            }
+        });
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.user_card, viewGroup, false);
+
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView vUser;
+        public TextView vName;
+        public TextView vLocation;
+        public TextView vYear;
 
         public FrameLayout vCard;
 
-        public LogViewHolder(View v) {
+        public ViewHolder(View v) {
             super(v);
-            vTitle = (TextView) v.findViewById(R.id.log_type);
-            vColor = v.findViewById(R.id.log_color);
-            vText =  (TextView) v.findViewById(R.id.log_text);
-            vDate = (TextView) v.findViewById(R.id.log_date);
-            vTime = (TextView)  v.findViewById(R.id.log_time);
-            vDist = (TextView) v.findViewById(R.id.log_distance);
-            vPace = (TextView) v.findViewById(R.id.log_pace);
-            vSession = (TextView) v.findViewById(R.id.log_session);
-            vComments = (TextView) v.findViewById(R.id.log_comments);
+            vUser = (TextView) v.findViewById(R.id.usercard_username);
+            vName = getTextView(v, R.id.usercard_realname);
+            vLocation = getTextView(v, R.id.usercard_location);
+            vYear = getTextView(v, R.id.usercard_year);
 
-            vCard = (FrameLayout) v.findViewById(R.id.log_container);
+            vCard = (FrameLayout) v.findViewById(R.id.usercard_container);
+        }
+
+        public TextView getTextView (View v, int id) {
+            View layout = v.findViewById(id);
+            TextView t = (TextView) layout.findViewById(R.id.usercard_detail);
+            return t;
         }
     }
 }

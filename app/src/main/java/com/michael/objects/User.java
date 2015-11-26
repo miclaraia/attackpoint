@@ -94,4 +94,27 @@ public class User {
         return s;
     }
 
+    public Strings strings() {
+        return new Strings(this);
+    }
+
+    public class Strings {
+        public String name;
+        public String username;
+        public String year;
+        public String id;
+        public String location;
+        public String email;
+
+        public Strings(User user) {
+            name = user.name;
+            username = user.username;
+            year = "" + user.year;
+            id = "" + user.id;
+            location = user.location;
+            email = user.email;
+
+        }
+    }
+
 }
