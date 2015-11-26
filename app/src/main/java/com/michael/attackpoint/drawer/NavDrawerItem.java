@@ -10,6 +10,7 @@ public class NavDrawerItem {
     public static final int TYPE_REGULAR = 1;
     public static final int TYPE_SEPERATOR = 2;
     public static final int TYPE_USER = 3;
+    public static final int TYPE_COUNT = 4;
 
     public String name;
     public int type;

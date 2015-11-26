@@ -153,7 +153,7 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return NavDrawerItem.TYPE_COUNT;
     }
 
     @Override

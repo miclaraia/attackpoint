@@ -17,6 +17,11 @@
         <item>User Test</item>
         <item>User Fragment</item>
         <item>Log Fragment</item>
+        <item>Test</item>
+        <item>Test</item>
+        <item>Test</item>
+        <item>Test</item>
+        <item>Test</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -29,6 +34,11 @@
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
+        <item>@drawable/ic_person</item>
+        <item>@drawable/ic_person</item>
+        <item>@drawable/ic_person</item>
+        <item>@drawable/ic_person</item>
+        <item>@drawable/ic_person</item>
     </array>
 
 
