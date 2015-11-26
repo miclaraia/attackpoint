@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/usercard_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/logCard_marginV"
+    android:layout_marginLeft="@dimen/logCard_marginH"
+    android:layout_marginRight="@dimen/logCard_marginH"
+    android:clickable="true"
+    android:focusable="true"
+    android:addStatesFromChildren="true"
+    android:foreground="@drawable/ripple_rectangle" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/dark_colorPrimary" >
+
+        <RelativeLayout
+            android:id="@id/logInfo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/logTitle_barHeight"
+            android:background="@color/dark_colorPrimaryDark" >
+
+            <TextView
+                android:id="@id/usercard_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/usercard_title_marginV"
+                android:layout_marginTop="@dimen/usercard_title_marginV"
+                android:layout_marginLeft="@dimen/usercard_title_marginH"
+                android:layout_marginRight="@dimen/usercard_title_marginH"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/usercard_title"
+                android:textColor="@color/dark_colorAccent"
+                android:textStyle="bold"
+                android:text="miclaraia" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/usercard_realname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/usercard_label"
+                android:text="Real Name" />
+            <TextView
+                style="@style/usercard_detail"
+                android:text="Michael Laraia" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/usercard_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/usercard_label"
+                android:text="Location" />
+            <TextView
+                style="@style/usercard_detail"
+                android:text="Wetzikon ZH" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@id/usercard_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/usercard_label"
+                android:text="Year" />
+            <TextView
+                style="@style/usercard_detail"
+                android:text="1996" />
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

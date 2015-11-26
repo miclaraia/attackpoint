@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.michael.attackpoint.UsersFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test2"
-        android:textColor="@color/white" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"
         android:layout_width="match_parent"
