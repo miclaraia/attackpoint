@@ -10,13 +10,13 @@
     <item type="id" name="usercard_location" />
     <item type="id" name="usercard_year" />
 
-    <dimen name="usercard_detail_marginH">7dp</dimen>
-    <dimen name="usercard_detail_marginV">7dp</dimen>
+    <dimen name="usercard_detail_marginH">10dp</dimen>
+    <dimen name="usercard_detail_marginV">5dp</dimen>
     <dimen name="usercard_detail_seperation">150dp</dimen>
 
     <dimen name="usercard_title_marginH">10dp</dimen>
-    <dimen name="usercard_title_marginV">10dp</dimen>
-    <dimen name="usercard_title">20dp</dimen>
+    <dimen name="usercard_title_marginV">5dp</dimen>
+    <dimen name="usercard_title">15dp</dimen>
 
 
     <style name="usercard_detail_layout">
@@ -27,7 +27,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/dark_textColorPrimary</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">12dp</item>
         
         <item name="android:layout_marginBottom">@dimen/usercard_detail_marginV</item>
         <item name="android:layout_marginTop">@dimen/usercard_detail_marginV</item>
