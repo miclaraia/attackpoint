@@ -68,8 +68,8 @@ public class User {
         return username;
     }
 
-    public String getId() {
-        return USER_PREFIX + id;
+    public int getId() {
+        return id;
     }
 
     public String getName() {

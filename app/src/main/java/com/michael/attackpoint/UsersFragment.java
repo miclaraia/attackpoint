@@ -65,12 +65,17 @@ public class UsersFragment extends Fragment {
         super.onDetach();
     }
 
-    private void setUsers(List<User> users) {
+    private void setUsers(ArrayList<User> users) {
         mAdapter.setList(users);
+        updateUsers(users);
     }
 
     private void updateUser(int position, User user) {
         mAdapter.updateList(position, user);
+    }
+
+    private void updateUser(User user) {
+        mAdapter.updateList(user);
     }
 
     public void getFavorites() {
@@ -79,7 +84,7 @@ public class UsersFragment extends Fragment {
                 new Response.Listener<List<User>>() {
                     @Override
                     public void onResponse(List<User> users) {
-                        setUsers(users);
+                        setUsers((ArrayList) users);
                     }
                 },
                 new Response.ErrorListener() {
@@ -90,5 +95,24 @@ public class UsersFragment extends Fragment {
                 }
         );
         singleton.add(request);
+    }
+
+    public void updateUsers(ArrayList<User> users) {
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            UserRequest request = new UserRequest(user.getId(),
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            updateUser(user);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
+                            e.printStackTrace();
+                        }
+            });
+            singleton.add(request);
+        }
     }
 }

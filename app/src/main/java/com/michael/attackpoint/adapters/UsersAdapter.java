@@ -38,6 +38,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         this.notifyDataSetChanged();
     }
 
+    public void updateList(User user) {
+        for (int i = 0; i < mUserList.size(); i++) {
+            if (user.getId() == mUserList.get(i).getId()) {
+                updateList(i, user);
+                break;
+            }
+        }
+    }
+
     public void setList(List<User> update) {
         mUserList = update;
         this.notifyDataSetChanged();
