@@ -74,6 +74,10 @@ public class Singleton extends Application {
         CookieHandler.setDefault(manager);
     }
 
+    public void closeCookies() {
+
+    }
+
     public <T> void add(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);

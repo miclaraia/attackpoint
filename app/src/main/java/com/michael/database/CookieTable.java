@@ -44,6 +44,9 @@ public class CookieTable {
     public CookieTable() {
         singleton = Singleton.getInstance();
         dbHelper = new CookieDBHelper(singleton.getContext());
+
+        //Taken from void open()
+        database = dbHelper.getWritableDatabase();
     }
 
     public static String getCurrentID() {
@@ -62,14 +65,13 @@ public class CookieTable {
                 + " AND " + COLUMN_NAME
                 + " LIKE \"login\"";
 
-        open();
         Cursor cursor = database.rawQuery(sql, null);
 
         cursor.moveToFirst();
         String cookie = cursor.getString(0);
         String id = cookie.split(":")[0];
+        cursor.close();
 
-        close();
         return id;
     }
 
@@ -79,9 +81,7 @@ public class CookieTable {
         sql.put(CookieTable.COLUMN_NAME, cookieName);
         sql.put(CookieTable.COLUMN_COOKIE, cookieValue);
 
-        open();
         database.insert(CookieTable.TABLE, null, sql);
-        close();
     }
 
     public List<HttpCookie> getCookies(String currentUser) {
@@ -89,7 +89,6 @@ public class CookieTable {
         String select = COLUMN_USER + " LIKE ?";
         String[] selectionArgs = {currentUser};
 
-        open();
         Cursor cursor = database.query(TABLE,
                 COLUMNS, select, selectionArgs, null, null, null);
 
@@ -104,7 +103,6 @@ public class CookieTable {
         }
         // make sure to close the cursor
         cursor.close();
-        close();
         return cookies;
     }
 
@@ -113,7 +111,6 @@ public class CookieTable {
                 + COLUMN_COOKIE + " LIKE ?";
         String[] whereArgs = {cookieName, cookieValue};
 
-        open();
         int result = database.delete(TABLE, where, whereArgs);
         close();
         if (result > 0) return true;
@@ -121,9 +118,7 @@ public class CookieTable {
     }
 
     public boolean removeAll() {
-        open();
         int result = database.delete(CookieTable.TABLE, "1", null);
-        close();
         if (result > 0) return true;
         else return false;
     }
@@ -131,12 +126,11 @@ public class CookieTable {
     public int getUserCount() {
         String sql = "SELECT COUNT(*) FROM " + CookieTable.TABLE
                 + "GROUP BY " + CookieTable.COLUMN_USER;
-        open();
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
-        close();
+
         Log.d(DEBUG_TAG, "found " + count + "users in db");
         return count;
     }
@@ -148,7 +142,6 @@ public class CookieTable {
                 + " FROM " + CookieTable.TABLE
                 + " GROUP BY " + CookieTable.COLUMN_USER;
 
-        open();
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -158,22 +151,19 @@ public class CookieTable {
         }
 
         cursor.close();
-        close();
         return users;
     }
 
     public void removeUser(String user) {
         String where = "user LIKE \"" + user + "\"";
 
-        open();
         database.delete(CookieTable.TABLE, where, null);
-        close();
     }
 
     public String getAllCookies() {
         Log.d(DEBUG_TAG, "getTableAsString called");
         String tableString = String.format("Table %s:\n", CookieTable.TABLE);
-        open();
+
         Cursor cursor  = database.rawQuery("SELECT * FROM " + CookieTable.TABLE, null);
         if (cursor.moveToFirst() ){
             String[] columnNames = cursor.getColumnNames();
@@ -187,6 +177,7 @@ public class CookieTable {
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
         return tableString;
     }
 
