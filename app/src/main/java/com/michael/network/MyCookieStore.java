@@ -10,7 +10,6 @@ import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
 import com.michael.database.CookieDBHelper;
 import com.michael.database.CookieTable;
-import com.michael.database.UserTable;
 
 import org.apache.http.cookie.Cookie;
 

@@ -80,6 +80,10 @@ public class User {
         return year;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
     public boolean isFavorite() {
         return favorite;
     }
