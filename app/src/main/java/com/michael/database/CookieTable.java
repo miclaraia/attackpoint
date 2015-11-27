@@ -45,7 +45,7 @@ public class CookieTable {
         singleton = Singleton.getInstance();
         dbHelper = new CookieDBHelper(singleton.getContext());
 
-        //Taken from void open()
+        //Taken from open()
         database = dbHelper.getWritableDatabase();
     }
 
