@@ -2,7 +2,6 @@ package com.michael.attackpoint;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,10 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.objects.LogInfo;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.michael.attackpoint.loginfo.LogInfo;
 
 public class LogDetailActivity extends Activity {
     private static final String DEBUG_TAG = "ap.logDetailActivity";

@@ -1,17 +1,20 @@
-package com.michael.objects;
+package com.michael.attackpoint.loginfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by michael on 11/11/15.
+ * Class that manages the date used in representing a log entry.
+ * Can parse date from attackpoint.org and formats it for use in
+ * the app's log entries.
+ * @author Michael Laraia
  */
 public class Date {
-
     private static final String DATE_FORMAT = "ccc MMM d";
     private static final String LOG_FORMAT = "cccc MMM d #";
     private static final String LOG_FORMAT_SESSION = "h a";
+
     private Calendar cal;
     private SimpleDateFormat sdf;
 
@@ -24,6 +27,12 @@ public class Date {
         set(logDate);
     }
 
+    /**
+     * parses and sets date
+     * @param logDate must be either in
+     * the format 'ccc MMM d' used by the app or 'cccc MMM d #' used by
+     * attackpoint.org
+     */
     public void set(String logDate) {
         cal = Calendar.getInstance();
         if (logDate.contains("#")) {
@@ -45,6 +54,11 @@ public class Date {
         }
     }
 
+    /**
+     * sets time of day of session
+     * @param time must be in format 'h a'
+     *             as used on attackpoint.org
+     */
     public void setSession(String time) {
         SimpleDateFormat sdf = new SimpleDateFormat(LOG_FORMAT_SESSION);
         try {

@@ -10,7 +10,6 @@ import android.util.Log;
  */
 public class CookieDBHelper extends SQLiteOpenHelper {
 
-
     private static final String DATABASE_NAME = "cookies.db";
     private static final int DATABASE_VERSION = 1;
 

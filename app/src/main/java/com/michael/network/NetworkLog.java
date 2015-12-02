@@ -5,14 +5,11 @@ import android.text.TextUtils;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.database.CookieTable;
-import com.michael.objects.Distance;
-import com.michael.objects.LogInfo;
+import com.michael.attackpoint.loginfo.Distance;
+import com.michael.attackpoint.loginfo.LogInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

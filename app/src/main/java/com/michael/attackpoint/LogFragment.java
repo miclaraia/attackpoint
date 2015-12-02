@@ -1,6 +1,5 @@
 package com.michael.attackpoint;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,16 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.adapters.LogAdapter;
 import com.michael.database.CookieTable;
 import com.michael.network.NetworkLog;
-import com.michael.objects.LogInfo;
-
-import org.jsoup.Jsoup;
+import com.michael.attackpoint.loginfo.LogInfo;
 
 import java.util.ArrayList;
 import java.util.List;

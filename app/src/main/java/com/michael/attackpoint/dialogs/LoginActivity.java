@@ -10,21 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.drawer.NavDrawer;
-import com.michael.attackpoint.drawer.NavDrawerUsers;
 import com.michael.network.LoginRequest;
-import com.michael.objects.LogInfo;
-
-import org.jsoup.Jsoup;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";
