@@ -91,14 +91,13 @@ public class NetworkLog extends Request<List<LogInfo>> {
 
             LogInfo details = new LogInfo();
             details.setType(type);
-            details.time.set(time);
-            details.intensity.set(intensity);
-            details.distance.set(distance);
-            if (distance != null) {
-                details.pace.set(details.time.get(), distance);
-            }
+            details.setTime(time);;
+            details.setIntensity(intensity);
+            details.setDistance(distance);
+            details.setPace();
+
             details.setText(text);
-            details.color.set(color);
+            details.setColor(color);
 
             return details;
         }

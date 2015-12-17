@@ -141,6 +141,14 @@ public class LogInfo {
     /**
      * Sets distance
      * @param distance distance of workout
+     */
+    public void setDistance(Distance distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * Sets distance
+     * @param distance distance of workout
      * @param unit unit of distance
      */
     public void setDistance(int distance, String unit) {
@@ -210,6 +218,9 @@ public class LogInfo {
 
     //++++++++++++++++++ Pace +++++++++++++++++
 
+    public void setPace() {
+        setPace(this.time.get(), this.distance);
+    }
     /**
      * calculates and sets pace of log entry
      * @param t time taken
