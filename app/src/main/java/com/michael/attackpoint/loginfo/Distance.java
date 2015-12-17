@@ -59,6 +59,19 @@ public class Distance {
         this.unit = items[1];
     }
 
+    /**
+     * Checks if distance is 0
+     * @return
+     */
+    public boolean isEmpty() {
+        if (distance == 0 || unit.equals("")) return true;
+        else return false;
+    }
+
+    /**
+     * Converts distance into human-readable string
+     * @return
+     */
     public String toString() {
         return Float.toString(distance) + " " + unit;
     }

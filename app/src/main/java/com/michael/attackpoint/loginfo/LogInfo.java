@@ -54,12 +54,7 @@ public class LogInfo {
     }*/
 
     public LogInfo() {
-        date = new Date();
-        time = new Duration();
-        pace = new Pace();
-        distance = new Distance();
-        color = new Color();
-
+        init();
     }
 
     /**
@@ -67,6 +62,7 @@ public class LogInfo {
      * @param jsonString JSON string output from tostring()
      */
     public LogInfo(String jsonString) {
+        init();
         try {
             JSONObject json = new JSONObject(jsonString);
             setType((String) json.get(JSON_TYPE));
@@ -85,6 +81,14 @@ public class LogInfo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void init() {
+        date = new Date();
+        time = new Duration();
+        pace = new Pace();
+        distance = new Distance();
+        color = new Color();
     }
 
     /**
@@ -143,7 +147,9 @@ public class LogInfo {
      * @param distance distance of workout
      */
     public void setDistance(Distance distance) {
-        this.distance = distance;
+        if (distance != null) {
+            this.distance = distance;
+        }
     }
 
     /**
@@ -219,7 +225,9 @@ public class LogInfo {
     //++++++++++++++++++ Pace +++++++++++++++++
 
     public void setPace() {
-        setPace(this.time.get(), this.distance);
+        if (!this.distance.isEmpty()) {
+            setPace(this.time.get(), this.distance);
+        }
     }
     /**
      * calculates and sets pace of log entry
@@ -269,8 +277,8 @@ public class LogInfo {
      * returns intensity as string
      * @return intensity
      */
-    public String getIntensity() {
-        return "" + intensity;
+    public int getIntensity() {
+        return intensity;
     }
 
     //++++++++++++++++++ Color +++++++++++++++++
@@ -348,7 +356,7 @@ public class LogInfo {
             this.distance = li.distance.toString();
             this.pace = li.pace.toString();
             this.time = li.time.toString();
-            this.intensity = li.getIntensity();
+            this.intensity = "" + li.getIntensity();
 
             // TODO
             this.comments = "";
