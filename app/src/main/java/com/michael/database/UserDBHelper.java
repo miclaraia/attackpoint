@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class UserDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "cookies.db";
+    private static final String DATABASE_NAME = "users.db";
     private static final int DATABASE_VERSION = 1;
 
     public UserDBHelper(Context context) {
@@ -19,17 +19,17 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(CookieTable.TABLE_CREATE);
+        database.execSQL(UserTable.TABLE_CREATE);
         //database.execSQL(UserTable.TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(CookieDBHelper.class.getName(),
+        Log.w(UserDBHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
 
-        db.execSQL("DROP TABLE IF EXISTS " + CookieTable.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
         //db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
         onCreate(db);
     }

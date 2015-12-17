@@ -25,7 +25,7 @@ public class CookieDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(UserTable.TABLE_CREATE);
+        database.execSQL(CookieTable.TABLE_CREATE);
     }
 
     @Override
