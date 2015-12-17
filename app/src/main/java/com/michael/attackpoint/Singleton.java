@@ -19,7 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by michael on 8/18/15.
+ * Singleton class managing global objects that can be accessed
+ * from any class in the application.
+ * @author Michael Laraia
  */
 public class Singleton extends Application {
     private static final String TAG = "com.michael.Attackpoint.request.";
@@ -29,8 +31,6 @@ public class Singleton extends Application {
     private NavDrawer mDrawer;
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
-    private Map<String, Object> mLoginResponse;
-    private NetworkLog mLogManager;
     private Fragment mFragment;
 
     @Override
@@ -41,82 +41,108 @@ public class Singleton extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
-        mLoginResponse = new HashMap<>();
 
         initCookies();
     }
 
+    /**
+     * returns instance of Singleton initialized at application start
+     * @return
+     */
     public static synchronized Singleton getInstance() {
         return mInstance;
-    }
-
-    public void setContext(Context context) {
-        mContext = context;
     }
 
     public Context getContext() {
         return mContext;
     }
 
+    /**
+     * returns instance of preferences
+     * @return
+     */
     public Preferences getPreferences() {
         return mPreferences;
     }
 
+    /**
+     * returns volley request queue
+     * @return
+     */
     public RequestQueue getRequestQueue() {
         return mRequestQueue;
     }
 
+    /**
+     * returns cookie store for network operations
+     * @return
+     */
     public MyCookieStore getCookieStore() { return mCookieStore; }
 
+    /**
+     * initializes cookie store and attaches to cookie handler
+     */
     public void initCookies() {
         mCookieStore = new MyCookieStore();
         CookieManager manager = new CookieManager( mCookieStore, CookiePolicy.ACCEPT_ALL );
         CookieHandler.setDefault(manager);
     }
 
-    public void closeCookies() {
-
-    }
-
+    /**
+     * adds request to request queue
+     * @param req request
+     * @param <T> request type
+     */
     public <T> void add(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
     }
 
-    public Map<String, Object> getLoginResponse() {
-        return mLoginResponse;
-    }
-
-    public void setLoginResponse(Map<String, Object> loginResponse) {
-        this.mLoginResponse = loginResponse;
-    }
-
+    /**
+     * cancels all requests currently in queue
+     */
     public void cancel() {
         mRequestQueue.cancelAll(TAG);
     }
 
+    /**
+     * sets navigation drawer
+     * @param drawer
+     */
     public void setDrawer(NavDrawer drawer) {
         this.mDrawer = drawer;
     }
 
+    /**
+     * gets navigation drawer
+     * @return
+     */
     public NavDrawer getDrawer() {
         return mDrawer;
     }
 
+    /**
+     * gets NavDrawerGroup controlling users in nav drawer
+     * @return
+     */
     public NavDrawerUsers getUserGroup() {
         String g = NavDrawerUsers.GROUP_NAME;
         NavDrawerUsers navGroup = (NavDrawerUsers) mDrawer.getGroup(g);
         return navGroup;
     }
 
-    public NetworkLog getLogManager() {
-        return mLogManager;
-    }
-
+    /**
+     * Sets fragment currently being used
+     * @param fragment
+     */
     public void setFragment(Fragment fragment) {
         this.mFragment = fragment;
     }
 
+    /**
+     * gets curreng fragment
+     * @return
+     */
     public Fragment getFragment() {
         return mFragment;
     }

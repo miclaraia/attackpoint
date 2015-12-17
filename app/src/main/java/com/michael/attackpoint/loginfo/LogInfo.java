@@ -128,74 +128,145 @@ public class LogInfo {
     }
 
     //++++++++++++++++++ Distance +++++++++++++++++
+
+    /**
+     * Sets distance
+     * @param distance distance of workout
+     * @param unit unit of distance
+     */
     public void setDistance(int distance, String unit) {
         this.distance = new Distance(distance, unit);
     }
 
+    /**
+     * Sets distance
+     * @param distance distance of workout
+     * @param unit unit of distance
+     */
     public void setDistance(String distance, String unit) {
         this.distance = new Distance(distance, unit);
     }
 
+    /**
+     * Sets distance
+     * @param distance distance of workout
+     * @param unit unit of distance
+     */
     public void setDistance(float distance, String unit) {
         this.distance = new Distance(distance, unit);
     }
 
+    /**
+     * Sets distance
+     * @param distance distance of workout, string
+     *                 includes unit.
+     */
     public void setDistance(String distance) {
         this.distance = new Distance(distance);
     }
 
+    /**
+     * gets distance object
+     * @return {@link Distance}
+     */
     public Distance getDistance() {
         return distance;
     }
 
     //++++++++++++++++++ Time +++++++++++++++++
 
+    /**
+     * Sets time of log entry
+     * @param time see {@link Time} for formatting details
+     */
     public void setTime(String time) {
         this.time = new Duration(time);
     }
 
+    /**
+     * Sets time of log entry
+     * @param time see {@link Time} for formatting details
+     */
     public void setTime(Time time) {
         this.time = new Duration(time);
     }
 
+    /**
+     * gets time object
+     * @return {@link Time}
+     */
     public Duration getTime() {
         return this.time;
     }
 
     //++++++++++++++++++ Pace +++++++++++++++++
 
+    /**
+     * calculates and sets pace of log entry
+     * @param t time taken
+     * @param d distance traveled
+     */
     public void setPace(Duration t, Distance d) {
         this.pace = new Pace(t, d);
     }
 
+    /**
+     * calculates and sets pace of log entry
+     * @param t time taken
+     * @param d distance traveled
+     */
     public void setPace(Time t, Distance d) {
         this.pace = new Pace(t, d);
     }
 
+    /**
+     * returns pace object
+     * @return {@link Pace}
+     */
     public Pace getPace() {
         return this.pace;
     }
 
     //++++++++++++++++++ Intensity +++++++++++++++++
 
+    /**
+     * sets intensity of log entry
+     * @param intensity int from 1 to 5
+     */
     public void setIntensity(int intensity) {
         this.intensity = intensity;
     }
 
+    /**
+     * sets intensity of log entry
+     * @param intensity int from 1 to 5
+     */
     public void setIntensity(String intensity) {
         this.intensity = Integer.parseInt(intensity);
     }
 
+    /**
+     * returns intensity as string
+     * @return intensity
+     */
     public String getIntensity() {
         return "" + intensity;
     }
 
     //++++++++++++++++++ Color +++++++++++++++++
 
+    /**
+     * sets color of log entry
+     * @param color
+     */
     public void setColor(String color) {
         this.color = new Color(color);
     }
 
+    /**
+     * sets color of log entry
+     * @param color
+     */
     public void setColor(int color) {
         this.color = new Color(color);
     }
@@ -225,6 +296,10 @@ public class LogInfo {
         }
     }
 
+    /**
+     * Container class containing public strings derived from data held in
+     * a LogInfo object
+     */
     public class Strings {
         public String text;
         public int color;
@@ -239,6 +314,10 @@ public class LogInfo {
         public String comments;
         public String session;
 
+        /**
+         * initializes strings
+         * @param li LogInfo object to be converted to strings
+         */
         public Strings(LogInfo li) {
             this.text = li.text;
             this.color = li.color.get();

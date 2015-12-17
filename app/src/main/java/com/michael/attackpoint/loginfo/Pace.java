@@ -3,27 +3,47 @@ package com.michael.attackpoint.loginfo;
 import android.text.format.*;
 
 /**
- * Created by michael on 12/2/15.
+ * Class managing pace of log entries
  */
 public class Pace {
     private android.text.format.Time pace;
     private String unit;
     // TODO conversion between min/km and min/mi
 
+    /**
+     * craetes Pace object from Duration and Distance objects
+     * @param t duration of log entry
+     * @param d distance traveled in workout
+     */
     public Pace(Duration t, Distance d) {
         this.unit = d.unit;
         this.pace = calc(t, d);
     }
 
+    /**
+     * craetes Pace object from Time and Distance objects
+     * @param time duration of log entry
+     * @param distance distance traveled in workout
+     */
     public Pace(android.text.format.Time time, Distance distance) {
         this.unit = distance.unit;
         set(calc(time, distance));
     }
 
+    /**
+     * sets pace value to specified pace
+     * @param pace
+     */
     public void set(android.text.format.Time pace) {
         this.pace = pace;
     }
 
+    /**
+     * Calculates pace given time and distance
+     * @param t duration
+     * @param d distance traveled
+     * @return
+     */
     private Time calc(Duration t, Distance d) {
         return calc(t.get(), d);
     }
@@ -45,10 +65,18 @@ public class Pace {
         return out;
     }
 
+    /**
+     * gets pace
+     * @return
+     */
     public android.text.format.Time get() {
         return pace;
     }
 
+    /**
+     * returns pace as formatted string
+     * @return
+     */
     public String toString() {
         String out;
         if (this.pace == null) {

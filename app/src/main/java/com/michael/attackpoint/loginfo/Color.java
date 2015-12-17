@@ -1,7 +1,8 @@
 package com.michael.attackpoint.loginfo;
 
 /**
- * Created by michael on 12/2/15.
+ * Class managing log entry colors
+ * @author Michael Laraia
  */
 public class Color {
     private int color = android.graphics.Color.WHITE;
@@ -18,6 +19,10 @@ public class Color {
         return this.color;
     }
 
+    /**
+     * caclulates brightness value of the current color
+     * @return brightness
+     */
     public int brightness() {
         int r = android.graphics.Color.red(color);
         int g = android.graphics.Color.green(color);
@@ -27,6 +32,10 @@ public class Color {
         return (int) Math.round(brightness);
     }
 
+    /**
+     * Returns color for text to have sufficient contrast with background color
+     * @return white or black
+     */
     public int contrast() {
         int brightness = brightness();
 

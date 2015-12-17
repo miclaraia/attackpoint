@@ -1,11 +1,15 @@
 package com.michael.attackpoint.loginfo;
 
 /**
- * Created by michael on 8/6/15.
+ * Class managing time and duration of log entries
  */
 public class Duration {
     private android.text.format.Time time;
 
+    /**
+     * Creates duration object
+     * @param time time string must be a properly formatted hh:mm:ss time
+     */
     public Duration(String time) {
         String[] pieces = time.split(":");
         int h = 0;
@@ -29,14 +33,26 @@ public class Duration {
         this.time.set(s,m,h,0,0,0);
     }
 
+    /**
+     * Creates duration object from android Time object
+     * @param time
+     */
     public Duration(android.text.format.Time time) {
         this.time = time;
     }
 
+    /**
+     * gets the current duration as Time object
+     * @return
+     */
     public android.text.format.Time get() {
         return this.time;
     }
 
+    /**
+     * returns current duration as string
+     * @return
+     */
     public String toString() {
         if (this.time == null) {
             return null;

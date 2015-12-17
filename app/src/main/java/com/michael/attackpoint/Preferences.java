@@ -6,12 +6,17 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
- * Created by michael on 8/18/15.
+ * Class managing application preferences
+ * @author Michael Laraia
  */
 public class Preferences extends Application{
     private static final String DEBUG_TAG = "ap.preferences";
     private static final String pFileKey = "com.michael.attackpoint.preferences.sI5Xav";
 
+    /**
+     * sets current user
+     * @param user
+     */
     public void setUser(String user) {
         if (user == null) user = "";
         SharedPreferences prefs = getPreferences();
@@ -22,6 +27,10 @@ public class Preferences extends Application{
         editor.commit();
     }
 
+    /**
+     * retrieves current user
+     * @return
+     */
     public String getUser() {
         SharedPreferences prefs = getPreferences();
         String user = prefs.getString("user", "");
@@ -30,34 +39,10 @@ public class Preferences extends Application{
         return user;
     }
 
-    public void saveCookie(String cookie) {
-        if (cookie == null) {
-            //the server did not return a cookie so we wont have anything to save
-            return;
-        }
-        // Save in the preferences
-        SharedPreferences prefs = getPreferences();
-        if (prefs == null) {
-            return;
-        }
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("cookie", cookie);
-        editor.commit();
-    }
-
-    public String getCookie() {
-        SharedPreferences prefs = getPreferences();
-        String cookie = prefs.getString("cookie", "");
-        return cookie;
-    }
-
-    public void removeCookie() {
-        SharedPreferences prefs = getPreferences();
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove("cookie");
-        editor.commit();
-    }
-
+    /**
+     * initializes SharedPreferences
+     * @return
+     */
     public SharedPreferences getPreferences() {
         Context context = Singleton.getInstance().getContext();
         SharedPreferences sharedPref = context.getSharedPreferences(
