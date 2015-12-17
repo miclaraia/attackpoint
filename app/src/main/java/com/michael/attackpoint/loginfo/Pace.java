@@ -11,7 +11,16 @@ public class Pace {
     // TODO conversion between min/km and min/mi
 
     /**
-     * craetes Pace object from Duration and Distance objects
+     * creates empty Pace object
+     */
+    public Pace() {
+        unit = "";
+        pace = new android.text.format.Time();
+        pace.set(0,0,0,0,0,0);
+    }
+
+    /**
+     * creates Pace object from Duration and Distance objects
      * @param t duration of log entry
      * @param d distance traveled in workout
      */

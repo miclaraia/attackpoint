@@ -7,6 +7,14 @@ public class Duration {
     private android.text.format.Time time;
 
     /**
+     * Creates empty duration object
+     */
+    public Duration() {
+        this.time = new android.text.format.Time();
+        this.time.set(0,0,0,0,0,0);
+    }
+
+    /**
      * Creates duration object
      * @param time time string must be a properly formatted hh:mm:ss time
      */

@@ -30,6 +30,7 @@ public class LogInfo {
     public String type;
     public String text;
     public String snippet;
+    public int intensity;
     // TODO
     public String comments;
     public String session;
@@ -37,7 +38,6 @@ public class LogInfo {
     public Date date;
     public Duration time;
     public Pace pace;
-    public int intensity;
     public Distance distance;
     public Color color;
 
@@ -52,6 +52,15 @@ public class LogInfo {
 
         this.pace.set(this.time.get(), this.distance.get());
     }*/
+
+    public LogInfo() {
+        date = new Date();
+        time = new Duration();
+        pace = new Pace();
+        distance = new Distance();
+        color = new Color();
+
+    }
 
     /**
      * Recreates LogInfo object from data serialized into JSON

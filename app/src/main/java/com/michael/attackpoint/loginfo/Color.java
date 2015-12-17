@@ -7,14 +7,33 @@ package com.michael.attackpoint.loginfo;
 public class Color {
     private int color = android.graphics.Color.WHITE;
 
+    /**
+     * creates empty Color object
+     */
+    public Color() {
+
+    }
+
+    /**
+     * creates Color object
+     * @param color properly formed hexadecimal color
+     */
     public Color(String color) {
         this.color = android.graphics.Color.parseColor(color);
     }
 
+    /**
+     * creates color object
+     * @param color int representing hexadecimal color
+     */
     public Color(int color) {
         this.color = color;
     }
 
+    /**
+     * Gets color as integer
+     * @return color
+     */
     public int get() {
         return this.color;
     }

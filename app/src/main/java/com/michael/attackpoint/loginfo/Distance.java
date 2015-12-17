@@ -11,6 +11,14 @@ public class Distance {
 
 
     /**
+     * Creates empty distance object
+     */
+    public Distance() {
+        distance = 0;
+        unit = "";
+    }
+
+    /**
      * Creates distance object
      * @param distance distance traveled during workout
      * @param unit unit of distance
