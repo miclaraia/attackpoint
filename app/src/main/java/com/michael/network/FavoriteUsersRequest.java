@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
 import com.michael.objects.User;
+import com.michael.objects.UserCallback;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -25,13 +26,19 @@ public class FavoriteUsersRequest extends Request<List<User>> {
 
     private ArrayList<User> userList;
     private Singleton singleton;
+    private UpdateCallback mUpdate;
 
     private final Response.Listener<List<User>> mListener;
 
-    public FavoriteUsersRequest(Response.Listener<List<User>> listener,
+    public interface UpdateCallback {
+        public void go();
+    }
+
+    public FavoriteUsersRequest(UpdateCallback update, Response.Listener<List<User>> listener,
                                 Response.ErrorListener errorListener) {
         super(Method.GET, BASE_URL, errorListener);
         mListener = listener;
+        mUpdate = update;
     }
 
     @Override
@@ -65,13 +72,19 @@ public class FavoriteUsersRequest extends Request<List<User>> {
         String username = info.text();
         String id = info.attr("href");
         id = id.split("/")[2];
-        return new User(username, id);
+        return new UserCallback(username, id, new UserCallback.Callback() {
+            @Override
+            public void go() {
+                mUpdate.go();
+            }
+        });
     }
 
     private List<User> getUsers(Element element) {
         List<User> users = new ArrayList<User>();
 
-        Elements favorites = element.getElementsByClass("favList").first().getElementsByTag("tr");
+        Elements favorites = element.getElementsByClass("favList");
+        favorites = favorites.first().getElementsByTag("tr");
         for (Element favorite : favorites) {
             users.add(getUser(favorite));
         }

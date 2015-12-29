@@ -67,7 +67,7 @@ public class UsersFragment extends Fragment {
 
     private void setUsers(ArrayList<User> users) {
         mAdapter.setList(users);
-        updateUsers(users);
+        //updateUsers(users);
     }
 
     private void updateUser(int position, User user) {
@@ -80,8 +80,12 @@ public class UsersFragment extends Fragment {
 
     public void getFavorites() {
         List<User> favorites;
-        FavoriteUsersRequest request = new FavoriteUsersRequest(
-                new Response.Listener<List<User>>() {
+        FavoriteUsersRequest request = new FavoriteUsersRequest(new FavoriteUsersRequest.UpdateCallback() {
+            @Override
+            public void go() {
+                mAdapter.notifyDataSetChanged();
+            }
+        }, new Response.Listener<List<User>>() {
                     @Override
                     public void onResponse(List<User> users) {
                         setUsers((ArrayList) users);

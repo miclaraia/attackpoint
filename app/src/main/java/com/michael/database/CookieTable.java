@@ -9,7 +9,6 @@ import android.util.Log;
 import com.michael.attackpoint.Singleton;
 
 import java.net.HttpCookie;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +23,7 @@ public class CookieTable {
     public static final String COLUMN_COOKIE = "cookie";
 
     public static final String DEBUG_TAG = "ap.CookieTable";
-    private SQLiteDatabase database;
-    private CookieDBHelper dbHelper;
+    private DatabaseHelper dbHelper;
     private Singleton singleton;
 
     public static final String TABLE_CREATE = "CREATE TABLE "
@@ -43,10 +41,7 @@ public class CookieTable {
 
     public CookieTable() {
         singleton = Singleton.getInstance();
-        dbHelper = new CookieDBHelper(singleton.getContext());
-
-        //Taken from open()
-        database = dbHelper.getWritableDatabase();
+        dbHelper = DatabaseHelper.getInstance(singleton.getContext());
     }
 
     public static String getCurrentID() {
@@ -65,6 +60,7 @@ public class CookieTable {
                 + " AND " + COLUMN_NAME
                 + " LIKE \"login\"";
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery(sql, null);
 
         cursor.moveToFirst();
@@ -81,6 +77,7 @@ public class CookieTable {
         sql.put(CookieTable.COLUMN_NAME, cookieName);
         sql.put(CookieTable.COLUMN_COOKIE, cookieValue);
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         database.insert(CookieTable.TABLE, null, sql);
     }
 
@@ -89,6 +86,7 @@ public class CookieTable {
         String select = COLUMN_USER + " LIKE ?";
         String[] selectionArgs = {currentUser};
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(TABLE,
                 COLUMNS, select, selectionArgs, null, null, null);
 
@@ -111,13 +109,15 @@ public class CookieTable {
                 + COLUMN_COOKIE + " LIKE ?";
         String[] whereArgs = {cookieName, cookieValue};
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         int result = database.delete(TABLE, where, whereArgs);
-        close();
+
         if (result > 0) return true;
         else return false;
     }
 
     public boolean removeAll() {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         int result = database.delete(CookieTable.TABLE, "1", null);
         if (result > 0) return true;
         else return false;
@@ -126,6 +126,8 @@ public class CookieTable {
     public int getUserCount() {
         String sql = "SELECT COUNT(*) FROM " + CookieTable.TABLE
                 + "GROUP BY " + CookieTable.COLUMN_USER;
+
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
@@ -142,6 +144,7 @@ public class CookieTable {
                 + " FROM " + CookieTable.TABLE
                 + " GROUP BY " + CookieTable.COLUMN_USER;
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -157,6 +160,7 @@ public class CookieTable {
     public void removeUser(String user) {
         String where = "user LIKE \"" + user + "\"";
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         database.delete(CookieTable.TABLE, where, null);
     }
 
@@ -164,6 +168,7 @@ public class CookieTable {
         Log.d(DEBUG_TAG, "getTableAsString called");
         String tableString = String.format("Table %s:\n", CookieTable.TABLE);
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor  = database.rawQuery("SELECT * FROM " + CookieTable.TABLE, null);
         if (cursor.moveToFirst() ){
             String[] columnNames = cursor.getColumnNames();
@@ -179,13 +184,5 @@ public class CookieTable {
 
         cursor.close();
         return tableString;
-    }
-
-    public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbHelper.close();
     }
 }

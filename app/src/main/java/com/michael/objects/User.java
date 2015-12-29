@@ -1,5 +1,11 @@
 package com.michael.objects;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.michael.attackpoint.Singleton;
+import com.michael.database.UserTable;
+import com.michael.network.UserRequest;
+
 /**
  * Created by michael on 11/11/15.
  */
@@ -15,32 +21,78 @@ public class User {
     private String email;
     private boolean favorite;
 
+    private UserTable mUserTable;
+    private Singleton mSingleton;
+
     public User(String username, int id) {
         this.username = username;
         this.id = id;
 
-        // TODO add function to query attackpoint for remaining info
+        mUserTable = new UserTable();
+        mSingleton = Singleton.getInstance();
+
+        checkTable();
     }
 
     public User(String username, String id) {
         this.username = username;
+
+        mUserTable = new UserTable();
+        mSingleton = Singleton.getInstance();
 
         if(id.contains(USER_PREFIX)) {
             id = id.split("_")[1];
         }
         int parsed = Integer.parseInt(id);
         this.id = parsed;
+
+        checkTable();
     }
 
-    public User(String username, int id, String name, int year, boolean favorite) {
+    public User(String username, int id, String name, String location, int year) {
         this.username = username;
         this.id = id;
         this.name = name;
         this.year = year;
-        this.favorite = favorite;
+        this.location = location;
+    }
+
+    public void checkTable() {
+        if (mUserTable.userExists(id)) {
+            setUser(mUserTable.getUser(id));
+        } else {
+            UserRequest request = new UserRequest(id, new Response.Listener<User>() {
+                @Override
+                public void onResponse(User user) {
+                    setUser(user);
+                    mUserTable.addUser(user);
+                    done();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+            mSingleton.add(request);
+        }
+    }
+
+    public void done() {
+
     }
 
     //+++++++++++  SET  ++++++++++++++
+
+    public void setUser(User user) {
+        this.name = user.name;
+        this.username = user.username;
+        this.year = user.year;
+        this.id = user.id;
+        this.location = user.location;
+        this.email = user.email;
+        this.favorite = user.favorite;
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -1,22 +1,14 @@
 package com.michael.network;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
-import com.michael.database.CookieDBHelper;
 import com.michael.database.CookieTable;
-
-import org.apache.http.cookie.Cookie;
 
 import java.net.CookieStore;
 import java.net.HttpCookie;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

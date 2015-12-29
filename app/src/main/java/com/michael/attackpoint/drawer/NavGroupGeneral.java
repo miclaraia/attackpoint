@@ -16,6 +16,7 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
+import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
 import com.michael.network.UserRequest;
@@ -79,10 +80,21 @@ public class NavGroupGeneral extends NavDrawerGroup {
             case "Check Cookies":
                 Log.d(DEBUG_TAG, mCookieStore.getAllCookies());
                 break;
+            case "Check Users":
+                Log.d(DEBUG_TAG, UserTable.printAllUsers());
+                break;
+            case "Clear Users":
+                UserTable.clearUsers();
+                break;
             case "Check Favorites":
                 Log.d(DEBUG_TAG, "Checking favorites");
                 request = new FavoriteUsersRequest(
-                        new Response.Listener<List<User>>() {
+                        new FavoriteUsersRequest.UpdateCallback() {
+                            @Override
+                            public void go() {
+
+                            }
+                        }, new Response.Listener<List<User>>() {
                             @Override
                             public void onResponse(List<User> users) {
                                 Log.d(DEBUG_TAG, "Got response");

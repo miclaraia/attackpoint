@@ -13,6 +13,8 @@
         <item >Log</item>
         <item >Add Training</item>
         <item>Check Cookies</item>
+        <item>Check Users</item>
+        <item>Clear Users</item>
         <item>Check Favorites</item>
         <item>User Test</item>
         <item>User Fragment</item>
@@ -23,6 +25,8 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_general_icons">
         <item>@drawable/ic_log</item>
+        <item>@drawable/ic_person</item>
+        <item>@drawable/ic_person</item>
         <item>@drawable/ic_person</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
