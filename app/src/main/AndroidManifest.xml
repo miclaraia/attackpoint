@@ -51,7 +51,7 @@
             android:name=".LogDetailActivity"
             android:label="@string/title_activity_log_detail"></activity>
         <activity
-            android:name=".adapters.LogActivity"
+            android:name=".LogActivity"
             android:label="@string/title_activity_log"></activity>
     </application>
 
