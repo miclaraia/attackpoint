@@ -11,6 +11,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
@@ -73,10 +74,16 @@ public class NavGroupGeneral extends NavDrawerGroup {
         Request request;
         Fragment fragment;
         FragmentTransaction transaction;
+        Intent intent;
 
         switch (item.getName()) {
+            case "Log":
+                intent = new Intent(mActivity, LogActivity.class);
+                intent.putExtra(LogFragment.USER_ID, CookieTable.getCurrentID());
+                mActivity.startActivity(intent);
+                break;
             case "Add Training":
-                Intent intent = new Intent(mActivity, TrainingActivity.class);
+                intent = new Intent(mActivity, TrainingActivity.class);
                 mActivity.startActivity(intent);
                 break;
             case "Check Cookies":
