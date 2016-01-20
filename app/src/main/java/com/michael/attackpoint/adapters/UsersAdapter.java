@@ -1,8 +1,10 @@
 package com.michael.attackpoint.adapters;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.R;
+import com.michael.database.CookieTable;
 import com.michael.objects.User;
 
 import org.w3c.dom.Text;
@@ -79,7 +83,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 ColorDrawable overlay = new ColorDrawable(Color.parseColor("#AAFFFFFF"));
                 overlay.setBounds(0, h, w, 0);
                 mask.add(overlay);
-
             }
         });
     }

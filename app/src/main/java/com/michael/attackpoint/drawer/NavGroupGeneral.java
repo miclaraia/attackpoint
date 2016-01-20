@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
+import com.michael.database.CookieTable;
 import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
@@ -145,6 +147,9 @@ public class NavGroupGeneral extends NavDrawerGroup {
             case "Log Fragment":
                 Log.d(DEBUG_TAG, "swapping fragments");
                 fragment = new LogFragment();
+                Bundle extras = new Bundle();
+                extras.putString(LogFragment.USER_ID, CookieTable.getCurrentID());
+                fragment.setArguments(extras);
 
                 transaction = mActivity.getFragmentManager().beginTransaction();
 

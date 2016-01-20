@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class LogFragment extends Fragment {
 
+    public static final String USER_ID = "userid";
+
     private List<LogInfo> logInfoList;
     private RecyclerView recList;
     private LogAdapter adapter;
@@ -65,7 +67,7 @@ public class LogFragment extends Fragment {
     }
 
     public void getLog() {
-        String userID = CookieTable.getCurrentID();
+        String userID = (String) getArguments().get(USER_ID);
         if (userID != null) {
             NetworkLog request = new NetworkLog(userID,
                     new Response.Listener<List<LogInfo>>() {

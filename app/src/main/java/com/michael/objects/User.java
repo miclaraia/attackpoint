@@ -61,7 +61,7 @@ public class User {
         if (mUserTable.userExists(id)) {
             setUser(mUserTable.getUser(id));
         } else {
-            // TODO update data when user changes their info?
+            // TODO update data when user changes their info?2
             UserRequest request = new UserRequest(id, new Response.Listener<User>() {
                 @Override
                 public void onResponse(User user) {
