@@ -34,8 +34,13 @@ public class Distance {
      * @param unit unit of distance
      */
     public Distance(String distance, String unit) {
-        this.distance = Float.parseFloat(distance);
-        this.unit = unit;
+        if (!(distance == null || distance.equals(""))) {
+            this.distance = Float.parseFloat(distance);
+            this.unit = unit;
+        } else {
+            this.distance = 0;
+            this.unit = "";
+        }
     }
 
     /**
@@ -54,9 +59,14 @@ public class Distance {
      *                 the unit, seperated by a space
      */
     public Distance(String distance) {
-        String[] items = distance.split(" ");
-        this.distance = Float.parseFloat(items[0]);
-        this.unit = items[1];
+        if (!(distance == null || distance.equals(""))) {
+            String[] items = distance.split(" ");
+            this.distance = Float.parseFloat(items[0]);
+            this.unit = items[1];
+        } else {
+            this.distance = 0;
+            this.unit = "";
+        }
     }
 
     /**
@@ -73,6 +83,7 @@ public class Distance {
      * @return
      */
     public String toString() {
+        if (distance <= 0) return "";
         return Float.toString(distance) + " " + unit;
     }
 }

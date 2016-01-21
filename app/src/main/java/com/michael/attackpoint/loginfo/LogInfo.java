@@ -70,9 +70,12 @@ public class LogInfo {
             setDate((String) json.get(JSON_DATE));
 
             setTime((String) json.get(JSON_TIME));
+
+            //makes sure distance actually exists before trying to set it
             if(!json.isNull(JSON_DISTANCE)) {
                 setDistance((String) json.get(JSON_DISTANCE));
-                setPace(time, distance);
+                //only sets pace if distance is non zero
+                if (!this.distance.isEmpty()) setPace(time, distance);
             }
 
             this.setIntensity((int) json.get(JSON_INTENSITY));

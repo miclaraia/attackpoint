@@ -89,7 +89,7 @@ public class Pace {
     public String toString() {
         String out;
         if (this.pace == null) {
-            return null;
+            return "";
         }
         if (this.pace.hour == 0) {
             out = pace.format("%M:%S");

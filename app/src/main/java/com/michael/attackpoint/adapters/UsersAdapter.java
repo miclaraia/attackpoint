@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
@@ -90,7 +92,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 mask.add(overlay);
 
                 Log.d(DEBUG_TAG, "opening log of user " + user.getName());
-                Fragment fragment = new LogFragment();
+                Activity activity = Singleton.getInstance().getActivity();
+                Intent intent = new Intent(activity, LogActivity.class);
+                intent.putExtra(LogFragment.USER_ID, user.getId());
+                activity.startActivity(intent);
+
+
+                /*Fragment fragment = new LogFragment();
                 Bundle extras = new Bundle();
                 extras.putInt(LogFragment.USER_ID, user.getId());
                 fragment.setArguments(extras);
@@ -104,7 +112,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 transaction.addToBackStack("asdf");
 
                 // Commit the transaction
-                transaction.commit();
+                transaction.commit();*/
             }
         });
     }

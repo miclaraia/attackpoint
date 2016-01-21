@@ -94,8 +94,11 @@ public class NetworkLog extends Request<List<LogInfo>> {
             details.setType(type);
             details.setTime(time);;
             details.setIntensity(intensity);
-            details.setDistance(distance);
-            details.setPace();
+
+            if (!distance.isEmpty()) {
+                details.setDistance(distance);
+                details.setPace();
+            }
 
             details.setText(text);
             details.setColor(color);
@@ -147,7 +150,7 @@ public class NetworkLog extends Request<List<LogInfo>> {
                 return distance;
             }
         }
-        return null;
+        return new Distance();
     }
 
     //gets the color of the activity
