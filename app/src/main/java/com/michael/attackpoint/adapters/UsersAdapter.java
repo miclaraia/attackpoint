@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int i) {
-        User.Strings strings = mUserList.get(i).strings();
+        final User user = mUserList.get(i);
+        User.Strings strings = user.strings();
 
         vh.vUser.setText(strings.username);
         vh.vName.setText(strings.name);
@@ -83,6 +85,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 ColorDrawable overlay = new ColorDrawable(Color.parseColor("#AAFFFFFF"));
                 overlay.setBounds(0, h, w, 0);
                 mask.add(overlay);
+
+                Log.d(DEBUG_TAG, "opening log of user " + user.getName());
+                Fragment fragment = new LogFragment();
+                Bundle extras = new Bundle();
+                extras.putInt(LogFragment.USER_ID, user.getId());
+                fragment.setArguments(extras);
+
+                FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
             }
         });
     }

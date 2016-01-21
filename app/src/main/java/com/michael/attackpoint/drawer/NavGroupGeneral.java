@@ -155,7 +155,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 Log.d(DEBUG_TAG, "swapping fragments");
                 fragment = new LogFragment();
                 Bundle extras = new Bundle();
-                extras.putString(LogFragment.USER_ID, CookieTable.getCurrentID());
+                extras.putInt(LogFragment.USER_ID, CookieTable.getCurrentID());
                 fragment.setArguments(extras);
 
                 transaction = mActivity.getFragmentManager().beginTransaction();

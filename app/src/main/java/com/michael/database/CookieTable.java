@@ -44,15 +44,15 @@ public class CookieTable {
         dbHelper = DatabaseHelper.getInstance(singleton.getContext());
     }
 
-    public static String getCurrentID() {
+    public static int getCurrentID() {
         CookieTable ct = new CookieTable();
         String user = ct.singleton.getPreferences().getUser();
-        if (user.equals("")) return null;
+        if (user.equals("")) return -1;
 
         return ct.getID(user);
     }
 
-    public String getID(String user) {
+    public int getID(String user) {
         String sql = "SELECT " + COLUMN_COOKIE
                 + " FROM " + TABLE
                 + " WHERE " + COLUMN_USER
@@ -68,7 +68,7 @@ public class CookieTable {
         String id = cookie.split(":")[0];
         cursor.close();
 
-        return id;
+        return Integer.parseInt(id);
     }
 
     public void addCookie(String user, String cookieName, String cookieValue) {

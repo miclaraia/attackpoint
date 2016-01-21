@@ -67,8 +67,8 @@ public class LogFragment extends Fragment {
     }
 
     public void getLog() {
-        String userID = (String) getArguments().get(USER_ID);
-        if (userID != null) {
+        int userID = (int) getArguments().get(USER_ID);
+        if (userID > 0) {
             NetworkLog request = new NetworkLog(userID,
                     new Response.Listener<List<LogInfo>>() {
                         @Override

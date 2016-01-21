@@ -38,7 +38,7 @@ public class NetworkLog extends Request<List<LogInfo>> {
 
     private final Response.Listener<List<LogInfo>> mListener;
 
-    public NetworkLog(String userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
+    public NetworkLog(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, BASE_URL + userID, errorListener);
         mListener = listener;
     }
