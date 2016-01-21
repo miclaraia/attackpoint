@@ -270,7 +270,8 @@ public class LogInfo {
      * @param intensity int from 1 to 5
      */
     public void setIntensity(String intensity) {
-        this.intensity = Integer.parseInt(intensity);
+        if (intensity == null || intensity.equals("")) this.intensity = -1;
+        else this.intensity = Integer.parseInt(intensity);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.michael.network;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -128,9 +129,21 @@ public class NetworkLog extends Request<List<LogInfo>> {
     public Distance getMetaDistance(Element meta) {
         String metaString = meta.toString();
         String[] split = metaString.split(" ");
+
         for (int i = 0; i < split.length; i++) {
-            if (split[i].equals("km")) {
-                Distance distance = new Distance(split[i - 1], split[i]);
+            if (split[i].equals("km") || split[i].equals("mi")) {
+                char dArray[] = split[i-1].toCharArray();
+                String d = "";
+
+                for (int j = 0; j < dArray.length; j++) {
+                    char c = dArray[j];
+                    if (c == '.' || c >= '0' && c <= '9') {
+                        Log.d(DEBUG_TAG, ""+c);
+                        d += c;
+                    }
+                }
+
+                Distance distance = new Distance(d, split[i]);
                 return distance;
             }
         }

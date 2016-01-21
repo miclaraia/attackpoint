@@ -1,5 +1,6 @@
 package com.michael.attackpoint.adapters;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 import com.michael.database.CookieTable;
 import com.michael.objects.User;
 
@@ -93,13 +95,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 extras.putInt(LogFragment.USER_ID, user.getId());
                 fragment.setArguments(extras);
 
-                FragmentManager manager = fragment.getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
+                Activity activity = Singleton.getInstance().getActivity();
+                FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
                 transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
+                transaction.addToBackStack("asdf");
 
                 // Commit the transaction
                 transaction.commit();
