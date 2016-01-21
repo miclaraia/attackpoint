@@ -1,5 +1,6 @@
 package com.michael.attackpoint;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
@@ -28,6 +29,7 @@ public class Singleton extends Application {
     private RequestQueue mRequestQueue;
     private Preferences mPreferences;
     private Context mContext;
+    private Activity mActivity;
     private NavDrawer mDrawer;
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
@@ -38,6 +40,8 @@ public class Singleton extends Application {
         super.onCreate();
 
         mInstance = this;
+        mActivity = null;
+
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
@@ -55,6 +59,22 @@ public class Singleton extends Application {
 
     public Context getContext() {
         return mContext;
+    }
+
+    /**
+     * gets current activity
+     * @return Activity
+     */
+    public Activity getActivity() {
+        return mActivity;
+    }
+
+    /**
+     * sets current activity
+     * @param activity
+     */
+    public void setActivity(Activity activity) {
+        mActivity = activity;
     }
 
     /**

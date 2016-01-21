@@ -19,12 +19,19 @@ public class LogDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_detail);
+        Singleton.getInstance().setActivity(this);
 
         Intent intent = getIntent();
         String data = intent.getStringExtra(DETAILS);
         setDetails(data);
 
         Log.d(DEBUG_TAG, data);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Singleton.getInstance().setActivity(this);
     }
 
     @Override

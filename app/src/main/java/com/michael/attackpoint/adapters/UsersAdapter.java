@@ -1,6 +1,7 @@
 package com.michael.attackpoint.adapters;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -92,7 +93,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 extras.putInt(LogFragment.USER_ID, user.getId());
                 fragment.setArguments(extras);
 
-                FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction();
+                FragmentManager manager = fragment.getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back

@@ -14,6 +14,7 @@ public class LogActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+        Singleton.getInstance().setActivity(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -27,6 +28,12 @@ public class LogActivity extends ActionBarActivity {
         transaction.add(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Singleton.getInstance().setActivity(this);
     }
 
 }

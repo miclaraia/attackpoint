@@ -28,7 +28,7 @@ public class TrainingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training);
-        findViewById(R.id.training_parent).
+        Singleton.getInstance().setActivity(this);
 
         findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
@@ -73,6 +73,12 @@ public class TrainingActivity extends Activity {
                 dialog.show(getFragmentManager(), "durationpicker");
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Singleton.getInstance().setActivity(this);
     }
 
     private View.OnClickListener trainingListener = new View.OnClickListener() {
