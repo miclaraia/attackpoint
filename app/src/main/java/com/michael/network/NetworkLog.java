@@ -73,37 +73,42 @@ public class NetworkLog extends Request<List<LogInfo>> {
     //gets meta data and text from an activity in the html
     //returns LogInfo object
     public LogInfo getActivity(Element activity) {
-        Element meta = activity.getElementsByTag("p").first();
+        String type = activity.getElementsByTag("b").first().text();
 
-        String type = meta.getElementsByTag("b").first().text();
-        String text = activity.select(".descrow:not(.privatenote)").first().html();
-        // TODO fix this
-        if (type.equals("Note")) {
-            LogInfo details = new LogInfo();
-            details.setType(type);
-            details.setText(text);
-            return details;
+        if (type.equals("Event:")) {
+            return new LogInfo();
         } else {
-            String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
-            String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
-            Distance distance = getMetaDistance(meta);
+            Element meta = activity.getElementsByTag("p").first();
 
-            String color = getActivityColor(activity);
+            String text = activity.select(".descrow:not(.privatenote)").first().html();
+            // TODO fix this
+            if (type.equals("Note")) {
+                LogInfo details = new LogInfo();
+                details.setType(type);
+                details.setText(text);
+                return details;
+            } else {
+                String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
+                String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
+                Distance distance = getMetaDistance(meta);
 
-            LogInfo details = new LogInfo();
-            details.setType(type);
-            details.setTime(time);;
-            details.setIntensity(intensity);
+                String color = getActivityColor(activity);
 
-            if (!distance.isEmpty()) {
-                details.setDistance(distance);
-                details.setPace();
+                LogInfo details = new LogInfo();
+                details.setType(type);
+                details.setTime(time);;
+                details.setIntensity(intensity);
+
+                if (!distance.isEmpty()) {
+                    details.setDistance(distance);
+                    details.setPace();
+                }
+
+                details.setText(text);
+                details.setColor(color);
+
+                return details;
             }
-
-            details.setText(text);
-            details.setColor(color);
-
-            return details;
         }
     }
 
