@@ -49,10 +49,14 @@
 
         <activity
             android:name=".LogDetailActivity"
-            android:label="@string/title_activity_log_detail"></activity>
+            android:label="@string/title_activity_log_detail" />
         <activity
             android:name=".LogActivity"
-            android:label="@string/title_activity_log"></activity>
+            android:label="@string/title_activity_log" />
+        <activity
+            android:name=".DiscussionActivity"
+            android:label="@string/title_activity_discussion"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

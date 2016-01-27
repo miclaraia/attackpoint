@@ -11,6 +11,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.DiscussionActivity;
 import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
@@ -81,6 +82,10 @@ public class NavGroupGeneral extends NavDrawerGroup {
             case "Log":
                 intent = new Intent(mActivity, LogActivity.class);
                 intent.putExtra(LogFragment.USER_ID, CookieTable.getCurrentID());
+                mActivity.startActivity(intent);
+                break;
+            case "Discussion":
+                intent = new Intent(mActivity, DiscussionActivity.class);
                 mActivity.startActivity(intent);
                 break;
             case "Add Training":

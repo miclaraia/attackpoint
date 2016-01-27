@@ -4,7 +4,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-        <!-- inherit from the material theme -->
+    <!-- inherit from the material theme -->
 
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Main theme colors -->
@@ -50,5 +50,14 @@
         <item name="spinBars">true</item>
         <item name="color">@color/dark_textColorPrimary</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
