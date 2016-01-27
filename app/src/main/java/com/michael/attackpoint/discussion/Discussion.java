@@ -1,5 +1,6 @@
 package com.michael.attackpoint.discussion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,13 @@ public class Discussion {
     
     public Discussion(List<Comment> comments, int id, String title, String category) {
         mComments = comments;
+        mId = id;
+        mTitle = title;
+        mCategory = category;
+    }
+
+    public Discussion(int id, String title, String category) {
+        mComments = new ArrayList<>();
         mId = id;
         mTitle = title;
         mCategory = category;
