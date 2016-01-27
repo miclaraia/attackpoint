@@ -64,4 +64,8 @@ public class Discussion {
     public void setCategory(String category) {
         mCategory = category;
     }
+
+    public void addComment(Comment comment) {
+        mComments.add(comment);
+    }
 }
