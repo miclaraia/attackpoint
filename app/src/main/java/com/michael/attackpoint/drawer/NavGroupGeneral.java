@@ -152,6 +152,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
                         volleyError.printStackTrace();
                     }
                 });
+                mSingleton.add(request);
                 break;
             case "User Fragment":
                 Log.d(DEBUG_TAG, "swapping fragments");
