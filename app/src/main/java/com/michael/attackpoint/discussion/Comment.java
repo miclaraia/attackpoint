@@ -14,28 +14,36 @@ import java.util.Locale;
 public class Comment {
 
     private static final String DEBUG_TAG = "ap.comment";
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'kk:mm:ss'Z'";
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'kk:mm:ss'Z'-zzz";
 
-    private String mComment;
+    private String mText;
     private int mId;
     private int mUser;
     private String mUsername;
     private Date mTimestamp;
 
-    public Comment(String comment, int id, int user, String username, Date timestamp) {
-        mComment = comment;
-        mId = id;
-        mUser = user;
-        mUsername = username;
-        mTimestamp = timestamp;
+    public Comment(String text, int id, int user, String username, Date timestamp) {
+        setText(text);
+        setId(id);
+        setUser(user);
+        setUsername(username);
+        setTimestamp(timestamp);
     }
 
-    public String getComment() {
-        return mComment;
+    public Comment(String text, int id, int user, String username, String timestamp) {
+        setText(text);
+        setId(id);
+        setUser(user);
+        setUsername(username);
+        setTimestamp(timestamp);
     }
 
-    public void setComment(String comment) {
-        mComment = comment;
+    public String getText() {
+        return mText;
+    }
+
+    public void setText(String text) {
+        mText = text;
     }
 
     public int getId() {
@@ -71,6 +79,7 @@ public class Comment {
     }
 
     public void setTimestamp(String timestamp) {
+        timestamp += "-GMT";
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
             Date parsed = sdf.parse(timestamp);
