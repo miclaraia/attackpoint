@@ -65,7 +65,7 @@ public class Discussion {
         mCategory = category;
     }
 
-    public void addComment(Comment comment) {
+    void addComment(Comment comment) {
         mComments.add(comment);
     }
 }
