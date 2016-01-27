@@ -8,6 +8,8 @@ android {
         applicationId "com.michael.attackpoint"
         minSdkVersion 21
         targetSdkVersion 21
+
+        multiDexEnabled true
     }
 
     buildTypes {
