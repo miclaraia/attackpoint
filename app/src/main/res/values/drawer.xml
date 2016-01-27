@@ -16,6 +16,7 @@
         <item>Check Users</item>
         <item>Clear Users</item>
         <item>Check Favorites</item>
+        <item>Discussion Test</item>
         <item>User Test</item>
         <item>User Fragment</item>
         <item>Log Fragment</item>
@@ -28,6 +29,7 @@
         <item>@drawable/ic_person</item>
         <item>@drawable/ic_person</item>
         <item>@drawable/ic_person</item>
+        <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>
         <item>@drawable/ic_log</item>

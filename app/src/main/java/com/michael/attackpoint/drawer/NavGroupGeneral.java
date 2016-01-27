@@ -18,6 +18,7 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
+import com.michael.attackpoint.discussion.Discussion;
 import com.michael.database.CookieTable;
 import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
@@ -136,6 +137,21 @@ public class NavGroupGeneral extends NavDrawerGroup {
                     }
                 });
                 mSingleton.add(request);
+                break;
+            case "Discussion Test":
+                Log.d(DEBUG_TAG, "Testing discussion request");
+                request = new com.michael.attackpoint.discussion.Request(1132702, new Response.Listener<Discussion>() {
+                    @Override
+                    public void onResponse(Discussion discussion) {
+                        Log.d(DEBUG_TAG, "Got response");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d(DEBUG_TAG, "Got error");
+                        volleyError.printStackTrace();
+                    }
+                });
                 break;
             case "User Fragment":
                 Log.d(DEBUG_TAG, "swapping fragments");

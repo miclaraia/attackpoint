@@ -33,7 +33,7 @@ public class Request extends com.android.volley.Request<Discussion> {
         try {
             String data = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             Discussion discussion = getDiscussion(Jsoup.parse(data));
-            
+
             return Response.success(discussion, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             e.printStackTrace();
