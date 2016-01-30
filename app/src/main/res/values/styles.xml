@@ -15,10 +15,13 @@
         <item name="android:colorAccent">@color/dark_colorAccent</item>
         <item name="android:colorBackground">@color/dark_colorPrimary</item>
 
+        <item name="android:textColorPrimary">@color/dark_textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/dark_textColorSecondary</item>
+
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionBarStyle">@style/Widget.AppTheme.ActionBar</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
-        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppTheme.PopupMenu</item>
+
     </style>
 
     <style name="Widget.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
