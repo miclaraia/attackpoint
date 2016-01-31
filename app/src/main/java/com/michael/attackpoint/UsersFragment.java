@@ -40,8 +40,8 @@ public class UsersFragment extends Fragment {
         //TODO should be handled differently
         singleton.setFragment(this);
 
-        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         View view = inflater.inflate(R.layout.fragment_users, container,false);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardList);
         mRecyclerView.setLayoutManager(linearLayout);
