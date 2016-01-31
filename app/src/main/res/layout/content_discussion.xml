@@ -12,30 +12,95 @@
     tools:context="com.michael.attackpoint.DiscussionActivity"
     tools:showIn="@layout/activity_discussion">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Golf Courses for Sprint Maps"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="30dp"/>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Golf Courses for Sprint Maps"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="30dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Orienteering"
+                    android:textColor="?android:colorAccent"
+                    android:textSize="15dp"
+                    android:layout_below="@id/title" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?android:colorPrimary"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Orienteering"
-                android:textColor="?android:colorAccent"
-                android:textSize="15dp"
-                android:layout_below="@id/title" />
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:id="@+id/user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pink Socks"
+                    android:textColor="?android:colorAccent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/user"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="Anyone here ever used a golf course as a sprint venue? A google search turned up a few maps in the UK and a canceled event in Massachusetts.
 
-        </RelativeLayout>
-    </LinearLayout>
+CascadeOC may have a lead on being able to use one as part of a sprint venue we'll map next year.
+
+And we're talking golf golf, since I know about many disc golf courses on orienteering maps.
+
+(To avoid obvious conflicts, I'm also assuming that we'd only use it at night.)"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?android:colorPrimary"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:id="@+id/user2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="slow-twitch"
+                    android:textColor="?android:colorAccent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/user2"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="I've run at least once on Muriwai golf course in NZ - I can't recall whether it was courtesy of one of the Auckland O Clubs (in which case, more likely NorthWest) or a national squad 'special' but hopefully someone involved on the organisational side will see this and contribute more usefully! Was indeed at night, and all 'greens' (I'm not a golfer so I may not have my terminology right - I mean the level, super-groomed, bits around the holes) were O.O.B. That's about all I can recall, other than it was at the end of October so monster-masks and the like may or may not have been involved...
+
+Have certainly seen many other courses that I would love for us to be allowed to go play on. There's a lovely bit of sand-dune terrain right next to Wellington airport that has in my opinion the wrong sort of flags set out on it!
+
+Edit: thanks to this thing called attackpoint I can tell you the Muriwai event was 31st October 2009. I don't have a map link but if someone has a copy of it on the net somewhere, that added info plus 'TONIC' (the 'brand' for the weekend as a whole) might help with the googling"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
