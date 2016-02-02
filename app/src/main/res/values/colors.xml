@@ -11,13 +11,31 @@
     <color name="red">#D50000</color>
     <color name="ripple">#FFAAAAAA</color>
 
-    <color name="dark_window_background">#303030</color>
+    <color name="dark_status_bar">#000000</color>
+    <color name="dark_app_bar">#303030</color>
+    <color name="dark_background">#404040</color>
     <color name="dark_colorPrimary">#515151</color>
     <color name="dark_colorPrimaryDark">#414141</color>
     <color name="dark_colorAccent">@color/orange_1</color>
 
     <color name="dark_textColorPrimary">#FAFAFA</color>
     <color name="dark_textColorSecondary">#AAAAAA</color>
+
+    <!--<color name="colorPrimaryLight">#FFE0B2</color>
+    <color name="colorPrimary">#FF8800</color>
+    <color name="colorPrimaryDark">#F57C00</color>-->
+    <color name="colorPrimaryLight">#78909C</color>
+    <color name="colorPrimary">#546E7A</color>
+    <color name="colorPrimaryDark">#37474F</color>
+    <color name="colorAccent">#FF8800</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B1FFFFFF</color>
+    <color name="textColorHint">#4CFFFFFF</color>
+    <color name="colorStatusBar">#000000</color>
+    <color name="colorAppBar">#212121</color>
+    <color name="colorBackground">#303030</color>
+    <color name="colorCardDialog">#424242</color>
+    <color name="colorCardSecondary">#505050</color>
 
     <!--color name="1dark_accent">#373029</color>
     <color name="1dark_barBackground">#4a4a4a</color>

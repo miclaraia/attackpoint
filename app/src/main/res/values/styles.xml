@@ -9,17 +9,18 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
-        <item name="android:textColorPrimary">@color/dark_textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/dark_textColorSecondary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
 
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionBarStyle">@style/Widget.AppTheme.ActionBar</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
-        <item name="colorAccent">@color/dark_colorAccent</item>
-        <item name="colorPrimary">@color/dark_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/dark_colorPrimaryDark</item>
-        <item name="android:textColorPrimaryInverse">@color/dark_colorPrimary</item>
-        <item name="android:colorBackground">@color/dark_window_background</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:navigationBarColor">@color/colorStatusBar</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
 
     </style>
 

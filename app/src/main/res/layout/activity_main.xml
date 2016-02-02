@@ -26,6 +26,5 @@
         android:choiceMode="singleChoice"
         android:divider="@color/dark_colorPrimaryDark"
         android:dividerHeight="3dp"
-        android:background="@color/dark_window_background"
         android:listSelector="@drawable/ripple_rectangle" />
 </android.support.v4.widget.DrawerLayout>
