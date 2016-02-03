@@ -54,8 +54,8 @@ public class NavDrawer {
                 R.string.drawer_open, R.string.drawer_close);
 
         drawer.setDrawerListener(mDrawerToggle);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //activity.getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
 
         mNavGroups = new ArrayList<>();

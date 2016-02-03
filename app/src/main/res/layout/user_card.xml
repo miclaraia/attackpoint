@@ -16,13 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/dark_colorPrimary" >
+        android:background="@color/colorCardSecondary" >
 
         <RelativeLayout
             android:id="@id/logInfo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/logTitle_barHeight"
-            android:background="@color/dark_colorPrimaryDark" >
+            android:background="@color/colorCardDialog">
 
             <TextView
                 android:id="@id/usercard_username"
@@ -34,7 +34,7 @@
                 android:layout_marginRight="@dimen/usercard_title_marginH"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/usercard_title"
-                android:textColor="@color/dark_colorAccent"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:text="miclaraia" />
         </RelativeLayout>

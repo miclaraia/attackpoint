@@ -44,10 +44,10 @@
     <color name="textColorSecondary">#B1FFFFFF</color>
     <color name="textColorHint">#4CFFFFFF</color>
     <color name="colorStatusBar">#37474F</color>
-    <color name="colorAppBar">#212121</color>
-    <color name="colorBackground">#303030</color>
-    <color name="colorCardDialog">#424242</color>
-    <color name="colorCardSecondary">#505050</color>
+    <color name="colorAppBar">#303030</color>
+    <color name="colorBackground">#424242</color>
+    <color name="colorCardDialog">#505050</color>
+    <color name="colorCardSecondary">#606060</color>
 
     <!--color name="1dark_accent">#373029</color>
     <color name="1dark_barBackground">#4a4a4a</color>

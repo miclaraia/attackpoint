@@ -16,13 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/dark_colorPrimary" >
+        android:background="@color/colorCardDialog" >
 
         <RelativeLayout
             android:id="@id/logInfo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/logTitle_barHeight"
-            android:background="@color/dark_colorPrimary" >
+            android:layout_height="@dimen/logTitle_barHeight" >
 
             <View
                 android:id="@id/log_color"
@@ -88,7 +87,7 @@
             android:id="@id/logInfo_top"
             style="@style/logCardItem_detail"
             android:padding="10dp"
-            android:background="@color/dark_colorPrimaryDark" >
+            android:background="@color/colorCardSecondary" >
 
             <TextView
                 android:id="@id/log_time"
