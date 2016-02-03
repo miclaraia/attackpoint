@@ -28,18 +28,15 @@ public class LogFragment extends Fragment {
     private List<LogInfo> logInfoList;
     private RecyclerView recList;
     private LogAdapter adapter;
-    private LinearLayoutManager linearLayout;
     private Singleton singleton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        linearLayout = new LinearLayoutManager(getActivity());
-
         View view = inflater.inflate(R.layout.fragment_log, container,false);
         recList = (RecyclerView) view.findViewById(R.id.cardList);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         recList.setLayoutManager(linearLayout);
 
         // TODO initialize should actually initialize the network sequence and spawn an animation

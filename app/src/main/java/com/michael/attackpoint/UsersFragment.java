@@ -41,9 +41,10 @@ public class UsersFragment extends Fragment {
         singleton.setFragment(this);
 
         View view = inflater.inflate(R.layout.fragment_users, container,false);
-        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardList);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
+        //TODO recyclerview is null becuase not logged in. Something in the view is null?
         mRecyclerView.setLayoutManager(linearLayout);
 
         mAdapter = new UsersAdapter(this, new ArrayList<User>());
