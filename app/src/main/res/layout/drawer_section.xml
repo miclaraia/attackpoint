@@ -5,13 +5,13 @@
     android:paddingLeft="20dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
-    android:background="@color/dark_colorPrimaryDark" >
+    android:background="@color/colorAppBar" >
 
     <TextView
         android:id="@id/item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/dark_textColorSecondary"
+        android:textColor="?android:textColorSecondary"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:textSize="15dp"
