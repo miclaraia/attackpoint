@@ -21,6 +21,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:navigationBarColor">@color/colorStatusBar</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
 
     </style>
 

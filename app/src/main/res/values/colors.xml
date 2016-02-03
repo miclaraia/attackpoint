@@ -24,7 +24,7 @@
     <!--<color name="colorPrimaryLight">#FFE0B2</color>
     <color name="colorPrimary">#FF8800</color>
     <color name="colorPrimaryDark">#F57C00</color>-->
-    <color name="colorPrimaryLight">#78909C</color>
+    <!--<color name="colorPrimaryLight">#78909C</color>
     <color name="colorPrimary">#546E7A</color>
     <color name="colorPrimaryDark">#37474F</color>
     <color name="colorAccent">#FF8800</color>
@@ -32,6 +32,18 @@
     <color name="textColorSecondary">#B1FFFFFF</color>
     <color name="textColorHint">#4CFFFFFF</color>
     <color name="colorStatusBar">#000000</color>
+    <color name="colorAppBar">#212121</color>
+    <color name="colorBackground">#303030</color>
+    <color name="colorCardDialog">#424242</color>
+    <color name="colorCardSecondary">#505050</color>-->
+
+    <color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#303030</color>
+    <color name="colorAccent">#FF8800</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B1FFFFFF</color>
+    <color name="textColorHint">#4CFFFFFF</color>
+    <color name="colorStatusBar">#37474F</color>
     <color name="colorAppBar">#212121</color>
     <color name="colorBackground">#303030</color>
     <color name="colorCardDialog">#424242</color>
