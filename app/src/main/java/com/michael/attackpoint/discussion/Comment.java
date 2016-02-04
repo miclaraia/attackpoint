@@ -14,7 +14,8 @@ import java.util.Locale;
 public class Comment {
 
     private static final String DEBUG_TAG = "ap.comment";
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'kk:mm:ss'Z'-zzz";
+    private static final String PARSE_FORMAT = "yyyy-MM-dd'T'kk:mm:ss'Z'-zzz";
+    private static final String OUT_FORMAT = "MMM dd, yyyy kk:mm:ss";
 
     private String mText;
     private int mId;
@@ -74,6 +75,11 @@ public class Comment {
         return mTimestamp;
     }
 
+    public String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat(OUT_FORMAT, Locale.ENGLISH);
+        return sdf.format(mTimestamp);
+    }
+
     public void setTimestamp(Date timestamp) {
         mTimestamp = timestamp;
     }
@@ -81,7 +87,7 @@ public class Comment {
     public void setTimestamp(String timestamp) {
         timestamp += "-GMT";
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+            SimpleDateFormat sdf = new SimpleDateFormat(PARSE_FORMAT, Locale.ENGLISH);
             Date parsed = sdf.parse(timestamp);
             this.mTimestamp = parsed;
         } catch (ParseException e) {
