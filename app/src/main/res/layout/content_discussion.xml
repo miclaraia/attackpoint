@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RelativeLayout
+                android:id="@+id/discussion_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
@@ -26,7 +27,7 @@
                 android:paddingRight="16dp"
                 android:background="@color/colorBackground">
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/discussion_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Golf Courses for Sprint Maps"
@@ -34,14 +35,19 @@
                     android:textSize="30dp"/>
 
                 <TextView
-                    android:id="@+id/category"
+                    android:id="@+id/discussion_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Orienteering"
                     android:textColor="?android:colorAccent"
                     android:textSize="15dp"
-                    android:layout_below="@id/title" />
+                    android:layout_below="@id/discussion_title" />
             </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/discussion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </ScrollView>
