@@ -86,6 +86,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 break;
             case "Discussion":
                 intent = new Intent(mActivity, DiscussionActivity.class);
+                intent.putExtra(DiscussionActivity.DISCUSSION_ID, 1111416);
                 mActivity.startActivity(intent);
                 break;
             case "Add Training":
