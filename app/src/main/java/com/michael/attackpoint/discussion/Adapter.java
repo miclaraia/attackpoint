@@ -13,6 +13,7 @@ import com.michael.attackpoint.R;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public Adapter(Activity activity, List<Comment> comments) {
         mActivity = activity;
         mComments = comments;
+    }
+
+    public Adapter(Activity activity) {
+        mActivity = activity;
+        mComments = new ArrayList<Comment>();
     }
 
     public void updateList(int position, Comment comment) {

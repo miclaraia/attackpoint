@@ -49,6 +49,10 @@ public class DiscussionActivity extends AppCompatActivity {
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayout);
 
+        mAdapter = new Adapter(this);
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(mAdapter);
+
         getDiscussion();
     }
 
@@ -73,10 +77,7 @@ public class DiscussionActivity extends AppCompatActivity {
         vh.title.setText(discussion.getTitle());
         vh.category.setText(discussion.getCategory());
 
-        mAdapter = new Adapter(this, discussion.getComments());
-        mAdapter.notifyDataSetChanged();
-
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setList(discussion.getComments());
     }
 
     private class ViewHolder {
