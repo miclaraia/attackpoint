@@ -45,14 +45,6 @@ public class DiscussionActivity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
-        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(linearLayout);
-
-        mAdapter = new Adapter(this);
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(mAdapter);
-
         getDiscussion();
     }
 
@@ -77,7 +69,15 @@ public class DiscussionActivity extends AppCompatActivity {
         vh.title.setText(discussion.getTitle());
         vh.category.setText(discussion.getCategory());
 
-        mAdapter.setList(discussion.getComments());
+        //get recyclerview from layout
+        mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayout);
+
+        //create adapter and attach to recyclerview\
+        mAdapter = new Adapter(this, discussion.getComments());
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private class ViewHolder {

@@ -62,7 +62,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder vh, int i) {
         final Comment comment = mComments.get(i);
-        vh.user.setText(comment.getUser());
+        vh.user.setText(comment.getUsername());
         vh.date.setText(comment.getDate());
         vh.content.setText(comment.getText());
 
