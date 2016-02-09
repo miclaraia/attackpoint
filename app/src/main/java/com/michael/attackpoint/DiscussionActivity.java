@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ public class DiscussionActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.discussion);
         mAdapter = new Adapter(this, discussion.getComments());
+        mListView.setAdapter(mAdapter);
 
         //get recyclerview from layout
         /*mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
@@ -82,6 +84,15 @@ public class DiscussionActivity extends AppCompatActivity {
         /*mAdapter = new Adapter(this, discussion.getComments());
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);*/
+    }
+
+    private View inflateHeader(Discussion discussion) {
+        View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
+        ViewHolder vh = new ViewHolder(header);
+        vh.title.setText(discussion.getTitle());
+        vh.category.setText(discussion.getCategory());
+
+        return header;
     }
 
     private class ViewHolder {
