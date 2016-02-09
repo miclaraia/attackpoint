@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by michael on 2/3/16.
  */
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends BaseAdapter {
     private static final String DEBUG_TAG = "discussion.A";
 
     private List<Comment> mComments;
@@ -55,6 +56,48 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
+    public int getCount() {
+        return mComments.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mComments.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mComments.get(position).getId();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_comment, null);
+        }
+
+        //set text inside convertView
+        ViewHolder vh = new ViewHolder(convertView);
+        final Comment comment = mComments.get(position);
+        vh.user.setText(comment.getUsername());
+        vh.date.setText(comment.getDate());
+        vh.content.setText(comment.getText());
+
+        // colors comment background alternating light/dark
+        int color = 0;
+        if ((position & 1) == 0) {
+            color = mActivity.getResources().getColor(R.color.colorCardDialog);
+        } else {
+            color = mActivity.getResources().getColor(R.color.colorBackground);
+        }
+        vh.container.setBackgroundColor(color);
+
+        return convertView;
+    }
+
+
+
+    /*@Override
     public int getItemCount() {
         return mComments.size();
     }
@@ -88,16 +131,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-    }
-    
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    }*/
+
+    public static class ViewHolder {
         public TextView user;
         public TextView date;
         public TextView content;
         public RelativeLayout container;
 
         public ViewHolder(View v) {
-            super(v);
             user = (TextView) v.findViewById(R.id.comment_user);
             date = (TextView) v.findViewById(R.id.comment_date);
             content = (TextView) v.findViewById(R.id.comment_content);
