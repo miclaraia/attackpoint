@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class DiscussionActivity extends AppCompatActivity {
     public final static String DISCUSSION_ID = "d_id";
-    private RecyclerView mRecyclerView;
+    private ListView mListView;
     private Adapter mAdapter;
     private Singleton singleton;
 
@@ -53,7 +54,7 @@ public class DiscussionActivity extends AppCompatActivity {
         Request request = new Request(id, new Response.Listener<Discussion>() {
             @Override
             public void onResponse(Discussion discussion) {
-                initRecycler(discussion);
+                initList(discussion);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -64,20 +65,23 @@ public class DiscussionActivity extends AppCompatActivity {
         singleton.add(request);
     }
 
-    private void initRecycler(Discussion discussion) {
+    private void initList(Discussion discussion) {
         ViewHolder vh = new ViewHolder(findViewById(R.id.discussion_head));
         vh.title.setText(discussion.getTitle());
         vh.category.setText(discussion.getCategory());
 
+        mListView = (ListView) findViewById(R.id.discussion);
+        mAdapter = new Adapter(this, discussion.getComments());
+
         //get recyclerview from layout
-        mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
+        /*mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(linearLayout);
+        mRecyclerView.setLayoutManager(linearLayout);*/
 
         //create adapter and attach to recyclerview\
-        mAdapter = new Adapter(this, discussion.getComments());
+        /*mAdapter = new Adapter(this, discussion.getComments());
         mAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
     }
 
     private class ViewHolder {
