@@ -67,13 +67,12 @@ public class DiscussionActivity extends AppCompatActivity {
     }
 
     private void initList(Discussion discussion) {
-        ViewHolder vh = new ViewHolder(findViewById(R.id.discussion_head));
-        vh.title.setText(discussion.getTitle());
-        vh.category.setText(discussion.getCategory());
-
         mListView = (ListView) findViewById(R.id.discussion);
         mAdapter = new Adapter(this, discussion.getComments());
         mListView.setAdapter(mAdapter);
+
+        View header = inflateHeader(discussion);
+        mListView.addHeaderView(header);
 
         //get recyclerview from layout
         /*mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
