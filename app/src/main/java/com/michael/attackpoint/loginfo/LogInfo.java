@@ -3,8 +3,12 @@ package com.michael.attackpoint.loginfo;
 import android.text.Html;
 import android.text.format.Time;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class containing all information to be rendered on a log
@@ -26,13 +30,14 @@ public class LogInfo {
     public static final String JSON_PACE = "pace";
     public static final String JSON_INTENSITY = "intensity";
     public static final String JSON_COLOR = "color";
+    public static final String JSON_COMMENTS = "comment";
 
     public String type;
     public String text;
     public String snippet;
     public int intensity;
     // TODO
-    public String comments;
+    public List<Comment> comments;
     public String session;
 
     public Date date;
@@ -81,6 +86,13 @@ public class LogInfo {
             this.setIntensity((int) json.get(JSON_INTENSITY));
             this.setColor((int) json.get(JSON_COLOR));
 
+            // get comments from JSON
+            JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
+            for (int i = 0; i < comments_array.length(); i++) {
+                JSONObject c = comments_array.getJSONObject(i);
+                addComment(new Comment(c));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -92,6 +104,7 @@ public class LogInfo {
         pace = new Pace();
         distance = new Distance();
         color = new Color();
+        comments = new ArrayList<>();
     }
 
     /**
@@ -303,6 +316,24 @@ public class LogInfo {
         this.color = new Color(color);
     }
 
+    //++++++++++++++++++ Comments +++++++++++++++++
+    public void addComment(String title, String id) {
+        Comment c = new Comment(title, id);
+        comments.add(c);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public Comment getComment(int index) {
+        return comments.get(index);
+    }
+
 
     /**
      * Creates a JSON string encoding each data point of LogInfo
@@ -320,6 +351,13 @@ public class LogInfo {
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.getIntensity());
             json.put(JSON_COLOR, this.color.get());
+
+            JSONArray comments_array = new JSONArray();
+            for (int i = 0; i < comments.size(); i++) {
+                Comment c = comments.get(i);
+                comments_array.put(c.getJSON());
+            }
+            json.put(JSON_COMMENTS, comments_array);
 
             return json.toString();
         } catch (JSONException e) {

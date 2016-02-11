@@ -28,15 +28,6 @@ public class NetworkLog extends Request<List<LogInfo>> {
     private static final String DEBUG_TAG = "attackpoint.NetworkLog";
     private static final String BASE_URL = "http://www.attackpoint.org/log.jsp/user_";
 
-
-    private static final String TYPE_LOG = "viewlog.jsp";
-
-    public Document document;
-    private ArrayList<LogInfo> logInfoList;
-    private LogAdapter recycler;
-    private Singleton singleton;
-    private static CookieManager cookies;
-
     private final Response.Listener<List<LogInfo>> mListener;
 
     public NetworkLog(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
@@ -75,13 +66,13 @@ public class NetworkLog extends Request<List<LogInfo>> {
     public LogInfo getActivity(Element activity) {
         String type = activity.getElementsByTag("b").first().text();
 
+        //ignores events
         if (type.equals("Event:")) {
             return new LogInfo();
         } else {
             Element meta = activity.getElementsByTag("p").first();
 
             String text = activity.select(".descrow:not(.privatenote)").first().html();
-            // TODO fix this
             if (type.equals("Note")) {
                 LogInfo details = new LogInfo();
                 details.setType(type);
@@ -123,7 +114,15 @@ public class NetworkLog extends Request<List<LogInfo>> {
 
             Elements activities = day.getElementsByAttributeValue("class", "tlactivity");
             for (Element activity : activities) {
-                if (activity.select(".descrowtype1").size() > 0) continue;
+                //checks if this row is a comment
+                if (activity.select(".descrowtype1").size() > 0){
+                    LogInfo last = li.get(li.size() - 1);
+                    Element c = activity.select(".descrowtyp1").first();
+
+                    Element a = c.getElementsByTag("a").first();
+                    String id = a.attr("href").split("_")[1];
+                    String title = a.text().substring(4);
+                }
                 LogInfo info = getActivity(activity);
                 info.setDate(date);
                 li.add(info);
