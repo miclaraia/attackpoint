@@ -72,7 +72,8 @@ public class LogInfo {
             JSONObject json = new JSONObject(jsonString);
             setType((String) json.get(JSON_TYPE));
             setText((String) json.get(JSON_TEXT));
-            setDate((String) json.get(JSON_DATE));
+
+            date.fromJSON(json.getString(JSON_DATE));
 
             setTime((String) json.get(JSON_TIME));
 
@@ -358,7 +359,7 @@ public class LogInfo {
         try {
             json.put(JSON_TYPE, this.type);
             json.put(JSON_TEXT, this.text);
-            json.put(JSON_DATE, this.date.toString());
+            json.put(JSON_DATE, this.date.toJSON());
             json.put(JSON_TIME, this.time.toString());
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.getIntensity());

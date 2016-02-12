@@ -1,5 +1,7 @@
 package com.michael.attackpoint.loginfo;
 
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,6 +14,7 @@ import java.util.Calendar;
  */
 public class Date {
     private static final String DATE_FORMAT = "ccc MMM d";
+    private static final String JSON_FORMAT = "yyyy-MM-dd";
     //todo change to get date from link
     //private static final String LOG_FORMAT = "cccc MMM d #";
     private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
@@ -22,10 +25,12 @@ public class Date {
 
     public Date() {
         sdf = new SimpleDateFormat(DATE_FORMAT);
+        cal = Calendar.getInstance();
     }
 
-    public Date(String logDate) {
+    public Date(String logDate, boolean json) {
         sdf = new SimpleDateFormat(DATE_FORMAT);
+        cal = Calendar.getInstance();
         set(logDate);
     }
 
@@ -36,7 +41,6 @@ public class Date {
      * attackpoint.org
      */
     public void set(String logDate) {
-        cal = Calendar.getInstance();
         if (logDate.contains("enddate")) {
             SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
             try {
@@ -74,5 +78,20 @@ public class Date {
 
     public String toString() {
         return sdf.format(cal.getTime());
+    }
+
+    public String toJSON() {
+        SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
+        return sdf.format(cal.getTime());
+    }
+
+    public void fromJSON(String json) {
+        SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
+        try {
+            java.util.Date date = sdf.parse(json);
+            cal.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

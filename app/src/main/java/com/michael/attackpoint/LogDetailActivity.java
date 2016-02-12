@@ -76,5 +76,8 @@ public class LogDetailActivity extends Activity {
         vh.vDist.setText(data.distance);
         vh.vPace.setText(data.pace);
         vh.vTime.setText(data.time);
+
+        //sets number of comments
+        vh.vComments.setText(data.comments);
     }
 }
