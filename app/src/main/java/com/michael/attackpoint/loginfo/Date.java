@@ -37,7 +37,7 @@ public class Date {
      */
     public void set(String logDate) {
         cal = Calendar.getInstance();
-        if (logDate.contains("#")) {
+        if (logDate.contains("enddate")) {
             SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
             try {
                 java.util.Date date = sdf.parse(logDate);

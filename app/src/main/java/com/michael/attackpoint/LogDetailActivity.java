@@ -58,20 +58,23 @@ public class LogDetailActivity extends Activity {
 
     private void setDetails(String json) {
         View view = findViewById(R.id.log_details);
-        LogAdapter.LogViewHolder viewHolder = new LogAdapter.LogViewHolder(view);
+        LogAdapter.LogViewHolder vh = new LogAdapter.LogViewHolder(view);
         LogInfo loginfo = new LogInfo(json);
         LogInfo.Strings data = loginfo.strings();
 
-        viewHolder.vTitle.setText(data.type);
-        viewHolder.vColor.setBackgroundColor(data.color);
+        vh.vTitle.setText(data.type);
+        vh.vColor.setBackgroundColor(data.color);
 
         //Sets snippet text, removes view if no text
-        if (data.text == null || data.text.length() <= 0) viewHolder.vText.setVisibility(View.GONE);
-        else viewHolder.vText.setText(data.text);
+        if (data.text == null || data.text.length() <= 0) vh.vText.setVisibility(View.GONE);
+        else vh.vText.setText(data.text);
+
+        //sets date
+        vh.vDate.setText(data.date);
 
         //Sets log entry's meta data
-        viewHolder.vDist.setText(data.distance);
-        viewHolder.vPace.setText(data.pace);
-        viewHolder.vTime.setText(data.time);
+        vh.vDist.setText(data.distance);
+        vh.vPace.setText(data.pace);
+        vh.vTime.setText(data.time);
     }
 }
