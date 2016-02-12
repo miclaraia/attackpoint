@@ -23,7 +23,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     private List<LogInfo> logInfoList;
     private Fragment fragment;
-    private LogViewHolder logViewHolder;
 
     public LogAdapter(Fragment fragment, List<LogInfo> logInfoList) {
         this.logInfoList = logInfoList;
@@ -46,33 +45,34 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(LogViewHolder logViewHolder, int i) {
+    public void onBindViewHolder(LogViewHolder vh, int i) {
         LogInfo.Strings li = logInfoList.get(i).strings();
 
         //Sets title and its colors
-        logViewHolder.vTitle.setText(li.type);
-        logViewHolder.vDate.setText(li.date);
-        logViewHolder.vColor.setBackgroundColor(li.color);
+        vh.vTitle.setText(li.type);
+        vh.vDate.setText(li.date);
+        vh.vColor.setBackgroundColor(li.color);
         //logViewHolder.vColor.setBackgroundColor(li.color);
 
         //Sets snippet text, removes view if no text
-        if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) logViewHolder.vText.setVisibility(View.GONE);
-        else logViewHolder.vText.setText(li.snippet);
+        if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) vh.vText.setVisibility(View.GONE);
+        else vh.vText.setText(li.snippet);
 
         //Sets log entry's meta data
-        logViewHolder.vDist.setText(li.distance);
-        logViewHolder.vPace.setText(li.pace);
-        logViewHolder.vTime.setText(li.time);
+        vh.vDist.setText(li.distance);
+        vh.vPace.setText(li.pace);
+        vh.vTime.setText(li.time);
+        
+        //displays number of comments
+        vh.vComments.setText(li.comments);
 
-        // TODO incorporate comments and session time
-        //logViewHolder.vComments.setText(li.comments);
-        //logViewHolder.vSession.setText(li.session);
-
+        // TODO incorporate session time
+        //vh.vSession.setText(li.session);
 
         // TODO proper animation for click
         //Attach click listener to each card and define click behavior
-        logViewHolder.vCard.setTag(i);
-        logViewHolder.vCard.setOnClickListener(new View.OnClickListener() {
+        vh.vCard.setTag(i);
+        vh.vCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ViewOverlay mask = v.getOverlay();

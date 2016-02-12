@@ -334,6 +334,18 @@ public class LogInfo {
         return comments.get(index);
     }
 
+    public int commentSize() {
+        return comments.size();
+    }
+
+    public String commentsText() {
+        int size = comments.size();
+        String s = size + " ";
+        if (size == 1) s += "comment";
+        else s += "comments";
+        return s;
+    }
+
 
     /**
      * Creates a JSON string encoding each data point of LogInfo
@@ -352,6 +364,7 @@ public class LogInfo {
             json.put(JSON_INTENSITY, this.getIntensity());
             json.put(JSON_COLOR, this.color.get());
 
+            //loads comments from json
             JSONArray comments_array = new JSONArray();
             for (int i = 0; i < comments.size(); i++) {
                 Comment c = comments.get(i);
@@ -382,7 +395,7 @@ public class LogInfo {
         public String time;
         public String intensity;
         public String comments;
-        public String session;
+        //public String session;
 
         /**
          * initializes strings
@@ -399,10 +412,10 @@ public class LogInfo {
             this.pace = li.pace.toString();
             this.time = li.time.toString();
             this.intensity = "" + li.getIntensity();
+            this.comments = commentsText();
 
             // TODO
-            this.comments = "";
-            this.session = "";
+            //this.session = "";
         }
     }
 }
