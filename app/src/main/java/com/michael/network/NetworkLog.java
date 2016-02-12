@@ -117,7 +117,7 @@ public class NetworkLog extends Request<List<LogInfo>> {
                 //checks if this row is a comment
                 if (activity.select(".descrowtype1").size() > 0){
                     LogInfo last = li.get(li.size() - 1);
-                    Element c = activity.select(".descrowtyp1").first();
+                    Element c = activity.select(".descrowtype1").first();
 
                     Element a = c.getElementsByTag("a").first();
                     String id = a.attr("href").split("_")[1];
