@@ -12,7 +12,9 @@ import java.util.Calendar;
  */
 public class Date {
     private static final String DATE_FORMAT = "ccc MMM d";
-    private static final String LOG_FORMAT = "cccc MMM d #";
+    //todo change to get date from link
+    //private static final String LOG_FORMAT = "cccc MMM d #";
+    private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
     private static final String LOG_FORMAT_SESSION = "h a";
 
     private Calendar cal;
@@ -36,7 +38,7 @@ public class Date {
     public void set(String logDate) {
         cal = Calendar.getInstance();
         if (logDate.contains("#")) {
-            SimpleDateFormat sdf = new SimpleDateFormat(LOG_FORMAT);
+            SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
             try {
                 java.util.Date date = sdf.parse(logDate);
                 cal.setTime(date);

@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.adapters.LogAdapter;
+import com.michael.attackpoint.loginfo.Comment;
 import com.michael.attackpoint.loginfo.Distance;
 import com.michael.attackpoint.loginfo.LogInfo;
 
@@ -110,7 +111,9 @@ public class NetworkLog extends Request<List<LogInfo>> {
         Elements days = soup.getElementsByAttributeValue("class", "tlday");
 
         for (Element day : days) {
-            String date = day.getElementsByTag("h3").first().text();
+            Element d = day.getElementsByTag("a").first();
+            String[] permalink = d.attr("href").split("/");
+            String date = permalink[permalink.length - 1];
 
             Elements activities = day.getElementsByAttributeValue("class", "tlactivity");
             for (Element activity : activities) {
@@ -122,10 +125,14 @@ public class NetworkLog extends Request<List<LogInfo>> {
                     Element a = c.getElementsByTag("a").first();
                     String id = a.attr("href").split("_")[1];
                     String title = a.text().substring(4);
+
+                    //adds comment to previous activity
+                    last.addComment(title, id);
+                } else {
+                    LogInfo info = getActivity(activity);
+                    info.setDate(date);
+                    li.add(info);
                 }
-                LogInfo info = getActivity(activity);
-                info.setDate(date);
-                li.add(info);
             }
         }
 
