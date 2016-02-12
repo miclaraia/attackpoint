@@ -83,36 +83,44 @@
             android:layout_marginBottom="@dimen/logCardItem_marginV"
             android:text="@string/content_test" />
 
-        <LinearLayout
+        <GridLayout
             android:id="@id/logInfo_top"
-            style="@style/logCardItem_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="10dp"
-            android:background="@color/colorCardSecondary" >
-
+            android:background="@color/colorCardSecondary"
+            android:columnCount="5" >
             <TextView
                 android:id="@id/log_time"
                 style="@style/logCardItem_data"
                 android:textColor="@color/orange_1"
-                android:text="@string/log_time" />
+                android:text="@string/log_time"
+                android:layout_column="0"
+                android:layout_columnWeight="1"/>
 
             <TextView
                 android:id="@id/log_distance"
                 style="@style/logCardItem_data"
                 android:textColor="@color/orange_1"
-                android:text="@string/log_distance"/>
+                android:text="@string/log_distance"
+                android:layout_column="1"
+                android:layout_columnWeight="1"/>
             <TextView
                 android:id="@id/log_pace"
                 style="@style/logCardItem_data"
                 android:textColor="@color/orange_1"
-                android:text="@string/log_pace"/>
+                android:text="@string/log_pace"
+                android:layout_column="2"
+                android:layout_columnWeight="1" />
 
             <TextView
                 android:id="@id/log_comments"
                 style="@style/logCardItem_data"
                 android:textColor="@color/white"
-                android:text="@string/log_comments" />
-
-        </LinearLayout>
-
+                android:text="@string/log_comments"
+                android:layout_column="3"
+                android:layout_columnSpan="2"
+                android:layout_columnWeight="1"/>
+        </GridLayout>
     </LinearLayout>
 </FrameLayout>
