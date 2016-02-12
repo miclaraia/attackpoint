@@ -92,6 +92,7 @@ public class Pace {
             return "";
         }
         if (this.pace.hour == 0) {
+            if (this.pace.minute == 0 && this.pace.second == 0) return "";
             out = pace.format("%M:%S");
         }
         else out = pace.format("%H:%M:%S");

@@ -63,11 +63,12 @@ public class Duration {
      */
     public String toString() {
         if (this.time == null) {
-            return null;
+            return "";
         }
         String format;
         if (time.hour == 0) {
             if (time.minute == 0) {
+                if (time.second == 0) return "";
                 format = "%S";
             }
             else format = "%M:%S";
