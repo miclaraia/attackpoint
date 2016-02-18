@@ -22,11 +22,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "attackpoint.Main";
-    private Singleton singleton;
-    private DrawerLayout drawerLayout;
-    private ListView drawerList;
-    private DrawerAdapter drawerAdapter;
-    private NavDrawer drawer;
+    private Singleton mSingleton;
+    //private NavDrawer drawer;
+    private DrawerLayout mDrawer;
     private MainActivity self = this;
 
     private ArrayList<NavDrawerItem> navMenuItems;
@@ -43,19 +41,24 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-        drawer = new NavDrawer(activity, drawerLayout, drawerList);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //ListView drawerList = (ListView) findViewById(R.id.left_drawer);
+        //drawer = new NavDrawer(activity, drawerLayout, drawerList);
 
-        singleton = Singleton.getInstance();
-        singleton.setDrawer(drawer);
-        singleton.setActivity(this);
+        mSingleton = Singleton.getInstance();
+        //mSingleton.setDrawer(drawer);
+        mSingleton.setActivity(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Singleton.getInstance().setActivity(this);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
     }
 
     @Override
@@ -69,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (drawer.checkToggleClick(item)) {
+        /*if (drawer.checkToggleClick(item)) {
             return true;
-        }
+        }*/
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_search:
