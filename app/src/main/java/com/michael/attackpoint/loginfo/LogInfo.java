@@ -31,6 +31,7 @@ public class LogInfo {
     public static final String JSON_INTENSITY = "intensity";
     public static final String JSON_COLOR = "color";
     public static final String JSON_COMMENTS = "comment";
+    public static final String JSON_CLIMB = "climb";
 
     public String type;
     public String text;
@@ -45,6 +46,7 @@ public class LogInfo {
     public Pace pace;
     public Distance distance;
     public Color color;
+    public Climb climb;
 
     /**public LogInfo(String text, String date, String type, String distance, String unit, String time) {
         init();
@@ -84,6 +86,8 @@ public class LogInfo {
                 if (!this.distance.isEmpty()) setPace(time, distance);
             }
 
+            this.climb.fromJSON((JSONObject) json.get(JSON_CLIMB));
+
             this.setIntensity((int) json.get(JSON_INTENSITY));
             this.setColor((int) json.get(JSON_COLOR));
 
@@ -106,6 +110,7 @@ public class LogInfo {
         distance = new Distance();
         color = new Color();
         comments = new ArrayList<>();
+        climb = new Climb();
     }
 
     /**
@@ -299,6 +304,23 @@ public class LogInfo {
         return intensity;
     }
 
+    //++++++++++++++++++ Climb +++++++++++++++++
+    public void setClimb(Climb climb) {
+        this.climb = climb;
+    }
+
+    public void setClimb(String climb) {
+        this.climb = new Climb(climb);
+    }
+
+    public void setClimb(int climb) {
+        this.climb = new Climb(climb);
+    }
+
+    public Climb getClimb() {
+        return climb;
+    }
+
     //++++++++++++++++++ Color +++++++++++++++++
 
     /**
@@ -364,6 +386,7 @@ public class LogInfo {
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.getIntensity());
             json.put(JSON_COLOR, this.color.get());
+            json.put(JSON_CLIMB, this.climb.toJSON());
 
             //loads comments from json
             JSONArray comments_array = new JSONArray();
@@ -394,6 +417,7 @@ public class LogInfo {
         public String distance;
         public String pace;
         public String time;
+        public String climb;
         public String intensity;
         public String comments;
         //public String session;
@@ -412,6 +436,7 @@ public class LogInfo {
             this.distance = li.distance.toString();
             this.pace = li.pace.toString();
             this.time = li.time.toString();
+            this.climb = li.climb.toString();
             this.intensity = "" + li.getIntensity();
             this.comments = commentsText();
 

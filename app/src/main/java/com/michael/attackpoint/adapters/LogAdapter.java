@@ -65,6 +65,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         if (!details.time.isEmpty()) vh.vTime.setText(li.time);
         if (!details.distance.isEmpty()) vh.vDist.setText(li.distance);
         if (!details.pace.isEmpty()) vh.vPace.setText(li.pace);
+        if (!details.climb.isEmpty()) vh.vClimb.setText(li.climb);
         
         //displays number of comments
         //vh.vComments.setText(li.comments);
@@ -113,9 +114,13 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         public View vColor;
         public TextView vText;
         public TextView vDate;
+
         public TextViewDetail vTime;
         public TextViewDetail vDist;
         public TextViewDetail vPace;
+        public TextViewDetail vClimb;
+        public TextViewDetail vEffort;
+
         public TextView vSession;
         public TextView vComments;
 
@@ -131,6 +136,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             vTime = new TextViewDetail(v.findViewById(R.id.log_time));
             vDist = new TextViewDetail(v.findViewById(R.id.log_distance));
             vPace = new TextViewDetail(v.findViewById(R.id.log_pace));
+            vClimb = new TextViewDetail(v.findViewById(R.id.log_climb));
+            vEffort = new TextViewDetail(v.findViewById(R.id.log_effort));
+
 
             vSession = (TextView) v.findViewById(R.id.log_session);
             vComments = (TextView) v.findViewById(R.id.log_comments);

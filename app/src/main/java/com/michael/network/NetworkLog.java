@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.adapters.LogAdapter;
+import com.michael.attackpoint.loginfo.Climb;
 import com.michael.attackpoint.loginfo.Comment;
 import com.michael.attackpoint.loginfo.Distance;
 import com.michael.attackpoint.loginfo.LogInfo;
@@ -86,10 +87,13 @@ public class NetworkLog extends Request<List<LogInfo>> {
 
                 String color = getActivityColor(activity);
 
+                Climb climb = getMetaClimb(meta);
+
                 LogInfo details = new LogInfo();
                 details.setType(type);
                 details.setTime(time);;
                 details.setIntensity(intensity);
+                details.setClimb(climb);
 
                 if (!distance.isEmpty()) {
                     details.setDistance(distance);
@@ -152,7 +156,7 @@ public class NetworkLog extends Request<List<LogInfo>> {
                 for (int j = 0; j < dArray.length; j++) {
                     char c = dArray[j];
                     if (c == '.' || c >= '0' && c <= '9') {
-                        Log.d(DEBUG_TAG, ""+c);
+                        //Log.d(DEBUG_TAG, ""+c);
                         d += c;
                     }
                 }
@@ -162,6 +166,21 @@ public class NetworkLog extends Request<List<LogInfo>> {
             }
         }
         return new Distance();
+    }
+
+    /**
+     * Gets climb from meta data if it exists
+     * @param meta
+     * @return
+     */
+    public Climb getMetaClimb(Element meta) {
+        Elements span = meta.select("span[title*=\"climb\"");
+        if (span.size() > 0) {
+            Climb climb = new Climb(span.first().text());
+            Log.d("CLIMB", climb.toString());
+            return climb;
+        }
+        return new Climb();
     }
 
     //gets the color of the activity
