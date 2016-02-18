@@ -1,10 +1,12 @@
 package com.michael.attackpoint.adapters;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +48,8 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     @Override
     public void onBindViewHolder(LogViewHolder vh, int i) {
-        LogInfo.Strings li = logInfoList.get(i).strings();
+        LogInfo details = logInfoList.get(i);
+        LogInfo.Strings li = details.strings();
 
         //Sets title and its colors
         vh.vTitle.setText(li.type);
@@ -59,12 +62,12 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         else vh.vText.setText(li.snippet);
 
         //Sets log entry's meta data
-        vh.vDist.setText(li.distance);
-        vh.vPace.setText(li.pace);
-        vh.vTime.setText(li.time);
+        if (!details.time.isEmpty()) vh.vTime.setText(li.time);
+        if (!details.distance.isEmpty()) vh.vDist.setText(li.distance);
+        if (!details.pace.isEmpty()) vh.vPace.setText(li.pace);
         
         //displays number of comments
-        vh.vComments.setText(li.comments);
+        //vh.vComments.setText(li.comments);
 
         // TODO incorporate session time
         //vh.vSession.setText(li.session);
@@ -124,13 +127,40 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             vColor = v.findViewById(R.id.log_color);
             vText =  (TextView) v.findViewById(R.id.log_text);
             vDate = (TextView) v.findViewById(R.id.log_date);
-            vTime = (TextView)  v.findViewById(R.id.log_time);
-            vDist = (TextView) v.findViewById(R.id.log_distance);
-            vPace = (TextView) v.findViewById(R.id.log_pace);
+
+            vTime = (TextViewDetail)  v.findViewById(R.id.log_time);
+            vDist = (TextViewDetail) v.findViewById(R.id.log_distance);
+            vPace = (TextViewDetail) v.findViewById(R.id.log_pace);
+
             vSession = (TextView) v.findViewById(R.id.log_session);
             vComments = (TextView) v.findViewById(R.id.log_comments);
 
             vCard = (FrameLayout) v.findViewById(R.id.log_container);
+        }
+    }
+
+    private class TextViewDetail extends TextView {
+
+        public TextViewDetail(Context context) {
+            super(context);
+        }
+
+        public TextViewDetail(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public TextViewDetail(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        public TextViewDetail(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void setText(CharSequence text, BufferType type) {
+            super.setText(text, type);
+            setVisibility(View.VISIBLE);
         }
     }
 }

@@ -77,4 +77,10 @@ public class Duration {
         return time.format(format);
     }
 
+    public boolean isEmpty() {
+        if (time.hour == 0 && time.minute == 0 && time.second == 0)
+            return true;
+        return false;
+    }
+
 }

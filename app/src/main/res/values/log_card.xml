@@ -51,5 +51,8 @@
 	    <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
 		<item name="android:textSize">14sp</item>
+		<item name="android:layout_marginRight">10dp</item>
+		<item name="android:textColor">@color/orange_1</item>
+		<item name="android:visibility">gone</item>
 	</style>
 </resources>

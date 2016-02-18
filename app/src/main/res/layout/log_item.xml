@@ -83,51 +83,40 @@
             android:layout_marginBottom="@dimen/logCardItem_marginV"
             android:text="@string/content_test" />
 
-        <GridLayout
+        <LinearLayout
             android:id="@id/logInfo_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:background="@color/colorCardSecondary"
-            android:columnCount="3"
-            android:layout_gravity="center">
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/log_intensity"
+                style="@style/logCardItem_data"
+                android:textColor="@color/textColorPrimary"
+                android:text="1" />
             <TextView
                 android:id="@id/log_time"
                 style="@style/logCardItem_data"
-                android:textColor="@color/orange_1"
-                android:text="@string/log_time"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:text="@string/log_time" />
 
             <TextView
                 android:id="@id/log_distance"
                 style="@style/logCardItem_data"
-                android:textColor="@color/orange_1"
-                android:text="@string/log_distance"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"/>
+                android:text="@string/log_distance" />
             <TextView
                 android:id="@id/log_pace"
                 style="@style/logCardItem_data"
-                android:textColor="@color/orange_1"
-                android:text="@string/log_pace"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:gravity="center"/>
-
+                android:text="@string/log_pace" />
             <TextView
-                android:id="@id/log_comments"
+                android:id="@+id/log_climb"
                 style="@style/logCardItem_data"
-                android:textColor="@color/white"
-                android:text="@string/log_comments"
-                android:layout_columnWeight="1"
-                android:layout_columnSpan="1"
-                android:layout_gravity="fill"
-                android:gravity="center"
-                android:layout_row="1"
-                android:visibility="gone"/>
-        </GridLayout>
+                android:text="494m" />
+            <TextView
+                android:id="@+id/log_effort"
+                style="@style/logCardItem_data"
+                android:text="3:00/km"
+                android:textStyle="italic"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

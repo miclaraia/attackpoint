@@ -100,4 +100,10 @@ public class Pace {
         out += " / " + this.unit;
         return out;
     }
+
+    public boolean isEmpty() {
+        if (pace.hour == 0 && pace.minute == 0 && pace.second == 0)
+            return true;
+        return false;
+    }
 }
