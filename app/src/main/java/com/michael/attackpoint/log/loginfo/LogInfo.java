@@ -48,18 +48,6 @@ public class LogInfo {
     public Color color;
     public Climb climb;
 
-    /**public LogInfo(String text, String date, String type, String distance, String unit, String time) {
-        init();
-        this.text = text;
-        this.type = type;
-        this.date = new Date(date);
-
-        this.distance.set(distance, unit);
-        this.time.set(time);
-
-        this.pace.set(this.time.get(), this.distance.get());
-    }*/
-
     public LogInfo() {
         init();
     }
@@ -70,6 +58,20 @@ public class LogInfo {
      */
     public LogInfo(String jsonString) {
         init();
+        fromJSON(jsonString);
+    }
+
+    public void init() {
+        date = new Date();
+        time = new Duration();
+        pace = new Pace();
+        distance = new Distance();
+        color = new Color();
+        comments = new ArrayList<>();
+        climb = new Climb();
+    }
+
+    public void fromJSON(String jsonString) {
         try {
             JSONObject json = new JSONObject(jsonString);
             setType((String) json.get(JSON_TYPE));
@@ -101,16 +103,6 @@ public class LogInfo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public void init() {
-        date = new Date();
-        time = new Duration();
-        pace = new Pace();
-        distance = new Distance();
-        color = new Color();
-        comments = new ArrayList<>();
-        climb = new Climb();
     }
 
     /**

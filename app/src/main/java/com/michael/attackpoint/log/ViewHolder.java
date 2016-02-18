@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.Note;
 
 /**
  * Created by michael on 2/18/16.
@@ -58,15 +59,25 @@ public class ViewHolder {
         vColor.setBackgroundColor(text.color);
         //logViewHolder.vColor.setBackgroundColor(li.color);
 
-        //Sets snippet text, removes view if no text
+        //Sets log entry's meta data
+        //skips these steps if entry is a note
+        if (li instanceof Note) {
+            if (!li.time.isEmpty()) vTime.setText(text.time);
+            if (!li.distance.isEmpty()) vDist.setText(text.distance);
+            if (!li.pace.isEmpty()) vPace.setText(text.pace);
+            if (!li.climb.isEmpty()) vClimb.setText(text.climb);
+        }
+    }
+
+    public void setFull(LogInfo li) {
+        setDetails(li);
+        vText.setText(li.text);
+    }
+
+    public void setSnippet(LogInfo li) {
+        setDetails(li);
         if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) vText.setVisibility(View.GONE);
         else vText.setText(li.snippet);
-
-        //Sets log entry's meta data
-        if (!li.time.isEmpty()) vTime.setText(text.time);
-        if (!li.distance.isEmpty()) vDist.setText(text.distance);
-        if (!li.pace.isEmpty()) vPace.setText(text.pace);
-        if (!li.climb.isEmpty()) vClimb.setText(text.climb);
     }
 
     public static class TextViewDetail {

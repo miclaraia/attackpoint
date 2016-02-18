@@ -62,6 +62,6 @@ public class LogDetailActivity extends Activity {
         ViewHolder vh = new ViewHolder(view);
 
         LogInfo li = new LogInfo(json);
-        vh.setDetails(li);
+        vh.setFull(li);
     }
 }

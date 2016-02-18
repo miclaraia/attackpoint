@@ -49,7 +49,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.LogViewHolder> {
         ViewHolder vh = lvh.vh;
         LogInfo li = logInfoList.get(i);
         
-        vh.setDetails(li);
+        vh.setSnippet(li);
 
         // TODO proper animation for click
         //Attach click listener to each card and define click behavior

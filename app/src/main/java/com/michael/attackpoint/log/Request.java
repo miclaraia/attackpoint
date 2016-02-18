@@ -9,6 +9,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.log.loginfo.Climb;
 import com.michael.attackpoint.log.loginfo.Distance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.Note;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -70,10 +71,9 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
             Element meta = activity.getElementsByTag("p").first();
 
             String text = activity.select(".descrow:not(.privatenote)").first().html();
+            // special case when entry is a note
             if (type.equals("Note")) {
-                LogInfo details = new LogInfo();
-                details.setType(type);
-                details.setText(text);
+                LogInfo details = new Note(type, text);
                 return details;
             } else {
                 String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
