@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.michael.attackpoint.LogDetailActivity;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.Note;
 
 import java.util.List;
 
@@ -67,6 +68,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.LogViewHolder> {
                 Intent intent = new Intent(fragment.getActivity(), LogDetailActivity.class);
                 LogInfo loginfo = logInfoList.get((int) v.getTag());
                 intent.putExtra(LogDetailActivity.DETAILS, loginfo.toString());
+
+                String name;
+                if (loginfo instanceof Note) name = Note.NAME;
+                else name = loginfo.NAME;
+
+                intent.putExtra(LogDetailActivity.NAME, name);
                 fragment.startActivity(intent);
 
             }

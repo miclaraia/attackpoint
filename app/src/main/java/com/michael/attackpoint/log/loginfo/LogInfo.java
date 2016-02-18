@@ -20,6 +20,7 @@ public class LogInfo {
     // TODO store each card temporarily in sql rather than json.
     // TODO Make next render recall faster? Can force refresh?
     private static final int SNIPPET_MAX = 50;
+    public static final String NAME = "loginfo";
 
     public static final String JSON_TYPE = "type";
     public static final String JSON_TEXT = "text";

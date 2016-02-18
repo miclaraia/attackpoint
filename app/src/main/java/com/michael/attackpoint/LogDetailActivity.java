@@ -11,10 +11,12 @@ import android.view.View;
 import com.michael.attackpoint.log.Adapter;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.Note;
 
 public class LogDetailActivity extends Activity {
     private static final String DEBUG_TAG = "ap.logDetailActivity";
     public static final String DETAILS = "json_details";
+    public static final String NAME = "loginfo_name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +25,18 @@ public class LogDetailActivity extends Activity {
         Singleton.getInstance().setActivity(this);
 
         Intent intent = getIntent();
-        String data = intent.getStringExtra(DETAILS);
-        setDetails(data);
+        String name = intent.getStringExtra(NAME);
+        String json = intent.getStringExtra(DETAILS);
 
-        Log.d(DEBUG_TAG, data);
+        LogInfo li;
+        if (name.equals(Note.NAME)) li = new Note(json);
+        else li = new LogInfo(json);
+
+        View view = findViewById(R.id.log_details);
+        ViewHolder vh = new ViewHolder(view);
+        vh.setFull(li);
+
+        Log.d(DEBUG_TAG, json);
     }
 
     @Override
@@ -55,13 +65,5 @@ public class LogDetailActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setDetails(String json) {
-        View view = findViewById(R.id.log_details);
-        ViewHolder vh = new ViewHolder(view);
-
-        LogInfo li = new LogInfo(json);
-        vh.setFull(li);
     }
 }

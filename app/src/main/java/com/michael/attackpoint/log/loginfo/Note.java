@@ -8,6 +8,8 @@ import org.json.JSONObject;
  * Created by michael on 2/18/16.
  */
 public class Note extends LogInfo {
+    public static final String NAME = "note";
+
     public Note(String type, String text) {
         super();
         setText(text);
