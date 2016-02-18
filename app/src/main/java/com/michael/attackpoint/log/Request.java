@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.log.loginfo.Climb;
@@ -22,13 +21,13 @@ import java.util.List;
 /**
  * Created by michael on 8/16/15.
  */
-public class NetworkLog extends Request<List<LogInfo>> {
-    private static final String DEBUG_TAG = "attackpoint.NetworkLog";
+public class Request extends com.android.volley.Request<List<LogInfo>> {
+    private static final String DEBUG_TAG = "attackpoint.Request";
     private static final String BASE_URL = "http://www.attackpoint.org/log.jsp/user_";
 
     private final Response.Listener<List<LogInfo>> mListener;
 
-    public NetworkLog(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
+    public Request(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, BASE_URL + userID, errorListener);
         mListener = listener;
     }

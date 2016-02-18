@@ -8,7 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.michael.attackpoint.log.LogAdapter;
+import com.michael.attackpoint.log.Adapter;
+import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 public class LogDetailActivity extends Activity {
@@ -58,26 +59,9 @@ public class LogDetailActivity extends Activity {
 
     private void setDetails(String json) {
         View view = findViewById(R.id.log_details);
-        LogAdapter.LogViewHolder vh = new LogAdapter.LogViewHolder(view);
-        LogInfo loginfo = new LogInfo(json);
-        LogInfo.Strings data = loginfo.strings();
+        ViewHolder vh = new ViewHolder(view);
 
-        vh.vTitle.setText(data.type);
-        vh.vColor.setBackgroundColor(data.color);
-
-        //Sets snippet text, removes view if no text
-        if (data.text == null || data.text.length() <= 0) vh.vText.setVisibility(View.GONE);
-        else vh.vText.setText(data.text);
-
-        //sets date
-        vh.vDate.setText(data.date);
-
-        //Sets log entry's meta data
-        vh.vDist.setText(data.distance);
-        vh.vPace.setText(data.pace);
-        vh.vTime.setText(data.time);
-
-        //sets number of comments
-        //vh.vComments.setText(data.comments);
+        LogInfo li = new LogInfo(json);
+        vh.setDetails(li);
     }
 }
