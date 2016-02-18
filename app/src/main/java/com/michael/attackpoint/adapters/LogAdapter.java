@@ -113,9 +113,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         public View vColor;
         public TextView vText;
         public TextView vDate;
-        public TextView vTime;
-        public TextView vDist;
-        public TextView vPace;
+        public TextViewDetail vTime;
+        public TextViewDetail vDist;
+        public TextViewDetail vPace;
         public TextView vSession;
         public TextView vComments;
 
@@ -128,9 +128,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             vText =  (TextView) v.findViewById(R.id.log_text);
             vDate = (TextView) v.findViewById(R.id.log_date);
 
-            vTime = (TextViewDetail)  v.findViewById(R.id.log_time);
-            vDist = (TextViewDetail) v.findViewById(R.id.log_distance);
-            vPace = (TextViewDetail) v.findViewById(R.id.log_pace);
+            vTime = new TextViewDetail(v.findViewById(R.id.log_time));
+            vDist = new TextViewDetail(v.findViewById(R.id.log_distance));
+            vPace = new TextViewDetail(v.findViewById(R.id.log_pace));
 
             vSession = (TextView) v.findViewById(R.id.log_session);
             vComments = (TextView) v.findViewById(R.id.log_comments);
@@ -139,28 +139,16 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         }
     }
 
-    private class TextViewDetail extends TextView {
+    public static class TextViewDetail {
+        private TextView mText;
 
-        public TextViewDetail(Context context) {
-            super(context);
+        public TextViewDetail (View tv) {
+            mText = (TextView) tv;
         }
 
-        public TextViewDetail(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public TextViewDetail(Context context, AttributeSet attrs, int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-        }
-
-        public TextViewDetail(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-        }
-
-        @Override
-        public void setText(CharSequence text, BufferType type) {
-            super.setText(text, type);
-            setVisibility(View.VISIBLE);
+        public void setText(String text) {
+            mText.setText(text);
+            mText.setVisibility(View.VISIBLE);
         }
     }
 }
