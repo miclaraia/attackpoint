@@ -37,7 +37,7 @@ public class Climb {
         if (!(distance == null || distance.equals(""))) {
             if (distance.contains("+")) {
                 int l = distance.length();
-                distance = distance.substring(1, l - 2);
+                distance = distance.substring(1, l - 1);
             }
             this.distance = Integer.parseInt(distance);
         } else {
@@ -64,7 +64,7 @@ public class Climb {
      */
     public String toString() {
         if (distance <= 0) return "";
-        return Float.toString(distance) + UNIT;
+        return "+" + distance + UNIT;
     }
 
     public JSONObject toJSON() {
