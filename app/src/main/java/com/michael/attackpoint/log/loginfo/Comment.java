@@ -1,6 +1,5 @@
-package com.michael.attackpoint.loginfo;
+package com.michael.attackpoint.log.loginfo;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

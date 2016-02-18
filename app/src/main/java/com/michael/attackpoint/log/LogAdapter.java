@@ -1,12 +1,10 @@
-package com.michael.attackpoint.adapters;
+package com.michael.attackpoint.log;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.LogDetailActivity;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.util.List;
 
@@ -48,24 +46,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     @Override
     public void onBindViewHolder(LogViewHolder vh, int i) {
-        LogInfo details = logInfoList.get(i);
-        LogInfo.Strings li = details.strings();
 
-        //Sets title and its colors
-        vh.vTitle.setText(li.type);
-        vh.vDate.setText(li.date);
-        vh.vColor.setBackgroundColor(li.color);
-        //logViewHolder.vColor.setBackgroundColor(li.color);
-
-        //Sets snippet text, removes view if no text
-        if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) vh.vText.setVisibility(View.GONE);
-        else vh.vText.setText(li.snippet);
-
-        //Sets log entry's meta data
-        if (!details.time.isEmpty()) vh.vTime.setText(li.time);
-        if (!details.distance.isEmpty()) vh.vDist.setText(li.distance);
-        if (!details.pace.isEmpty()) vh.vPace.setText(li.pace);
-        if (!details.climb.isEmpty()) vh.vClimb.setText(li.climb);
         
         //displays number of comments
         //vh.vComments.setText(li.comments);
@@ -144,6 +125,26 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             vComments = (TextView) v.findViewById(R.id.log_comments);
 
             vCard = (FrameLayout) v.findViewById(R.id.log_container);
+        }
+
+        public void setDetails(LogInfo li) {
+            LogInfo.Strings text = li.strings();
+
+            //Sets title and its colors
+            vTitle.setText(li.type);
+            vDate.setText(li.date);
+            vh.vColor.setBackgroundColor(li.color);
+            //logViewHolder.vColor.setBackgroundColor(li.color);
+
+            //Sets snippet text, removes view if no text
+            if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) vh.vText.setVisibility(View.GONE);
+            else vh.vText.setText(li.snippet);
+
+            //Sets log entry's meta data
+            if (!details.time.isEmpty()) vh.vTime.setText(li.time);
+            if (!details.distance.isEmpty()) vh.vDist.setText(li.distance);
+            if (!details.pace.isEmpty()) vh.vPace.setText(li.pace);
+            if (!details.climb.isEmpty()) vh.vClimb.setText(li.climb);
         }
     }
 

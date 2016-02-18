@@ -10,10 +10,9 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.database.CookieTable;
-import com.michael.network.NetworkLog;
-import com.michael.attackpoint.loginfo.LogInfo;
+import com.michael.attackpoint.log.LogAdapter;
+import com.michael.attackpoint.log.NetworkLog;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.util.ArrayList;
 import java.util.List;

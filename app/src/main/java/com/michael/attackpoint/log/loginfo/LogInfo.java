@@ -1,4 +1,4 @@
-package com.michael.attackpoint.loginfo;
+package com.michael.attackpoint.log.loginfo;
 
 import android.text.Html;
 import android.text.format.Time;

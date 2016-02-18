@@ -10,14 +10,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.michael.attackpoint.drawer.NavDrawerUsers;
 import com.michael.network.MyCookieStore;
-import com.michael.network.NetworkLog;
 import com.michael.attackpoint.drawer.NavDrawer;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Singleton class managing global objects that can be accessed

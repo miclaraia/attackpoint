@@ -1,6 +1,4 @@
-package com.michael.attackpoint.loginfo;
-
-import org.json.JSONObject;
+package com.michael.attackpoint.log.loginfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

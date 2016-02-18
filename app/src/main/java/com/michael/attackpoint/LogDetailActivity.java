@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.attackpoint.loginfo.LogInfo;
+import com.michael.attackpoint.log.LogAdapter;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 
 public class LogDetailActivity extends Activity {
     private static final String DEBUG_TAG = "ap.logDetailActivity";
@@ -78,6 +78,6 @@ public class LogDetailActivity extends Activity {
         vh.vTime.setText(data.time);
 
         //sets number of comments
-        vh.vComments.setText(data.comments);
+        //vh.vComments.setText(data.comments);
     }
 }

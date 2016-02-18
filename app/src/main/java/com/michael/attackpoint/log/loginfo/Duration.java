@@ -1,4 +1,4 @@
-package com.michael.attackpoint.loginfo;
+package com.michael.attackpoint.log.loginfo;
 
 /**
  * Class managing time and duration of log entries

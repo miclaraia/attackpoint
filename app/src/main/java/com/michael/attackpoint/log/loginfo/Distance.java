@@ -1,4 +1,4 @@
-package com.michael.attackpoint.loginfo;
+package com.michael.attackpoint.log.loginfo;
 
 /**
  * Class containing info on distance and unit of a log entry

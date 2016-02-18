@@ -1,4 +1,4 @@
-package com.michael.network;
+package com.michael.attackpoint.log;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -7,19 +7,15 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.adapters.LogAdapter;
-import com.michael.attackpoint.loginfo.Climb;
-import com.michael.attackpoint.loginfo.Comment;
-import com.michael.attackpoint.loginfo.Distance;
-import com.michael.attackpoint.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.Climb;
+import com.michael.attackpoint.log.loginfo.Distance;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.CookieManager;
 import java.util.ArrayList;
 import java.util.List;
 
