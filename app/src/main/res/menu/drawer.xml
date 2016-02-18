@@ -3,16 +3,48 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/ic_one"
-            android:title="First" />
+            android:id="@+id/nv_log"
+            android:title="Log"
+            android:icon="@drawable/ic_log" />
         <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/ic_two"
-            android:title="Second" />
+            android:id="@+id/nv_discussion"
+            android:title="Discussion"
+            android:icon="@drawable/ic_log"/>
         <item
-            android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/ic_three"
-            android:title="Third" />
+            android:id="@+id/nv_add_training"
+            android:title="Add Training"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_check_cookies"
+            android:title="Check Cookies"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_check_users"
+            android:title="Check Users"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_clear_users"
+            android:title="Clear Users"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_check_favorites"
+            android:title="Check Favorites"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_discussion_test"
+            android:title="Discussion Test"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_user_test"
+            android:title="User Test"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_user_fragment"
+            android:title="User Fragment"
+            android:icon="@drawable/ic_log"/>
+        <item
+            android:id="@+id/nv_log_fragment"
+            android:title="Log Fragment"
+            android:icon="@drawable/ic_log"/>
     </group>
 </menu>
