@@ -25,6 +25,7 @@ public class DrawerAdapter extends BaseAdapter {
 
     private static final int TYPE_HEADER = 1;
     private static final int TYPE_REGULAR = 2;
+    private static final int TYPE_COUNT = 3;
 
     public DrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
@@ -154,7 +155,7 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return NavDrawerItem.TYPE_COUNT;
+        return TYPE_COUNT;
     }
 
     @Override
