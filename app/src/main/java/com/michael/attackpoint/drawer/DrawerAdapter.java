@@ -19,13 +19,13 @@ import java.util.ArrayList;
 /**
  * Created by michael on 8/24/15.
  */
-public class Adapter extends BaseAdapter {
+public class DrawerAdapter extends BaseAdapter {
     private static final String DEBUG_TAG = "attackpoint.DAdapter";
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private LayoutInflater inflater;
 
-    public Adapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
+    public DrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 

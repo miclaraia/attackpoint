@@ -20,7 +20,7 @@ import com.michael.attackpoint.log.loginfo.Note;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.LogViewHolder> {
-    private static final String DEBUG_TAG = "attackpoint.Adapter";
+    private static final String DEBUG_TAG = "attackpoint.DrawerAdapter";
 
     private List<LogInfo> logInfoList;
     private Fragment fragment;

@@ -80,7 +80,7 @@ public class DiscussionActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayout);*/
 
         //create adapter and attach to recyclerview\
-        /*mAdapter = new Adapter(this, discussion.getComments());
+        /*mAdapter = new DrawerAdapter(this, discussion.getComments());
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);*/
     }

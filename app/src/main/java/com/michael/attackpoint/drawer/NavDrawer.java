@@ -21,7 +21,7 @@ public class NavDrawer {
     private static final String DEBUG_TAG = "NavDrawer";
 
     private AppCompatActivity mActivity;
-    private Adapter mAdapter;
+    private DrawerAdapter mAdapter;
     private ListView mDrawerList;
     private DrawerLayout mDrawer;
 
@@ -62,7 +62,7 @@ public class NavDrawer {
         }
         mNavItems = navItems;
 
-        mAdapter = new Adapter(mActivity, navItems);
+        mAdapter = new DrawerAdapter(mActivity, navItems);
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -122,7 +122,7 @@ public class NavDrawer {
         if (userCount <= 0) prefs.setUser(null);
         else prefs.setUser(navMenuItems.get(userFirst).getName());
 
-        adapter = new Adapter(activity, navMenuItems);
+        adapter = new DrawerAdapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
 
 
