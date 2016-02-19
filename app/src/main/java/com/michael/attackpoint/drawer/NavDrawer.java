@@ -105,29 +105,6 @@ public class NavDrawer {
         mNavGroups.remove(group);
     }
 
-    /*public void notifyUpdate() {
-        boolean bUserFirst = false;
-
-        for (int i = 0; i < navMenuItems.size(); i++) {
-            NavDrawerItem item = navMenuItems.get(i);
-            String g = item.getGroup();
-            if (!bUserFirst && g != null && g.equals("Account")) {
-                userFirst = i;
-                bUserFirst = true;
-            }
-        }
-
-        userCount = countUsers();
-
-        if (userCount <= 0) prefs.setUser(null);
-        else prefs.setUser(navMenuItems.get(userFirst).getName());
-
-        adapter = new DrawerAdapter(activity, navMenuItems);
-        drawerList.setAdapter(adapter);
-
-
-    }*/
-
     public class DrawerClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -137,46 +114,10 @@ public class NavDrawer {
             NavDrawerItem item = mNavItems.get(position);
             String group = item.getGroup();
 
-            if (true || item.getType() == NavDrawerItem.TYPE_REGULAR) {
-                mDrawer.closeDrawer(Gravity.LEFT);
+            mDrawer.closeDrawer(Gravity.LEFT);
 
-                getGroup(group).action(item);
-                /*switch (item.getAction()) {
-                    case "account":
-                        actionAccount(item);
-                        break;
-                    case "general":
-                        actionGeneral(item);
-                        break;
-                }*/
-            } //else if (item.getType() == NavDrawerItem.TYPE_USER) actionUser(item);
+            //implement the items action
+            item.action();
         }
-
-        /*private void actionAccount(NavDrawerItem item) {
-            switch (item.getName()) {
-                case "Add User":
-                    Log.i(DEBUG_TAG, "Login pressed");
-                    login();
-                    break;
-                case "Logout":
-                    Log.i(DEBUG_TAG, "Logout pressed");
-                    //activity.logout();
-                    break;
-            }
-        }
-
-        private void actionUser(NavDrawerItem item) {
-            try {
-                setUser(item.getName());
-            } catch (UserException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void login() {
-            Intent intent = new Intent(activity, LoginActivity.class);
-            activity.startActivity(intent);
-        }*/
     }
-
 }

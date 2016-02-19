@@ -7,6 +7,7 @@ import com.michael.attackpoint.R;
  */
 public abstract class NavDrawerItem {
     public static final String DEFAULT_GROUP = "Attackpoint";
+    public static final int TYPE_COUNT = 2;
 
     public String mName;
     public int mType;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ public class DrawerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private LayoutInflater inflater;
+
+    private static final int TYPE_HEADER = 1;
+    private static final int TYPE_REGULAR = 2;
 
     public DrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
@@ -48,9 +52,9 @@ public class DrawerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         NavDrawerItem item = navDrawerItems.get(position);
         View view = null;
-        if (item.getType() == NavDrawerItem.TYPE_SEPERATOR)  {
+        if (item instanceof NavItemHeader)  {
             view = getSepView(convertView, parent, item);
-        } else if (item.getType() == NavDrawerItem.TYPE_REGULAR) {
+        } else if (item instanceof NavItemReg) {
             view = getItemView(convertView, parent, item);
         }/* else if (item.getType() == NavDrawerItem.TYPE_USER) {
             view = getUserView(convertView, parent, item);
@@ -111,7 +115,7 @@ public class DrawerAdapter extends BaseAdapter {
         }
 
         viewHolder.labelView.setText(item.getName());
-        viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
+        /*viewHolder.removeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -120,7 +124,7 @@ public class DrawerAdapter extends BaseAdapter {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
         //convertView.setOnClickListener(new ItemClickListener(item));
 
@@ -155,7 +159,10 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return navDrawerItems.get(position).type;
+        NavDrawerItem item = navDrawerItems.get(position);
+        if (item instanceof NavItemHeader) return TYPE_HEADER;
+        else if (item instanceof NavItemReg) return TYPE_REGULAR;
+        else return TYPE_REGULAR;
     }
 
     private static class ItemViewHolder {
