@@ -24,8 +24,7 @@ public class LoginRequest extends Request<String> {
 
     private Map<String, String> mParams;
     private Response.Listener mListener;
-    private String oldUser;
-    private Singleton singleton;
+    private Singleton mSingleton;
 
     public LoginRequest(String user, String pass,
                         Response.Listener<String> listener,
@@ -37,11 +36,7 @@ public class LoginRequest extends Request<String> {
         mParams.put("password", pass);
         mParams.put("returl", RETURL);
 
-        singleton = Singleton.getInstance();
-        Preferences prefs = singleton.getPreferences();
-        oldUser = prefs.getUser();
-        prefs.setUser(user);
-
+        mSingleton = Singleton.getInstance();
     }
 
     @Override
@@ -53,14 +48,12 @@ public class LoginRequest extends Request<String> {
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         String username = mParams.get("username");
 
-        if (singleton.getCookieStore().checkValid(username)) {
+        if (mSingleton.getCookieStore().checkValid(username)) {
             Log.d(DEBUG_TAG, "login successfull");
             return Response.success(username, HttpHeaderParser.parseCacheHeaders(response));
         } else {
             Log.d(DEBUG_TAG, "login unsuccessful");
-
-            singleton.getPreferences().setUser(oldUser);
-            singleton.getCookieStore().removeUser(username);
+            mSingleton.getCookieStore().removeUser(username);
             return Response.error(new AuthFailureError("Login unsuccessfull"));
         }
     }

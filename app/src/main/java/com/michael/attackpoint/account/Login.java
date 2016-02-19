@@ -31,6 +31,9 @@ public class Login {
         if (!(u.equals("") || u == null)) {
             mLogin = true;
             mUser = u;
+        } else {
+            mLogin = false;
+            mUser = null;
         }
     }
 
@@ -40,6 +43,8 @@ public class Login {
                     @Override
                     public void onResponse(String username) {
                         mLogin = true;
+                        mUser = username;
+                        mPreferences.setUser(username);
                         // TODO add user to drawer
                     }
                 }, new Response.ErrorListener() {
@@ -59,5 +64,13 @@ public class Login {
 
         mUser = null;
         mLogin = false;
+    }
+
+    public boolean isLoggedIn() {
+        return mLogin;
+    }
+
+    public String getUser() {
+        return mUser;
     }
 }
