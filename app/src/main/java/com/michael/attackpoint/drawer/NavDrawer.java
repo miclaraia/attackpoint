@@ -1,7 +1,5 @@
 package com.michael.attackpoint.drawer;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,21 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.michael.attackpoint.LogFragment;
-import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.TrainingActivity;
-import com.michael.attackpoint.adapters.DrawerAdapter;
-import com.michael.attackpoint.dialogs.LoginActivity;
-import com.michael.network.FavoriteUsersRequest;
-import com.michael.network.MyCookieStore;
-import com.michael.objects.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by michael on 8/24/15.
@@ -35,7 +21,7 @@ public class NavDrawer {
     private static final String DEBUG_TAG = "NavDrawer";
 
     private AppCompatActivity mActivity;
-    private DrawerAdapter mAdapter;
+    private Adapter mAdapter;
     private ListView mDrawerList;
     private DrawerLayout mDrawer;
 
@@ -54,8 +40,8 @@ public class NavDrawer {
                 R.string.drawer_open, R.string.drawer_close);
 
         drawer.setDrawerListener(mDrawerToggle);
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //activity.getSupportActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
 
         mNavGroups = new ArrayList<>();
@@ -76,7 +62,7 @@ public class NavDrawer {
         }
         mNavItems = navItems;
 
-        mAdapter = new DrawerAdapter(mActivity, navItems);
+        mAdapter = new Adapter(mActivity, navItems);
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -136,7 +122,7 @@ public class NavDrawer {
         if (userCount <= 0) prefs.setUser(null);
         else prefs.setUser(navMenuItems.get(userFirst).getName());
 
-        adapter = new DrawerAdapter(activity, navMenuItems);
+        adapter = new Adapter(activity, navMenuItems);
         drawerList.setAdapter(adapter);
 
 

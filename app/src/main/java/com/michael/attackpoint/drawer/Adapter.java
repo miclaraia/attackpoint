@@ -1,4 +1,4 @@
-package com.michael.attackpoint.adapters;
+package com.michael.attackpoint.drawer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,13 +19,13 @@ import java.util.ArrayList;
 /**
  * Created by michael on 8/24/15.
  */
-public class DrawerAdapter extends BaseAdapter {
+public class Adapter extends BaseAdapter {
     private static final String DEBUG_TAG = "attackpoint.DAdapter";
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private LayoutInflater inflater;
 
-    public DrawerAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
+    public Adapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 

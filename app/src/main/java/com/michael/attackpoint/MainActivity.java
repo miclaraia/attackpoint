@@ -2,16 +2,12 @@ package com.michael.attackpoint;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.michael.attackpoint.adapters.DrawerAdapter;
-
 import android.widget.ListView;
 
 import com.michael.attackpoint.drawer.NavDrawer;
@@ -42,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //ListView drawerList = (ListView) findViewById(R.id.left_drawer);
-        //drawer = new NavDrawer(activity, drawerLayout, drawerList);
+        ListView drawerList = (ListView) findViewById(R.id.nav_list);
+        NavDrawer drawer = new NavDrawer(activity, mDrawer, drawerList);
 
         mSingleton = Singleton.getInstance();
-        //mSingleton.setDrawer(drawer);
+        mSingleton.setDrawer(drawer);
         mSingleton.setActivity(this);
     }
 
