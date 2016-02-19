@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent" >
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@id/item_icon"
@@ -16,15 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:textSize="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="?android:textColorSecondary"
         android:text="Log"
         android:layout_toRightOf="@id/item_icon"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"/>
 
     <ImageView
         android:id="@id/item_remove"
