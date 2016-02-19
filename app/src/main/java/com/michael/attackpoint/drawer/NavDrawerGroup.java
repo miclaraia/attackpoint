@@ -75,6 +75,5 @@ public abstract class NavDrawerGroup {
         return items;
     }
 
-    public abstract void action(NavDrawerItem item);
     public abstract void loadItems();
 }

@@ -5,65 +5,81 @@ import com.michael.attackpoint.R;
 /**
  * Created by michael on 8/24/15.
  */
-public class NavDrawerItem {
+public abstract class NavDrawerItem {
     public static final String DEFAULT_GROUP = "Attackpoint";
-    public static final int TYPE_REGULAR = 1;
-    public static final int TYPE_SEPERATOR = 2;
-    public static final int TYPE_USER = 3;
-    public static final int TYPE_COUNT = 4;
 
-    public String name;
-    public int type;
-    public int icon;
-    public String group;
+    public String mName;
+    public int mType;
+    public int mIcon;
+    public String mGroup;
+
+    public DrawerListener mClick;
 
 
-    public NavDrawerItem(String name, String group, int icon) {
-        this.name = name;
-        this.type = TYPE_REGULAR;
-        this.group = group;
-        this.icon = icon;
+    /*public NavDrawerItem(String name, String group, int icon, DrawerListener click) {
+        mName = name;
+        mType = TYPE_REGULAR;
+        mGroup = group;
+        mIcon = icon;
+        mClick = click;
+    }*/
+
+    public NavDrawerItem(String name, String group, DrawerListener click) {
+        mName = name;
+        mGroup = group;
+        mClick = click;
     }
 
-    public NavDrawerItem(String name, int type) {
-        this.name = name;
-        this.type = type;
-        if (type == TYPE_USER) {
+    public NavDrawerItem(String name, String group) {
+        mName = name;
+        mGroup = group;
+    }
+
+    /*public NavDrawerItem(String name, int type) {
+        mName = name;
+        mType = type;
+        *//*if (type == TYPE_USER) {
             this.icon = R.drawable.ic_person;
-        }
-    }
+        }*//*
+    }*/
 
     public void setName(String name) {
-        this.name = name;
+        mName = name;
     }
 
     public void setType(int type) {
-        this.type = type;
+        mType = type;
     }
 
     public void setGroup(String group) {
-        this.group = group;
+        mGroup = group;
     }
 
     public void setIcon(int icon) {
-        this.icon = icon;
+        mIcon = icon;
     }
 
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public int getType() {
-        return type;
+        return mType;
     }
 
     public String getGroup() {
-        return this.group;
+        return mGroup;
     }
 
     public int getIcon() {
-        return this.icon;
+        return mIcon;
+    }
+
+    public abstract void action();
+
+    public interface DrawerListener {
+        void click();
     }
 
 }

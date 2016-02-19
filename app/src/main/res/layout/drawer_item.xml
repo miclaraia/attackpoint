@@ -6,7 +6,7 @@
     <ImageView
         android:id="@id/item_icon"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:src="@drawable/ic_log"
         android:layout_marginLeft="20dp"
         android:layout_alignParentStart="true"
@@ -16,11 +16,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:textSize="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="?android:textColorSecondary"
         android:text="Log"
         android:layout_toRightOf="@id/item_icon"
         android:gravity="center_vertical"/>
+
+    <ImageView
+        android:id="@id/item_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_clear" />
+
+    <TextView
+        android:id="@+id/item_badge"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="5"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:fadingEdgeLength="5dp"
+        android:background="@color/colorCardDialog"
+        android:textColor="?android:colorAccent"
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

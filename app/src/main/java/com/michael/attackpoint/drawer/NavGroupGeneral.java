@@ -48,77 +48,94 @@ public class NavGroupGeneral extends NavDrawerGroup {
         mPreferences = mSingleton.getPreferences();
     }
 
-
     @Override
     public void loadItems() {
-        String[] navNames = mActivity.getResources().getStringArray(R.array.nav_general_names);
+        /*String[] navNames = mActivity.getResources().getStringArray(R.array.nav_general_names);
 
         TypedArray ar = mActivity.getResources().obtainTypedArray(R.array.nav_general_icons);
         int len = ar.length();
         int[] navMenuIcons = new int[len];
         for (int i = 0; i < len; i++)
             navMenuIcons[i] = ar.getResourceId(i, 0);
-        ar.recycle();
+        ar.recycle();*/
 
         mNavItems = new ArrayList<>();
-        mHeader = new NavDrawerItem(GROUP_NAME, NavDrawerItem.TYPE_SEPERATOR);
+        mHeader = new NavItemHeader(GROUP_NAME);
         mHeader.setGroup(GROUP_NAME);
 
-        for (int i = 0; i < navNames.length; i++) {
-            NavDrawerItem item = new NavDrawerItem(navNames[i],
-                    GROUP_NAME, navMenuIcons[i]);
-            mNavItems.add(item);
-        }
-    }
-
-    @Override
-    public void action(NavDrawerItem item) {
-        Request request;
-        Fragment fragment;
-        FragmentTransaction transaction;
-        Intent intent;
-
-        switch (item.getName()) {
-            case "Log":
-                intent = new Intent(mActivity, LogActivity.class);
+        //Open log of current user
+        mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                Intent intent = new Intent(mActivity, LogActivity.class);
                 intent.putExtra(LogFragment.USER_ID, CookieTable.getCurrentID());
                 mActivity.startActivity(intent);
-                break;
-            case "Discussion":
-                intent = new Intent(mActivity, DiscussionActivity.class);
+            }
+        }));
+
+        //Start DiscussionActivity looking at thread 1111416
+        mNavItems.add(new NavItemReg("Discussion", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                Intent intent = new Intent(mActivity, DiscussionActivity.class);
                 intent.putExtra(DiscussionActivity.DISCUSSION_ID, 1111416);
                 mActivity.startActivity(intent);
-                break;
-            case "Add Training":
-                intent = new Intent(mActivity, TrainingActivity.class);
+            }
+        }));
+
+        //Start TrainingActivity
+        mNavItems.add(new NavItemReg("Add Training", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                Intent intent = new Intent(mActivity, TrainingActivity.class);
                 mActivity.startActivity(intent);
-                break;
-            case "Check Cookies":
+            }
+        }));
+
+        //display all cookies stored in database
+        mNavItems.add(new NavItemReg("Check Cookies", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 Log.d(DEBUG_TAG, mCookieStore.getAllCookies());
-                break;
-            case "Check Users":
+            }
+        }));
+
+        //list all users in database
+        mNavItems.add(new NavItemReg("Check Users", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 Log.d(DEBUG_TAG, UserTable.printAllUsers());
-                break;
-            case "Clear Users":
+            }
+        }));
+
+        //clear all users from database
+        mNavItems.add(new NavItemReg("Clear Users", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 UserTable.clearUsers();
-                break;
-            case "Check Favorites":
+            }
+        }));
+
+        //Test favorite user request system
+        mNavItems.add(new NavItemReg("Check Favorites", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 Log.d(DEBUG_TAG, "Checking favorites");
-                request = new FavoriteUsersRequest(
+                Request request = new FavoriteUsersRequest(
                         new FavoriteUsersRequest.UpdateCallback() {
                             @Override
                             public void go() {
 
                             }
                         }, new Response.Listener<List<User>>() {
-                            @Override
-                            public void onResponse(List<User> users) {
-                                Log.d(DEBUG_TAG, "Got response");
-                                for (User user : users) {
-                                    Log.d(DEBUG_TAG, user.toString());
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onResponse(List<User> users) {
+                        Log.d(DEBUG_TAG, "Got response");
+                        for (User user : users) {
+                            Log.d(DEBUG_TAG, user.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         System.out.println("Something went wrong!");
@@ -127,26 +144,15 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 }
                 );
                 mSingleton.add(request);
-                break;
-            case "User Test":
-                Log.d(DEBUG_TAG, "Testing user request");
-                request = new UserRequest(11778, new Response.Listener<User>() {
-                    @Override
-                    public void onResponse(User user) {
-                        Log.d(DEBUG_TAG, "Got response");
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError e) {
-                        Log.d(DEBUG_TAG, "Got Error");
-                        e.printStackTrace();
-                    }
-                });
-                mSingleton.add(request);
-                break;
-            case "Discussion Test":
+            }
+        }));
+
+        // test discussion request
+        mNavItems.add(new NavItemReg("Discussion Test", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 Log.d(DEBUG_TAG, "Testing discussion request");
-                request = new com.michael.attackpoint.discussion.Request(1132702, new Response.Listener<Discussion>() {
+                Request request = new com.michael.attackpoint.discussion.Request(1132702, new Response.Listener<Discussion>() {
                     @Override
                     public void onResponse(Discussion discussion) {
                         Log.d(DEBUG_TAG, "Got response");
@@ -159,12 +165,36 @@ public class NavGroupGeneral extends NavDrawerGroup {
                     }
                 });
                 mSingleton.add(request);
-                break;
-            case "User Fragment":
-                Log.d(DEBUG_TAG, "swapping fragments");
-                fragment = new UsersFragment();
+            }
+        }));
 
-                transaction = mActivity.getFragmentManager().beginTransaction();
+        //test user request
+        mNavItems.add(new NavItemReg("User Test", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                Log.d(DEBUG_TAG, "Testing user request");
+                Request request = new UserRequest(11778, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User user) {
+                        Log.d(DEBUG_TAG, "Got response");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError e) {
+                        Log.d(DEBUG_TAG, "Got Error");
+                        e.printStackTrace();
+                    }
+                });
+                mSingleton.add(request);
+            }
+        }));
+        mNavItems.add(new NavItemReg("User Fragment", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                Log.d(DEBUG_TAG, "swapping fragments");
+                Fragment fragment = new UsersFragment();
+
+                FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
@@ -173,15 +203,18 @@ public class NavGroupGeneral extends NavDrawerGroup {
 
                 // Commit the transaction
                 transaction.commit();
-                break;
-            case "Log Fragment":
+            }
+        }));
+        mNavItems.add(new NavItemReg("Log Fragment", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
                 Log.d(DEBUG_TAG, "swapping fragments");
-                fragment = new LogFragment();
+                Fragment fragment = new LogFragment();
                 Bundle extras = new Bundle();
                 extras.putInt(LogFragment.USER_ID, CookieTable.getCurrentID());
                 fragment.setArguments(extras);
 
-                transaction = mActivity.getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
@@ -190,7 +223,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
 
                 // Commit the transaction
                 transaction.commit();
-
-        }
+            }
+        }));
     }
 }

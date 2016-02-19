@@ -8,7 +8,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.michael.attackpoint.drawer.NavDrawerUsers;
+import com.michael.attackpoint.drawer.NavGroupUsers;
 import com.michael.network.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
 
@@ -142,9 +142,9 @@ public class Singleton extends Application {
      * gets NavDrawerGroup controlling users in nav drawer
      * @return
      */
-    public NavDrawerUsers getUserGroup() {
-        String g = NavDrawerUsers.GROUP_NAME;
-        NavDrawerUsers navGroup = (NavDrawerUsers) mDrawer.getGroup(g);
+    public NavGroupUsers getUserGroup() {
+        String g = NavGroupUsers.GROUP_NAME;
+        NavGroupUsers navGroup = (NavGroupUsers) mDrawer.getGroup(g);
         return navGroup;
     }
 

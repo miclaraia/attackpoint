@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.drawer.NavDrawer;
-import com.michael.attackpoint.drawer.NavDrawerItem;
-import com.michael.attackpoint.drawer.NavDrawerUsers;
 
 import java.util.ArrayList;
 
@@ -55,10 +52,10 @@ public class DrawerAdapter extends BaseAdapter {
             view = getSepView(convertView, parent, item);
         } else if (item.getType() == NavDrawerItem.TYPE_REGULAR) {
             view = getItemView(convertView, parent, item);
-        } else if (item.getType() == NavDrawerItem.TYPE_USER) {
+        }/* else if (item.getType() == NavDrawerItem.TYPE_USER) {
             view = getUserView(convertView, parent, item);
         }
-        view.setTag(R.id.drawer_info, "test");
+        view.setTag(R.id.drawer_info, "test");*/
 
         return view;
     }
@@ -119,7 +116,7 @@ public class DrawerAdapter extends BaseAdapter {
             public void onClick(View v) {
                 try {
                     Singleton.getInstance().getUserGroup().removeUser((NavDrawerItem) v.getTag());
-                } catch (NavDrawerUsers.UserException e) {
+                } catch (NavGroupUsers.UserException e) {
                     e.printStackTrace();
                 }
             }

@@ -18,16 +18,16 @@ import java.util.List;
 /**
  * Created by michael on 11/22/15.
  */
-public class NavDrawerUsers extends NavDrawerGroup {
+public class NavGroupUsers extends NavDrawerGroup {
     private static final String DEBUG_TAG = "NavGeneral";
-    public static final String GROUP_NAME = "Users";
+    public static final String GROUP_NAME = "Account";
     public static final String ADD_USER = "Add User";
 
     private Singleton mSingleton;
     private MyCookieStore mCookieStore;
     private Preferences mPreferences;
 
-    public NavDrawerUsers(NavDrawer drawer, AppCompatActivity activity) {
+    public NavGroupUsers(NavDrawer drawer, AppCompatActivity activity) {
         super(drawer, activity);
     }
 
