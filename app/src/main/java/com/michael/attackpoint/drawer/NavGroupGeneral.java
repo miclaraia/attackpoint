@@ -43,6 +43,10 @@ public class NavGroupGeneral extends NavDrawerGroup {
 
     public NavGroupGeneral(NavDrawer drawer, AppCompatActivity activity) {
         super(drawer, activity);
+    }
+
+    @Override
+    protected void init() {
         mSingleton = Singleton.getInstance();
         mCookieStore = mSingleton.getCookieStore();
         mPreferences = mSingleton.getPreferences();

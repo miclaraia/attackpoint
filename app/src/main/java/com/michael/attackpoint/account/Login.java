@@ -29,7 +29,8 @@ public class Login {
         mPreferences = mSingleton.getPreferences();
 
         // TODO NullPointerException waiting to happen
-        mDrawerGroup = (NavGroupUsers) mSingleton.getDrawer().getGroup(NavGroupUsers.GROUP_NAME);
+        NavDrawer drawer = mSingleton.getDrawer();
+        if (drawer != null) mDrawerGroup = (NavGroupUsers) drawer.getGroup(NavGroupUsers.GROUP_NAME);
 
         String u = mPreferences.getUser();
         if (!(u.equals("") || u == null)) {

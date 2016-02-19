@@ -29,7 +29,13 @@ public abstract class NavDrawerGroup {
         mNavItems = new ArrayList<>();
         mNavDrawer = drawer;
         mActivity = activity;
+
+        init();
         loadItems();
+    }
+
+    //empty void to allow but not require subclass to override
+    protected void init() {
     }
 
     public void add(NavDrawerItem item) {

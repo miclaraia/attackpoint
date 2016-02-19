@@ -31,8 +31,11 @@ public class NavGroupUsers extends NavDrawerGroup {
 
     public NavGroupUsers(NavDrawer drawer, AppCompatActivity activity) {
         super(drawer, activity);
+    }
 
-        //initialize class variables
+    @Override
+    protected void init() {
+        //initialize variables
         mSingleton = Singleton.getInstance();
         mCookieStore = mSingleton.getCookieStore();
         mPreferences = mSingleton.getPreferences();
