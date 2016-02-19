@@ -8,6 +8,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.drawer.NavGroupUsers;
 import com.michael.network.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
@@ -31,6 +32,7 @@ public class Singleton extends Application {
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
     private Fragment mFragment;
+    private Login mLogin;
 
     @Override
     public void onCreate() {
@@ -42,6 +44,7 @@ public class Singleton extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
+        mLogin = new Login();
 
         initCookies();
     }
@@ -162,5 +165,9 @@ public class Singleton extends Application {
      */
     public Fragment getFragment() {
         return mFragment;
+    }
+
+    public Login getLogin() {
+        return mLogin;
     }
 }

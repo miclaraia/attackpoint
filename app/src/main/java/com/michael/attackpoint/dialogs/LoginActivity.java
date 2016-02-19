@@ -44,22 +44,8 @@ public class LoginActivity extends ActionBarActivity {
                 Log.d(DEBUG_TAG, "login pressed");
                 String u = username.getText().toString();
                 String p = password.getText().toString();
-                //singleton.getLogin().login(u, p);
-                LoginRequest request = new LoginRequest(u, p,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String username) {
-                                singleton.getUserGroup().addUser(username);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Error handling
-                        System.out.println("Something went wrong!");
-                        error.printStackTrace();
-                    }
-                });
-                singleton.add(request);
+
+                singleton.getLogin().doLogin(u, p);
                 finish();
                 break;
         }
@@ -85,25 +71,5 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void resultOK(String user) {
-        Intent intent = getIntent();
-        intent.putExtra(USERNAME, user);
-        if (getParent() == null) {
-            setResult(Activity.RESULT_OK, intent);
-        } else {
-            getParent().setResult(Activity.RESULT_OK, intent);
-        }
-        finish();
-    }
-
-    public void resultCancel() {
-        if (getParent() == null) {
-            setResult(Activity.RESULT_CANCELED);
-        } else {
-            getParent().setResult(Activity.RESULT_CANCELED);
-        }
-        finish();
     }
 }
