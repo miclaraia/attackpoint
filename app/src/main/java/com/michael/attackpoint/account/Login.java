@@ -1,9 +1,13 @@
 package com.michael.attackpoint.account;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.dialogs.LoginActivity;
 import com.michael.attackpoint.drawer.NavDrawer;
 import com.michael.attackpoint.drawer.NavDrawerGroup;
 import com.michael.attackpoint.drawer.NavGroupUsers;
@@ -35,6 +39,12 @@ public class Login {
             mLogin = false;
             mUser = null;
         }
+    }
+
+    public void performLogin() {
+        Activity activity = mSingleton.getActivity();
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
     }
 
     public void doLogin(String u, String p) {

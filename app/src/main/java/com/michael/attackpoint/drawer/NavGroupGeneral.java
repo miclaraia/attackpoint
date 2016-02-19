@@ -61,7 +61,6 @@ public class NavGroupGeneral extends NavDrawerGroup {
 
         mNavItems = new ArrayList<>();
         mHeader = new NavItemHeader(GROUP_NAME);
-        mHeader.setGroup(GROUP_NAME);
 
         //Open log of current user
         mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {

@@ -7,6 +7,7 @@ public class NavItemHeader extends NavDrawerItem {
 
     public NavItemHeader(String group) {
         super(group, group);
+        setGroup(group);
     }
 
     public void action() {
