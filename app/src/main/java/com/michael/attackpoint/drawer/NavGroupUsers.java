@@ -65,4 +65,9 @@ public class NavGroupUsers extends NavDrawerGroup {
             }));
         }
     }
+
+    public void reload() {
+        mNavItems.removeAll(mNavItems);
+        loadItems();
+    }
 }

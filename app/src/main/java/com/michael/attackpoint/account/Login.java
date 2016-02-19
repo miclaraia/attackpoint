@@ -52,10 +52,14 @@ public class Login {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String username) {
+                        //update variables
                         mLogin = true;
                         mUser = username;
+                        //set user to preferences
                         mPreferences.setUser(username);
-                        // TODO add user to drawer
+
+                        //reset drawer
+                        mDrawerGroup.reload();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -69,11 +73,16 @@ public class Login {
     }
 
     public void doLogout() {
+        //remove user from preferences and cookies
         mSingleton.getCookieStore().removeUser(mUser);
         mPreferences.setUser(null);
 
+        //update variables
         mUser = null;
         mLogin = false;
+
+        //reset drawer
+        mDrawerGroup.reload();
     }
 
     public boolean isLoggedIn() {
