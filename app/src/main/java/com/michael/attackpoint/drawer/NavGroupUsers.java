@@ -23,7 +23,7 @@ public class NavGroupUsers extends NavDrawerGroup {
     private static final String DEBUG_TAG = "NavGeneral";
     public static final String GROUP_NAME = "Account";
     public static final String ADD_USER = "Add User";
-    public static final String USER_PRE = "Logged in as: ";
+    public static final String USER_PRE = "";
 
     private Singleton mSingleton;
     private MyCookieStore mCookieStore;

@@ -28,7 +28,7 @@ public class MyCookieStore implements CookieStore {
 
     @Override
     public void add(URI uri, HttpCookie cookie) {
-        String user = prefs.getUser();
+        String user = singleton.getLogin().getUser();
         if (user.equals("")) return;
 
         String name = cookie.getName();
@@ -44,7 +44,7 @@ public class MyCookieStore implements CookieStore {
 
     @Override
     public List<HttpCookie> getCookies() {
-        String currentUser = prefs.getUser();
+        String currentUser = singleton.getLogin().getUser();
         return cookieTable.getCookies(currentUser);
     }
 

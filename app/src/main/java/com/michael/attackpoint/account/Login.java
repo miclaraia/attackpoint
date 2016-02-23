@@ -42,30 +42,36 @@ public class Login {
         }
     }
 
-    public void performLogin() {
+    public void loginDialog() {
         Activity activity = mSingleton.getActivity();
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
 
     public void doLogin(String u, String p) {
+        /* set current user beforehand so cookiestore can access
+           it when storing login cookies.
+          */
+        final String oldUser = mUser;
+        mUser = u;
         LoginRequest request = new LoginRequest(u, p,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String username) {
                         //update variables
                         mLogin = true;
-                        mUser = username;
                         //set user to preferences
                         mPreferences.setUser(username);
 
-                        //reset drawer
+                        //reset drawer to load new user
                         mDrawerGroup.reload();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Error handling
+                        //reset current user to previous state
+                        mUser = oldUser;
                         System.out.println("Something went wrong!");
                         error.printStackTrace();
                     }
