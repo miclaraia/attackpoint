@@ -1,10 +1,12 @@
 package com.michael.attackpoint.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.MainActivity;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.dialogs.LoginActivity;
@@ -60,7 +62,7 @@ public class Login {
                         mPreferences.setUser(username);
 
                         //reset drawer to load new user
-                        updateDrawer();
+                        restartActivity();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -85,7 +87,7 @@ public class Login {
         mLogin = false;
 
         //reset drawer
-        updateDrawer();
+        restartActivity();
     }
 
     public boolean isLoggedIn() {
@@ -96,11 +98,18 @@ public class Login {
         return mUser;
     }
 
-    private void updateDrawer() {
-        NavDrawer drawer = mSingleton.getDrawer();
+    private void restartActivity() {
+        /*NavDrawer drawer = mSingleton.getDrawer();
         if (drawer != null) {
             NavGroupUsers drawerGroup = (NavGroupUsers) drawer.getGroup(NavGroupUsers.GROUP_NAME);
             if (drawerGroup != null) drawerGroup.reload();
-        }
+        }*/
+
+        Activity curActivity = mSingleton.getActivity();
+        Context context = mSingleton.getContext();
+        Intent intent = new Intent(context, MainActivity.class);
+
+        curActivity.startActivity(intent);
+        curActivity.finish();
     }
 }
