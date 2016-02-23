@@ -28,10 +28,6 @@ public class Login {
         mSingleton = Singleton.getInstance();
         mPreferences = mSingleton.getPreferences();
 
-        // TODO NullPointerException waiting to happen
-        NavDrawer drawer = mSingleton.getDrawer();
-        if (drawer != null) mDrawerGroup = (NavGroupUsers) drawer.getGroup(NavGroupUsers.GROUP_NAME);
-
         String u = mPreferences.getUser();
         if (!(u.equals("") || u == null)) {
             mLogin = true;
@@ -64,7 +60,7 @@ public class Login {
                         mPreferences.setUser(username);
 
                         //reset drawer to load new user
-                        mDrawerGroup.reload();
+                        updateDrawer();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -89,7 +85,7 @@ public class Login {
         mLogin = false;
 
         //reset drawer
-        mDrawerGroup.reload();
+        updateDrawer();
     }
 
     public boolean isLoggedIn() {
@@ -98,5 +94,13 @@ public class Login {
 
     public String getUser() {
         return mUser;
+    }
+
+    private void updateDrawer() {
+        NavDrawer drawer = mSingleton.getDrawer();
+        if (drawer != null) {
+            NavGroupUsers drawerGroup = (NavGroupUsers) drawer.getGroup(NavGroupUsers.GROUP_NAME);
+            if (drawerGroup != null) drawerGroup.reload();
+        }
     }
 }

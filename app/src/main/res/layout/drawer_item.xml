@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@id/item_icon"
@@ -18,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="18dp"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="?android:textColorSecondary"
         android:text="Log"

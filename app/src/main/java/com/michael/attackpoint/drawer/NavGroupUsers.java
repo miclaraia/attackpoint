@@ -63,7 +63,7 @@ public class NavGroupUsers extends NavDrawerGroup {
             mNavItems.add(new NavItemReg("Login", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
                 @Override
                 public void click() {
-                    mSingleton.getInstance().getLogin().performLogin();
+                    mSingleton.getInstance().getLogin().loginDialog();
                 }
             }));
         }
@@ -72,5 +72,6 @@ public class NavGroupUsers extends NavDrawerGroup {
     public void reload() {
         mNavItems.removeAll(mNavItems);
         loadItems();
+        mNavDrawer.notifyUpdate();
     }
 }

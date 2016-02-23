@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,8 @@ public class NavDrawer {
 
         mDrawerToggle = new ActionBarDrawerToggle(activity, drawer,
                 R.string.drawer_open, R.string.drawer_close);
+
+        Singleton.getInstance().setDrawer(this);
 
         drawer.setDrawerListener(mDrawerToggle);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
