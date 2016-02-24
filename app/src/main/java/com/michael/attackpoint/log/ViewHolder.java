@@ -62,7 +62,7 @@ public class ViewHolder {
         //Sets log entry's meta data
         //skips these steps if entry is a note
         if (!(li instanceof Note)) {
-            if (!li.time.isEmpty()) vTime.setText(text.time);
+            if (!li.duration.isEmpty()) vTime.setText(text.time);
             if (!li.distance.isEmpty()) vDist.setText(text.distance);
             if (!li.pace.isEmpty()) vPace.setText(text.pace);
             if (!li.climb.isEmpty()) vClimb.setText(text.climb);

@@ -44,7 +44,7 @@ public class LogInfo {
     public String session;
 
     public Date date;
-    public Duration time;
+    public Duration duration;
     public Pace pace;
     public Distance distance;
     public Color color;
@@ -65,7 +65,7 @@ public class LogInfo {
 
     public void init() {
         date = new Date();
-        time = new Duration();
+        duration = new Duration();
         pace = new Pace();
         distance = new Distance();
         color = new Color();
@@ -87,7 +87,7 @@ public class LogInfo {
             if(!json.isNull(JSON_DISTANCE)) {
                 setDistance((String) json.get(JSON_DISTANCE));
                 //only sets pace if distance is non zero
-                if (!this.distance.isEmpty()) setPace(time, distance);
+                if (!this.distance.isEmpty()) setPace(duration, distance);
             }
 
             this.climb.fromJSON((JSONObject) json.get(JSON_CLIMB));
@@ -245,7 +245,7 @@ public class LogInfo {
      * @param time see {@link Time} for formatting details
      */
     public void setTime(String time) {
-        this.time = new Duration(time);
+        this.duration = new Duration(time);
     }
 
     /**
@@ -253,7 +253,7 @@ public class LogInfo {
      * @param time see {@link Time} for formatting details
      */
     public void setTime(Time time) {
-        this.time = new Duration(time);
+        this.duration = new Duration(time);
     }
 
     /**
@@ -261,14 +261,14 @@ public class LogInfo {
      * @return {@link Time}
      */
     public Duration getTime() {
-        return this.time;
+        return this.duration;
     }
 
     //++++++++++++++++++ Pace +++++++++++++++++
 
     public void setPace() {
         if (!this.distance.isEmpty()) {
-            setPace(this.time.get(), this.distance);
+            setPace(this.duration.get(), this.distance);
         }
     }
     /**
@@ -402,7 +402,7 @@ public class LogInfo {
             json.put(JSON_TYPE, this.type);
             json.put(JSON_TEXT, this.text);
             json.put(JSON_DATE, this.date.toJSON());
-            json.put(JSON_TIME, this.time.toString());
+            json.put(JSON_TIME, this.duration.toString());
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.getIntensity());
             json.put(JSON_COLOR, this.color.get());
@@ -455,7 +455,7 @@ public class LogInfo {
             this.date = li.date.toString();
             this.distance = li.distance.toString();
             this.pace = li.pace.toString();
-            this.time = li.time.toString();
+            this.time = li.duration.toString();
             this.climb = li.climb.toString();
             this.intensity = "" + li.getIntensity();
             this.comments = commentsText();
