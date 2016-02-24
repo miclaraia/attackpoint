@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -33,6 +36,7 @@ public class TrainingActivity extends Activity {
         findViewById(R.id.training_date).setOnClickListener(trainingListener);
 
         // TODO create single custom adapter for all spinners and load from attackpoint
+        // initialize activity type spinner
         RelativeLayout activity = (RelativeLayout) findViewById(R.id.training_activity);
         activity.setOnClickListener(new RelativeClickListener());
         Spinner activitySpinner = (Spinner) activity.findViewById(R.id.item);
@@ -41,6 +45,7 @@ public class TrainingActivity extends Activity {
         activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activitySpinner.setAdapter(activityAdapter);
 
+        // initialize workout type spinner (long, interval, hills, etc)
         RelativeLayout workout = (RelativeLayout) findViewById(R.id.training_workout);
         workout.setOnClickListener(new RelativeClickListener());
         Spinner workoutSpinner = (Spinner) workout.findViewById(R.id.item);
@@ -49,7 +54,7 @@ public class TrainingActivity extends Activity {
         workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         workoutSpinner.setAdapter(workoutAdapter);
 
-        //// TODO: 8/27/15
+        // initialize intensity number picker
         findViewById(R.id.training_intensity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +63,7 @@ public class TrainingActivity extends Activity {
             }
         });
 
+        // initialize duration number picker
         View duration = findViewById(R.id.training_duration);
         duration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,32 @@ public class TrainingActivity extends Activity {
                 dialog.show(getFragmentManager(), "durationpicker");
             }
         });
+
+        // initialize distance data entry
+        View distance = findViewById(R.id.training_distance);
+        distance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = v.findViewById(R.id.item);
+                view.requestFocusFromTouch();
+                InputMethodManager lManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                lManager.showSoftInput(view, 0);
+            }
+        });
+
+        // initialize description data entry
+        View description = findViewById(R.id.training_description);
+        description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = v.findViewById(R.id.item);
+                view.requestFocusFromTouch();
+                InputMethodManager lManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                lManager.showSoftInput(view, 0);
+            }
+        });
+
+
     }
 
     @Override
