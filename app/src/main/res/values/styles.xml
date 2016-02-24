@@ -21,6 +21,9 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:textColor">@color/textColorPrimary</item>
 
+        <item name="android:colorButtonNormal">?android:colorAccent</item>
+        <item name="android:textColorHint">@color/textColorHint</item>
+
     </style>
 
     <style name="Widget.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
