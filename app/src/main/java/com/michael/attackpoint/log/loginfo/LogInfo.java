@@ -117,14 +117,6 @@ public class LogInfo {
     }
 
     /**
-     * Sets type of workout (Activity on attackpoint.org)
-     * @param type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * Sets description text of log entry
      * @param text
      */
@@ -164,6 +156,30 @@ public class LogInfo {
 
     public void setDate(Calendar cal) {
         this.date.set(cal);
+    }
+
+    //++++++++++++++++++ Activity +++++++++++++++++
+
+    /**
+     * Sets type of workout (Activity on attackpoint.org)
+     * @param type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    //++++++++++++++++++ Workout +++++++++++++++++
+
+    public void setWorkout(String workout) {
+        // TODO
+    }
+
+    public String getWorkout() {
+        return "";
     }
 
     //++++++++++++++++++ Distance +++++++++++++++++
