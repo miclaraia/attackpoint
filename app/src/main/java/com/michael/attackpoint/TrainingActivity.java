@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,14 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.michael.attackpoint.dialogs.NumberPickerDialog;
 import com.michael.attackpoint.dialogs.TrainingDatePicker;
 import com.michael.attackpoint.dialogs.TrainingDurationPicker;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.network.AddTrainingRequest;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +36,7 @@ import java.util.Date;
  * Created by michael on 8/25/15.
  */
 public class TrainingActivity extends Activity {
+    private static final String DEBUG_TAG = "training";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +169,30 @@ public class TrainingActivity extends Activity {
         li.setIntensity("" + intensity.getText());
 
         // Duration
-        TextView
+        Calendar duration = (Calendar) vh.duration.item.getTag();
+        li.setDuration(duration);
+
+        // Distance
+        TextView distance = (TextView) vh.distance.item;
+        // TODO implement proper unit selection
+        li.setDistance("" + distance.getText(), "km");
+
+        // Description
+        EditText description = (EditText) vh.description.item;
+        li.setText(description.toString());
+
+        Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
+            @Override
+            public void onResponse(Boolean aBoolean) {
+                Log.d(DEBUG_TAG, aBoolean.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        });
+        Singleton.getInstance().add(request);
     }
 
     private class RelativeClickListener implements View.OnClickListener {

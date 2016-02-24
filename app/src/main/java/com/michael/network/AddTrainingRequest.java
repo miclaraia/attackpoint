@@ -57,7 +57,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private Singleton mSingleton;
 
     public AddTrainingRequest(LogInfo training,
-                        Response.Listener<String> listener,
+                        Response.Listener<Boolean> listener,
                         Response.ErrorListener errorListener) {
         super(Request.Method.POST, URL, errorListener);
         mListener = listener;
