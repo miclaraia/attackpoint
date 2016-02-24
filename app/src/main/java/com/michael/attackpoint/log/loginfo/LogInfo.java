@@ -250,10 +250,10 @@ public class LogInfo {
 
     /**
      * Sets time of log entry
-     * @param time see {@link Time} for formatting details
+     * @param cal see {@link Time} for formatting details
      */
-    public void setTime(Time time) {
-        this.duration = new Duration(time);
+    public void setTime(Calendar cal) {
+        this.duration = new Duration(cal);
     }
 
     /**
@@ -268,7 +268,7 @@ public class LogInfo {
 
     public void setPace() {
         if (!this.distance.isEmpty()) {
-            setPace(this.duration.get(), this.distance);
+            setPace(this.duration.getCalendar(), this.distance);
         }
     }
     /**
@@ -285,7 +285,7 @@ public class LogInfo {
      * @param t time taken
      * @param d distance traveled
      */
-    public void setPace(Time t, Distance d) {
+    public void setPace(Calendar t, Distance d) {
         this.pace = new Pace(t, d);
     }
 

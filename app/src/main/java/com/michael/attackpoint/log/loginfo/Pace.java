@@ -34,7 +34,7 @@ public class Pace {
 
     /**
      * craetes Pace object from Time and Distance objects
-     * @param time duration of log entry
+     * @param cal duration of log entry
      * @param distance distance traveled in workout
      */
     public Pace(Calendar cal, Distance distance) {
