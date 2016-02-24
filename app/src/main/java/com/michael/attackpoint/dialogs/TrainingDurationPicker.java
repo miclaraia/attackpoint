@@ -99,7 +99,7 @@ public class TrainingDurationPicker extends DialogFragment {
         String time = (String) bundle.get("time_string");
         duration = parseTime(time);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");
 
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
