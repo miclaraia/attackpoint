@@ -75,17 +75,4 @@ public class Duration {
             return true;
         return false;
     }
-
-    public class CalendarTime {
-        public int h;
-        public int m;
-        public int s;
-
-        public CalendarTime(Calendar cal) {
-            h = cal.get(Calendar.HOUR_OF_DAY);
-            m = cal.get(Calendar.MINUTE);
-            s = cal.get(Calendar.SECOND);
-        }
-    }
-
 }

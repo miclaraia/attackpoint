@@ -2,11 +2,14 @@ package com.michael.attackpoint.log.loginfo;
 
 import android.text.format.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Class managing pace of log entries
  */
 public class Pace {
-    private android.text.format.Time pace;
+    private Calendar pace;
     private String unit;
     // TODO conversion between min/km and min/mi
 
@@ -15,7 +18,7 @@ public class Pace {
      */
     public Pace() {
         unit = "";
-        pace = new android.text.format.Time();
+        pace = Calendar.getInstance();
         pace.set(0,0,0,0,0,0);
     }
 
@@ -34,16 +37,16 @@ public class Pace {
      * @param time duration of log entry
      * @param distance distance traveled in workout
      */
-    public Pace(android.text.format.Time time, Distance distance) {
+    public Pace(Calendar cal, Distance distance) {
         this.unit = distance.unit;
-        set(calc(time, distance));
+        set(calc(cal, distance));
     }
 
     /**
      * sets pace value to specified pace
      * @param pace
      */
-    public void set(android.text.format.Time pace) {
+    public void set(Calendar pace) {
         this.pace = pace;
     }
 
@@ -53,24 +56,25 @@ public class Pace {
      * @param d distance traveled
      * @return
      */
-    private Time calc(Duration t, Distance d) {
-        return calc(t.get(), d);
+    private Calendar calc(Duration t, Distance d) {
+        return calc(t.getCalendar(), d);
     }
 
-    private Time calc(android.text.format.Time time, Distance distance) {
+    private Calendar calc(Calendar time, Distance distance) {
         // TODO make sure this calculates properly
-        int h = time.hour;
-        int m = time.minute;
-        int s = time.second;
+        CalendarTime ct = new CalendarTime(time);
 
-        int pace = (int) Math.floor((h*3600 + m*60 + s) / distance.distance);
+        int pace = (int) Math.floor((ct.h*3600 + ct.m*60 + ct.s) / distance.distance);
 
-        h = (int) pace / 3600;
+        int h = (int) pace / 3600;
         int r = pace % 3600;
-        m = (int) r / 60;
-        s = r % 60;
-        android.text.format.Time out = new android.text.format.Time();
-        out.set(s,m,h,0,0,0);
+        int m = (int) r / 60;
+        int s = r % 60;
+
+        Calendar out = Calendar.getInstance();
+        out.set(Calendar.HOUR_OF_DAY, h);
+        out.set(Calendar.MINUTE, m);
+        out.set(Calendar.SECOND, s);
         return out;
     }
 
@@ -78,7 +82,7 @@ public class Pace {
      * gets pace
      * @return
      */
-    public android.text.format.Time get() {
+    public Calendar get() {
         return pace;
     }
 
@@ -87,22 +91,26 @@ public class Pace {
      * @return
      */
     public String toString() {
-        String out;
+        String format;
+        CalendarTime ct = new CalendarTime(pace);
         if (this.pace == null) {
             return "";
         }
-        if (this.pace.hour == 0) {
-            if (pace.minute == 0 && pace.second == 0) return "";
-            out = pace.format("%M:%S");
+        if (ct.h == 0) {
+            if (ct.m == 0 && ct.s == 0) return "";
+            format = "mm:ss";
         }
-        else out = pace.format("%H:%M:%S");
+        else format = "HH:mm:ss";
 
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        String out = sdf.format(pace.getTime());
         out += " / " + this.unit;
         return out;
     }
 
     public boolean isEmpty() {
-        if (pace.hour == 0 && pace.minute == 0 && pace.second == 0)
+        CalendarTime ct = new CalendarTime(pace);
+        if (ct.h == 0 && ct.m == 0 && ct.s == 0)
             return true;
         return false;
     }
