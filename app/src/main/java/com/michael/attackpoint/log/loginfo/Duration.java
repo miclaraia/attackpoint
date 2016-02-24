@@ -1,17 +1,23 @@
 package com.michael.attackpoint.log.loginfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * Class managing time and duration of log entries
  */
 public class Duration {
-    private android.text.format.Time time;
+    private static final String FORMAT_NORMAL = "HH:mm:ss";
+    private static final String FORMAT_FORM_OUT = "HHmmss";
+    private Calendar mCalendar;
 
     /**
      * Creates empty duration object
      */
     public Duration() {
-        this.time = new android.text.format.Time();
-        this.time.set(0,0,0,0,0,0);
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(0,0,0,0,0,0);
     }
 
     /**
@@ -19,42 +25,29 @@ public class Duration {
      * @param time time string must be a properly formatted hh:mm:ss time
      */
     public Duration(String time) {
-        String[] pieces = time.split(":");
-        int h = 0;
-        int m = 0;
-        int s = 0;
-        switch (pieces.length) {
-            case 1:
-                s = Integer.parseInt(pieces[0]);
-                break;
-            case 2:
-                m = Integer.parseInt(pieces[0]);
-                s = Integer.parseInt(pieces[1]);
-                break;
-            case 3:
-                h = Integer.parseInt(pieces[0]);
-                m = Integer.parseInt(pieces[1]);
-                s = Integer.parseInt(pieces[2]);
-                break;
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_NORMAL);
+        try {
+            java.util.Date d = sdf.parse(time);
+            mCalendar.setTime(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        this.time = new android.text.format.Time();
-        this.time.set(s,m,h,0,0,0);
     }
 
     /**
-     * Creates duration object from android Time object
-     * @param time
+     * Creates duration object from android Calendar object
+     * @param cal
      */
-    public Duration(android.text.format.Time time) {
-        this.time = time;
+    public Duration(Calendar cal) {
+        mCalendar = cal;
     }
 
     /**
-     * gets the current duration as Time object
+     * gets the current duration as Calendar object
      * @return
      */
-    public android.text.format.Time get() {
-        return this.time;
+    public Calendar getCalendar() {
+        return mCalendar;
     }
 
     /**
@@ -62,25 +55,37 @@ public class Duration {
      * @return
      */
     public String toString() {
-        if (this.time == null) {
-            return "";
-        }
         String format;
-        if (time.hour == 0) {
-            if (time.minute == 0) {
-                if (time.second == 0) return "";
-                format = "%S";
+        CalendarTime ct = new CalendarTime(mCalendar);
+        if (ct.h == 0) {
+            if (ct.m == 0) {
+                if (ct.s == 0) return "";
+                format = "ss";
             }
-            else format = "%M:%S";
+            else format = "mm:ss";
         }
-        else format = "%H:%M:%S";
-        return time.format(format);
+        else format = "HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(mCalendar.getTime());
     }
 
     public boolean isEmpty() {
-        if (time.hour == 0 && time.minute == 0 && time.second == 0)
+        CalendarTime ct = new CalendarTime(mCalendar);
+        if (ct.h == 0 && ct.m == 0 && ct.s == 0)
             return true;
         return false;
+    }
+
+    public class CalendarTime {
+        public int h;
+        public int m;
+        public int s;
+
+        public CalendarTime(Calendar cal) {
+            h = cal.get(Calendar.HOUR_OF_DAY);
+            m = cal.get(Calendar.MINUTE);
+            s = cal.get(Calendar.SECOND);
+        }
     }
 
 }
