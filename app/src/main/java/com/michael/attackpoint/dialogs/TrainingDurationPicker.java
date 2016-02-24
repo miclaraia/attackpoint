@@ -191,6 +191,7 @@ public class TrainingDurationPicker extends DialogFragment {
                     duration.set(0, 0, 0, hour.getValue(), minute.getValue(), second.getValue());
                     DateFormat sdf = new SimpleDateFormat(TIME_FORMAT_H);
                     result.setText(sdf.format(duration.getTime()));
+                    result.setTag(duration);
                     dialog.dismiss();
                     break;
             }

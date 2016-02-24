@@ -146,9 +146,24 @@ public class TrainingActivity extends Activity {
         ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
         LogInfo li = new LogInfo();
 
+        // Date
         Calendar cal = (Calendar) vh.date.item.getTag();
         li.setDate(cal);
 
+        // Activity type
+        Spinner spinner = (Spinner) vh.activity.item;
+        li.setType(spinner.getSelectedItem().toString());
+
+        // Workout type
+        Spinner spinner2 = (Spinner) vh.workout.item;
+        li.setWorkout(spinner2.getSelectedItem().toString());
+
+        // Intensity
+        TextView intensity = (TextView) vh.intensity.item;
+        li.setIntensity("" + intensity.getText());
+
+        // Duration
+        TextView
     }
 
     private class RelativeClickListener implements View.OnClickListener {
