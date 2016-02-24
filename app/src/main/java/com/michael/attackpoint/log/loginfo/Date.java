@@ -74,6 +74,10 @@ public class Date {
         }
     }
 
+    public Calendar getDate() {
+        return cal;
+    }
+
     public String toString() {
         return sdf.format(cal.getTime());
     }

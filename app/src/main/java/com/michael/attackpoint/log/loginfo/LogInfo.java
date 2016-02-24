@@ -155,6 +155,12 @@ public class LogInfo {
         this.snippet = snippet.replace('\n',' ');
     }
 
+    //++++++++++++++++++ Date +++++++++++++++++
+
+    public Date getDate() {
+        return date;
+    }
+
     //++++++++++++++++++ Distance +++++++++++++++++
 
     /**

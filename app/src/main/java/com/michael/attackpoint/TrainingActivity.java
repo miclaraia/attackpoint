@@ -135,6 +135,10 @@ public class TrainingActivity extends Activity {
         }
     };
 
+    private void submitTraining() {
+
+    }
+
     private class RelativeClickListener implements View.OnClickListener {
 
         @Override
