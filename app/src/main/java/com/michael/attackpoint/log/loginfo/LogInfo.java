@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -124,14 +125,6 @@ public class LogInfo {
     }
 
     /**
-     * Sets date of log entry
-     * @param date see {@link Date} for proper formatting
-     */
-    public void setDate(String date) {
-        this.date.set(date);
-    }
-
-    /**
      * Sets description text of log entry
      * @param text
      */
@@ -159,6 +152,18 @@ public class LogInfo {
 
     public Date getDate() {
         return date;
+    }
+
+    /**
+     * Sets date of log entry
+     * @param date see {@link Date} for proper formatting
+     */
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
+    public void setDate(Calendar cal) {
+        this.date.set(cal);
     }
 
     //++++++++++++++++++ Distance +++++++++++++++++

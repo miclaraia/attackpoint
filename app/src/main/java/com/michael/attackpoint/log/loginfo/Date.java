@@ -58,6 +58,10 @@ public class Date {
         }
     }
 
+    public void set(Calendar cal) {
+        this.cal = cal;
+    }
+
     /**
      * sets time of day of session
      * @param time must be in format 'h a'

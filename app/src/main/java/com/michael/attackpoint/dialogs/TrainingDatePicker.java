@@ -53,13 +53,13 @@ public class TrainingDatePicker extends DialogFragment
         TextView dateView = (TextView) getActivity()
                 .findViewById(R.id.training_date).findViewById(R.id.item);
         dateView.setText(sdf.format(date));
-        dateView.setTag(date);
+        dateView.setTag(cal);
     }
 
     /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == PICK_TODAY) {
+        if (requestCode == PICK_TODAY) {date
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 

@@ -22,12 +22,16 @@ import android.widget.TextView;
 import com.michael.attackpoint.dialogs.NumberPickerDialog;
 import com.michael.attackpoint.dialogs.TrainingDatePicker;
 import com.michael.attackpoint.dialogs.TrainingDurationPicker;
+import com.michael.attackpoint.log.loginfo.LogInfo;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by michael on 8/25/15.
  */
 public class TrainingActivity extends Activity {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +143,11 @@ public class TrainingActivity extends Activity {
     };
 
     private void submitTraining() {
+        ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
+        LogInfo li = new LogInfo();
+
+        Calendar cal = (Calendar) vh.date.item.getTag();
+        li.setDate(cal);
 
     }
 
