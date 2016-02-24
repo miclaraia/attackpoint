@@ -6,6 +6,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.log.loginfo.CalendarTime;
 import com.michael.attackpoint.log.loginfo.Date;
 import com.michael.attackpoint.log.loginfo.Duration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -75,9 +76,8 @@ public class AddTrainingRequest extends Request<Boolean> {
         mParams.put(FIELD_ACTIVITY, "" + 76863);
 
         // Duration
-        Time time = training.getTime().get();
-        String t = "" + time.hour + time.minute + time.second;
-        mParams.put(FIELD_DURATION, t);
+        String duration = training.getDuration().toFormString();
+        mParams.put(FIELD_DURATION, duration);
 
         // Distance
         String distance = "" + training.getDistance().distance;

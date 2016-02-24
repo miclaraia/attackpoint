@@ -69,6 +69,11 @@ public class Duration {
         return sdf.format(mCalendar.getTime());
     }
 
+    public String toFormString() {
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_FORM_OUT);
+        return sdf.format(mCalendar.getTime());
+    }
+
     public boolean isEmpty() {
         CalendarTime ct = new CalendarTime(mCalendar);
         if (ct.h == 0 && ct.m == 0 && ct.s == 0)

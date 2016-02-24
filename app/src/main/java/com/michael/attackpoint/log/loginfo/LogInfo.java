@@ -1,7 +1,6 @@
 package com.michael.attackpoint.log.loginfo;
 
 import android.text.Html;
-import android.text.format.Time;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +27,7 @@ public class LogInfo {
     public static final String JSON_DATE = "date";
     public static final String JSON_DISTANCE = "distance";
     public static final String JSON_UNIT = "unit";
-    public static final String JSON_TIME = "time";
+    public static final String JSON_DURATION = "duration";
     public static final String JSON_PACE = "pace";
     public static final String JSON_INTENSITY = "intensity";
     public static final String JSON_COLOR = "color";
@@ -81,7 +80,7 @@ public class LogInfo {
 
             date.fromJSON(json.getString(JSON_DATE));
 
-            setTime((String) json.get(JSON_TIME));
+            setDuration((String) json.get(JSON_DURATION));
 
             //makes sure distance actually exists before trying to set it
             if(!json.isNull(JSON_DISTANCE)) {
@@ -238,29 +237,29 @@ public class LogInfo {
         return distance;
     }
 
-    //++++++++++++++++++ Time +++++++++++++++++
+    //++++++++++++++++++ Duration +++++++++++++++++
 
     /**
-     * Sets time of log entry
-     * @param time see {@link Time} for formatting details
+     * Sets duration of log entry
+     * @param duration see {@link Duration} for formatting details
      */
-    public void setTime(String time) {
-        this.duration = new Duration(time);
+    public void setDuration(String duration) {
+        this.duration = new Duration(duration);
     }
 
     /**
-     * Sets time of log entry
-     * @param cal see {@link Time} for formatting details
+     * Sets Duration of log entry
+     * @param cal see {@link Duration} for formatting details
      */
-    public void setTime(Calendar cal) {
+    public void setDuration(Calendar cal) {
         this.duration = new Duration(cal);
     }
 
     /**
-     * gets time object
-     * @return {@link Time}
+     * gets Duration object
+     * @return {@link Duration}
      */
-    public Duration getTime() {
+    public Duration getDuration() {
         return this.duration;
     }
 
@@ -402,7 +401,7 @@ public class LogInfo {
             json.put(JSON_TYPE, this.type);
             json.put(JSON_TEXT, this.text);
             json.put(JSON_DATE, this.date.toJSON());
-            json.put(JSON_TIME, this.duration.toString());
+            json.put(JSON_DURATION, this.duration.toString());
             json.put(JSON_DISTANCE, this.distance.toString());
             json.put(JSON_INTENSITY, this.getIntensity());
             json.put(JSON_COLOR, this.color.get());
@@ -436,7 +435,7 @@ public class LogInfo {
         public String date;
         public String distance;
         public String pace;
-        public String time;
+        public String duration;
         public String climb;
         public String intensity;
         public String comments;
@@ -455,7 +454,7 @@ public class LogInfo {
             this.date = li.date.toString();
             this.distance = li.distance.toString();
             this.pace = li.pace.toString();
-            this.time = li.duration.toString();
+            this.duration = li.duration.toString();
             this.climb = li.climb.toString();
             this.intensity = "" + li.getIntensity();
             this.comments = commentsText();

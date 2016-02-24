@@ -76,7 +76,7 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
                 LogInfo details = new Note(type, text);
                 return details;
             } else {
-                String time = meta.getElementsByAttributeValue("xclass", "i0").first().text();
+                String duration = meta.getElementsByAttributeValue("xclass", "i0").first().text();
                 String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
                 Distance distance = getMetaDistance(meta);
 
@@ -86,7 +86,7 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
 
                 LogInfo details = new LogInfo();
                 details.setType(type);
-                details.setTime(time);;
+                details.setDuration(duration);;
                 details.setIntensity(intensity);
                 details.setClimb(climb);
 
