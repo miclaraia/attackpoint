@@ -25,7 +25,11 @@ public class Duration {
      * @param time time string must be a properly formatted hh:mm:ss time
      */
     public Duration(String time) {
-        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_NORMAL);
+        mCalendar = Calendar.getInstance();
+
+        int count = time.split(":").length;
+        String format = FORMAT_NORMAL.substring((3 - count) * 3);
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
             java.util.Date d = sdf.parse(time);
             mCalendar.setTime(d);
