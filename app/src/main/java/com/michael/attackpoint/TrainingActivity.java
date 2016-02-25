@@ -117,6 +117,15 @@ public class TrainingActivity extends Activity {
             }
         });
 
+        // initialize submit button
+        Button submit = vh.submit;
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(DEBUG_TAG, "submit button clicked, submitting training");
+                submitTraining();
+            }
+        });
 
     }
 
@@ -192,7 +201,8 @@ public class TrainingActivity extends Activity {
                 volleyError.printStackTrace();
             }
         });
-        Singleton.getInstance().add(request);
+        Log.d(DEBUG_TAG, "finished creating training request");
+        //Singleton.getInstance().add(request);
     }
 
     private class RelativeClickListener implements View.OnClickListener {
@@ -211,6 +221,7 @@ public class TrainingActivity extends Activity {
         private SubViewHolder duration;
         private SubViewHolder distance;
         private SubViewHolder description;
+        private Button submit;
 
         private ViewHolder(View v) {
             date = new SubViewHolder(v, R.id.training_date);
@@ -220,6 +231,8 @@ public class TrainingActivity extends Activity {
             duration = new SubViewHolder(v, R.id.training_duration);
             distance = new SubViewHolder(v, R.id.training_distance);
             description = new SubViewHolder(v, R.id.training_description);
+
+            submit = (Button) v.findViewById(R.id.training_submit);
         }
     }
 

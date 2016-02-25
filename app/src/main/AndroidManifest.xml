@@ -41,7 +41,10 @@
         <activity
             android:name=".dialogs.LoginActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".TrainingActivity" />
+        <activity
+            android:name=".TrainingActivity"
+            android:theme="@style/AppTheme"
+            android:label="Add Training"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
