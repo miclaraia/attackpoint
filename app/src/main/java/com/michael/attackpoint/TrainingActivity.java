@@ -1,22 +1,15 @@
 package com.michael.attackpoint;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,7 +28,7 @@ import java.util.Date;
 /**
  * Created by michael on 8/25/15.
  */
-public class TrainingActivity extends Activity {
+public class TrainingActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "training";
 
     @Override

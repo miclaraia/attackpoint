@@ -5,10 +5,11 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.michael.attackpoint.R;
 
-public class LogActivity extends ActionBarActivity {
+public class LogActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
