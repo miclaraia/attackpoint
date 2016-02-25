@@ -1,21 +1,18 @@
-package com.michael.attackpoint.dialogs;
+package com.michael.attackpoint.training;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.training.details.DateManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by michael on 8/25/15.
@@ -26,7 +23,7 @@ public class TrainingDatePicker extends DialogFragment
     private static final String DATE_FORMAT = "dd MMM, yyyy";
     private static final int PICK_TODAY = 1;
     private static final int RESULT_OK = 10;
-    private DatePickerDialog dialog;
+    private DatePickerDialog mDialog;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,23 +34,20 @@ public class TrainingDatePicker extends DialogFragment
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        dialog =  new DatePickerDialog(getActivity(), DatePickerDialog.THEME_DEVICE_DEFAULT_DARK, this, year, month, day);
-        DatePicker picker = dialog.getDatePicker();
+        mDialog =  new DatePickerDialog(getActivity(), DatePickerDialog.THEME_DEVICE_DEFAULT_DARK, this, year, month, day);
+        DatePicker picker = mDialog.getDatePicker();
         picker.setCalendarViewShown(true);
         picker.setSpinnersShown(false);
-        return dialog;
+        return mDialog;
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, monthOfYear, dayOfMonth);
-        Date date = cal.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        TextView dateView = (TextView) getActivity()
-                .findViewById(R.id.training_date).findViewById(R.id.item);
-        dateView.setText(sdf.format(date));
-        dateView.setTag(cal);
+
+        DateManager dm = (DateManager) getActivity().findViewById(R.id.training_date).getTag();
+        dm.updateDetail(cal);
     }
 
     /*@Override

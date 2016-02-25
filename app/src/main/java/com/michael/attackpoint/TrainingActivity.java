@@ -16,14 +16,22 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.dialogs.NumberPickerDialog;
-import com.michael.attackpoint.dialogs.TrainingDatePicker;
-import com.michael.attackpoint.dialogs.TrainingDurationPicker;
+import com.michael.attackpoint.log.loginfo.Date;
+import com.michael.attackpoint.log.loginfo.Duration;
+import com.michael.attackpoint.training.NumberPickerDialog;
+import com.michael.attackpoint.training.TrainingDatePicker;
+import com.michael.attackpoint.training.TrainingDurationPicker;
 import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.network.AddTrainingRequest;
+import com.michael.attackpoint.training.AddTrainingRequest;
+import com.michael.attackpoint.training.details.DateManager;
+import com.michael.attackpoint.training.details.DetailManager;
+import com.michael.attackpoint.training.details.DurationManager;
+import com.michael.attackpoint.training.details.IntensityManager;
+import com.michael.attackpoint.training.details.ViewHolder;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by michael on 8/25/15.
@@ -39,7 +47,8 @@ public class TrainingActivity extends AppCompatActivity {
 
         final ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
 
-        vh.date.parent.setOnClickListener(trainingListener);
+        // initialize date
+        DateManager date = new DateManager(vh.date, new Date());
 
         // TODO create single custom adapter for all spinners and load from attackpoint
         // initialize activity type spinner
@@ -61,30 +70,10 @@ public class TrainingActivity extends AppCompatActivity {
         workoutSpinner.setAdapter(workoutAdapter);
 
         // initialize intensity number picker
-        vh.intensity.parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment dialog = new NumberPickerDialog();
-                dialog.show(getFragmentManager(), "numberpicker");
-            }
-        });
+        IntensityManager intensity = new IntensityManager(vh.intensity, 0);
 
         // initialize duration number picker
-        View duration = vh.duration.parent;
-        duration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView time = (TextView) vh.duration.item;
-                String timeString = time.getText().toString();
-
-                TrainingDurationPicker dialog = new TrainingDurationPicker();
-                Bundle bundle = new Bundle();
-                bundle.putString("time_string", timeString);
-                dialog.setArguments(bundle);
-                dialog.setResultView(time);
-                dialog.show(getFragmentManager(), "durationpicker");
-            }
-        });
+        DurationManager duration = new DurationManager(vh.duration, new Duration());
 
         // initialize distance data entry
         View distance = vh.distance.parent;
@@ -128,35 +117,13 @@ public class TrainingActivity extends AppCompatActivity {
         Singleton.getInstance().setActivity(this);
     }
 
-    private View.OnClickListener trainingListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.training_date:
-                    DialogFragment newFragment = new TrainingDatePicker();
-                    newFragment.show(getFragmentManager(), "timePicker");
-                    break;
-                case R.id.training_duration:
-                    TextView time = (TextView) v.findViewById(R.id.item);
-                    String timeString = time.getText().toString();
-
-                    DialogFragment dialog = new TrainingDurationPicker();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("time_string", timeString);
-                    dialog.setArguments(bundle);
-                    dialog.show(getFragmentManager(), "durationpicker");
-
-            }
-        }
-    };
-
     private void submitTraining() {
         ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
         LogInfo li = new LogInfo();
 
         // Date
-        Calendar cal = (Calendar) vh.date.item.getTag();
-        li.setDate(cal);
+        DateManager dateManager = (DateManager) vh.date.parent.getTag();
+        li.setDate(dateManager.getDetail());
 
         // Activity type
         Spinner spinner = (Spinner) vh.activity.item;
@@ -167,12 +134,12 @@ public class TrainingActivity extends AppCompatActivity {
         li.setWorkout(spinner2.getSelectedItem().toString());
 
         // Intensity
-        TextView intensity = (TextView) vh.intensity.item;
-        li.setIntensity("" + intensity.getText());
+        IntensityManager intensity = (IntensityManager) vh.intensity.parent.getTag();
+        li.setIntensity(intensity.getDetail());
 
         // Duration
-        Calendar duration = (Calendar) vh.duration.item.getTag();
-        li.setDuration(duration);
+        DurationManager duration = (DurationManager) vh.duration.parent.getTag();
+        li.setDuration(duration.getDetail());
 
         // Distance
         TextView distance = (TextView) vh.distance.item;
@@ -195,7 +162,7 @@ public class TrainingActivity extends AppCompatActivity {
             }
         });
         Log.d(DEBUG_TAG, "finished creating training request");
-        //Singleton.getInstance().add(request);
+        Singleton.getInstance().add(request);
     }
 
     private class RelativeClickListener implements View.OnClickListener {
@@ -203,39 +170,6 @@ public class TrainingActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             view.findViewById(R.id.item).performClick();
-        }
-    }
-
-    private class ViewHolder {
-        private SubViewHolder date;
-        private SubViewHolder activity;
-        private SubViewHolder workout;
-        private SubViewHolder intensity;
-        private SubViewHolder duration;
-        private SubViewHolder distance;
-        private SubViewHolder description;
-        private Button submit;
-
-        private ViewHolder(View v) {
-            date = new SubViewHolder(v, R.id.training_date);
-            activity = new SubViewHolder(v, R.id.training_activity);
-            workout = new SubViewHolder(v, R.id.training_workout);
-            intensity = new SubViewHolder(v, R.id.training_intensity);
-            duration = new SubViewHolder(v, R.id.training_duration);
-            distance = new SubViewHolder(v, R.id.training_distance);
-            description = new SubViewHolder(v, R.id.training_description);
-
-            submit = (Button) v.findViewById(R.id.training_submit);
-        }
-    }
-
-    private class SubViewHolder {
-        private View parent;
-        private View item;
-
-        private SubViewHolder(View v, int id) {
-            parent = v.findViewById(id);
-            item = parent.findViewById(R.id.item);
         }
     }
 }

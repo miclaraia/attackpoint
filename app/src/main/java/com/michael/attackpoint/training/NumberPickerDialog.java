@@ -1,4 +1,4 @@
-package com.michael.attackpoint.dialogs;
+package com.michael.attackpoint.training;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.training.details.IntensityManager;
 
 /**
  * Created by michael on 8/27/15.
@@ -23,13 +24,17 @@ import com.michael.attackpoint.Singleton;
 public class NumberPickerDialog extends DialogFragment {
     private static final String DEBUG_TAG = "attackpoint.NP";
     private NumberPicker np;
-    private Dialog dialog;
+    private Dialog mDialog;
 
+    private IntensityManager mDetailManager;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");
+
+        mDetailManager = (IntensityManager) getActivity().findViewById(R.id.training_intensity).getTag();
+
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.number_picker, null);
 
@@ -43,8 +48,8 @@ public class NumberPickerDialog extends DialogFragment {
         np.setMinValue(0);
         np.setWrapSelectorWheel(false);
         np.setValue(3);
-        dialog = builder.create();
-        return dialog;
+        mDialog = builder.create();
+        return mDialog;
     }
 
 
@@ -62,13 +67,15 @@ public class NumberPickerDialog extends DialogFragment {
                 // cancel
                 case R.id.dialog_buttonC:
                     Log.d(DEBUG_TAG, "cancel pressed");
-                    dialog.dismiss();
+                    mDialog.dismiss();
                     break;
                 // login
                 case R.id.dialog_buttonA:
                     Log.d(DEBUG_TAG, "accept pressed");
-                    intensity.setText("" + np.getValue());
-                    dialog.dismiss();
+
+                    mDetailManager.updateDetail(np.getValue());
+
+                    mDialog.dismiss();
                     break;
             }
         }

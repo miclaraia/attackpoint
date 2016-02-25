@@ -1,4 +1,4 @@
-package com.michael.attackpoint.dialogs;
+package com.michael.attackpoint.training;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.training.details.DurationManager;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,49 +36,16 @@ import java.util.HashMap;
  */
 public class TrainingDurationPicker extends DialogFragment {
     private static final String DEBUG_TAG = "attackpoint.TP";
-    private static final String TIME_FORMAT_H = "HH:mm:ss";
-    private static final String TIME_FORMAT_M = "mm:ss";
-    private static final String TIME_FORMAT_S = "ss";
-    private Dialog dialog;
-
-    private TextView result;
-    private Calendar duration;
+    private Dialog mDialog;
 
     private NumberPicker hour;
     private NumberPicker minute;
     private NumberPicker second;
 
+    private DurationManager mDetailManager;
+    private Calendar mCalendar;
+
     private HashMap<String, NumberPicker> pickers;
-
-    public Calendar parseTime(String time) {
-        try {
-            String parse = "";
-            SimpleDateFormat sdf;
-            switch (time.split(":").length) {
-                case 1:
-                    sdf = new SimpleDateFormat(TIME_FORMAT_S);
-                    break;
-                case 2:
-                    sdf = new SimpleDateFormat(TIME_FORMAT_M);
-                    break;
-                case 3:
-                    sdf = new SimpleDateFormat(TIME_FORMAT_H);
-                    break;
-                default:
-                    sdf = new SimpleDateFormat();
-            }
-            sdf.parse(time);
-            return sdf.getCalendar();
-        } catch (ParseException e) {
-            Log.e(DEBUG_TAG, "Error tring to parse duration time");
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public void setResultView(TextView result) {
-        this.result = result;
-    }
 
     private EditText findInput(ViewGroup np) {
         int count = np.getChildCount();
@@ -95,9 +63,8 @@ public class TrainingDurationPicker extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        Bundle bundle = getArguments();
-        String time = (String) bundle.get("time_string");
-        duration = parseTime(time);
+        mDetailManager = (DurationManager) getActivity().findViewById(R.id.training_duration).getTag();
+        mCalendar = mDetailManager.getDetail().getCalendar();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");
@@ -121,9 +88,9 @@ public class TrainingDurationPicker extends DialogFragment {
         m.setWrapSelectorWheel(false);
         s.setWrapSelectorWheel(false);
 
-        h.setValue(duration.get(Calendar.HOUR));
-        m.setValue(duration.get(Calendar.MINUTE));
-        s.setValue(duration.get(Calendar.SECOND));
+        h.setValue(mCalendar.get(Calendar.HOUR_OF_DAY));
+        m.setValue(mCalendar.get(Calendar.MINUTE));
+        s.setValue(mCalendar.get(Calendar.SECOND));
 
         try {
             EditText hh = findInput(h);
@@ -150,8 +117,8 @@ public class TrainingDurationPicker extends DialogFragment {
         view.findViewById(R.id.dialog_buttonC).setOnClickListener(new ClickListener());
 
         builder.setView(view);
-        dialog = builder.create();
-        return dialog;
+        mDialog = builder.create();
+        return mDialog;
     }
 
     private class FocusListener implements View.OnFocusChangeListener {
@@ -179,20 +146,15 @@ public class TrainingDurationPicker extends DialogFragment {
                 // cancel
                 case R.id.dialog_buttonC:
                     Log.d(DEBUG_TAG, "cancel pressed");
-                    dialog.dismiss();
+                    mDialog.dismiss();
                     break;
                 // login
                 case R.id.dialog_buttonA:
                     Log.d(DEBUG_TAG, "accept pressed");
-                    if (result == null) {
-                        Log.e(DEBUG_TAG, "result view not set for TrainingDurationPicker");
-                        result = (TextView) getActivity().findViewById(R.id.training_duration).findViewById(R.id.item);
-                    }
-                    duration.set(0, 0, 0, hour.getValue(), minute.getValue(), second.getValue());
-                    DateFormat sdf = new SimpleDateFormat(TIME_FORMAT_H);
-                    result.setText(sdf.format(duration.getTime()));
-                    result.setTag(duration);
-                    dialog.dismiss();
+
+                    mCalendar.set(0, 0, 0, hour.getValue(), minute.getValue(), second.getValue());
+                    mDetailManager.updateDetail(mCalendar);
+                    mDialog.dismiss();
                     break;
             }
         }

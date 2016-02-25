@@ -157,6 +157,10 @@ public class LogInfo {
         this.date.set(cal);
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     //++++++++++++++++++ Activity +++++++++++++++++
 
     /**
@@ -253,6 +257,10 @@ public class LogInfo {
      */
     public void setDuration(Calendar cal) {
         this.duration = new Duration(cal);
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
     /**

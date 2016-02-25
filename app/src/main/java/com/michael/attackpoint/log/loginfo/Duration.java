@@ -46,6 +46,10 @@ public class Duration {
         mCalendar = cal;
     }
 
+    public void setCalendar(Calendar cal) {
+        mCalendar = cal;
+    }
+
     /**
      * gets the current duration as Calendar object
      * @return
