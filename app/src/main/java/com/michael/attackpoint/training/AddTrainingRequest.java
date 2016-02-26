@@ -120,7 +120,6 @@ public class AddTrainingRequest extends Request<Boolean> {
         return params;
     }
 
-
     @Override
     protected Response<Boolean> parseNetworkResponse(NetworkResponse networkResponse) {
         Log.d(DEBUG_TAG, networkResponse.toString());
