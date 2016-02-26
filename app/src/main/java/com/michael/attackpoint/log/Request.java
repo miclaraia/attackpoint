@@ -7,7 +7,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.log.loginfo.Climb;
-import com.michael.attackpoint.log.loginfo.Distance;
+import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;
 
@@ -78,7 +78,7 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
             } else {
                 String duration = meta.getElementsByAttributeValue("xclass", "i0").first().text();
                 String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
-                Distance distance = getMetaDistance(meta);
+                LogDistance distance = getMetaDistance(meta);
 
                 String color = getActivityColor(activity);
 
@@ -139,7 +139,7 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
     }
 
     //gets the activity distance. returns null if nonexistant
-    public Distance getMetaDistance(Element meta) {
+    public LogDistance getMetaDistance(Element meta) {
         String metaString = meta.toString();
         String[] split = metaString.split(" ");
 
@@ -156,11 +156,11 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
                     }
                 }
 
-                Distance distance = new Distance(d, split[i]);
+                LogDistance distance = new LogDistance(d, split[i]);
                 return distance;
             }
         }
-        return new Distance();
+        return new LogDistance();
     }
 
     /**

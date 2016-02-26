@@ -1,7 +1,5 @@
 package com.michael.attackpoint.log.loginfo;
 
-import android.text.format.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -27,7 +25,7 @@ public class Pace {
      * @param t duration of log entry
      * @param d distance traveled in workout
      */
-    public Pace(Duration t, Distance d) {
+    public Pace(Duration t, LogDistance d) {
         this.unit = d.unit;
         this.pace = calc(t, d);
     }
@@ -37,7 +35,7 @@ public class Pace {
      * @param cal duration of log entry
      * @param distance distance traveled in workout
      */
-    public Pace(Calendar cal, Distance distance) {
+    public Pace(Calendar cal, LogDistance distance) {
         this.unit = distance.unit;
         set(calc(cal, distance));
     }
@@ -56,11 +54,11 @@ public class Pace {
      * @param d distance traveled
      * @return
      */
-    private Calendar calc(Duration t, Distance d) {
+    private Calendar calc(Duration t, LogDistance d) {
         return calc(t.getCalendar(), d);
     }
 
-    private Calendar calc(Calendar time, Distance distance) {
+    private Calendar calc(Calendar time, LogDistance distance) {
         // TODO make sure this calculates properly
         CalendarTime ct = new CalendarTime(time);
 

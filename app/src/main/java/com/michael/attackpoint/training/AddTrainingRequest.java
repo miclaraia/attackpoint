@@ -1,19 +1,13 @@
 package com.michael.attackpoint.training;
 
-import android.text.format.Time;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.log.loginfo.CalendarTime;
-import com.michael.attackpoint.log.loginfo.Date;
-import com.michael.attackpoint.log.loginfo.Duration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.text.SimpleDateFormat;

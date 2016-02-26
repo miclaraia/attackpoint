@@ -29,9 +29,9 @@ public abstract class LogInfoItem<T> {
         return mItem;
     }
 
+    public abstract void onCreate();
+    public abstract boolean isEmpty();
     public abstract String toString();
     public abstract JSONObject toJSON();
     public abstract void fromJSON(JSONObject json);
-    public abstract boolean isEmpty();
-    public abstract void onCreate();
 }

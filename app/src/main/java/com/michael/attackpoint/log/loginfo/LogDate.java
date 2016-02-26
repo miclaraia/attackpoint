@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Class that manages the date used in representing a log entry.
@@ -82,7 +83,7 @@ public class LogDate extends LogInfoItem<Calendar> {
         SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
         try {
             String dateString = (String) json.get(JSON);
-            java.util.Date date = sdf.parse(dateString);
+            Date date = sdf.parse(dateString);
             mItem.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();

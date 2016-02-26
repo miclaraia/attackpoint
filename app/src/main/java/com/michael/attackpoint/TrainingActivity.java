@@ -1,6 +1,5 @@
 package com.michael.attackpoint;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,22 +15,14 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.log.loginfo.Date;
+import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.Duration;
-import com.michael.attackpoint.training.NumberPickerDialog;
-import com.michael.attackpoint.training.TrainingDatePicker;
-import com.michael.attackpoint.training.TrainingDurationPicker;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.attackpoint.training.details.DateManager;
-import com.michael.attackpoint.training.details.DetailManager;
 import com.michael.attackpoint.training.details.DurationManager;
 import com.michael.attackpoint.training.details.IntensityManager;
 import com.michael.attackpoint.training.details.ViewHolder;
-
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
 
 /**
  * Created by michael on 8/25/15.
@@ -48,7 +39,7 @@ public class TrainingActivity extends AppCompatActivity {
         final ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
 
         // initialize date
-        DateManager date = new DateManager(vh.date, new Date());
+        DateManager date = new DateManager(vh.date, new LogDate());
 
         // TODO create single custom adapter for all spinners and load from attackpoint
         // initialize activity type spinner

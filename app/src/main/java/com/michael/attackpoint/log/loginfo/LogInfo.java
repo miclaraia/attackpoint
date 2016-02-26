@@ -42,10 +42,10 @@ public class LogInfo {
     public List<Comment> comments;
     public String session;
 
-    public Date date;
+    public LogDate date;
     public Duration duration;
     public Pace pace;
-    public Distance distance;
+    public LogDistance distance;
     public Color color;
     public Climb climb;
 
@@ -63,10 +63,10 @@ public class LogInfo {
     }
 
     public void init() {
-        date = new Date();
+        date = new LogDate();
         duration = new Duration();
         pace = new Pace();
-        distance = new Distance();
+        distance = new LogDistance();
         color = new Color();
         comments = new ArrayList<>();
         climb = new Climb();
@@ -141,13 +141,13 @@ public class LogInfo {
 
     //++++++++++++++++++ Date +++++++++++++++++
 
-    public Date getDate() {
+    public LogDate getDate() {
         return date;
     }
 
     /**
      * Sets date of log entry
-     * @param date see {@link Date} for proper formatting
+     * @param date see {@link LogDate} for proper formatting
      */
     public void setDate(String date) {
         this.date.set(date);
@@ -157,7 +157,7 @@ public class LogInfo {
         this.date.set(cal);
     }
 
-    public void setDate(Date date) {
+    public void setDate(LogDate date) {
         this.date = date;
     }
 
@@ -191,7 +191,7 @@ public class LogInfo {
      * Sets distance
      * @param distance distance of workout
      */
-    public void setDistance(Distance distance) {
+    public void setDistance(LogDistance distance) {
         if (distance != null) {
             this.distance = distance;
         }
@@ -203,7 +203,7 @@ public class LogInfo {
      * @param unit unit of distance
      */
     public void setDistance(int distance, String unit) {
-        this.distance = new Distance(distance, unit);
+        this.distance = new LogDistance(distance, unit);
     }
 
     /**
@@ -212,7 +212,7 @@ public class LogInfo {
      * @param unit unit of distance
      */
     public void setDistance(String distance, String unit) {
-        this.distance = new Distance(distance, unit);
+        this.distance = new LogDistance(distance, unit);
     }
 
     /**
@@ -221,7 +221,7 @@ public class LogInfo {
      * @param unit unit of distance
      */
     public void setDistance(float distance, String unit) {
-        this.distance = new Distance(distance, unit);
+        this.distance = new LogDistance(distance, unit);
     }
 
     /**
@@ -230,14 +230,14 @@ public class LogInfo {
      *                 includes unit.
      */
     public void setDistance(String distance) {
-        this.distance = new Distance(distance);
+        this.distance = new LogDistance(distance);
     }
 
     /**
      * gets distance object
-     * @return {@link Distance}
+     * @return {@link LogDistance}
      */
-    public Distance getDistance() {
+    public LogDistance getDistance() {
         return distance;
     }
 
@@ -283,7 +283,7 @@ public class LogInfo {
      * @param t time taken
      * @param d distance traveled
      */
-    public void setPace(Duration t, Distance d) {
+    public void setPace(Duration t, LogDistance d) {
         this.pace = new Pace(t, d);
     }
 
@@ -292,7 +292,7 @@ public class LogInfo {
      * @param t time taken
      * @param d distance traveled
      */
-    public void setPace(Calendar t, Distance d) {
+    public void setPace(Calendar t, LogDistance d) {
         this.pace = new Pace(t, d);
     }
 
