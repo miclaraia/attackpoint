@@ -1,5 +1,8 @@
 package com.michael.attackpoint.log.loginfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,34 +13,19 @@ import java.util.Calendar;
  * the app's log entries.
  * @author Michael Laraia
  */
-public class Date {
+public class Date extends LogInfoItem<Calendar> {
     private static final String DATE_FORMAT = "ccc MMM d";
     private static final String JSON_FORMAT = "yyyy-MM-dd";
     //todo change to get date from link
     //private static final String LOG_FORMAT = "cccc MMM d #";
     private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
-    private static final String LOG_FORMAT_SESSION = "h a";
-
-    private Calendar cal;
-    private SimpleDateFormat sdf;
-
-    public Date() {
-        sdf = new SimpleDateFormat(DATE_FORMAT);
-        cal = Calendar.getInstance();
-    }
-
-    public Date(String logDate, boolean json) {
-        sdf = new SimpleDateFormat(DATE_FORMAT);
-        cal = Calendar.getInstance();
-        set(logDate);
-    }
+    public static final String JSON = "date";
 
     /**
      * parses and sets date
      * @param logDate must be either in
      * the format 'ccc MMM d' used by the app or 'cccc MMM d #' used by
      * attackpoint.org
-     */
     public void set(String logDate) {
         if (logDate.contains("enddate")) {
             SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
@@ -62,42 +50,54 @@ public class Date {
         this.cal = cal;
     }
 
-    /**
-     * sets time of day of session
-     * @param time must be in format 'h a'
-     *             as used on attackpoint.org
-     */
-    public void setSession(String time) {
-        SimpleDateFormat sdf = new SimpleDateFormat(LOG_FORMAT_SESSION);
-        try {
-            Calendar parsed = Calendar.getInstance();
-            parsed.setTime(sdf.parse(time));
-            cal.set(Calendar.HOUR_OF_DAY, parsed.get(Calendar.HOUR_OF_DAY));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+    */
 
-    public Calendar getDate() {
+    public static Calendar parseLog(String dateString) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(dateString));
         return cal;
     }
 
+    @Override
     public String toString() {
-        return sdf.format(cal.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(mItem.getTime());
     }
 
-    public String toJSON() {
-        SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
-        return sdf.format(cal.getTime());
-    }
-
-    public void fromJSON(String json) {
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
         SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
         try {
-            java.util.Date date = sdf.parse(json);
-            cal.setTime(date);
+            json.put(JSON, sdf.format(mItem.getTime()));
+            return json;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void fromJSON(JSONObject json) {
+        SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
+        try {
+            String dateString = (String) json.get(JSON);
+            java.util.Date date = sdf.parse(dateString);
+            mItem.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void onCreate() {
+        mItem = Calendar.getInstance();
     }
 }
