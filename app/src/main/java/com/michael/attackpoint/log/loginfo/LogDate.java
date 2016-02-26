@@ -13,7 +13,7 @@ import java.util.Calendar;
  * the app's log entries.
  * @author Michael Laraia
  */
-public class Date extends LogInfoItem<Calendar> {
+public class LogDate extends LogInfoItem<Calendar> {
     private static final String DATE_FORMAT = "ccc MMM d";
     private static final String JSON_FORMAT = "yyyy-MM-dd";
     //todo change to get date from link

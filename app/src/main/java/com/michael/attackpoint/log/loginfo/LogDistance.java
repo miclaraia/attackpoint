@@ -4,7 +4,7 @@ package com.michael.attackpoint.log.loginfo;
  * Class containing info on distance and unit of a log entry
  * @author Michael Laraia
  */
-public class Distance {
+public class LogDistance extends LogInfoItem<Float>{
     // TODO allow conversion between units
     public float distance;
     public String unit;
@@ -13,7 +13,7 @@ public class Distance {
     /**
      * Creates empty distance object
      */
-    public Distance() {
+    public LogDistance() {
         distance = 0;
         unit = "";
     }
@@ -23,7 +23,7 @@ public class Distance {
      * @param distance distance traveled during workout
      * @param unit unit of distance
      */
-    public Distance(int distance, String unit) {
+    public LogDistance(int distance, String unit) {
         this.distance = distance;
         this.unit = unit;
     }
@@ -33,7 +33,7 @@ public class Distance {
      * @param distance distance traveled during workout
      * @param unit unit of distance
      */
-    public Distance(String distance, String unit) {
+    public LogDistance(String distance, String unit) {
         if (!(distance == null || distance.equals(""))) {
             this.distance = Float.parseFloat(distance);
             this.unit = unit;
@@ -48,7 +48,7 @@ public class Distance {
      * @param distance distance traveled during workout
      * @param unit unit of distance
      */
-    public Distance(float distance, String unit) {
+    public LogDistance(float distance, String unit) {
         this.distance = distance;
         this.unit = unit;
     }
@@ -58,7 +58,7 @@ public class Distance {
      * @param distance combination of distance traveled and
      *                 the unit, seperated by a space
      */
-    public Distance(String distance) {
+    public LogDistance(String distance) {
         if (!(distance == null || distance.equals(""))) {
             String[] items = distance.split(" ");
             this.distance = Float.parseFloat(items[0]);
