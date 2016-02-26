@@ -11,6 +11,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.DiscussionActivity;
 import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.LogFragment;
@@ -20,6 +22,8 @@ import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
 import com.michael.attackpoint.discussion.Discussion;
+import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.database.CookieTable;
 import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
@@ -92,6 +96,33 @@ public class NavGroupGeneral extends NavDrawerGroup {
             public void click() {
                 Intent intent = new Intent(mActivity, TrainingActivity.class);
                 mActivity.startActivity(intent);
+            }
+        }));
+
+        //test training request
+        mNavItems.add(new NavItemReg("Add Training Test", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
+            @Override
+            public void click() {
+                LogInfo li = new LogInfo();
+                li.setDistance(5, "km");
+                li.setIntensity(3);
+                li.setText("Android app test");
+                li.setDuration("00:05:00");
+                Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean aBoolean) {
+                        Log.d(DEBUG_TAG, "success");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                        String response = new String(volleyError.networkResponse.data);
+                        response = response.replaceAll("(\\r|\\n)", "");
+                        VolleyLog.e(response);
+                    }
+                });
+                Singleton.getInstance().add(request);
             }
         }));
 

@@ -1,16 +1,22 @@
 package com.michael.attackpoint.training;
 
 import android.text.format.Time;
+import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.CalendarTime;
 import com.michael.attackpoint.log.loginfo.Date;
 import com.michael.attackpoint.log.loginfo.Duration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,6 +57,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private static final String FIELD_UNITS = "distanceunits";
     private static final String FIELD_CLIMB = "climb";
     private static final String FIELD_DESCRIPTION = "description";
+    private static final String FIELD_INTENSITY = "intensity";
 
     private Map<String, String> mParams;
     private Response.Listener mListener;
@@ -69,8 +76,8 @@ public class AddTrainingRequest extends Request<Boolean> {
         // Date
         Calendar d = training.getDate().getDate();
         mParams.put(FIELD_YEAR, "" + d.get(Calendar.YEAR));
-        mParams.put(FIELD_MONTH, "" + d.get(Calendar.MONTH));
-        mParams.put(FIELD_DAY, "" + d.get(Calendar.DAY_OF_MONTH));
+        mParams.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
+        mParams.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
 
         // Activity type
         mParams.put(FIELD_ACTIVITY, "" + 76863);
@@ -88,6 +95,17 @@ public class AddTrainingRequest extends Request<Boolean> {
 
         // Description
         mParams.put(FIELD_DESCRIPTION, strings.text);
+
+        // Intensity
+        mParams.put(FIELD_INTENSITY, strings.intensity);
+
+        mParams.put("session_length", "500");
+        mParams.put("workouttypeid", "1");
+        mParams.put("isplan", "0");
+        mParams.put("sessionstarthour", "-1");
+        mParams.put("shoes", "null");
+
+
     }
 
     @Override
@@ -95,10 +113,18 @@ public class AddTrainingRequest extends Request<Boolean> {
         return mParams;
     }
 
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Content-Type","application/x-www-form-urlencoded");
+        return params;
+    }
+
 
     @Override
     protected Response<Boolean> parseNetworkResponse(NetworkResponse networkResponse) {
-        return null;
+        Log.d(DEBUG_TAG, networkResponse.toString());
+        return Response.success(true, HttpHeaderParser.parseCacheHeaders(networkResponse));
     }
 
     @Override
