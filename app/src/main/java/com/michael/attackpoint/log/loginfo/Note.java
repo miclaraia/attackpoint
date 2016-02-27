@@ -27,7 +27,7 @@ public class Note extends LogInfo {
             setType((String) json.get(JSON_TYPE));
             setText((String) json.get(JSON_TEXT));
 
-            date.fromJSON(json.getString(JSON_DATE));
+            date.fromJSON(json);
 
             // get comments from JSON
             JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
