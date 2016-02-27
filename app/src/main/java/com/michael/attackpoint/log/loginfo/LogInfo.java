@@ -44,7 +44,7 @@ public class LogInfo {
 
     public LogDate date;
     public LogDuration duration;
-    public Pace pace;
+    public LogPace pace;
     public LogDistance distance;
     public Color color;
     public Climb climb;
@@ -65,7 +65,7 @@ public class LogInfo {
     public void init() {
         date = new LogDate();
         duration = new LogDuration();
-        pace = new Pace();
+        pace = new LogPace();
         distance = new LogDistance();
         color = new Color();
         comments = new ArrayList<>();
@@ -284,7 +284,7 @@ public class LogInfo {
      * @param d distance traveled
      */
     public void setPace(LogDuration t, LogDistance d) {
-        this.pace = new Pace(t, d);
+        this.pace = new LogPace(t, d);
     }
 
     /**
@@ -293,14 +293,14 @@ public class LogInfo {
      * @param d distance traveled
      */
     public void setPace(Calendar t, LogDistance d) {
-        this.pace = new Pace(t, d);
+        this.pace = new LogPace(t, d);
     }
 
     /**
      * returns pace object
-     * @return {@link Pace}
+     * @return {@link LogPace}
      */
-    public Pace getPace() {
+    public LogPace getPace() {
         return this.pace;
     }
 
