@@ -70,7 +70,7 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
                 sb_unit.append(c);
             }
         }
-        
+
         if (n_found) {
             climb.climb = Integer.parseInt(sb.toString());
             climb.unit = sb_unit.toString();

@@ -46,7 +46,7 @@ public class LogInfo {
     public LogDuration duration;
     public LogPace pace;
     public LogDistance distance;
-    public Color color;
+    public LogColor color;
     public LogClimb climb;
 
     public LogInfo() {
@@ -67,7 +67,7 @@ public class LogInfo {
         duration = new LogDuration();
         pace = new LogPace();
         distance = new LogDistance();
-        color = new Color();
+        color = new LogColor();
         comments = new ArrayList<>();
         climb = new LogClimb();
     }
@@ -355,7 +355,7 @@ public class LogInfo {
      * @param color
      */
     public void setColor(String color) {
-        this.color = new Color(color);
+        this.color = new LogColor(color);
     }
 
     /**
@@ -363,7 +363,7 @@ public class LogInfo {
      * @param color
      */
     public void setColor(int color) {
-        this.color = new Color(color);
+        this.color = new LogColor(color);
     }
 
     //++++++++++++++++++ Comments +++++++++++++++++
