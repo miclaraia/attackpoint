@@ -53,11 +53,14 @@ public class LogDate extends LogInfoItem<Calendar> {
 
     */
 
-    public static Calendar parseLog(String dateString) throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(sdf.parse(dateString));
-        return cal;
+    @Override
+    public void onCreate() {
+        mItem = Calendar.getInstance();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
@@ -92,13 +95,10 @@ public class LogDate extends LogInfoItem<Calendar> {
         }
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void onCreate() {
-        mItem = Calendar.getInstance();
+    public static Calendar parseLog(String dateString) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(dateString));
+        return cal;
     }
 }

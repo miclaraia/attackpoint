@@ -43,7 +43,7 @@ public class LogInfo {
     public String session;
 
     public LogDate date;
-    public Duration duration;
+    public LogDuration duration;
     public Pace pace;
     public LogDistance distance;
     public Color color;
@@ -64,7 +64,7 @@ public class LogInfo {
 
     public void init() {
         date = new LogDate();
-        duration = new Duration();
+        duration = new LogDuration();
         pace = new Pace();
         distance = new LogDistance();
         color = new Color();
@@ -245,29 +245,29 @@ public class LogInfo {
 
     /**
      * Sets duration of log entry
-     * @param duration see {@link Duration} for formatting details
+     * @param duration see {@link LogDuration} for formatting details
      */
     public void setDuration(String duration) {
-        this.duration = new Duration(duration);
+        this.duration = new LogDuration(duration);
     }
 
     /**
      * Sets Duration of log entry
-     * @param cal see {@link Duration} for formatting details
+     * @param cal see {@link LogDuration} for formatting details
      */
     public void setDuration(Calendar cal) {
-        this.duration = new Duration(cal);
+        this.duration = new LogDuration(cal);
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(LogDuration duration) {
         this.duration = duration;
     }
 
     /**
      * gets Duration object
-     * @return {@link Duration}
+     * @return {@link LogDuration}
      */
-    public Duration getDuration() {
+    public LogDuration getDuration() {
         return this.duration;
     }
 
@@ -283,7 +283,7 @@ public class LogInfo {
      * @param t time taken
      * @param d distance traveled
      */
-    public void setPace(Duration t, LogDistance d) {
+    public void setPace(LogDuration t, LogDistance d) {
         this.pace = new Pace(t, d);
     }
 

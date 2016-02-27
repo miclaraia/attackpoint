@@ -29,6 +29,10 @@ public abstract class LogInfoItem<T> {
         return mItem;
     }
 
+    public String toFormString() {
+        return toString();
+    }
+
     public abstract void onCreate();
     public abstract boolean isEmpty();
     public abstract String toString();

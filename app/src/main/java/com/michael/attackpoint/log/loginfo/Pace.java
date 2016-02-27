@@ -25,7 +25,7 @@ public class Pace {
      * @param t duration of log entry
      * @param d distance traveled in workout
      */
-    public Pace(Duration t, LogDistance d) {
+    public Pace(LogDuration t, LogDistance d) {
         this.unit = d.unit;
         this.pace = calc(t, d);
     }
@@ -54,7 +54,7 @@ public class Pace {
      * @param d distance traveled
      * @return
      */
-    private Calendar calc(Duration t, LogDistance d) {
+    private Calendar calc(LogDuration t, LogDistance d) {
         return calc(t.getCalendar(), d);
     }
 
