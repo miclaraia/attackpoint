@@ -33,7 +33,7 @@ public class Note extends LogInfo {
             JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
             for (int i = 0; i < comments_array.length(); i++) {
                 JSONObject c = comments_array.getJSONObject(i);
-                addComment(new Comment(c));
+                addComment(new LogComment(c));
             }
 
         } catch (JSONException e) {

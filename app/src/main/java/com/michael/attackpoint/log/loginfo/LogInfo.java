@@ -39,7 +39,7 @@ public class LogInfo {
     public String snippet;
     public int intensity;
     // TODO
-    public List<Comment> comments;
+    public List<LogComment> comments;
     public String session;
 
     public LogDate date;
@@ -98,7 +98,7 @@ public class LogInfo {
             JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
             for (int i = 0; i < comments_array.length(); i++) {
                 JSONObject c = comments_array.getJSONObject(i);
-                addComment(new Comment(c));
+                addComment(new LogComment(c));
             }
 
         } catch (JSONException e) {
@@ -368,19 +368,19 @@ public class LogInfo {
 
     //++++++++++++++++++ Comments +++++++++++++++++
     public void addComment(String title, String id) {
-        Comment c = new Comment(title, id);
+        LogComment c = new LogComment(title, id);
         comments.add(c);
     }
 
-    public void addComment(Comment comment) {
+    public void addComment(LogComment comment) {
         comments.add(comment);
     }
 
-    public List<Comment> getComments() {
+    public List<LogComment> getComments() {
         return comments;
     }
 
-    public Comment getComment(int index) {
+    public LogComment getComment(int index) {
         return comments.get(index);
     }
 
@@ -418,7 +418,7 @@ public class LogInfo {
             //loads comments from json
             JSONArray comments_array = new JSONArray();
             for (int i = 0; i < comments.size(); i++) {
-                Comment c = comments.get(i);
+                LogComment c = comments.get(i);
                 comments_array.put(c.getJSON());
             }
             json.put(JSON_COMMENTS, comments_array);
