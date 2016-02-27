@@ -6,7 +6,7 @@ import android.util.Log;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.michael.attackpoint.log.loginfo.Climb;
+import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;
@@ -82,7 +82,7 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
 
                 String color = getActivityColor(activity);
 
-                Climb climb = getMetaClimb(meta);
+                LogClimb climb = getMetaClimb(meta);
 
                 LogInfo details = new LogInfo();
                 details.setType(type);
@@ -168,14 +168,14 @@ public class Request extends com.android.volley.Request<List<LogInfo>> {
      * @param meta
      * @return
      */
-    public Climb getMetaClimb(Element meta) {
+    public LogClimb getMetaClimb(Element meta) {
         Elements span = meta.select("span[title*=\"climb\"");
         if (span.size() > 0) {
-            Climb climb = new Climb(span.first().text());
+            LogClimb climb = new LogClimb(span.first().text());
             Log.d("CLIMB", climb.toString());
             return climb;
         }
-        return new Climb();
+        return new LogClimb();
     }
 
     //gets the color of the activity

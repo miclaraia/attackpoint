@@ -47,7 +47,7 @@ public class LogInfo {
     public LogPace pace;
     public LogDistance distance;
     public Color color;
-    public Climb climb;
+    public LogClimb climb;
 
     public LogInfo() {
         init();
@@ -69,7 +69,7 @@ public class LogInfo {
         distance = new LogDistance();
         color = new Color();
         comments = new ArrayList<>();
-        climb = new Climb();
+        climb = new LogClimb();
     }
 
     public void fromJSON(String jsonString) {
@@ -332,19 +332,19 @@ public class LogInfo {
     }
 
     //++++++++++++++++++ Climb +++++++++++++++++
-    public void setClimb(Climb climb) {
+    public void setClimb(LogClimb climb) {
         this.climb = climb;
     }
 
     public void setClimb(String climb) {
-        this.climb = new Climb(climb);
+        this.climb = new LogClimb(climb);
     }
 
     public void setClimb(int climb) {
-        this.climb = new Climb(climb);
+        this.climb = new LogClimb(climb);
     }
 
-    public Climb getClimb() {
+    public LogClimb getClimb() {
         return climb;
     }
 
