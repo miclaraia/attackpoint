@@ -36,6 +36,6 @@ public abstract class LogInfoItem<T> {
     public abstract void onCreate();
     public abstract boolean isEmpty();
     public abstract String toString();
-    public abstract JSONObject toJSON();
+    public abstract JSONObject toJSON(JSONObject json);
     public abstract void fromJSON(JSONObject json);
 }

@@ -70,8 +70,7 @@ public class LogDate extends LogInfoItem<Calendar> {
     }
 
     @Override
-    public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
+    public JSONObject toJSON(JSONObject json) {
         SimpleDateFormat sdf = new SimpleDateFormat(JSON_FORMAT);
         try {
             json.put(JSON, sdf.format(mItem.getTime()));

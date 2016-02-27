@@ -30,9 +30,8 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance>{
     }
 
     @Override
-    public JSONObject toJSON() {
+    public JSONObject toJSON(JSONObject json) {
         try {
-            JSONObject json = new JSONObject();
             json.put(JSON_DISTANCE, mItem.distance);
             json.put(JSON_UNIT, mItem.unit);
             return json;
