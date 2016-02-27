@@ -114,6 +114,11 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
             pace.set(0,0,0,0,0,0);
             unit = LogDistance.Distance.UNIT_DEFAULT;
         }
+
+        public Pace(Calendar pace, String unit) {
+            this.pace = pace;
+            this.unit = unit;
+        }
     }
 
     /*private Calendar pace;

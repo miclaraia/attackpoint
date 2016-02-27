@@ -91,6 +91,12 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
             climb = 0;
             unit = UNIT_DEFAULT;
         }
+
+        public Climb(int climb, String unit) {
+            this.climb = climb;
+            this.unit = unit;
+
+        }
     }
     /*// TODO allow conversion between units
     public int distance;
