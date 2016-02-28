@@ -8,7 +8,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class containing all information to be rendered on a log
@@ -22,19 +25,18 @@ public class LogInfo {
     private static final int SNIPPET_MAX = 50;
     public static final String NAME = "loginfo";
 
-    public static final String JSON_TYPE = "type";
-    public static final String JSON_TEXT = "text";
-    public static final String JSON_DATE = "date";
-    public static final String JSON_DISTANCE = "distance";
-    public static final String JSON_UNIT = "unit";
-    public static final String JSON_DURATION = "duration";
-    public static final String JSON_PACE = "pace";
-    public static final String JSON_INTENSITY = "intensity";
-    public static final String JSON_COLOR = "color";
-    public static final String JSON_COMMENTS = "comment";
-    public static final String JSON_CLIMB = "climb";
+    public static final String KEY_CLIMB = "kclimb";
+    public static final String KEY_COLOR = "kcolor";
+    public static final String KEY_COMMENT = "kcomment";
+    public static final String KEY_DATE = "kdate";
+    public static final String KEY_DESCRIPTION = "kdescription";
+    public static final String KEY_DISTANCE = "kdistance";
+    public static final String KEY_DURATION = "kduration";
+    public static final String KEY_ACTIVITY = "kactivity";
+    public static final String KEY_INTENSITY = "kintensity";
+    public static final String KEY_PACE = "kpace";
 
-    public String type;
+   /* public String type;
     public String text;
     public String snippet;
     public int intensity;
@@ -47,10 +49,23 @@ public class LogInfo {
     public LogPace pace;
     public LogDistance distance;
     public LogColor color;
-    public LogClimb climb;
+    public LogClimb climb;*/
+
+    private LogClimb mClimb;
+    private LogColor mColor;
+    private LogComment mComment;
+    private LogDate mDate;
+    private LogDescription mDescription;
+    private LogDistance mDistance;
+    private LogDuration mDuration;
+    private LogInfoActivity mActivity;
+    private LogIntensity mIntensity;
+    private LogPace mPace;
+
+    private Map<String, LogInfoItem> mItems;
 
     public LogInfo() {
-        init();
+        onCreate();
     }
 
     /**
@@ -58,52 +73,51 @@ public class LogInfo {
      * @param jsonString JSON string output from tostring()
      */
     public LogInfo(String jsonString) {
-        init();
+        onCreate();
         fromJSON(jsonString);
     }
 
-    public void init() {
-        date = new LogDate();
-        duration = new LogDuration();
-        pace = new LogPace();
-        distance = new LogDistance();
-        color = new LogColor();
-        comments = new ArrayList<>();
-        climb = new LogClimb();
+    public void onCreate() {
+        mClimb = new LogClimb();
+        mColor = new LogColor();
+        mComment = new LogComment();
+        mDate = new LogDate();
+        mDescription = new LogDescription();
+        mDistance = new LogDistance();
+        mDuration = new LogDuration();
+        mActivity = new LogInfoActivity();
+        mIntensity = new LogIntensity();
+        mPace = new LogPace();
+
+        mItems = new HashMap<>();
+        mItems.put(KEY_CLIMB, mClimb);
+        mItems.put(KEY_COLOR, mColor);
+        mItems.put(KEY_COMMENT, mComment);
+        mItems.put(KEY_DATE, mDate);
+        mItems.put(KEY_DESCRIPTION, mDescription);
+        mItems.put(KEY_DISTANCE, mDistance);
+        mItems.put(KEY_DURATION, mDuration);
+        mItems.put(KEY_ACTIVITY, mActivity);
+        mItems.put(KEY_INTENSITY, mIntensity);
+        mItems.put(KEY_PACE, mPace);
     }
 
     public void fromJSON(String jsonString) {
         try {
             JSONObject json = new JSONObject(jsonString);
-            setType((String) json.get(JSON_TYPE));
-            setText((String) json.get(JSON_TEXT));
-
-            date.fromJSON(json.getString(JSON_DATE));
-
-            setDuration((String) json.get(JSON_DURATION));
-
-            //makes sure distance actually exists before trying to set it
-            if(!json.isNull(JSON_DISTANCE)) {
-                setDistance((String) json.get(JSON_DISTANCE));
-                //only sets pace if distance is non zero
-                if (!this.distance.isEmpty()) setPace(duration, distance);
+            for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
+                entry.getValue().fromJSON(json);
             }
-
-            this.climb.fromJSON((JSONObject) json.get(JSON_CLIMB));
-
-            this.setIntensity((int) json.get(JSON_INTENSITY));
-            this.setColor((int) json.get(JSON_COLOR));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
             // get comments from JSON
-            JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
+            /*JSONArray comments_array= json.getJSONArray(JSON_COMMENTS);
             for (int i = 0; i < comments_array.length(); i++) {
                 JSONObject c = comments_array.getJSONObject(i);
                 addComment(new LogComment(c));
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            }*/
     }
 
     /**
@@ -116,39 +130,28 @@ public class LogInfo {
     }
 
     /**
-     * Sets description text of log entry
-     * @param text
-     */
-    public void setText(String text) {
-        // TODO preserve line breaks
-        text = Html.fromHtml(text).toString();
-        this.text = text;
-        setSnippet(text);
-    }
-
-    /**
      * creates short snippet of description
      * @param snippet full description text
      */
-    public void setSnippet(String snippet) {
+    /*public void setSnippet(String snippet) {
         snippet = snippet.substring(0, Math.min(text.length(), SNIPPET_MAX));
         int index = snippet.lastIndexOf(' ');
         if (index > 0) {
             snippet = snippet.substring(0, index);
         }
         this.snippet = snippet.replace('\n',' ');
-    }
+    }*/
 
-    //++++++++++++++++++ Date +++++++++++++++++
+    /*//++++++++++++++++++ Date +++++++++++++++++
 
     public LogDate getDate() {
         return date;
     }
 
-    /**
+    *//**
      * Sets date of log entry
      * @param date see {@link LogDate} for proper formatting
-     */
+     *//*
     public void setDate(String date) {
         this.date.set(date);
     }
@@ -163,10 +166,10 @@ public class LogInfo {
 
     //++++++++++++++++++ Activity +++++++++++++++++
 
-    /**
+    *//**
      * Sets type of workout (Activity on attackpoint.org)
      * @param type
-     */
+     *//*
     public void setType(String type) {
         this.type = type;
     }
@@ -187,74 +190,74 @@ public class LogInfo {
 
     //++++++++++++++++++ Distance +++++++++++++++++
 
-    /**
+    *//**
      * Sets distance
      * @param distance distance of workout
-     */
+     *//*
     public void setDistance(LogDistance distance) {
         if (distance != null) {
             this.distance = distance;
         }
     }
 
-    /**
+    *//**
      * Sets distance
      * @param distance distance of workout
      * @param unit unit of distance
-     */
+     *//*
     public void setDistance(int distance, String unit) {
         this.distance = new LogDistance(distance, unit);
     }
 
-    /**
+    *//**
      * Sets distance
      * @param distance distance of workout
      * @param unit unit of distance
-     */
+     *//*
     public void setDistance(String distance, String unit) {
         this.distance = new LogDistance(distance, unit);
     }
 
-    /**
+    *//**
      * Sets distance
      * @param distance distance of workout
      * @param unit unit of distance
-     */
+     *//*
     public void setDistance(float distance, String unit) {
         this.distance = new LogDistance(distance, unit);
     }
 
-    /**
+    *//**
      * Sets distance
      * @param distance distance of workout, string
      *                 includes unit.
-     */
+     *//*
     public void setDistance(String distance) {
         this.distance = new LogDistance(distance);
     }
 
-    /**
+    *//**
      * gets distance object
      * @return {@link LogDistance}
-     */
+     *//*
     public LogDistance getDistance() {
         return distance;
     }
 
     //++++++++++++++++++ Duration +++++++++++++++++
 
-    /**
+    *//**
      * Sets duration of log entry
      * @param duration see {@link LogDuration} for formatting details
-     */
+     *//*
     public void setDuration(String duration) {
         this.duration = new LogDuration(duration);
     }
 
-    /**
+    *//**
      * Sets Duration of log entry
      * @param cal see {@link LogDuration} for formatting details
-     */
+     *//*
     public void setDuration(Calendar cal) {
         this.duration = new LogDuration(cal);
     }
@@ -263,10 +266,10 @@ public class LogInfo {
         this.duration = duration;
     }
 
-    /**
+    *//**
      * gets Duration object
      * @return {@link LogDuration}
-     */
+     *//*
     public LogDuration getDuration() {
         return this.duration;
     }
@@ -278,55 +281,55 @@ public class LogInfo {
             setPace(this.duration.getCalendar(), this.distance);
         }
     }
-    /**
+    *//**
      * calculates and sets pace of log entry
      * @param t time taken
      * @param d distance traveled
-     */
+     *//*
     public void setPace(LogDuration t, LogDistance d) {
         this.pace = new LogPace(t, d);
     }
 
-    /**
+    *//**
      * calculates and sets pace of log entry
      * @param t time taken
      * @param d distance traveled
-     */
+     *//*
     public void setPace(Calendar t, LogDistance d) {
         this.pace = new LogPace(t, d);
     }
 
-    /**
+    *//**
      * returns pace object
      * @return {@link LogPace}
-     */
+     *//*
     public LogPace getPace() {
         return this.pace;
     }
 
     //++++++++++++++++++ Intensity +++++++++++++++++
 
-    /**
+    *//**
      * sets intensity of log entry
      * @param intensity int from 1 to 5
-     */
+     *//*
     public void setIntensity(int intensity) {
         this.intensity = intensity;
     }
 
-    /**
+    *//**
      * sets intensity of log entry
      * @param intensity int from 1 to 5
-     */
+     *//*
     public void setIntensity(String intensity) {
         if (intensity == null || intensity.equals("")) this.intensity = -1;
         else this.intensity = Integer.parseInt(intensity);
     }
 
-    /**
+    *//**
      * returns intensity as string
      * @return intensity
-     */
+     *//*
     public int getIntensity() {
         return intensity;
     }
@@ -350,18 +353,18 @@ public class LogInfo {
 
     //++++++++++++++++++ Color +++++++++++++++++
 
-    /**
+    *//**
      * sets color of log entry
      * @param color
-     */
+     *//*
     public void setColor(String color) {
         this.color = new LogColor(color);
     }
 
-    /**
+    *//**
      * sets color of log entry
      * @param color
-     */
+     *//*
     public void setColor(int color) {
         this.color = new LogColor(color);
     }
@@ -394,7 +397,7 @@ public class LogInfo {
         if (size == 1) s += "comment";
         else s += "comments";
         return s;
-    }
+    }*/
 
 
     /**
@@ -403,31 +406,12 @@ public class LogInfo {
      * recreate this LogInfo
      * @return json string
      */
-    public String toString() {
+    public JSONObject toJSON() {
         JSONObject json = new JSONObject();
-        try {
-            json.put(JSON_TYPE, this.type);
-            json.put(JSON_TEXT, this.text);
-            json.put(JSON_DATE, this.date.toJSON());
-            json.put(JSON_DURATION, this.duration.toString());
-            json.put(JSON_DISTANCE, this.distance.toString());
-            json.put(JSON_INTENSITY, this.getIntensity());
-            json.put(JSON_COLOR, this.color.get());
-            json.put(JSON_CLIMB, this.climb.toJSON());
-
-            //loads comments from json
-            JSONArray comments_array = new JSONArray();
-            for (int i = 0; i < comments.size(); i++) {
-                LogComment c = comments.get(i);
-                comments_array.put(c.getJSON());
-            }
-            json.put(JSON_COMMENTS, comments_array);
-
-            return json.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
+        for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
+            json = entry.getValue().toJSON(json);
         }
+        return json;
     }
 
     /**
@@ -435,18 +419,17 @@ public class LogInfo {
      * a LogInfo object
      */
     public class Strings {
-        public String text;
-        public int color;
-        public int contrast;
-        public String snippet;
-        public String type;
-        public String date;
-        public String distance;
-        public String pace;
-        public String duration;
         public String climb;
-        public String intensity;
+        public int color;
         public String comments;
+        public String date;
+        public String description;
+        public String distance;
+        public String duration;
+        public String activity;
+        public String intensity;
+        public String pace;
+        //public String snippet;
         //public String session;
 
         /**
@@ -454,21 +437,16 @@ public class LogInfo {
          * @param li LogInfo object to be converted to strings
          */
         public Strings(LogInfo li) {
-            this.text = li.text;
-            this.color = li.color.get();
-            this.contrast = li.color.contrast();
-            this.snippet = li.snippet;
-            this.type = li.type;
-            this.date = li.date.toString();
-            this.distance = li.distance.toString();
-            this.pace = li.pace.toString();
-            this.duration = li.duration.toString();
-            this.climb = li.climb.toString();
-            this.intensity = "" + li.getIntensity();
-            this.comments = commentsText();
-
-            // TODO
-            //this.session = "";
+            climb = li.mClimb.toString();
+            color = li.mColor.get();
+            comments = li.mComment.toString();
+            date = li.mDate.toString();
+            description = li.mDescription.toString();
+            distance = li.mDistance.toString();
+            duration = li.mDuration.toString();
+            activity = li.mActivity.toString();
+            intensity = li.mIntensity.toString();
+            pace = li.mPace.toString();
         }
     }
 }
