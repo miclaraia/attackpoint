@@ -8,6 +8,7 @@ import org.json.JSONObject;
  */
 public class LogDescription extends LogInfoItem<String> {
     private static final String JSON = "description";
+    private static final int MAX_SNIPPET = 100;
 
     @Override
     public void onCreate() {
@@ -22,6 +23,11 @@ public class LogDescription extends LogInfoItem<String> {
     @Override
     public String toString() {
         return mItem.toString();
+    }
+
+    public String toSnippet() {
+        String snippet = mItem.substring(0, MAX_SNIPPET);
+        return snippet;
     }
 
     @Override

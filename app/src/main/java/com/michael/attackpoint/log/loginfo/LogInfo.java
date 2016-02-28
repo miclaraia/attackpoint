@@ -51,16 +51,16 @@ public class LogInfo {
     public LogColor color;
     public LogClimb climb;*/
 
-    protected LogClimb mClimb;
-    protected LogColor mColor;
-    protected LogComment mComment;
-    protected LogDate mDate;
-    protected LogDescription mDescription;
-    protected LogDistance mDistance;
-    protected LogDuration mDuration;
-    protected LogInfoActivity mActivity;
-    protected LogIntensity mIntensity;
-    protected LogPace mPace;
+    private LogClimb mClimb;
+    private LogColor mColor;
+    private LogComment mComment;
+    private LogDate mDate;
+    private LogDescription mDescription;
+    private LogDistance mDistance;
+    private LogDuration mDuration;
+    private LogInfoActivity mActivity;
+    private LogIntensity mIntensity;
+    private LogPace mPace;
 
     private Map<String, LogInfoItem> mItems;
 
@@ -100,6 +100,10 @@ public class LogInfo {
         mItems.put(KEY_ACTIVITY, mActivity);
         mItems.put(KEY_INTENSITY, mIntensity);
         mItems.put(KEY_PACE, mPace);
+    }
+    
+    public LogInfoItem get(String key) {
+        return mItems.get(key);
     }
 
     public void fromJSON(String jsonString) {

@@ -5,6 +5,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;
 
@@ -54,30 +55,30 @@ public class ViewHolder {
         LogInfo.Strings text = li.strings();
 
         //Sets title and its colors
-        vTitle.setText(text.type);
+        vTitle.setText(text.activity);
         vDate.setText(text.date);
         vColor.setBackgroundColor(text.color);
-        //logViewHolder.vColor.setBackgroundColor(li.color);
 
         //Sets log entry's meta data
         //skips these steps if entry is a note
         if (!(li instanceof Note)) {
-            if (!li.duration.isEmpty()) vTime.setText(text.duration);
-            if (!li.distance.isEmpty()) vDist.setText(text.distance);
-            if (!li.pace.isEmpty()) vPace.setText(text.pace);
-            if (!li.climb.isEmpty()) vClimb.setText(text.climb);
+            if (!li.get(LogInfo.KEY_DURATION).isEmpty()) vTime.setText(text.duration);
+            if (!li.get(LogInfo.KEY_DISTANCE).isEmpty()) vDist.setText(text.distance);
+            if (!li.get(LogInfo.KEY_PACE).isEmpty()) vPace.setText(text.pace);
+            if (!li.get(LogInfo.KEY_CLIMB).isEmpty()) vClimb.setText(text.climb);
         }
     }
 
     public void setFull(LogInfo li) {
         setDetails(li);
-        vText.setText(li.text);
+        vText.setText(li.get(LogInfo.KEY_DESCRIPTION).toString());
     }
 
     public void setSnippet(LogInfo li) {
         setDetails(li);
-        if (li.snippet == null || li.snippet == "" || li.snippet.length() == 0) vText.setVisibility(View.GONE);
-        else vText.setText(li.snippet);
+        LogDescription ld = (LogDescription) li.get(LogInfo.KEY_DESCRIPTION);
+        if (ld.isEmpty()) vText.setVisibility(View.GONE);
+        else vText.setText(ld.toSnippet());
     }
 
     public static class TextViewDetail {
