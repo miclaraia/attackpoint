@@ -12,15 +12,15 @@ public class Note extends LogInfo {
 
     public Note(String type, String text) {
         super();
-        setText(text);
-        setType(type);
+        mActivity.set(type);
+        mDescription.set(text);
     }
 
     public Note(String jsonString) {
         super(jsonString);
     }
 
-    @Override
+    /*@Override
     public void fromJSON(String jsonString) {
         try {
             JSONObject json = new JSONObject(jsonString);
@@ -39,5 +39,5 @@ public class Note extends LogInfo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
