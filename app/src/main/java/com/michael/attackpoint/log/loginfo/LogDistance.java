@@ -53,6 +53,11 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance>{
         }
     }
 
+    public static Distance parseLog(String logString) {
+        Distance d = new Distance();
+
+    }
+
     public static class Distance {
         public static final String UNIT_KM = "kilometer";
         public static final String UNIT_MI = "mile";

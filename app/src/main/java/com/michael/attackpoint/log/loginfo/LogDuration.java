@@ -76,6 +76,29 @@ public class LogDuration extends LogInfoItem<Calendar> {
         }
     }
 
+    public static Calendar parseLog(String durationString) throws ParseException {
+        int length = durationString.split(":").length;
+        String format;
+        switch (length) {
+            case 1:
+                format = "ss";
+                break;
+            case 2:
+                format = "mm:ss";
+                break;
+            case 3:
+                format = "HH:mm:ss";
+                break;
+            default:
+                format = FORMAT_FORM_OUT;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(durationString));
+        return cal;
+    }
+
     /**
      * Creates empty duration object
      *//*

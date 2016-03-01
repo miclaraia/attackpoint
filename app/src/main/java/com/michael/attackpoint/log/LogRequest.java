@@ -6,9 +6,16 @@ import android.util.Log;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.log.loginfo.LogClimb;
+import com.michael.attackpoint.log.loginfo.LogColor;
+import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
+import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.LogInfoActivity;
+import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.log.loginfo.Note;
 
 import org.jsoup.Jsoup;
@@ -16,7 +23,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -62,41 +71,31 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
     //gets meta data and text from an activity in the html
     //returns LogInfo object
     public LogInfo getActivity(Element activity) {
-        String type = activity.getElementsByTag("b").first().text();
+        LogInfoActivity type = getType(activity);
+        LogDescription text = getDescription(activity);
 
         //ignores events
-        if (type.equals("Event:")) {
+        if (type.get().equals("Event:")) {
             return new LogInfo();
         } else {
             Element meta = activity.getElementsByTag("p").first();
 
-            String text = activity.select(".descrow:not(.privatenote)").first().html();
             // special case when entry is a note
-            if (type.equals("Note")) {
-                LogInfo details = new Note(type, text);
+            if (type.get().equals("Note")) {
+                LogInfo details = new Note(type.get(), text.get());
                 return details;
             } else {
-                String duration = meta.getElementsByAttributeValue("xclass", "i0").first().text();
-                String intensity = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
-                LogDistance distance = getMetaDistance(meta);
-
-                String color = getActivityColor(activity);
-
-                LogClimb climb = getMetaClimb(meta);
 
                 LogInfo details = new LogInfo();
-                details.setType(type);
-                details.setDuration(duration);;
-                details.setIntensity(intensity);
-                details.setClimb(climb);
+                details.set(LogInfo.KEY_DURATION, getDuration(meta));
+                details.set(LogInfo.KEY_DISTANCE, getDistance(meta));
+                details.set(LogInfo.KEY_INTENSITY, getIntensity(meta));
+                details.set(LogInfo.KEY_COLOR, getColor(activity));
+                details.set(LogInfo.KEY_CLIMB, getClimb(meta));
+                details.set(LogInfo.KEY_ACTIVITY, type);
+                details.set(LogInfo.KEY_DESCRIPTION, text);
 
-                if (!distance.isEmpty()) {
-                    details.setDistance(distance);
-                    details.setPace();
-                }
-
-                details.setText(text);
-                details.setColor(color);
+                details.setPace();
 
                 return details;
             }
@@ -106,19 +105,17 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
     //splits document into activity entries and strips of confounding elements
     //returns list of LogInfo objects
     public ArrayList<LogInfo> getActivities(Document soup) {
-        ArrayList<LogInfo> li = new ArrayList<LogInfo>();
+        ArrayList<LogInfo> liList = new ArrayList<LogInfo>();
         Elements days = soup.getElementsByAttributeValue("class", "tlday");
 
         for (Element day : days) {
-            Element d = day.getElementsByTag("a").first();
-            String[] permalink = d.attr("href").split("/");
-            String date = permalink[permalink.length - 1];
+            LogDate date = getDate(day);
 
             Elements activities = day.getElementsByAttributeValue("class", "tlactivity");
             for (Element activity : activities) {
                 //checks if this row is a comment
                 if (activity.select(".descrowtype1").size() > 0){
-                    LogInfo last = li.get(li.size() - 1);
+                    LogInfo last = liList.get(liList.size() - 1);
                     Element c = activity.select(".descrowtype1").first();
 
                     Element a = c.getElementsByTag("a").first();
@@ -126,20 +123,21 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                     String title = a.text().substring(4);
 
                     //adds comment to previous activity
-                    last.addComment(title, id);
+                    //last.addComment(title, id);
                 } else {
                     LogInfo info = getActivity(activity);
-                    info.setDate(date);
-                    li.add(info);
+                    info.set(LogInfo.KEY_DATE, date);
+                    
+                    liList.add(info);
                 }
             }
         }
 
-        return li;
+        return liList;
     }
 
     //gets the activity distance. returns null if nonexistant
-    public LogDistance getMetaDistance(Element meta) {
+    private LogDistance getDistance(Element meta) {
         String metaString = meta.toString();
         String[] split = metaString.split(" ");
 
@@ -156,11 +154,47 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                     }
                 }
 
-                LogDistance distance = new LogDistance(d, split[i]);
-                return distance;
+                LogDistance ld = new LogDistance();
+                if (!d.equals("")) {
+                    int distance = Integer.parseInt(d);
+                    ld.set(new LogDistance.Distance(distance, split[i]));
+                }
+
+                return ld;
             }
         }
         return new LogDistance();
+    }
+
+    public LogDuration getDuration(Element meta) {
+        String s = meta.getElementsByAttributeValue("xclass", "i0").first().text();
+        LogDuration ld = new LogDuration();
+        try {
+            Calendar cal = LogDuration.parseLog(s);
+            ld.set(cal);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ld;
+    }
+
+    public LogIntensity getIntensity(Element meta) {
+        String i = meta.getElementsByAttributeValueStarting("title", "intensity").first().text();
+        LogIntensity li = new LogIntensity();
+        if (!i.equals("")) {
+            int intensity = Integer.parseInt(i);
+            li.set(intensity);
+        }
+        return li;
+    }
+
+    public LogInfoActivity getType(Element activity) {
+        String type = activity.getElementsByTag("b").first().text();
+
+        LogInfoActivity la = new LogInfoActivity();
+        la.set(type);
+
+        return la;
     }
 
     /**
@@ -168,22 +202,66 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
      * @param meta
      * @return
      */
-    public LogClimb getMetaClimb(Element meta) {
+    public LogClimb getClimb(Element meta) {
         Elements span = meta.select("span[title*=\"climb\"");
+        LogClimb lc = new LogClimb();
         if (span.size() > 0) {
-            LogClimb climb = new LogClimb(span.first().text());
-            Log.d("CLIMB", climb.toString());
-            return climb;
+            String climbString = span.first().text();
+
+            char[] cArray = climbString.toCharArray();
+            int l = cArray.length;
+            for (int i = l - 1; i > 1; i--) {
+                char c = cArray[i];
+                if (c >= '0' && c <= '9') {
+                    int climb = Integer.parseInt(climbString.substring(1, i + 1));
+                    String unit = climbString.substring(i + 1, l);
+                    lc.set(new LogClimb.Climb(climb, unit));
+
+                    Log.d("CLIMB", lc.toString());
+                    break;
+                }
+            }
         }
-        return new LogClimb();
+        return lc;
+    }
+
+    public LogDescription getDescription(Element activity) {
+        String text = activity.select(".descrow:not(.privatenote)").first().html();
+        LogDescription ld = new LogDescription();
+
+        if (!text.equals("")) {
+            ld.set(text);
+        }
+        return ld;
+    }
+
+    public LogDate getDate(Element day) {
+        Element d = day.getElementsByTag("a").first();
+        String[] permalink = d.attr("href").split("/");
+        String dateString = permalink[permalink.length - 1];
+
+        LogDate ld = new LogDate();
+        try {
+            Calendar cal = LogDate.parseLog(dateString);
+            ld.set(cal);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            return ld;
+        }
     }
 
     //gets the color of the activity
-    public String getActivityColor(Element activity) {
+    public LogColor getColor(Element activity) {
         Element actcolor = activity.getElementsByAttributeValue("class", "actcolor").first();
-        String color = actcolor.attr("style");
-        color = color.split(":")[1];
-        return color;
+        String c = actcolor.attr("style");
+        c = c.split(":")[1];
+
+        int color = Integer.parseInt(c);
+        LogColor lc = new LogColor();
+        lc.set(color);
+
+        return lc;
     }
 }
 

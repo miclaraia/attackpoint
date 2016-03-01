@@ -51,7 +51,7 @@ public class LogInfo {
     public LogColor color;
     public LogClimb climb;*/
 
-    private LogClimb mClimb;
+    /*private LogClimb mClimb;
     private LogColor mColor;
     private LogComment mComment;
     private LogDate mDate;
@@ -60,7 +60,7 @@ public class LogInfo {
     private LogDuration mDuration;
     private LogInfoActivity mActivity;
     private LogIntensity mIntensity;
-    private LogPace mPace;
+    private LogPace mPace;*/
 
     private Map<String, LogInfoItem> mItems;
 
@@ -78,32 +78,36 @@ public class LogInfo {
     }
 
     public void onCreate() {
-        mClimb = new LogClimb();
-        mColor = new LogColor();
-        mComment = new LogComment();
-        mDate = new LogDate();
-        mDescription = new LogDescription();
-        mDistance = new LogDistance();
-        mDuration = new LogDuration();
-        mActivity = new LogInfoActivity();
-        mIntensity = new LogIntensity();
-        mPace = new LogPace();
+        LogInfoItem climb = new LogClimb();
+        LogInfoItem color = new LogColor();
+        LogInfoItem comment = new LogComment();
+        LogInfoItem date = new LogDate();
+        LogInfoItem description = new LogDescription();
+        LogInfoItem distance = new LogDistance();
+        LogInfoItem duration = new LogDuration();
+        LogInfoItem activity = new LogInfoActivity();
+        LogInfoItem intensity = new LogIntensity();
+        LogInfoItem pace = new LogPace();
 
         mItems = new HashMap<>();
-        mItems.put(KEY_CLIMB, mClimb);
-        mItems.put(KEY_COLOR, mColor);
-        mItems.put(KEY_COMMENT, mComment);
-        mItems.put(KEY_DATE, mDate);
-        mItems.put(KEY_DESCRIPTION, mDescription);
-        mItems.put(KEY_DISTANCE, mDistance);
-        mItems.put(KEY_DURATION, mDuration);
-        mItems.put(KEY_ACTIVITY, mActivity);
-        mItems.put(KEY_INTENSITY, mIntensity);
-        mItems.put(KEY_PACE, mPace);
+        mItems.put(KEY_CLIMB, climb);
+        mItems.put(KEY_COLOR, color);
+        mItems.put(KEY_COMMENT, comment);
+        mItems.put(KEY_DATE, date);
+        mItems.put(KEY_DESCRIPTION, description);
+        mItems.put(KEY_DISTANCE, distance);
+        mItems.put(KEY_DURATION, duration);
+        mItems.put(KEY_ACTIVITY, activity);
+        mItems.put(KEY_INTENSITY, intensity);
+        mItems.put(KEY_PACE, pace);
     }
     
     public LogInfoItem get(String key) {
         return mItems.get(key);
+    }
+
+    public void set(String key, LogInfoItem item) {
+        mItems.put(key, item);
     }
 
     public void fromJSON(String jsonString) {
@@ -122,6 +126,20 @@ public class LogInfo {
                 JSONObject c = comments_array.getJSONObject(i);
                 addComment(new LogComment(c));
             }*/
+    }
+
+    public void setPace() {
+        LogDistance distance = (LogDistance) mItems.get(KEY_DISTANCE);
+        LogDuration duration = (LogDuration) mItems.get(KEY_DURATION);
+        if (!distance.isEmpty() && !duration.isEmpty()) {
+            LogPace lp = new LogPace();
+            LogPace.Pace pace = LogPace.calcPace(duration, distance);
+            lp.set(pace);
+
+            mItems.remove(KEY_PACE);
+            mItems.put(KEY_PACE, lp);
+        }
+
     }
 
     /**
@@ -441,16 +459,16 @@ public class LogInfo {
          * @param li LogInfo object to be converted to strings
          */
         public Strings(LogInfo li) {
-            climb = li.mClimb.toString();
-            color = li.mColor.get();
-            comments = li.mComment.toString();
-            date = li.mDate.toString();
-            description = li.mDescription.toString();
-            distance = li.mDistance.toString();
-            duration = li.mDuration.toString();
-            activity = li.mActivity.toString();
-            intensity = li.mIntensity.toString();
-            pace = li.mPace.toString();
+            climb = li.get(KEY_CLIMB).toString();
+            color = (Integer) li.get(KEY_COLOR).get();
+            comments = li.get(KEY_COMMENT).toString();
+            date = li.get(KEY_DATE).toString();
+            description = li.get(KEY_DESCRIPTION).toString();
+            distance = li.get(KEY_DISTANCE).toString();
+            duration = li.get(KEY_DURATION).toString();
+            activity = li.get(KEY_ACTIVITY).toString();
+            intensity = li.get(KEY_INTENSITY).toString();
+            pace = li.get(KEY_PACE).toString();
         }
     }
 }
