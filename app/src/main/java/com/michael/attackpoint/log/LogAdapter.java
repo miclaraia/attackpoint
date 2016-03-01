@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOverlay;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.michael.attackpoint.LogDetailActivity;
 import com.michael.attackpoint.R;
@@ -19,13 +17,13 @@ import com.michael.attackpoint.log.loginfo.Note;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.LogViewHolder> {
+public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     private static final String DEBUG_TAG = "attackpoint.DrawerAdapter";
 
     private List<LogInfo> logInfoList;
     private Fragment fragment;
 
-    public Adapter(Fragment fragment, List<LogInfo> logInfoList) {
+    public LogAdapter(Fragment fragment, List<LogInfo> logInfoList) {
         this.logInfoList = logInfoList;
         this.fragment = fragment;
     }

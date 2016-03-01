@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.log.Adapter;
-import com.michael.attackpoint.log.Request;
+import com.michael.attackpoint.log.LogAdapter;
+import com.michael.attackpoint.log.LogRequest;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class LogFragment extends Fragment {
 
     private List<LogInfo> logInfoList;
     private RecyclerView recList;
-    private Adapter adapter;
+    private LogAdapter adapter;
     private Singleton singleton;
 
     @Override
@@ -57,7 +57,7 @@ public class LogFragment extends Fragment {
     }
 
     private void initializeAdapter() {
-        adapter = new Adapter(this ,logInfoList);
+        adapter = new LogAdapter(this ,logInfoList);
         adapter.notifyDataSetChanged();
         recList.setAdapter(adapter);
     }
@@ -65,7 +65,7 @@ public class LogFragment extends Fragment {
     public void getLog() {
         int userID = (int) getArguments().get(USER_ID);
         if (userID > 0) {
-            Request request = new Request(userID,
+            LogRequest request = new LogRequest(userID,
                     new Response.Listener<List<LogInfo>>() {
                         @Override
                         public void onResponse(List<LogInfo> response) {

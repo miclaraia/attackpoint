@@ -22,13 +22,13 @@ import java.util.List;
 /**
  * Created by michael on 8/16/15.
  */
-public class Request extends com.android.volley.Request<List<LogInfo>> {
+public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
     private static final String DEBUG_TAG = "attackpoint.Request";
     private static final String BASE_URL = "http://www.attackpoint.org/log.jsp/user_";
 
     private final Response.Listener<List<LogInfo>> mListener;
 
-    public Request(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
+    public LogRequest(int userID, Response.Listener<List<LogInfo>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, BASE_URL + userID, errorListener);
         mListener = listener;
     }
