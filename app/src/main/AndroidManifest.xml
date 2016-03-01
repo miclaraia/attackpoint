@@ -57,7 +57,7 @@
             android:name=".LogActivity"
             android:label="@string/title_activity_log" />
         <activity
-            android:name=".DiscussionActivity"
+            android:name=".discussion.DiscussionActivity"
             android:label="@string/title_activity_discussion"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

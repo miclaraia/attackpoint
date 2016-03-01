@@ -15,15 +15,15 @@ import org.jsoup.select.Elements;
 /**
  * Created by michael on 1/27/16.
  */
-public class Request extends com.android.volley.Request<Discussion> {
+public class DiscussionRequest extends com.android.volley.Request<Discussion> {
     private static final String DEBUG_TAG = "discussion.R";
     private static final String BASE_URL = "http://www.attackpoint.org/discussionthread.jsp/message_";
 
     private final Response.Listener<Discussion> mListener;
     private int mId;
 
-    public Request(int id, Response.Listener<Discussion> listener,
-                       Response.ErrorListener errorListener) {
+    public DiscussionRequest(int id, Response.Listener<Discussion> listener,
+                             Response.ErrorListener errorListener) {
         super(Method.GET, buildUrl(id), errorListener);
         mListener = listener;
         mId = id;

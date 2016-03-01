@@ -20,18 +20,18 @@ import java.util.List;
 /**
  * Created by michael on 2/3/16.
  */
-public class Adapter extends BaseAdapter {
+public class DiscussionAdapter extends BaseAdapter {
     private static final String DEBUG_TAG = "discussion.A";
 
     private List<Comment> mComments;
     private Activity mActivity;
 
-    public Adapter(Activity activity, List<Comment> comments) {
+    public DiscussionAdapter(Activity activity, List<Comment> comments) {
         mActivity = activity;
         mComments = comments;
     }
 
-    public Adapter(Activity activity) {
+    public DiscussionAdapter(Activity activity) {
         mActivity = activity;
         mComments = new ArrayList<Comment>();
     }

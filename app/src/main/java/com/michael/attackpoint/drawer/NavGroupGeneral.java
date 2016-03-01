@@ -3,7 +3,6 @@ package com.michael.attackpoint.drawer;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,8 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.michael.attackpoint.DiscussionActivity;
+import com.michael.attackpoint.discussion.DiscussionActivity;
 import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
@@ -22,6 +20,7 @@ import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
 import com.michael.attackpoint.discussion.Discussion;
+import com.michael.attackpoint.discussion.DiscussionRequest;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.database.CookieTable;
@@ -186,7 +185,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
             @Override
             public void click() {
                 Log.d(DEBUG_TAG, "Testing discussion request");
-                Request request = new com.michael.attackpoint.discussion.Request(1132702, new Response.Listener<Discussion>() {
+                Request request = new DiscussionRequest(1132702, new Response.Listener<Discussion>() {
                     @Override
                     public void onResponse(Discussion discussion) {
                         Log.d(DEBUG_TAG, "Got response");

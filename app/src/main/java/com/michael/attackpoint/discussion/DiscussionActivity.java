@@ -1,11 +1,9 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.discussion;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +12,16 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.discussion.Adapter;
-import com.michael.attackpoint.discussion.Comment;
+import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.discussion.DiscussionAdapter;
 import com.michael.attackpoint.discussion.Discussion;
-import com.michael.attackpoint.discussion.Request;
-
-import java.util.ArrayList;
+import com.michael.attackpoint.discussion.DiscussionRequest;
 
 public class DiscussionActivity extends AppCompatActivity {
     public final static String DISCUSSION_ID = "d_id";
     private ListView mListView;
-    private Adapter mAdapter;
+    private DiscussionAdapter mAdapter;
     private Singleton singleton;
 
     @Override
@@ -52,7 +49,7 @@ public class DiscussionActivity extends AppCompatActivity {
 
     private void getDiscussion() {
         int id = getIntent().getExtras().getInt(DISCUSSION_ID);
-        Request request = new Request(id, new Response.Listener<Discussion>() {
+        DiscussionRequest request = new DiscussionRequest(id, new Response.Listener<Discussion>() {
             @Override
             public void onResponse(Discussion discussion) {
                 initList(discussion);
@@ -68,7 +65,7 @@ public class DiscussionActivity extends AppCompatActivity {
 
     private void initList(Discussion discussion) {
         mListView = (ListView) findViewById(R.id.discussion);
-        mAdapter = new Adapter(this, discussion.getComments());
+        mAdapter = new DiscussionAdapter(this, discussion.getComments());
         mListView.setAdapter(mAdapter);
 
         View header = inflateHeader(discussion);
