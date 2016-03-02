@@ -116,18 +116,17 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                 //checks if this row is a comment
                 if (activity.select(".descrowtype1").size() > 0){
                     LogInfo last = liList.get(liList.size() - 1);
-                    Element c = activity.select(".descrowtype1").first();
 
+                    //adds comment to previous activity
+                    /*Element c = activity.select(".descrowtype1").first();
                     Element a = c.getElementsByTag("a").first();
                     String id = a.attr("href").split("_")[1];
                     String title = a.text().substring(4);
-
-                    //adds comment to previous activity
-                    //last.addComment(title, id);
+                    last.addComment(title, id);*/
                 } else {
                     LogInfo info = getActivity(activity);
                     info.set(LogInfo.KEY_DATE, date);
-                    
+
                     liList.add(info);
                 }
             }
