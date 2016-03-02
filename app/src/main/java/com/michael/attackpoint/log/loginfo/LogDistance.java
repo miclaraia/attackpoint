@@ -7,10 +7,23 @@ import org.json.JSONObject;
  * Class containing info on distance and unit of a log entry
  * @author Michael Laraia
  */
-public class LogDistance extends LogInfoItem<LogDistance.Distance>{
+public class LogDistance extends LogInfoItem<LogDistance.Distance> {
 
     public static final String JSON_DISTANCE = "duration";
     public static final String JSON_UNIT = "unit";
+
+    public LogDistance() {
+        super();
+    }
+
+    public LogDistance(JSONObject json) {
+        super(json);
+    }
+
+    public LogDistance(Distance distance) {
+        super();
+        set(distance);
+    }
 
     @Override
     public void onCreate() {
@@ -51,11 +64,6 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance>{
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static Distance parseLog(String logString) {
-        Distance d = new Distance();
-
     }
 
     public static class Distance {

@@ -21,7 +21,10 @@ import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
 import com.michael.attackpoint.discussion.Discussion;
 import com.michael.attackpoint.discussion.DiscussionRequest;
+import com.michael.attackpoint.log.loginfo.LogClimb;
+import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.database.CookieTable;
 import com.michael.database.UserTable;
@@ -103,6 +106,10 @@ public class NavGroupGeneral extends NavDrawerGroup {
             @Override
             public void click() {
                 LogInfo li = new LogInfo();
+                li.set(LogInfo.KEY_DISTANCE, new LogDistance(new LogDistance.Distance(5, "km"));
+
+
+
                 li.setDistance(5, "km");
                 li.setIntensity(3);
                 li.setText("Android app test");

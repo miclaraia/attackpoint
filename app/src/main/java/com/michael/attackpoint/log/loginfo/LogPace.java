@@ -16,7 +16,18 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
     private static final String JSON_PACE = "pace_pace";
     private static final String JSON_UNIT = "pace_unit";
 
+    public LogPace() {
+        super();
+    }
 
+    public LogPace(JSONObject json) {
+        super(json);
+    }
+
+    public LogPace(Pace pace) {
+        super();
+        set(pace);
+    }
 
     @Override
     public void onCreate() {

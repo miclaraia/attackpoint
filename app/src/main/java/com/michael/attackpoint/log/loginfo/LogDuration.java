@@ -15,6 +15,19 @@ public class LogDuration extends LogInfoItem<Calendar> {
     private static final String FORMAT_FORM_OUT = "HHmmss";
     private static final String JSON = "duration";
 
+    public LogDuration() {
+        super();
+    }
+
+    public LogDuration(JSONObject json) {
+        super(json);
+    }
+
+    public LogDuration(Calendar duration) {
+        super();
+        set(duration);
+    }
+
     @Override
     public void onCreate() {
         mItem = Calendar.getInstance();

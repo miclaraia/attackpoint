@@ -9,6 +9,19 @@ import org.json.JSONObject;
 public class LogInfoActivity extends LogDescription {
     private static String JSON = "activity";
 
+    public LogInfoActivity() {
+        super();
+    }
+
+    public LogInfoActivity(JSONObject json) {
+        super(json);
+    }
+
+    public LogInfoActivity(String type) {
+        super();
+        set(type);
+    }
+
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {

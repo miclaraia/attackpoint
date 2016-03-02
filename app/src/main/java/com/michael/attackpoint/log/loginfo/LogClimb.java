@@ -14,6 +14,19 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
     private static final String JSON_UNIT = "climb_unit";
     private static final String FORMAT = "+%d%s";
 
+    public LogClimb() {
+        super();
+    }
+
+    public LogClimb(JSONObject json) {
+        super(json);
+    }
+
+    public LogClimb(Climb climb) {
+        super();
+        set(climb);
+    }
+
     @Override
     public void onCreate() {
         mItem = new Climb();

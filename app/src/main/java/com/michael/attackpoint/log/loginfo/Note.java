@@ -12,8 +12,8 @@ public class Note extends LogInfo {
 
     public Note(String type, String text) {
         super();
-        mActivity.set(type);
-        mDescription.set(text);
+        set(KEY_ACTIVITY, new LogInfoActivity(type));
+        set(KEY_DESCRIPTION, new LogDescription(text));
     }
 
     public Note(String jsonString) {

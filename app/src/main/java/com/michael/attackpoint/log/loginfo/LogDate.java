@@ -22,6 +22,19 @@ public class LogDate extends LogInfoItem<Calendar> {
     private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
     public static final String JSON = "date";
 
+    public LogDate() {
+        super();
+    }
+
+    public LogDate(JSONObject json) {
+        super(json);
+    }
+
+    public LogDate(Calendar date) {
+        super();
+        set(date);
+    }
+
     /**
      * parses and sets date
      * @param logDate must be either in

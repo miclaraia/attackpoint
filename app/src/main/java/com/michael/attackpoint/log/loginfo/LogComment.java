@@ -10,6 +10,19 @@ public class LogComment extends LogInfoItem<LogComment.Comment> {
     private static final String JSON_TITLE = "comment_title";
     private static final String JSON_ID = "comment_id";
 
+    public LogComment() {
+        super();
+    }
+
+    public LogComment(JSONObject json) {
+        super(json);
+    }
+
+    public LogComment(Comment comment) {
+        super();
+        set(comment);
+    }
+
     @Override
     public void onCreate() {
         mItem = new Comment();

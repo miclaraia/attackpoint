@@ -12,6 +12,19 @@ import org.json.JSONObject;
 public class LogColor extends LogInfoItem<Integer> {
     private static final String JSON = "color";
 
+    public LogColor() {
+        super();
+    }
+
+    public LogColor(JSONObject json) {
+        super(json);
+    }
+
+    public LogColor(Integer color) {
+        super();
+        set(color);
+    }
+
     @Override
     public void onCreate() {
         mItem = Color.WHITE;

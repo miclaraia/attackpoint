@@ -9,6 +9,19 @@ import org.json.JSONObject;
 public class LogIntensity extends LogInfoItem<Integer> {
     private static final String JSON = "intensity";
 
+    public LogIntensity() {
+        super();
+    }
+
+    public LogIntensity(JSONObject json) {
+        super(json);
+    }
+
+    public LogIntensity(Integer intensity) {
+        super();
+        set(intensity);
+    }
+
     @Override
     public void onCreate() {
         mItem = 0;

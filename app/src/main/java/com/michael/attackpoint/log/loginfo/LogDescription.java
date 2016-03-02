@@ -10,6 +10,19 @@ public class LogDescription extends LogInfoItem<String> {
     private static final String JSON = "description";
     private static final int MAX_SNIPPET = 100;
 
+    public LogDescription() {
+        super();
+    }
+
+    public LogDescription(JSONObject json) {
+        super(json);
+    }
+
+    public LogDescription(String description) {
+        super();
+        set(description);
+    }
+
     @Override
     public void onCreate() {
         mItem = new String();
