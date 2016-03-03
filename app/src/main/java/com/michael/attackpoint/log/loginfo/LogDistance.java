@@ -50,7 +50,7 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {
-            json.put(JSON_DISTANCE, mItem.distance);
+            json.put(JSON_DISTANCE, mItem.distance.toString());
             json.put(JSON_UNIT, mItem.unit);
             return json;
         } catch (JSONException e) {
