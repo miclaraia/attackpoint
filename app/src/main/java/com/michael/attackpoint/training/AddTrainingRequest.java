@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.text.SimpleDateFormat;
@@ -46,7 +47,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private static final String FIELD_ACTIVITY = "activitytypeid";
     private static final String FIELD_ACTIVITY_NEW = "newactivitytype";
     private static final String FIELD_ACTIVITY_SUBTYPE = "activitymodifiers";
-    private static final String FIELD_DURATION = "sessionlength";
+    private static final String FIELD_DURATION = "session_length";
     private static final String FIELD_DISTANCE = "distance";
     private static final String FIELD_UNITS = "distanceunits";
     private static final String FIELD_CLIMB = "climb";
@@ -68,7 +69,7 @@ public class AddTrainingRequest extends Request<Boolean> {
         mParams = new HashMap<String, String>();
 
         // Date
-        Calendar d = training.getDate().getDate();
+        Calendar d = (Calendar) training.get(LogInfo.KEY_DATE).get();
         mParams.put(FIELD_YEAR, "" + d.get(Calendar.YEAR));
         mParams.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
         mParams.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
@@ -77,23 +78,20 @@ public class AddTrainingRequest extends Request<Boolean> {
         mParams.put(FIELD_ACTIVITY, "" + 76863);
 
         // Duration
-        String duration = training.getDuration().toFormString();
+        String duration = training.get(LogInfo.KEY_DURATION).toFormString();
         mParams.put(FIELD_DURATION, duration);
 
         // Distance
-        String distance = "" + training.getDistance().distance;
-        mParams.put(FIELD_DISTANCE, distance);
-
-        // Units
-        mParams.put(FIELD_UNITS, "kilometers");
+        LogDistance.Distance distance = (LogDistance.Distance) training.get(LogInfo.KEY_DISTANCE).get();
+        mParams.put(FIELD_DISTANCE, distance.distance.toString());
+        mParams.put(FIELD_UNITS, distance.unit);
 
         // Description
-        mParams.put(FIELD_DESCRIPTION, strings.text);
+        mParams.put(FIELD_DESCRIPTION, strings.description);
 
         // Intensity
         mParams.put(FIELD_INTENSITY, strings.intensity);
-
-        mParams.put("session_length", "500");
+        
         mParams.put("workouttypeid", "1");
         mParams.put("isplan", "0");
         mParams.put("sessionstarthour", "-1");

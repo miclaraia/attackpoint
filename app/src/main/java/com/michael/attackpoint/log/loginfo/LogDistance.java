@@ -76,11 +76,11 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         public static final String UNIT_MI = "mile";
         public static final String UNIT_DEFAULT = UNIT_KM;
 
-        public float distance;
+        public Float distance;
         public String unit;
 
         public Distance() {
-            distance = 0;
+            distance = Float.valueOf(0);
             unit = UNIT_DEFAULT;
         }
 
