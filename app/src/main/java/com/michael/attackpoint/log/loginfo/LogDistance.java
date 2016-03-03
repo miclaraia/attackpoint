@@ -25,6 +25,11 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         set(distance);
     }
 
+    public LogDistance(float distance, String unit) {
+        super();
+        set(new Distance(distance, unit));
+    }
+
     @Override
     public void onCreate() {
         mItem = new Distance();
