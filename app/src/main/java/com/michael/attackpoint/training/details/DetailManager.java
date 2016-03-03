@@ -4,10 +4,12 @@ import android.app.DialogFragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.michael.attackpoint.log.loginfo.LogInfoItem;
+
 /**
  * Created by michael on 2/25/16.
  */
-public abstract class DetailManager<T> {
+public abstract class DetailManager<T extends LogInfoItem> {
     TextView mTextView;
     View mParent;
     T mDetail;

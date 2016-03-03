@@ -16,8 +16,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.loginfo.LogDescription;
+import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.LogInfoActivity;
+import com.michael.attackpoint.log.loginfo.LogInfoItem;
+import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.attackpoint.training.details.DateManager;
 import com.michael.attackpoint.training.details.DurationManager;
@@ -61,7 +66,7 @@ public class TrainingActivity extends AppCompatActivity {
         workoutSpinner.setAdapter(workoutAdapter);
 
         // initialize intensity number picker
-        IntensityManager intensity = new IntensityManager(vh.intensity, 0);
+        IntensityManager intensity = new IntensityManager(vh.intensity, new LogIntensity());
 
         // initialize duration number picker
         DurationManager duration = new DurationManager(vh.duration, new LogDuration());
@@ -114,32 +119,34 @@ public class TrainingActivity extends AppCompatActivity {
 
         // Date
         DateManager dateManager = (DateManager) vh.date.parent.getTag();
-        li.setDate(dateManager.getDetail());
+        li.set(LogInfo.KEY_DATE, dateManager.getDetail());
 
         // Activity type
         Spinner spinner = (Spinner) vh.activity.item;
-        li.setType(spinner.getSelectedItem().toString());
+        String activity = spinner.getSelectedItem().toString();
+        li.set(LogInfo.KEY_ACTIVITY, new LogInfoActivity(activity));
 
         // Workout type
-        Spinner spinner2 = (Spinner) vh.workout.item;
-        li.setWorkout(spinner2.getSelectedItem().toString());
+        /*Spinner spinner2 = (Spinner) vh.workout.item;
+        String workout = spinner2.getSelectedItem().toString();
+        li.set(LogInfo.KEY_WORKOUT, new LogWorkout(workout));*/
 
         // Intensity
         IntensityManager intensity = (IntensityManager) vh.intensity.parent.getTag();
-        li.setIntensity(intensity.getDetail());
+        li.set(LogInfo.KEY_INTENSITY, intensity.getDetail());
 
         // Duration
         DurationManager duration = (DurationManager) vh.duration.parent.getTag();
-        li.setDuration(duration.getDetail());
+        li.set(LogInfo.KEY_DURATION, duration.getDetail());
 
         // Distance
         TextView distance = (TextView) vh.distance.item;
         // TODO implement proper unit selection
-        li.setDistance("" + distance.getText(), "km");
+        li.set(LogInfo.KEY_DISTANCE, new LogDistance(Float.parseFloat(distance.getText().toString()), "km"));
 
         // Description
         EditText description = (EditText) vh.description.item;
-        li.setText(description.toString());
+        li.set(LogInfo.KEY_DESCRIPTION, new LogDescription(description.getText().toString()));
 
         Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
             @Override

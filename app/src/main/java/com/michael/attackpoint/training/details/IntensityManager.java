@@ -4,20 +4,26 @@ import android.app.DialogFragment;
 import android.view.View;
 
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.NumberPickerDialog;
 
 /**
  * Created by michael on 2/25/16.
  */
-public class IntensityManager extends DetailManager<Integer> {
+public class IntensityManager extends DetailManager<LogIntensity> {
 
-    public IntensityManager(ViewHolder.SubViewHolder svh, Integer detail) {
+    public IntensityManager(ViewHolder.SubViewHolder svh, LogIntensity detail) {
         super(svh, detail);
     }
 
     @Override
     public void update() {
         mTextView.setText(mDetail.toString());
+    }
+
+    public void updateDetail(Integer intensity) {
+        mDetail.set(intensity);
+        update();
     }
 
     @Override

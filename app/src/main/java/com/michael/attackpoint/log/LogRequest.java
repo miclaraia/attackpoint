@@ -155,7 +155,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
 
                 LogDistance ld = new LogDistance();
                 if (!d.equals("")) {
-                    int distance = Integer.parseInt(d);
+                    float distance = Float.parseFloat(d);
                     ld.set(new LogDistance.Distance(distance, split[i]));
                 }
 
@@ -256,7 +256,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
         String c = actcolor.attr("style");
         c = c.split(":")[1];
 
-        int color = Integer.parseInt(c);
+        int color = LogColor.parseColor(c);
         LogColor lc = new LogColor();
         lc.set(color);
 

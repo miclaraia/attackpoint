@@ -24,7 +24,7 @@ public class DurationManager extends DetailManager<LogDuration> {
     }
 
     public void updateDetail(Calendar cal) {
-        mDetail.setCalendar(cal);
+        mDetail.set(cal);
         update();
     }
 

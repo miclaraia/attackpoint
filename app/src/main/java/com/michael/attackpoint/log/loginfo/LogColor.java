@@ -59,6 +59,11 @@ public class LogColor extends LogInfoItem<Integer> {
             throw new RuntimeException(e);
         }
     }
+
+    public static Integer parseColor(String colorString) {
+        int c = android.graphics.Color.parseColor(colorString);
+        return c;
+    }
     /*private int color = android.graphics.Color.WHITE;
 
     *//**

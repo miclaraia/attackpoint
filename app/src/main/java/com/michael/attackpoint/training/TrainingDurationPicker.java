@@ -64,7 +64,7 @@ public class TrainingDurationPicker extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         mDetailManager = (DurationManager) getActivity().findViewById(R.id.training_duration).getTag();
-        mCalendar = mDetailManager.getDetail().getCalendar();
+        mCalendar = mDetailManager.getDetail().get();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");

@@ -91,7 +91,7 @@ public class AddTrainingRequest extends Request<Boolean> {
 
         // Intensity
         mParams.put(FIELD_INTENSITY, strings.intensity);
-        
+
         mParams.put("workouttypeid", "1");
         mParams.put("isplan", "0");
         mParams.put("sessionstarthour", "-1");
