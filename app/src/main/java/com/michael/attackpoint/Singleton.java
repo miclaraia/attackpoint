@@ -7,15 +7,20 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.drawer.NavGroupUsers;
+import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.training.TrainingTypeRequest;
 import com.michael.network.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.Map;
 
 /**
  * Singleton class managing global objects that can be accessed
@@ -47,6 +52,7 @@ public class Singleton extends Application {
         mLogin = new Login();
 
         initCookies();
+        updateActivityTypes();
     }
 
     /**
@@ -169,5 +175,22 @@ public class Singleton extends Application {
 
     public Login getLogin() {
         return mLogin;
+    }
+
+    private void updateActivityTypes() {
+        Request request = new TrainingTypeRequest(new Response.Listener<Map<String, Integer>>() {
+            @Override
+            public void onResponse(Map<String, Integer> response) {
+                ActivityTable table = new ActivityTable();
+                table.updateTable(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        });
+
+        add(request);
     }
 }

@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.michael.attackpoint.training.ActivityTable;
+
 /**
  * Created by michael on 10/20/15.
  */
@@ -43,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(CookieTable.TABLE_CREATE);
         database.execSQL(UserTable.TABLE_CREATE);
+        database.execSQL(ActivityTable.TABLE_CREATE);
     }
 
     @Override
@@ -53,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + CookieTable.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ActivityTable.TABLE);
         onCreate(db);
     }
 }

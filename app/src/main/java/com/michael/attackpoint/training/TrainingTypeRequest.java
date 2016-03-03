@@ -23,7 +23,7 @@ public class TrainingTypeRequest extends Request<Map<String, Integer>> {
 
     private Response.Listener<Map<String, Integer>> mListener;
 
-    public TrainingTypeRequest(int userID, Response.Listener<Map<String, Integer>> listener, Response.ErrorListener errorListener) {
+    public TrainingTypeRequest(Response.Listener<Map<String, Integer>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, URL, errorListener);
         mListener = listener;
     }
@@ -33,7 +33,7 @@ public class TrainingTypeRequest extends Request<Map<String, Integer>> {
         try {
             String responseString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             Map<String, Integer> response = getMap(Jsoup.parse(responseString));
-            
+
             return Response.success(response, HttpHeaderParser.parseCacheHeaders(networkResponse));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
