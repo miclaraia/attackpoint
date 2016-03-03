@@ -65,7 +65,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
                 Intent intent = new Intent(fragment.getActivity(), LogDetailActivity.class);
                 LogInfo loginfo = logInfoList.get((int) v.getTag());
-                intent.putExtra(LogDetailActivity.DETAILS, loginfo.toString());
+                intent.putExtra(LogDetailActivity.DETAILS, loginfo.toJSON().toString());
 
                 String name;
                 if (loginfo instanceof Note) name = Note.NAME;
