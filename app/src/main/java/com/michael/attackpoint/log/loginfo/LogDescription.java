@@ -30,7 +30,7 @@ public class LogDescription extends LogInfoItem<String> {
 
     @Override
     public boolean isEmpty() {
-        return isEmpty();
+        return mItem.isEmpty();
     }
 
     @Override
