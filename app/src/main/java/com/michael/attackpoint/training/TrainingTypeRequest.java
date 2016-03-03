@@ -54,6 +54,7 @@ public class TrainingTypeRequest extends Request<Map<String, Integer>> {
         for (Element option : options) {
             String key = option.text();
             Integer value = Integer.parseInt(option.attr("value"));
+            if (value <= 0) continue;
             map.put(key, value);
         }
 

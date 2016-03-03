@@ -23,7 +23,9 @@ import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
+import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.AddTrainingRequest;
+import com.michael.attackpoint.training.details.ActivityManager;
 import com.michael.attackpoint.training.details.DateManager;
 import com.michael.attackpoint.training.details.DurationManager;
 import com.michael.attackpoint.training.details.IntensityManager;
@@ -46,15 +48,8 @@ public class TrainingActivity extends AppCompatActivity {
         // initialize date
         DateManager date = new DateManager(vh.date, new LogDate());
 
-        // TODO create single custom adapter for all spinners and load from attackpoint
-        // initialize activity type spinner
-        View activity = vh.activity.parent;
-        activity.setOnClickListener(new RelativeClickListener());
-        Spinner activitySpinner = (Spinner) vh.activity.item;
-        ArrayAdapter<CharSequence> activityAdapter = ArrayAdapter.createFromResource(this,
-                R.array.training_activities, android.R.layout.simple_spinner_item);
-        activityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        activitySpinner.setAdapter(activityAdapter);
+        // initialize activity type
+        ActivityManager activity = new ActivityManager(vh.activity, new LogInfoActivity());
 
         // initialize workout type spinner (long, interval, hills, etc)
         View workout = vh.workout.parent;

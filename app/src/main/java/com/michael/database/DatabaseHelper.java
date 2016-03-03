@@ -13,7 +13,7 @@ import com.michael.attackpoint.training.ActivityTable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "cookies.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private static DatabaseHelper mInstance = null;
     private Context mContext;

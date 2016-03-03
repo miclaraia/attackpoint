@@ -1,5 +1,7 @@
 package com.michael.attackpoint.log.loginfo;
 
+import com.michael.attackpoint.training.ActivityTable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,14 @@ public class LogInfoActivity extends LogDescription {
     public LogInfoActivity(String type) {
         super();
         set(type);
+    }
+
+    @Override
+    public String toFormString() {
+        ActivityTable table = new ActivityTable();
+        Integer value = table.getValue(mItem);
+
+        return value.toString();
     }
 
     @Override

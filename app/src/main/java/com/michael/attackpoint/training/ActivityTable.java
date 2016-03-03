@@ -96,8 +96,44 @@ public class ActivityTable {
         return map;
     }
 
+    public ArrayList<String> getAllNames() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String format = "SELECT %s FROM %s";
+        Formatter f = new Formatter();
+        String sql = f.format(format, COLUMN_NAME, TABLE).toString();
+
+        //Cursor cursor = db.rawQuery(sql, null);
+
+        ArrayList<String> list = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery(sql, null)) {
+            while (cursor.moveToNext()) {
+                String key = cursor.getString(0);
+                list.add(key);
+            }
+        }
+
+        return list;
+    }
+
+    public String getFirst() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String format = "SELECT %s FROM %s LIMIT 1";
+        Formatter f = new Formatter();
+        String sql = f.format(format, COLUMN_NAME, TABLE).toString();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.getCount() <= 0) return "";
+
+        cursor.moveToFirst();
+        String first = cursor.getString(0);
+        cursor.close();
+        return first;
+    }
+
     public void flush() {
-        String sql = "DELETE FROM " + TABLE + "WHERE 1";
+        String sql = "DELETE FROM " + TABLE + " WHERE 1";
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL(sql);
     }

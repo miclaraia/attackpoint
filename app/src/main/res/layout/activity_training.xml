@@ -48,11 +48,16 @@
             style="@style/training_label"
             android:id="@id/label"
             android:text="Activity"/>
-        <Spinner
-            style="@style/training_spinner"
+        <TextView
             android:id="@id/item"
-            android:layout_toEndOf="@id/label"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Orienteering"
+            android:layout_marginLeft="15dp"
+            android:textSize="@dimen/training_item_size"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@id/label"/>
     </RelativeLayout>
 
     <RelativeLayout
