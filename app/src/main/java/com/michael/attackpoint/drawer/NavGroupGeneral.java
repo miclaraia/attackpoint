@@ -22,9 +22,12 @@ import com.michael.attackpoint.UsersFragment;
 import com.michael.attackpoint.discussion.Discussion;
 import com.michael.attackpoint.discussion.DiscussionRequest;
 import com.michael.attackpoint.log.loginfo.LogClimb;
+import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
+import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
+import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.database.CookieTable;
 import com.michael.database.UserTable;
@@ -33,6 +36,7 @@ import com.michael.network.MyCookieStore;
 import com.michael.network.UserRequest;
 import com.michael.objects.User;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,14 +110,15 @@ public class NavGroupGeneral extends NavDrawerGroup {
             @Override
             public void click() {
                 LogInfo li = new LogInfo();
-                li.set(LogInfo.KEY_DISTANCE, new LogDistance(new LogDistance.Distance(5, "km"));
+                try {
+                    li.set(LogInfo.KEY_DISTANCE, new LogDistance(5, "km"));
+                    li.set(LogInfo.KEY_INTENSITY, new LogIntensity(3));
+                    li.set(LogInfo.KEY_DESCRIPTION, new LogDescription("Android app test"));
+                    li.set(LogInfo.KEY_DURATION, new LogDuration(LogDuration.parseLog("5:00")));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
-
-
-                li.setDistance(5, "km");
-                li.setIntensity(3);
-                li.setText("Android app test");
-                li.setDuration("00:05:00");
                 Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean aBoolean) {
