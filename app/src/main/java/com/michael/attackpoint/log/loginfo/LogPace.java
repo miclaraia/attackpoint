@@ -12,7 +12,7 @@ import java.util.Date;
  * Class managing pace of log entries
  */
 public class LogPace extends LogInfoItem<LogPace.Pace> {
-    private static final String FORMAT = "mm''ss";
+    private static final String FORMAT = "m''ss";
     private static final String JSON_PACE = "pace_pace";
     private static final String JSON_UNIT = "pace_unit";
 

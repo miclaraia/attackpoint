@@ -14,6 +14,9 @@ public class LogDuration extends LogInfoItem<Calendar> {
     private static final String FORMAT_JSON = "HH:mm:ss";
     private static final String FORMAT_FORM_OUT = "HHmmss";
     private static final String JSON = "duration";
+    private static final String FORMAT_S = "s";
+    private static final String FORMAT_M = "m:ss";
+    private static final String FORMAT_H = "H:mm:ss";
 
     public LogDuration() {
         super();
@@ -49,11 +52,11 @@ public class LogDuration extends LogInfoItem<Calendar> {
         if (ct.h == 0) {
             if (ct.m == 0) {
                 if (ct.s == 0) return "";
-                format = "ss";
+                format = FORMAT_S;
             }
-            else format = "mm:ss";
+            else format = FORMAT_M;
         }
-        else format = "HH:mm:ss";
+        else format = FORMAT_H;
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(mItem.getTime());
     }
