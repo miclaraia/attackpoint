@@ -39,6 +39,7 @@ public class LogDescription extends LogInfoItem<String> {
     }
 
     public String toSnippet() {
+        if (mItem.length() < MAX_SNIPPET) return mItem;
         String snippet = mItem.substring(0, MAX_SNIPPET);
         return snippet;
     }
