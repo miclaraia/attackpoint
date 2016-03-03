@@ -431,7 +431,7 @@ public class LogInfo {
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
-            json = entry.getValue().toJSON(json);
+             json = entry.getValue().toJSON(json);
         }
         return json;
     }

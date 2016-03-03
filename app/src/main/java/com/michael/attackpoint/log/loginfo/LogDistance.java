@@ -9,8 +9,8 @@ import org.json.JSONObject;
  */
 public class LogDistance extends LogInfoItem<LogDistance.Distance> {
 
-    public static final String JSON_DISTANCE = "duration";
-    public static final String JSON_UNIT = "unit";
+    public static final String JSON_DISTANCE = "distance_distance";
+    public static final String JSON_UNIT = "distance_unit";
 
     public LogDistance() {
         super();
