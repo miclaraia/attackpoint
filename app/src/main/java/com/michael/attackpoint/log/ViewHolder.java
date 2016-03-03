@@ -1,5 +1,6 @@
 package com.michael.attackpoint.log;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -71,14 +72,18 @@ public class ViewHolder {
 
     public void setFull(LogInfo li) {
         setDetails(li);
-        vText.setText(li.get(LogInfo.KEY_DESCRIPTION).toString());
+        String text = li.get(LogInfo.KEY_DESCRIPTION).toString();
+        vText.setText(Html.fromHtml(text));
     }
 
     public void setSnippet(LogInfo li) {
         setDetails(li);
         LogDescription ld = (LogDescription) li.get(LogInfo.KEY_DESCRIPTION);
         if (ld.isEmpty()) vText.setVisibility(View.GONE);
-        else vText.setText(ld.toSnippet());
+        else {
+            String text = ld.toSnippet();
+            vText.setText(Html.fromHtml(text));
+        }
     }
 
     public static class TextViewDetail {
