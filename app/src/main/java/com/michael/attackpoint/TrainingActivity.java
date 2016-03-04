@@ -148,6 +148,7 @@ public class TrainingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Boolean aBoolean) {
                 Log.d(DEBUG_TAG, aBoolean.toString());
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override
