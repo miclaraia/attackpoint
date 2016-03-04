@@ -71,34 +71,41 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
     //gets meta data and text from an activity in the html
     //returns LogInfo object
     public LogInfo getActivity(Element activity) {
-        LogInfoActivity type = getType(activity);
-        LogDescription text = getDescription(activity);
+        try {
+            LogInfoActivity type = getType(activity);
+            LogDescription text = getDescription(activity);
 
-        //ignores events
-        if (type.get().equals("Event:")) {
-            return new LogInfo();
-        } else {
-            Element meta = activity.getElementsByTag("p").first();
-
-            // special case when entry is a note
-            if (type.get().equals("Note")) {
-                LogInfo details = new Note(type.get(), text.get());
-                return details;
+            //ignores events
+            if (type.get().equals("Event:")) {
+                return null;
             } else {
+                Element meta = activity.getElementsByTag("p").first();
 
-                LogInfo details = new LogInfo();
-                details.set(LogInfo.KEY_DURATION, getDuration(meta));
-                details.set(LogInfo.KEY_DISTANCE, getDistance(meta));
-                details.set(LogInfo.KEY_INTENSITY, getIntensity(meta));
-                details.set(LogInfo.KEY_COLOR, getColor(activity));
-                details.set(LogInfo.KEY_CLIMB, getClimb(meta));
-                details.set(LogInfo.KEY_ACTIVITY, type);
-                details.set(LogInfo.KEY_DESCRIPTION, text);
+                // special case when entry is a note
+                if (type.get().equals("Note")) {
+                    LogInfo details = new Note(type.get(), text.get());
+                    return details;
+                } else {
 
-                details.setPace();
+                    LogInfo details = new LogInfo();
+                    details.set(LogInfo.KEY_DURATION, getDuration(meta));
+                    details.set(LogInfo.KEY_DISTANCE, getDistance(meta));
+                    details.set(LogInfo.KEY_INTENSITY, getIntensity(meta));
+                    details.set(LogInfo.KEY_COLOR, getColor(activity));
+                    details.set(LogInfo.KEY_CLIMB, getClimb(meta));
+                    details.set(LogInfo.KEY_ACTIVITY, type);
+                    details.set(LogInfo.KEY_DESCRIPTION, text);
 
-                return details;
+                    details.setPace();
+
+                    return details;
+                }
             }
+        } catch (NullPointerException e) {
+            // TODO usually caused by splits
+            e.printStackTrace();
+            Log.d(DEBUG_TAG, activity.toString().replace("\r","").replace("\n",""));
+            return null;
         }
     }
 
@@ -125,9 +132,11 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                     last.addComment(title, id);*/
                 } else {
                     LogInfo info = getActivity(activity);
-                    info.set(LogInfo.KEY_DATE, date);
+                    if (info != null) {
+                        info.set(LogInfo.KEY_DATE, date);
 
-                    liList.add(info);
+                        liList.add(info);
+                    }
                 }
             }
         }
@@ -187,7 +196,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
         return li;
     }
 
-    public LogInfoActivity getType(Element activity) {
+    public LogInfoActivity getType(Element activity) throws NullPointerException {
         String type = activity.getElementsByTag("b").first().text();
 
         LogInfoActivity la = new LogInfoActivity();
