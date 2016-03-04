@@ -177,7 +177,7 @@ public class Singleton extends Application {
         return mLogin;
     }
 
-    private void updateActivityTypes() {
+    public void updateActivityTypes() {
         Request request = new TrainingTypeRequest(new Response.Listener<Map<String, Integer>>() {
             @Override
             public void onResponse(Map<String, Integer> response) {

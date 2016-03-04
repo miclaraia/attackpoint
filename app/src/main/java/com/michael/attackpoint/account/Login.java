@@ -13,6 +13,7 @@ import com.michael.attackpoint.dialogs.LoginActivity;
 import com.michael.attackpoint.drawer.NavDrawer;
 import com.michael.attackpoint.drawer.NavDrawerGroup;
 import com.michael.attackpoint.drawer.NavGroupUsers;
+import com.michael.attackpoint.training.ActivityTable;
 import com.michael.network.LoginRequest;
 
 /**
@@ -60,6 +61,7 @@ public class Login {
                         mLogin = true;
                         //set user to preferences
                         mPreferences.setUser(username);
+                        mSingleton.updateActivityTypes();
 
                         //reset drawer to load new user
                         restartActivity();
@@ -81,6 +83,7 @@ public class Login {
         //remove user from preferences and cookies
         mSingleton.getCookieStore().removeUser(mUser);
         mPreferences.setUser(null);
+        new ActivityTable().flush();
 
         //update variables
         mUser = null;

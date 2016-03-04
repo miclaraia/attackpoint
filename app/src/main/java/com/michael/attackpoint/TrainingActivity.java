@@ -117,9 +117,8 @@ public class TrainingActivity extends AppCompatActivity {
         li.set(LogInfo.KEY_DATE, dateManager.getDetail());
 
         // Activity type
-        Spinner spinner = (Spinner) vh.activity.item;
-        String activity = spinner.getSelectedItem().toString();
-        li.set(LogInfo.KEY_ACTIVITY, new LogInfoActivity(activity));
+        ActivityManager type = (ActivityManager) vh.activity.parent.getTag();
+        li.set(LogInfo.KEY_ACTIVITY, type.getDetail());
 
         // Workout type
         /*Spinner spinner2 = (Spinner) vh.workout.item;
@@ -137,7 +136,9 @@ public class TrainingActivity extends AppCompatActivity {
         // Distance
         TextView distance = (TextView) vh.distance.item;
         // TODO implement proper unit selection
-        li.set(LogInfo.KEY_DISTANCE, new LogDistance(Float.parseFloat(distance.getText().toString()), "km"));
+        String d = distance.getText().toString();
+        if (!d.equals(""))
+            li.set(LogInfo.KEY_DISTANCE, new LogDistance(Float.parseFloat(d), "km"));
 
         // Description
         EditText description = (EditText) vh.description.item;

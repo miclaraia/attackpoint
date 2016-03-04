@@ -23,6 +23,7 @@ public class ActivityManager extends DetailManager<LogInfoActivity> {
         ActivityTable table = new ActivityTable();
         String first = table.getFirst();
         mDetail.set(first);
+        update();
     }
 
     @Override

@@ -21,8 +21,8 @@ import java.util.Map;
 public class ActivityTable {
     public static final String TABLE = "activity_type";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "user";
-    public static final String COLUMN_VALUE = "name";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_VALUE = "value";
 
     public static final String DEBUG_TAG = "ap.ActivityTable";
     private DatabaseHelper dbHelper;
@@ -99,9 +99,9 @@ public class ActivityTable {
     public ArrayList<String> getAllNames() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String format = "SELECT %s FROM %s";
+        String format = "SELECT %s FROM %s ORDER BY %s ASC";
         Formatter f = new Formatter();
-        String sql = f.format(format, COLUMN_NAME, TABLE).toString();
+        String sql = f.format(format, COLUMN_NAME, TABLE, COLUMN_NAME).toString();
 
         //Cursor cursor = db.rawQuery(sql, null);
 
@@ -119,9 +119,9 @@ public class ActivityTable {
     public String getFirst() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String format = "SELECT %s FROM %s LIMIT 1";
+        String format = "SELECT %s FROM %s ORDER BY %s ASC LIMIT 1";
         Formatter f = new Formatter();
-        String sql = f.format(format, COLUMN_NAME, TABLE).toString();
+        String sql = f.format(format, COLUMN_NAME, TABLE, COLUMN_NAME).toString();
 
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.getCount() <= 0) return "";

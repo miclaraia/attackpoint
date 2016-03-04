@@ -13,7 +13,8 @@ import com.michael.attackpoint.training.ActivityTable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "cookies.db";
-    private static final int DATABASE_VERSION = 6;
+    // TODO updating database doesn't reset login status
+    private static final int DATABASE_VERSION = 7;
 
     private static DatabaseHelper mInstance = null;
     private Context mContext;
