@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by michael on 3/4/16.
  */
-public class Unit {
+public class UnitManager {
     public static final String UNIT_DEFAULT = "kilometers";
     public static final Map<String, String> UNITS;
 
@@ -19,11 +19,11 @@ public class Unit {
 
     private String mUnit;
 
-    public Unit() {
+    public UnitManager() {
         mUnit = UNIT_DEFAULT;
     }
 
-    public Unit(String unit) {
+    public UnitManager(String unit) {
         mUnit = parseUnit(unit);
     }
 

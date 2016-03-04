@@ -1,15 +1,7 @@
 package com.michael.attackpoint.log.loginfo;
 
-import android.support.annotation.NonNull;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Class containing info on distance and unit of a log entry
@@ -52,7 +44,7 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
     @Override
     public String toString() {
         if (isEmpty()) return "";
-        return Float.toString(mItem.distance) + " " + mItem.unit.getShortUnit();
+        return mItem.distance.toString() + " " + mItem.unit.getShortUnit();
     }
 
     @Override
@@ -71,26 +63,26 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         try {
             String d = (String) json.get(JSON_DISTANCE);
             String u = (String) json.get(JSON_UNIT);
-            float distance = Float.parseFloat(d);
+            double distance = Double.parseDouble(d);
             mItem.distance = distance;
-            mItem.unit = new Unit(u);
+            mItem.unit = new UnitManager(u);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static class Distance {
-        public Float distance;
-        public Unit unit;
+        public Double distance;
+        public UnitManager unit;
 
         public Distance() {
-            distance = Float.valueOf(0);
-            unit = new Unit();
+            distance = Double.valueOf(0);
+            unit = new UnitManager();
         }
 
-        public Distance(float distance, String unit) {
+        public Distance(double distance, String unit) {
             this.distance = distance;
-            this.unit = new Unit(unit);
+            this.unit = new UnitManager(unit);
         }
     }
 }
