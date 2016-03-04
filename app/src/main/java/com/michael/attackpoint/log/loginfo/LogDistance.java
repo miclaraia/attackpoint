@@ -1,7 +1,15 @@
 package com.michael.attackpoint.log.loginfo;
 
+import android.support.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class containing info on distance and unit of a log entry
@@ -44,14 +52,14 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
     @Override
     public String toString() {
         if (isEmpty()) return "";
-        return Float.toString(mItem.distance) + " " + mItem.unit;
+        return Float.toString(mItem.distance) + " " + mItem.unit.getShortUnit();
     }
 
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {
             json.put(JSON_DISTANCE, mItem.distance.toString());
-            json.put(JSON_UNIT, mItem.unit);
+            json.put(JSON_UNIT, mItem.unit.toString());
             return json;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -65,28 +73,24 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
             String u = (String) json.get(JSON_UNIT);
             float distance = Float.parseFloat(d);
             mItem.distance = distance;
-            mItem.unit = u;
+            mItem.unit = new Unit(u);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static class Distance {
-        public static final String UNIT_KM = "kilometer";
-        public static final String UNIT_MI = "mile";
-        public static final String UNIT_DEFAULT = UNIT_KM;
-
         public Float distance;
-        public String unit;
+        public Unit unit;
 
         public Distance() {
             distance = Float.valueOf(0);
-            unit = UNIT_DEFAULT;
+            unit = new Unit();
         }
 
         public Distance(float distance, String unit) {
             this.distance = distance;
-            this.unit = unit;
+            this.unit = new Unit(unit);
         }
     }
 }

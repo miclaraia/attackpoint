@@ -3,10 +3,12 @@ package com.michael.attackpoint.log.loginfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.cert.LDAPCertStoreParameters;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Class managing pace of log entries
@@ -71,7 +73,7 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
             mItem.pace.setTime(date);
 
             String unit = (String) json.get(JSON_UNIT);
-            mItem.unit = unit;
+            mItem.unit = new Unit(unit);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -118,17 +120,17 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
 
     public static class Pace {
         public Calendar pace;
-        public String unit;
+        public Unit unit;
 
         public Pace() {
             pace = Calendar.getInstance();
             pace.set(0,0,0,0,0,0);
-            unit = LogDistance.Distance.UNIT_DEFAULT;
+            unit = new Unit();
         }
 
         public Pace(Calendar pace, String unit) {
             this.pace = pace;
-            this.unit = unit;
+            this.unit = new Unit(unit);
         }
     }
 

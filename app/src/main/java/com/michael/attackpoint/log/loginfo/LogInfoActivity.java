@@ -8,28 +8,42 @@ import org.json.JSONObject;
 /**
  * Created by michael on 2/28/16.
  */
-public class LogInfoActivity extends LogDescription {
+public class LogInfoActivity extends LogInfoItem<String> {
     private static String JSON = "activity";
+    private ActivityTable mTable = new ActivityTable();
 
     public LogInfoActivity() {
         super();
+        mTable = new ActivityTable();
+        mItem = mTable.getFirst();
     }
 
     public LogInfoActivity(JSONObject json) {
         super(json);
+        mTable = new ActivityTable();
     }
 
-    public LogInfoActivity(String type) {
+    public LogInfoActivity(String name) {
         super();
-        set(type);
+        mTable = new ActivityTable();
+        set(name);
+
     }
 
     @Override
-    public String toFormString() {
-        ActivityTable table = new ActivityTable();
-        Integer value = table.getValue(mItem);
+    public void onCreate() {
+        mItem = "";
+    }
 
-        return value.toString();
+    @Override
+    public boolean isEmpty() {
+        if (mItem.equals("")) return true;
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return mItem;
     }
 
     @Override
@@ -49,5 +63,10 @@ public class LogInfoActivity extends LogDescription {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Integer getID() {
+        Integer id = mTable.getValue(mItem);
+        return id;
     }
 }

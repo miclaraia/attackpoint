@@ -10,6 +10,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,7 +48,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private static final String FIELD_ACTIVITY = "activitytypeid";
     private static final String FIELD_ACTIVITY_NEW = "newactivitytype";
     private static final String FIELD_ACTIVITY_SUBTYPE = "activitymodifiers";
-    private static final String FIELD_DURATION = "session_length";
+    private static final String FIELD_DURATION = "sessionlength";
     private static final String FIELD_DISTANCE = "distance";
     private static final String FIELD_UNITS = "distanceunits";
     private static final String FIELD_CLIMB = "climb";
@@ -75,19 +76,23 @@ public class AddTrainingRequest extends Request<Boolean> {
         mParams.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
 
         // Activity type
-        mParams.put(FIELD_ACTIVITY, "" + 76863);
+        Integer activity = ((LogInfoActivity) training.get(LogInfo.KEY_ACTIVITY)).getID();
+        mParams.put(FIELD_ACTIVITY, activity.toString());
 
         // Duration
         String duration = training.get(LogInfo.KEY_DURATION).toFormString();
         mParams.put(FIELD_DURATION, duration);
 
         // Distance
-        LogDistance.Distance distance = (LogDistance.Distance) training.get(LogInfo.KEY_DISTANCE).get();
-        mParams.put(FIELD_DISTANCE, distance.distance.toString());
-        mParams.put(FIELD_UNITS, distance.unit);
+        LogDistance ld = (LogDistance) training.get(LogInfo.KEY_DISTANCE);
+        if (!ld.isEmpty()) {
+            mParams.put(FIELD_DISTANCE, ld.get().distance.toString());
+            mParams.put(FIELD_UNITS, ld.get().unit.toString());
+        }
 
         // Description
-        mParams.put(FIELD_DESCRIPTION, strings.description);
+        if (!training.get(LogInfo.KEY_DESCRIPTION).isEmpty())
+            mParams.put(FIELD_DESCRIPTION, strings.description);
 
         // Intensity
         mParams.put(FIELD_INTENSITY, strings.intensity);

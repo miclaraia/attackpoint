@@ -61,7 +61,7 @@ public class ActivityTable {
     public int getValue(String name) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String format = "SELECT %s FROM %s WHERE %s LIKE %s";
+        String format = "SELECT %s FROM %s WHERE %s LIKE \"%s\"";
         Formatter f = new Formatter();
         String sql = f.format(format, COLUMN_VALUE, TABLE, COLUMN_NAME, name).toString();
 
