@@ -48,7 +48,7 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         if (isEmpty()) return "";
         SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
         String pace = sdf.format(mItem.pace.getTime());
-        pace += "/" + mItem.unit;
+        pace += "/" + mItem.unit.getShortUnit();
         return pace;
     }
 
