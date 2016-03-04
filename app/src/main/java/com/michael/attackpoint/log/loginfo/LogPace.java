@@ -3,12 +3,10 @@ package com.michael.attackpoint.log.loginfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.cert.LDAPCertStoreParameters;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Class managing pace of log entries
@@ -73,7 +71,7 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
             mItem.pace.setTime(date);
 
             String unit = (String) json.get(JSON_UNIT);
-            mItem.unit = new Unit(unit);
+            mItem.unit = new UnitManager(unit);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -94,13 +92,9 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
          * because int operations are easier to deal with than floats.
          * Then boils everything down to min/unit
          */
-        int p = (int) Math.floor((ct.h*3600 + ct.m*60 + ct.s) / d.distance);
-        int m = p / 60;
-        int s = p % 60;
+        int p = (int) Math.floor(paceToSeconds(ct) / d.distance);
 
-        pace.pace.set(Calendar.MINUTE, m);
-        pace.pace.set(Calendar.SECOND, s);
-
+        pace.pace = secondsToPace(p);
         return pace;
 
         /*int pace = (int) Math.floor((ct.h*3600 + ct.m*60 + ct.s) / distance.distance);
@@ -117,20 +111,36 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         return out;*/
 
     }
+    
+    public static int paceToSeconds(CalendarTime pace) {
+        int seconds = pace.h*3600 + pace.m*60 + pace.s;
+        return seconds;
+    }
+    
+    public static Calendar secondsToPace(int seconds) {
+        int m = seconds / 60;
+        int s = seconds % 60;
+
+        Calendar pace = Calendar.getInstance();
+        pace.set(Calendar.MINUTE, m);
+        pace.set(Calendar.SECOND, s);
+
+        return pace;
+    }
 
     public static class Pace {
         public Calendar pace;
-        public Unit unit;
+        public UnitManager unit;
 
         public Pace() {
             pace = Calendar.getInstance();
             pace.set(0,0,0,0,0,0);
-            unit = new Unit();
+            unit = new UnitManager();
         }
 
         public Pace(Calendar pace, String unit) {
             this.pace = pace;
-            this.unit = new Unit(unit);
+            this.unit = new UnitManager(unit);
         }
     }
 
