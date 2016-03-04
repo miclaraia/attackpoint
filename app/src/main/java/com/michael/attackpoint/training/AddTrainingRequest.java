@@ -86,8 +86,8 @@ public class AddTrainingRequest extends Request<Boolean> {
         // Distance
         LogDistance ld = (LogDistance) training.get(LogInfo.KEY_DISTANCE);
         if (!ld.isEmpty()) {
-            mParams.put(FIELD_DISTANCE, ld.get().distance.toString());
-            mParams.put(FIELD_UNITS, ld.get().unit.toString());
+            mParams.put(FIELD_DISTANCE, ld.get().getDistance().toString());
+            mParams.put(FIELD_UNITS, ld.get().getUnit().toString());
         }
 
         // Description

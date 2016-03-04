@@ -37,21 +37,21 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
 
     @Override
     public boolean isEmpty() {
-        if (mItem.distance <= 0) return true;
+        if (mItem.getDistanceStandard() <= 0) return true;
         return false;
     }
 
     @Override
     public String toString() {
         if (isEmpty()) return "";
-        return mItem.distance.toString() + " " + mItem.unit.getShortUnit();
+        return mItem.getDistance().toString() + " " + mItem.getUnit().toNickname();
     }
 
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {
-            json.put(JSON_DISTANCE, mItem.distance.toString());
-            json.put(JSON_UNIT, mItem.unit.toString());
+            json.put(JSON_DISTANCE, mItem.getDistanceStandard().toString());
+            json.put(JSON_UNIT, mItem.getUnit().toString());
             return json;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -63,26 +63,48 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         try {
             String d = (String) json.get(JSON_DISTANCE);
             String u = (String) json.get(JSON_UNIT);
+
             double distance = Double.parseDouble(d);
-            mItem.distance = distance;
-            mItem.unit = new UnitManager(u);
+
+            mItem.setDistance(distance);
+            mItem.setUnit(Unit.UnitManager.getUnit(u));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static class Distance {
-        public Double distance;
-        public UnitManager unit;
+        private Double mDistance;
+        private Unit mUnit;
+
+        public Unit getUnit() {
+            return mUnit;
+        }
+
+        public Double getDistance() {
+            return mUnit.convert(mDistance);
+        }
+
+        protected Double getDistanceStandard() {
+            return mDistance;
+        }
+
+        public void setUnit(Unit unit) {
+            mUnit = unit;
+        }
+
+        public void setDistance(Double distance) {
+            mDistance = distance;
+        }
 
         public Distance() {
-            distance = Double.valueOf(0);
-            unit = new UnitManager();
+            mDistance = Double.valueOf(0);
+            mUnit = Unit.UnitManager.getDefault();
         }
 
         public Distance(double distance, String unit) {
-            this.distance = distance;
-            this.unit = new UnitManager(unit);
+            mDistance = distance;
+            mUnit = Unit.UnitManager.getUnit(unit);
         }
     }
 }
