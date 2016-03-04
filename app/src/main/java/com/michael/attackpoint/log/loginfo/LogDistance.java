@@ -44,7 +44,8 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
     @Override
     public String toString() {
         if (isEmpty()) return "";
-        return mItem.getDistance().toString() + " " + mItem.getUnit().toNickname();
+        String format = "%.2f %s";
+        return String.format(format, mItem.getDistance(), mItem.getUnit().toNickname());
     }
 
     @Override
