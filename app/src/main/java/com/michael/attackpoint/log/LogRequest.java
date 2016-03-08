@@ -21,6 +21,8 @@ import com.michael.attackpoint.log.loginfo.Note;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.text.ParseException;
@@ -234,9 +236,13 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
     }
 
     public LogDescription getDescription(Element activity) {
-        String text = activity.select(".descrow:not(.privatenote)").first().html();
+        Element element = activity.select(".descrow:not(.privatenote)").first();
+        element = stripWhitespace(element);
+
+        String text = element.html();
         LogDescription ld = new LogDescription();
 
+        // checks for empty description
         if (!text.equals("")) {
             ld.set(text);
         }
@@ -270,6 +276,43 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
         lc.set(color);
 
         return lc;
+    }
+
+    public static Element stripWhitespace(Element element) {
+        List<Node> nodes = element.childNodes();
+        List<Element> remove = new ArrayList<>();
+
+        for (int i = 0; i < nodes.size(); i++) {
+            Node node = nodes.get(i);
+            Log.d("whitespace", node.toString());
+            if (node instanceof TextNode) {
+                String text = ((TextNode) node).text();
+                if (text.equals("") || text.equals("\r") || text.equals(" ")) continue;
+                else break;
+            } else if (node instanceof Element) {
+                Element e = (Element) node;
+                if (e.tagName().equals("br")) remove.add(e);
+            } else break;
+        }
+
+        for (int i = nodes.size() - 1; i >= 0; i--) {
+            Node node = nodes.get(i);
+            Log.d("whitespace", node.toString());
+            if (node instanceof TextNode) {
+                String text = ((TextNode) node).text();
+                if (text.equals("") || text.equals("\r") || text.equals(" ")) continue;
+                else break;
+            } else if (node instanceof Element) {
+                Element e = (Element) node;
+                if (e.tagName().equals("br")) remove.add(e);
+            } else break;
+        }
+
+        for (Element r : remove) {
+            r.remove();
+        }
+
+        return element;
     }
 }
 
