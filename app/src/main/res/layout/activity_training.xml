@@ -178,15 +178,15 @@
             android:id="@id/label"
             android:text="Description"
             android:layout_centerVertical="false"
-            android:layout_marginTop="11dp"/>
+            android:layout_marginTop="10dp"/>
         <EditText
             android:id="@id/item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/label"
-            android:layout_marginLeft="20dp"
+            android:layout_below="@id/label"
+            android:layout_marginTop="5dp"
             android:textSize="@dimen/training_item_size"
-            android:hint="Description of the activity"
+            android:hint="Type your description text"
             android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
             android:imeOptions="actionDone"
             android:lines="8"

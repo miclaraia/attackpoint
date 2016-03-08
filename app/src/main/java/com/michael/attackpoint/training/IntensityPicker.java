@@ -21,19 +21,15 @@ import com.michael.attackpoint.training.details.IntensityManager;
 /**
  * Created by michael on 8/27/15.
  */
-public class NumberPickerDialog extends DialogFragment {
+public class IntensityPicker extends TrainingPicker {
     private static final String DEBUG_TAG = "attackpoint.NP";
     private NumberPicker np;
     private Dialog mDialog;
-
-    private IntensityManager mDetailManager;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");
-
-        mDetailManager = (IntensityManager) getActivity().findViewById(R.id.training_intensity).getTag();
 
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.number_picker, null);
@@ -73,7 +69,7 @@ public class NumberPickerDialog extends DialogFragment {
                 case R.id.dialog_buttonA:
                     Log.d(DEBUG_TAG, "accept pressed");
 
-                    mDetailManager.updateDetail(np.getValue());
+                    mManager.updateDetail(np.getValue());
 
                     mDialog.dismiss();
                     break;

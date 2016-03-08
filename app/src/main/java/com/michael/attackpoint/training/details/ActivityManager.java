@@ -8,6 +8,7 @@ import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.TrainingDatePicker;
+import com.michael.attackpoint.training.TrainingPicker;
 import com.michael.attackpoint.training.TrainingTypePicker;
 
 import java.util.Calendar;
@@ -31,9 +32,11 @@ public class ActivityManager extends DetailManager<LogInfoActivity> {
         mTextView.setText(mDetail.toString());
     }
 
-    public void updateDetail(String detail) {
-        mDetail.set(detail);
-        update();
+    @Override
+    public void setDetail(Object detail) {
+        if (detail instanceof String) {
+            mDetail.set((String) detail);
+        }
     }
 
     @Override
@@ -41,7 +44,8 @@ public class ActivityManager extends DetailManager<LogInfoActivity> {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TrainingTypePicker();
+                TrainingPicker newFragment = new TrainingTypePicker();
+                newFragment.setManager(mSelf);
                 newFragment.show(Singleton.getInstance().getActivity().getFragmentManager(), "typePicker");
             }
         };

@@ -6,6 +6,7 @@ import android.view.View;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.training.TrainingDatePicker;
+import com.michael.attackpoint.training.TrainingPicker;
 
 import java.util.Calendar;
 
@@ -24,6 +25,11 @@ public class DateManager extends DetailManager<LogDate> {
         mTextView.setText(mDetail.toString());
     }
 
+    @Override
+    public void setDetail(Object detail) {
+        if (detail instanceof Calendar) mDetail.set((Calendar) detail);
+    }
+
     public void updateDetail(Calendar cal) {
         mDetail.set(cal);
         update();
@@ -34,7 +40,8 @@ public class DateManager extends DetailManager<LogDate> {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TrainingDatePicker();
+                TrainingPicker newFragment = new TrainingDatePicker();
+                newFragment.setManager(mSelf);
                 newFragment.show(Singleton.getInstance().getActivity().getFragmentManager(), "datePicker");
             }
         };

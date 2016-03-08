@@ -13,15 +13,21 @@ public abstract class DetailManager<T extends LogInfoItem> {
     TextView mTextView;
     View mParent;
     T mDetail;
+    final DetailManager mSelf;
 
     public DetailManager(ViewHolder.SubViewHolder svh, T detail) {
         mTextView = (TextView) svh.item;
         mParent = svh.parent;
         mDetail = detail;
+        mSelf = this;
 
-        mParent.setTag(this);
         mParent.setOnClickListener(createListener());
 
+        update();
+    }
+
+    public void updateDetail(Object detail) {
+        setDetail(detail);
         update();
     }
 
@@ -39,5 +45,6 @@ public abstract class DetailManager<T extends LogInfoItem> {
     }
 
     public abstract void update();
+    protected abstract void setDetail(Object detail);
     protected abstract View.OnClickListener createListener();
 }

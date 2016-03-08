@@ -6,6 +6,7 @@ import android.view.View;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.training.TrainingDurationPicker;
+import com.michael.attackpoint.training.TrainingPicker;
 
 import java.util.Calendar;
 
@@ -23,6 +24,11 @@ public class DurationManager extends DetailManager<LogDuration> {
         mTextView.setText(mDetail.toString());
     }
 
+    @Override
+    protected void setDetail(Object detail) {
+        if (detail instanceof Calendar) mDetail.set((Calendar) detail);
+    }
+
     public void updateDetail(Calendar cal) {
         mDetail.set(cal);
         update();
@@ -33,7 +39,8 @@ public class DurationManager extends DetailManager<LogDuration> {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TrainingDurationPicker();
+                TrainingPicker newFragment = new TrainingDurationPicker();
+                newFragment.setManager(mSelf);
                 newFragment.show(Singleton.getInstance().getActivity().getFragmentManager(), "durationPicker");
             }
         };

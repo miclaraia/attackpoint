@@ -8,6 +8,7 @@ import org.json.JSONObject;
  */
 public class LogIntensity extends LogInfoItem<Integer> {
     private static final String JSON = "intensity";
+    private static final int DEFAULT = 3;
 
     public LogIntensity() {
         super();
@@ -24,7 +25,7 @@ public class LogIntensity extends LogInfoItem<Integer> {
 
     @Override
     public void onCreate() {
-        mItem = 0;
+        mItem = DEFAULT;
     }
 
     @Override

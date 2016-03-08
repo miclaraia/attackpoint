@@ -34,7 +34,7 @@ import java.util.HashMap;
 /**
  * Created by michael on 8/27/15.
  */
-public class TrainingDurationPicker extends DialogFragment {
+public class TrainingDurationPicker extends TrainingPicker {
     private static final String DEBUG_TAG = "attackpoint.TP";
     private Dialog mDialog;
 
@@ -42,7 +42,6 @@ public class TrainingDurationPicker extends DialogFragment {
     private NumberPicker minute;
     private NumberPicker second;
 
-    private DurationManager mDetailManager;
     private Calendar mCalendar;
 
     private HashMap<String, NumberPicker> pickers;
@@ -63,8 +62,7 @@ public class TrainingDurationPicker extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        mDetailManager = (DurationManager) getActivity().findViewById(R.id.training_duration).getTag();
-        mCalendar = mDetailManager.getDetail().get();
+        mCalendar = (Calendar) mManager.getDetail().get();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
         builder.setTitle("Select an Intensity");
@@ -153,7 +151,7 @@ public class TrainingDurationPicker extends DialogFragment {
                     Log.d(DEBUG_TAG, "accept pressed");
 
                     mCalendar.set(0, 0, 0, hour.getValue(), minute.getValue(), second.getValue());
-                    mDetailManager.updateDetail(mCalendar);
+                    mManager.updateDetail(mCalendar);
                     mDialog.dismiss();
                     break;
             }

@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Created by michael on 8/25/15.
  */
-public class TrainingDatePicker extends DialogFragment
+public class TrainingDatePicker extends TrainingPicker
         implements DatePickerDialog.OnDateSetListener {
 
     private static final String DATE_FORMAT = "dd MMM, yyyy";
@@ -46,8 +46,7 @@ public class TrainingDatePicker extends DialogFragment
         Calendar cal = Calendar.getInstance();
         cal.set(year, monthOfYear, dayOfMonth);
 
-        DateManager dm = (DateManager) getActivity().findViewById(R.id.training_date).getTag();
-        dm.updateDetail(cal);
+        mManager.updateDetail(cal);
     }
 
     /*@Override

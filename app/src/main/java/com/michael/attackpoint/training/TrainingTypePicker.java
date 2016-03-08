@@ -18,7 +18,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 8/25/15.
  */
-public class TrainingTypePicker extends DialogFragment {
+public class TrainingTypePicker extends TrainingPicker {
 
     private DatePickerDialog mDialog;
 
@@ -34,8 +34,7 @@ public class TrainingTypePicker extends DialogFragment {
         builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String item = items.get(which);
-                        ActivityManager manager = (ActivityManager) getActivity().findViewById(R.id.training_activity).getTag();
-                        manager.updateDetail(item);
+                        mManager.updateDetail(item);
                     }
                 });
         return builder.create();

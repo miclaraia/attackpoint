@@ -5,7 +5,10 @@ import android.view.View;
 
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
-import com.michael.attackpoint.training.NumberPickerDialog;
+import com.michael.attackpoint.training.IntensityPicker;
+import com.michael.attackpoint.training.TrainingPicker;
+
+import java.util.Calendar;
 
 /**
  * Created by michael on 2/25/16.
@@ -21,6 +24,11 @@ public class IntensityManager extends DetailManager<LogIntensity> {
         mTextView.setText(mDetail.toString());
     }
 
+    @Override
+    protected void setDetail(Object detail) {
+        if (detail instanceof Integer) mDetail.set((Integer) detail);
+    }
+
     public void updateDetail(Integer intensity) {
         mDetail.set(intensity);
         update();
@@ -31,7 +39,8 @@ public class IntensityManager extends DetailManager<LogIntensity> {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new NumberPickerDialog();
+                TrainingPicker newFragment = new IntensityPicker();
+                newFragment.setManager(mSelf);
                 newFragment.show(Singleton.getInstance().getActivity().getFragmentManager(), "intensityPicker");
             }
         };
