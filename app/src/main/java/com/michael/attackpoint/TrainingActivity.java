@@ -47,6 +47,14 @@ public class TrainingActivity extends AppCompatActivity {
         final ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
         mManagers = new Managers(vh);
 
+        View workout = vh.workout.parent;
+        workout.setOnClickListener(new RelativeClickListener());
+        Spinner workoutSpinner = (Spinner) vh.workout.item;
+        ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
+                R.array.training_workout, android.R.layout.simple_spinner_item);
+        workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        workoutSpinner.setAdapter(workoutAdapter);
+
         // initialize distance data entry
         View distance = vh.distance.parent;
         distance.setOnClickListener(new View.OnClickListener() {
