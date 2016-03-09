@@ -35,6 +35,8 @@ public class LogSession extends LogInfoItem<Calendar> {
     @Override
     public void onCreate() {
         mItem = Calendar.getInstance();
+        int h = mItem.get(Calendar.HOUR_OF_DAY);
+        mItem.set(0,0,0,h,0,0);
     }
 
     @Override
