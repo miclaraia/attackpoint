@@ -51,8 +51,8 @@ public class LogDuration extends LogInfoItem<Calendar> {
         CalendarTime ct = new CalendarTime(mItem);
         if (ct.h == 0) {
             if (ct.m == 0) {
-                if (ct.s == 0) return "";
-                format = FORMAT_S;
+                if (ct.s == 0) format = FORMAT_H;
+                else format = FORMAT_S;
             }
             else format = FORMAT_M;
         }

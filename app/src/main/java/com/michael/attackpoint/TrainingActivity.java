@@ -36,6 +36,7 @@ import com.michael.attackpoint.training.details.ViewHolder;
  */
 public class TrainingActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "training";
+    private Managers mManagers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +45,7 @@ public class TrainingActivity extends AppCompatActivity {
         Singleton.getInstance().setActivity(this);
 
         final ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
-
-        // initialize date
-        DateManager date = new DateManager(vh.date, new LogDate());
-
-        // initialize activity type
-        ActivityManager activity = new ActivityManager(vh.activity, new LogInfoActivity());
-
-        // initialize workout type spinner (long, interval, hills, etc)
-        View workout = vh.workout.parent;
-        workout.setOnClickListener(new RelativeClickListener());
-        Spinner workoutSpinner = (Spinner) vh.workout.item;
-        ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(this,
-                R.array.training_workout, android.R.layout.simple_spinner_item);
-        workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        workoutSpinner.setAdapter(workoutAdapter);
-
-        // initialize intensity number picker
-        IntensityManager intensity = new IntensityManager(vh.intensity, new LogIntensity());
-
-        // initialize duration number picker
-        DurationManager duration = new DurationManager(vh.duration, new LogDuration());
+        mManagers = new Managers(vh);
 
         // initialize distance data entry
         View distance = vh.distance.parent;
@@ -112,26 +93,19 @@ public class TrainingActivity extends AppCompatActivity {
         ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
         LogInfo li = new LogInfo();
 
-        // Date
-        DateManager dateManager = (DateManager) vh.date.parent.getTag();
-        li.set(LogInfo.KEY_DATE, dateManager.getDetail());
-
         // Activity type
-        ActivityManager type = (ActivityManager) vh.activity.parent.getTag();
-        li.set(LogInfo.KEY_ACTIVITY, type.getDetail());
+        li.set(LogInfo.KEY_ACTIVITY, mManagers.activity.getDetail());
+        // Date
+        li.set(LogInfo.KEY_DATE, mManagers.date.getDetail());
+        // Duration
+        li.set(LogInfo.KEY_DURATION, mManagers.duration.getDetail());
+        // Intensity
+        li.set(LogInfo.KEY_INTENSITY, mManagers.intensity.getDetail());
 
         // Workout type
         /*Spinner spinner2 = (Spinner) vh.workout.item;
         String workout = spinner2.getSelectedItem().toString();
         li.set(LogInfo.KEY_WORKOUT, new LogWorkout(workout));*/
-
-        // Intensity
-        IntensityManager intensity = (IntensityManager) vh.intensity.parent.getTag();
-        li.set(LogInfo.KEY_INTENSITY, intensity.getDetail());
-
-        // Duration
-        DurationManager duration = (DurationManager) vh.duration.parent.getTag();
-        li.set(LogInfo.KEY_DURATION, duration.getDetail());
 
         // Distance
         TextView distance = (TextView) vh.distance.item;
@@ -165,6 +139,20 @@ public class TrainingActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             view.findViewById(R.id.item).performClick();
+        }
+    }
+
+    private static class Managers {
+        private ActivityManager activity;
+        private DateManager date;
+        private DurationManager duration;
+        private IntensityManager intensity;
+
+        private Managers(ViewHolder vh) {
+            activity = new ActivityManager(vh.activity, new LogInfoActivity());
+            date = new DateManager(vh.date, new LogDate());
+            duration = new DurationManager(vh.duration, new LogDuration());
+            intensity = new IntensityManager(vh.intensity, new LogIntensity());
         }
     }
 }
