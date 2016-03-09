@@ -10,12 +10,13 @@
     <item type="id" name="training_workout"/>
     <item type="id" name="training_activity"/>
     <item type="id" name="training_date"/>
+    <item type="id" name="training_session"/>
     <item type="id" name="training_parent"/>
 
     <item type="id" name="unit"/>
 
     <dimen name="training_item_height">55dp</dimen>
-    <dimen name="training_label_width">80dp</dimen>
+    <dimen name="training_label_width">60dp</dimen>
     <dimen name="training_label_size">14dp</dimen>
     <dimen name="training_item_size">15dp</dimen>
     <dimen name="training_label_marginR">10dp</dimen>

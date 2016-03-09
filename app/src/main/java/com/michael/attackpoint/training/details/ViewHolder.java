@@ -10,6 +10,7 @@ import com.michael.attackpoint.R;
  */
 public class ViewHolder {
     public SubViewHolder date;
+    public SubViewHolder session;
     public SubViewHolder activity;
     public SubViewHolder workout;
     public SubViewHolder intensity;
@@ -20,6 +21,7 @@ public class ViewHolder {
 
     public ViewHolder(View v) {
         date = new SubViewHolder(v, R.id.training_date);
+        session = new SubViewHolder(v, R.id.training_session);
         activity = new SubViewHolder(v, R.id.training_activity);
         workout = new SubViewHolder(v, R.id.training_workout);
         intensity = new SubViewHolder(v, R.id.training_intensity);

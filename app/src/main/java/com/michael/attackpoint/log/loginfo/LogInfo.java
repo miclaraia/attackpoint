@@ -29,6 +29,7 @@ public class LogInfo {
     public static final String KEY_COLOR = "kcolor";
     public static final String KEY_COMMENT = "kcomment";
     public static final String KEY_DATE = "kdate";
+    public static final String KEY_SESSION = "ksession";
     public static final String KEY_DESCRIPTION = "kdescription";
     public static final String KEY_DISTANCE = "kdistance";
     public static final String KEY_DURATION = "kduration";
@@ -82,6 +83,7 @@ public class LogInfo {
         LogInfoItem color = new LogColor();
         LogInfoItem comment = new LogComment();
         LogInfoItem date = new LogDate();
+        LogInfoItem session = new LogSession();
         LogInfoItem description = new LogDescription();
         LogInfoItem distance = new LogDistance();
         LogInfoItem duration = new LogDuration();
@@ -94,6 +96,7 @@ public class LogInfo {
         mItems.put(KEY_COLOR, color);
         mItems.put(KEY_COMMENT, comment);
         mItems.put(KEY_DATE, date);
+        mItems.put(KEY_SESSION, session);
         mItems.put(KEY_DESCRIPTION, description);
         mItems.put(KEY_DISTANCE, distance);
         mItems.put(KEY_DURATION, duration);
@@ -445,6 +448,7 @@ public class LogInfo {
         public int color;
         public String comments;
         public String date;
+        public String session;
         public String description;
         public String distance;
         public String duration;
@@ -463,6 +467,7 @@ public class LogInfo {
             color = (Integer) li.get(KEY_COLOR).get();
             comments = li.get(KEY_COMMENT).toString();
             date = li.get(KEY_DATE).toString();
+            session = li.get(KEY_SESSION).toString();
             description = li.get(KEY_DESCRIPTION).toString();
             distance = li.get(KEY_DISTANCE).toString();
             duration = li.get(KEY_DURATION).toString();

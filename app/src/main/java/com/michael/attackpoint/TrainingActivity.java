@@ -23,12 +23,14 @@ import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
+import com.michael.attackpoint.log.loginfo.LogSession;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.attackpoint.training.details.ActivityManager;
 import com.michael.attackpoint.training.details.DateManager;
 import com.michael.attackpoint.training.details.DurationManager;
 import com.michael.attackpoint.training.details.IntensityManager;
+import com.michael.attackpoint.training.details.SessionManager;
 import com.michael.attackpoint.training.details.ViewHolder;
 
 /**
@@ -155,12 +157,14 @@ public class TrainingActivity extends AppCompatActivity {
         private DateManager date;
         private DurationManager duration;
         private IntensityManager intensity;
+        private SessionManager session;
 
         private Managers(ViewHolder vh) {
             activity = new ActivityManager(vh.activity, new LogInfoActivity());
             date = new DateManager(vh.date, new LogDate());
             duration = new DurationManager(vh.duration, new LogDuration());
             intensity = new IntensityManager(vh.intensity, new LogIntensity());
+            session = new SessionManager(vh.session, new LogSession());
         }
     }
 }

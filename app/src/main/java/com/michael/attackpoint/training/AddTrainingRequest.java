@@ -11,6 +11,7 @@ import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
+import com.michael.attackpoint.log.loginfo.LogSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,7 +45,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private static final String FIELD_MONTH = "session-month";
     private static final String FIELD_DAY = "session-day";
     private static final String FIELD_YEAR = "session-year";
-    // TODO attackpoint uses id# instead of the name
+    private static final String FIELD_SESSION = "sessionstarthour";
     private static final String FIELD_ACTIVITY = "activitytypeid";
     private static final String FIELD_ACTIVITY_NEW = "newactivitytype";
     private static final String FIELD_ACTIVITY_SUBTYPE = "activitymodifiers";
@@ -75,6 +76,10 @@ public class AddTrainingRequest extends Request<Boolean> {
         mParams.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
         mParams.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
 
+        // Session
+        LogSession session = (LogSession) training.get(LogInfo.KEY_SESSION);
+        mParams.put(FIELD_SESSION, session.toFormString());
+
         // Activity type
         Integer activity = ((LogInfoActivity) training.get(LogInfo.KEY_ACTIVITY)).getID();
         mParams.put(FIELD_ACTIVITY, activity.toString());
@@ -99,7 +104,7 @@ public class AddTrainingRequest extends Request<Boolean> {
 
         mParams.put("workouttypeid", "1");
         mParams.put("isplan", "0");
-        mParams.put("sessionstarthour", "-1");
+        //mParams.put("sessionstarthour", "-1");
         mParams.put("shoes", "null");
 
 
