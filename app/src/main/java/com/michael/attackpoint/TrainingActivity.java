@@ -111,6 +111,8 @@ public class TrainingActivity extends AppCompatActivity {
         li.set(LogInfo.KEY_DURATION, mManagers.duration.getDetail());
         // Intensity
         li.set(LogInfo.KEY_INTENSITY, mManagers.intensity.getDetail());
+        // Session
+        li.set(LogInfo.KEY_SESSION, mManagers.session.getDetail());
 
         // Workout type
         /*Spinner spinner2 = (Spinner) vh.workout.item;
