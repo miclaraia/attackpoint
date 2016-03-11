@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.adapters.UsersAdapter;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
@@ -38,7 +39,7 @@ import com.michael.attackpoint.training.details.ViewHolder;
 /**
  * Created by michael on 3/11/16.
  */
-public class TrainingActivity extends AppCompatActivity {
+public abstract class TrainingActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "training";
     protected Managers mManagers;
     protected LogInfo mLogInfo;
@@ -61,7 +62,8 @@ public class TrainingActivity extends AppCompatActivity {
     }
 
     protected void init(ViewHolder viewHolder) {
-        mManagers = new Managers(this, viewHolder);
+        mLogInfo = initLogInfo();
+        mManagers = initManagers(viewHolder);
 
         final ViewHolder vh = viewHolder;
 
@@ -85,9 +87,13 @@ public class TrainingActivity extends AppCompatActivity {
     }
 
     private void submitTraining() {
-        ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
-        LogInfo li = new LogInfo();
+        mLogInfo = updateLogInfo(mLogInfo);
 
+        Request request = performRequest(mLogInfo);
+        Singleton.getInstance().add(request);
+    }
+
+    protected LogInfo updateLogInfo(LogInfo li) {
         // pickers
         li = mManagers.activity.updateLogInfo(li);
         li = mManagers.date.updateLogInfo(li);
@@ -104,21 +110,12 @@ public class TrainingActivity extends AppCompatActivity {
         String workout = spinner2.getSelectedItem().toString();
         li.set(LogInfo.KEY_WORKOUT, new LogWorkout(workout));*/
 
-        Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
-            @Override
-            public void onResponse(Boolean aBoolean) {
-                Log.d(DEBUG_TAG, aBoolean.toString());
-                finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-            }
-        });
-        Log.d(DEBUG_TAG, "finished creating training request");
-        Singleton.getInstance().add(request);
+        return li;
     }
+
+    protected abstract LogInfo initLogInfo();
+    protected abstract Managers initManagers(ViewHolder vh);
+    protected abstract Request performRequest(LogInfo li);
 
     protected class RelativeClickListener implements View.OnClickListener {
 
@@ -147,6 +144,17 @@ public class TrainingActivity extends AppCompatActivity {
 
             distance = new DistanceManager(context, vh.distance, new LogDistance());
             description = new DescriptionManager(context, vh.description, new LogDescription());
+        }
+
+        protected Managers(Context context, ViewHolder vh, LogInfo li) {
+            activity = new ActivityManager(vh.activity, li);
+            date = new DateManager(vh.date, li);
+            duration = new DurationManager(vh.duration, li);
+            intensity = new IntensityManager(vh.intensity, li);
+            session = new SessionManager(vh.session, li);
+
+            distance = new DistanceManager(context, vh.distance, li);
+            description = new DescriptionManager(context, vh.description, li);
         }
     }
 }
