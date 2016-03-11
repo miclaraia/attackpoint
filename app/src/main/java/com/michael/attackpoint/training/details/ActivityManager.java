@@ -27,6 +27,14 @@ public class ActivityManager extends PickerManager<LogInfoActivity> {
         update();
     }
 
+    public ActivityManager(ViewHolder.SubViewHolder svh, LogInfo logInfo) {
+        super(svh, logInfo);
+        ActivityTable table = new ActivityTable();
+        String first = table.getFirst();
+        mDetail.set(first);
+        update();
+    }
+
     @Override
     public void update() {
         mTextView.setText(mDetail.toString());

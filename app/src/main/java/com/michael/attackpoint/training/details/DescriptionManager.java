@@ -13,6 +13,10 @@ public class DescriptionManager extends EditTextManager<LogDescription> {
         super(context, svh, detail);
     }
 
+    public DescriptionManager(Context context, ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(context, svh, detail);
+    }
+
     @Override
     public LogDescription onGetDetail() {
         String text = mEditText.getText().toString();

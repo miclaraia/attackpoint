@@ -20,6 +20,10 @@ public class IntensityManager extends PickerManager<LogIntensity> {
         super(svh, detail);
     }
 
+    public IntensityManager(ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail);
+    }
+
     @Override
     public void update() {
         mTextView.setText(mDetail.toString());

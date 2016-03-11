@@ -20,6 +20,10 @@ public class DateManager extends PickerManager<LogDate> {
         super(svh, detail);
     }
 
+    public DateManager(ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail);
+    }
+
     @Override
     public void update() {
         mTextView.setText(mDetail.toString());

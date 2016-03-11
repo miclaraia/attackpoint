@@ -18,6 +18,10 @@ public class SessionManager extends PickerManager<LogSession> {
         super(svh, detail);
     }
 
+    public SessionManager(ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail);
+    }
+
     @Override
     public void update() {
         mTextView.setText(getDetail().toString());

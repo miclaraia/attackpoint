@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.michael.attackpoint.log.loginfo.LogDistance;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 
 /**
@@ -16,6 +17,15 @@ public abstract class EditTextManager<T extends LogInfoItem> extends DetailManag
 
     public EditTextManager(Context context, ViewHolder.SubViewHolder svh, T detail) {
         super(svh, detail);
+        init(context, svh);
+    }
+
+    public EditTextManager(Context context, ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail);
+        init(context, svh);
+    }
+
+    private void init(Context context, ViewHolder.SubViewHolder svh) {
         mEditText = (EditText) svh.item;
 
         final View fItem = svh.item;

@@ -18,6 +18,10 @@ public class DistanceManager extends EditTextManager<LogDistance> {
         super(context, svh, detail);
     }
 
+    public DistanceManager(Context context, ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(context, svh, detail);
+    }
+
     @Override
     public LogDistance onGetDetail() {
         LogDistance.Distance distance = mDetail.get();

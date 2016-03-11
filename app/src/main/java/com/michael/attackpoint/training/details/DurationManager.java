@@ -20,6 +20,10 @@ public class DurationManager extends PickerManager<LogDuration> {
         super(svh, detail);
     }
 
+    public DurationManager(ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail);
+    }
+
     @Override
     public void update() {
         mTextView.setText(mDetail.toString());

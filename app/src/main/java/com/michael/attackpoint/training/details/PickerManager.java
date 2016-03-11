@@ -3,6 +3,7 @@ package com.michael.attackpoint.training.details;
 import android.view.View;
 import android.widget.TextView;
 
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 
 /**
@@ -15,7 +16,16 @@ public abstract class PickerManager<T extends LogInfoItem> extends DetailManager
     public PickerManager(ViewHolder.SubViewHolder svh, T detail) {
         super(svh, detail, false);
         mTextView = (TextView) svh.item;
-        mDetail = detail;
+        mSelf = this;
+
+        mSVH.parent.setOnClickListener(createListener());
+
+        update();
+    }
+
+    public PickerManager(ViewHolder.SubViewHolder svh, LogInfo detail) {
+        super(svh, detail, false);
+        mTextView = (TextView) svh.item;
         mSelf = this;
 
         mSVH.parent.setOnClickListener(createListener());
