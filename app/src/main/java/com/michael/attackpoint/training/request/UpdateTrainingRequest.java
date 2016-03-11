@@ -14,7 +14,7 @@ public class UpdateTrainingRequest extends AddTrainingRequest {
     private static final String URL = "http://www.attackpoint.org/changetraining.jsp";
     private static final String FIELD_ID = "sessionid";
 
-    public UpdateTrainingRequest(LogInfo li, Response.Listener<Boolean> listener, Response.ErrorListener errorListener) {
+    public UpdateTrainingRequest(LogInfo li, Response.Listener<LogInfo> listener, Response.ErrorListener errorListener) {
         super(li, URL, listener, errorListener);
     }
 

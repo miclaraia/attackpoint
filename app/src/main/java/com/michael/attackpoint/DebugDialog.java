@@ -19,6 +19,7 @@ import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.request.AddTrainingRequest;
+import com.michael.attackpoint.training.request.UpdateTrainingRequest;
 import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
@@ -59,9 +60,9 @@ public class DebugDialog extends DialogFragment {
                     throw new RuntimeException(e);
                 }
 
-                Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
+                Request request = new AddTrainingRequest(li, new Response.Listener<LogInfo>() {
                     @Override
-                    public void onResponse(Boolean aBoolean) {
+                    public void onResponse(LogInfo response) {
                         Log.d(DEBUG_TAG, "success");
                     }
                 }, new Response.ErrorListener() {
@@ -165,6 +166,35 @@ public class DebugDialog extends DialogFragment {
                     }
                 });
                 mSingleton.add(request);
+            }
+        });
+
+        options.add(new Option("test update log entry") {
+            @Override
+            void action() {
+                Log.d(DEBUG_TAG, "trying to update log entry");
+                LogInfo li = new LogInfo();
+
+                try {
+                    li.set(LogInfo.KEY_DISTANCE, new LogDistance(5, "km"));
+                    li.set(LogInfo.KEY_INTENSITY, new LogIntensity(3));
+                    li.set(LogInfo.KEY_DESCRIPTION, new LogDescription("Android app test"));
+                    li.set(LogInfo.KEY_DURATION, new LogDuration(LogDuration.parseLog("10:00")));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Request request = new UpdateTrainingRequest(li, new Response.Listener<LogInfo>() {
+                    @Override
+                    public void onResponse(LogInfo response) {
+                        Log.d(DEBUG_TAG, response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+                    }
+                });
             }
         });
 

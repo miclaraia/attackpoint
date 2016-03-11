@@ -28,10 +28,10 @@ public class AddTrainingActivity extends TrainingActivity {
 
     @Override
     protected Request performRequest(LogInfo li) {
-        Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
+        Request request = new AddTrainingRequest(li, new Response.Listener<LogInfo>() {
             @Override
-            public void onResponse(Boolean aBoolean) {
-                Log.d(DEBUG_TAG, aBoolean.toString());
+            public void onResponse(LogInfo response) {
+                Log.d(DEBUG_TAG, response.toString());
                 finish();
             }
         }, new Response.ErrorListener() {

@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by michael on 2/24/16.
  */
-public class AddTrainingRequest extends Request<Boolean> {
+public class AddTrainingRequest extends Request<LogInfo> {
     private static final String DEBUG_TAG = "ap.trainingrequest";
     private static final String URL = "http://www.attackpoint.org/addtraining.jsp";
     private static final String FIELD_MAP_NAME = "NAME";
@@ -61,7 +61,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     private Singleton mSingleton;
 
     public AddTrainingRequest(LogInfo li,
-                        Response.Listener<Boolean> listener,
+                        Response.Listener<LogInfo> listener,
                         Response.ErrorListener errorListener) {
         super(Request.Method.POST, URL, errorListener);
         mListener = listener;
@@ -71,7 +71,7 @@ public class AddTrainingRequest extends Request<Boolean> {
     }
 
     public AddTrainingRequest(LogInfo li, String url,
-                              Response.Listener<Boolean> listener,
+                              Response.Listener<LogInfo> listener,
                               Response.ErrorListener errorListener) {
         super(Request.Method.POST, url, errorListener);
         mListener = listener;
@@ -137,13 +137,13 @@ public class AddTrainingRequest extends Request<Boolean> {
     }
 
     @Override
-    protected Response<Boolean> parseNetworkResponse(NetworkResponse networkResponse) {
+    protected Response<LogInfo> parseNetworkResponse(NetworkResponse networkResponse) {
         Log.d(DEBUG_TAG, networkResponse.toString());
-        return Response.success(true, HttpHeaderParser.parseCacheHeaders(networkResponse));
+        return Response.success(mLogInfo, HttpHeaderParser.parseCacheHeaders(networkResponse));
     }
 
     @Override
-    protected void deliverResponse(Boolean success) {
+    protected void deliverResponse(LogInfo success) {
         mListener.onResponse(success);
     }
 }
