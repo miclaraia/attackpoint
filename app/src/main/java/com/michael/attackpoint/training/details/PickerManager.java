@@ -13,7 +13,7 @@ public abstract class PickerManager<T extends LogInfoItem> extends DetailManager
     protected TextView mTextView;
 
     public PickerManager(ViewHolder.SubViewHolder svh, T detail) {
-        super(svh, detail);
+        super(svh, detail, false);
         mTextView = (TextView) svh.item;
         mDetail = detail;
         mSelf = this;

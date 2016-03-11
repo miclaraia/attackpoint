@@ -38,7 +38,7 @@ import com.michael.attackpoint.training.details.ViewHolder;
 /**
  * Created by michael on 3/11/16.
  */
-public abstract class TrainingActivity extends AppCompatActivity {
+public class TrainingActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "training";
     protected Managers mManagers;
     protected LogInfo mLogInfo;

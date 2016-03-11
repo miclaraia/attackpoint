@@ -21,6 +21,13 @@ public abstract class DetailManager<T extends LogInfoItem> {
         update();
     }
 
+    public DetailManager(ViewHolder.SubViewHolder svh, T detail, boolean update) {
+        mSVH = svh;
+        mDetail = detail;
+
+        if (update) update();
+    }
+
     public void updateDetail(Object detail) {
         setDetail(detail);
         update();
@@ -40,7 +47,7 @@ public abstract class DetailManager<T extends LogInfoItem> {
     }
 
     public LogInfo updateLogInfo(LogInfo logInfo) {
-        logInfo.set(getKey(), mDetail);
+        logInfo.set(getKey(), getDetail());
         return logInfo;
     }
 
