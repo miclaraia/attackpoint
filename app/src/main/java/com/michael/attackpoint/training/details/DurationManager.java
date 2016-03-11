@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDuration;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.training.TrainingDurationPicker;
 import com.michael.attackpoint.training.TrainingPicker;
 
@@ -13,7 +14,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 2/25/16.
  */
-public class DurationManager extends DetailManager<LogDuration> {
+public class DurationManager extends PickerManager<LogDuration> {
 
     public DurationManager(ViewHolder.SubViewHolder svh, LogDuration detail) {
         super(svh, detail);
@@ -27,6 +28,11 @@ public class DurationManager extends DetailManager<LogDuration> {
     @Override
     protected void setDetail(Object detail) {
         if (detail instanceof Calendar) mDetail.set((Calendar) detail);
+    }
+
+    @Override
+    protected String getKey() {
+        return LogInfo.KEY_DURATION;
     }
 
     public void updateDetail(Calendar cal) {

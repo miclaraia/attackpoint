@@ -1,14 +1,6 @@
 package com.michael.attackpoint.drawer;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.michael.attackpoint.TrainingActivity;
-import com.michael.network.FavoriteUsersRequest;
-import com.michael.objects.User;
 
 import java.util.ArrayList;
 import java.util.List;

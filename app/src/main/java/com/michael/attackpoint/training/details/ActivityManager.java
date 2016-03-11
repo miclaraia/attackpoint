@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.TrainingDatePicker;
@@ -16,8 +17,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 2/25/16.
  */
-public class ActivityManager extends DetailManager<LogInfoActivity> {
-    private static final String DATE_FORMAT = "dd MMM, yyyy";
+public class ActivityManager extends PickerManager<LogInfoActivity> {
 
     public ActivityManager(ViewHolder.SubViewHolder svh, LogInfoActivity detail) {
         super(svh, detail);
@@ -37,6 +37,11 @@ public class ActivityManager extends DetailManager<LogInfoActivity> {
         if (detail instanceof String) {
             mDetail.set((String) detail);
         }
+    }
+
+    @Override
+    protected String getKey() {
+        return LogInfo.KEY_ACTIVITY;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.michael.attackpoint.training.details;
 import android.view.View;
 
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogSession;
 import com.michael.attackpoint.training.SessionPicker;
 import com.michael.attackpoint.training.TrainingPicker;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 3/9/16.
  */
-public class SessionManager extends DetailManager<LogSession> {
+public class SessionManager extends PickerManager<LogSession> {
     public SessionManager(ViewHolder.SubViewHolder svh, LogSession detail) {
         super(svh, detail);
     }
@@ -25,6 +26,11 @@ public class SessionManager extends DetailManager<LogSession> {
     @Override
     public void setDetail(Object detail) {
         if (detail instanceof Calendar) mDetail.set((Calendar) detail);
+    }
+
+    @Override
+    protected String getKey() {
+        return LogInfo.KEY_SESSION;
     }
 
     @Override

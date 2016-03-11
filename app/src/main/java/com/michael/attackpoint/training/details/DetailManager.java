@@ -4,24 +4,19 @@ import android.app.DialogFragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 
 /**
  * Created by michael on 2/25/16.
  */
 public abstract class DetailManager<T extends LogInfoItem> {
-    TextView mTextView;
-    View mParent;
+    ViewHolder.SubViewHolder mSVH;
     T mDetail;
-    final DetailManager mSelf;
 
     public DetailManager(ViewHolder.SubViewHolder svh, T detail) {
-        mTextView = (TextView) svh.item;
-        mParent = svh.parent;
+        mSVH = svh;
         mDetail = detail;
-        mSelf = this;
-
-        mParent.setOnClickListener(createListener());
 
         update();
     }
@@ -40,11 +35,16 @@ public abstract class DetailManager<T extends LogInfoItem> {
         return mDetail;
     }
 
-    public TextView getTextView() {
-        return mTextView;
+    public String toString() {
+        return mDetail.toString();
+    }
+
+    public LogInfo updateLogInfo(LogInfo logInfo) {
+        logInfo.set(getKey(), mDetail);
+        return logInfo;
     }
 
     public abstract void update();
     protected abstract void setDetail(Object detail);
-    protected abstract View.OnClickListener createListener();
+    protected abstract String getKey();
 }

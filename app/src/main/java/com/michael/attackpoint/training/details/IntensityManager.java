@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.view.View;
 
 import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.IntensityPicker;
 import com.michael.attackpoint.training.TrainingPicker;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 2/25/16.
  */
-public class IntensityManager extends DetailManager<LogIntensity> {
+public class IntensityManager extends PickerManager<LogIntensity> {
 
     public IntensityManager(ViewHolder.SubViewHolder svh, LogIntensity detail) {
         super(svh, detail);
@@ -27,6 +28,11 @@ public class IntensityManager extends DetailManager<LogIntensity> {
     @Override
     protected void setDetail(Object detail) {
         if (detail instanceof Integer) mDetail.set((Integer) detail);
+    }
+
+    @Override
+    protected String getKey() {
+        return LogInfo.KEY_INTENSITY;
     }
 
     public void updateDetail(Integer intensity) {

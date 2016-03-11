@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.training.TrainingDatePicker;
 import com.michael.attackpoint.training.TrainingPicker;
 
@@ -13,7 +14,7 @@ import java.util.Calendar;
 /**
  * Created by michael on 2/25/16.
  */
-public class DateManager extends DetailManager<LogDate> {
+public class DateManager extends PickerManager<LogDate> {
 
     public DateManager(ViewHolder.SubViewHolder svh, LogDate detail) {
         super(svh, detail);
@@ -27,6 +28,11 @@ public class DateManager extends DetailManager<LogDate> {
     @Override
     public void setDetail(Object detail) {
         if (detail instanceof Calendar) mDetail.set((Calendar) detail);
+    }
+
+    @Override
+    protected String getKey() {
+        return LogInfo.KEY_DATE;
     }
 
     public void updateDetail(Calendar cal) {

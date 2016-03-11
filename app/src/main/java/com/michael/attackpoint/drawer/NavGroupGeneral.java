@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.michael.attackpoint.DebugDialog;
 import com.michael.attackpoint.discussion.DiscussionActivity;
 import com.michael.attackpoint.LogActivity;
@@ -18,28 +14,12 @@ import com.michael.attackpoint.LogFragment;
 import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.TrainingActivity;
 import com.michael.attackpoint.UsersFragment;
-import com.michael.attackpoint.discussion.Discussion;
-import com.michael.attackpoint.discussion.DiscussionRequest;
-import com.michael.attackpoint.log.loginfo.LogClimb;
-import com.michael.attackpoint.log.loginfo.LogDescription;
-import com.michael.attackpoint.log.loginfo.LogDistance;
-import com.michael.attackpoint.log.loginfo.LogDuration;
-import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.attackpoint.log.loginfo.LogInfoItem;
-import com.michael.attackpoint.log.loginfo.LogIntensity;
-import com.michael.attackpoint.training.AddTrainingRequest;
+import com.michael.attackpoint.training.activity.TrainingActivity;
 import com.michael.database.CookieTable;
-import com.michael.database.UserTable;
-import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;
-import com.michael.network.UserRequest;
-import com.michael.objects.User;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by michael on 11/22/15.

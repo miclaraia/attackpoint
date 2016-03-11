@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.training.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,30 +15,34 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.R;
+import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
-import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.log.loginfo.LogSession;
-import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.AddTrainingRequest;
 import com.michael.attackpoint.training.details.ActivityManager;
 import com.michael.attackpoint.training.details.DateManager;
+import com.michael.attackpoint.training.details.DescriptionManager;
+import com.michael.attackpoint.training.details.DistanceManager;
 import com.michael.attackpoint.training.details.DurationManager;
 import com.michael.attackpoint.training.details.IntensityManager;
 import com.michael.attackpoint.training.details.SessionManager;
 import com.michael.attackpoint.training.details.ViewHolder;
 
 /**
- * Created by michael on 8/25/15.
+ * Created by michael on 3/11/16.
  */
-public class TrainingActivity extends AppCompatActivity {
+public abstract class TrainingActivity extends AppCompatActivity {
     private static final String DEBUG_TAG = "training";
-    private Managers mManagers;
+    protected Managers mManagers;
+    protected LogInfo mLogInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,20 @@ public class TrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training);
         Singleton.getInstance().setActivity(this);
 
-        final ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
-        mManagers = new Managers(vh);
+        ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
+        init(vh);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Singleton.getInstance().setActivity(this);
+    }
+
+    protected void init(ViewHolder viewHolder) {
+        mManagers = new Managers(this, viewHolder);
+
+        final ViewHolder vh = viewHolder;
 
         View workout = vh.workout.parent;
         workout.setOnClickListener(new RelativeClickListener());
@@ -56,30 +72,6 @@ public class TrainingActivity extends AppCompatActivity {
                 R.array.training_workout, android.R.layout.simple_spinner_item);
         workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         workoutSpinner.setAdapter(workoutAdapter);
-
-        // initialize distance data entry
-        View distance = vh.distance.parent;
-        distance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = vh.distance.item;
-                view.requestFocusFromTouch();
-                InputMethodManager lManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                lManager.showSoftInput(view, 0);
-            }
-        });
-
-        // initialize description data entry
-        View description = vh.description.parent;
-        description.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = vh.description.item;
-                view.requestFocusFromTouch();
-                InputMethodManager lManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                lManager.showSoftInput(view, 0);
-            }
-        });
 
         // initialize submit button
         Button submit = vh.submit;
@@ -90,45 +82,27 @@ public class TrainingActivity extends AppCompatActivity {
                 submitTraining();
             }
         });
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Singleton.getInstance().setActivity(this);
     }
 
     private void submitTraining() {
         ViewHolder vh = new ViewHolder(findViewById(R.id.training_parent));
         LogInfo li = new LogInfo();
 
-        // Activity type
-        li.set(LogInfo.KEY_ACTIVITY, mManagers.activity.getDetail());
-        // Date
-        li.set(LogInfo.KEY_DATE, mManagers.date.getDetail());
-        // Duration
-        li.set(LogInfo.KEY_DURATION, mManagers.duration.getDetail());
-        // Intensity
-        li.set(LogInfo.KEY_INTENSITY, mManagers.intensity.getDetail());
-        // Session
-        li.set(LogInfo.KEY_SESSION, mManagers.session.getDetail());
+        // pickers
+        li = mManagers.activity.updateLogInfo(li);
+        li = mManagers.date.updateLogInfo(li);
+        li = mManagers.duration.updateLogInfo(li);
+        li = mManagers.intensity.updateLogInfo(li);
+        li = mManagers.session.updateLogInfo(li);
+
+        // edittexts
+        li = mManagers.distance.updateLogInfo(li);
+        li = mManagers.description.updateLogInfo(li);
 
         // Workout type
         /*Spinner spinner2 = (Spinner) vh.workout.item;
         String workout = spinner2.getSelectedItem().toString();
         li.set(LogInfo.KEY_WORKOUT, new LogWorkout(workout));*/
-
-        // Distance
-        TextView distance = (TextView) vh.distance.item;
-        // TODO implement proper unit selection
-        String d = distance.getText().toString();
-        if (!d.equals(""))
-            li.set(LogInfo.KEY_DISTANCE, new LogDistance(Float.parseFloat(d), "km"));
-
-        // Description
-        EditText description = (EditText) vh.description.item;
-        li.set(LogInfo.KEY_DESCRIPTION, new LogDescription(description.getText().toString()));
 
         Request request = new AddTrainingRequest(li, new Response.Listener<Boolean>() {
             @Override
@@ -146,7 +120,7 @@ public class TrainingActivity extends AppCompatActivity {
         Singleton.getInstance().add(request);
     }
 
-    private class RelativeClickListener implements View.OnClickListener {
+    protected class RelativeClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
@@ -154,19 +128,25 @@ public class TrainingActivity extends AppCompatActivity {
         }
     }
 
-    private static class Managers {
-        private ActivityManager activity;
-        private DateManager date;
-        private DurationManager duration;
-        private IntensityManager intensity;
-        private SessionManager session;
+    protected static class Managers {
+        protected ActivityManager activity;
+        protected DateManager date;
+        protected DurationManager duration;
+        protected IntensityManager intensity;
+        protected SessionManager session;
 
-        private Managers(ViewHolder vh) {
+        protected DistanceManager distance;
+        protected DescriptionManager description;
+
+        protected Managers(Context context, ViewHolder vh) {
             activity = new ActivityManager(vh.activity, new LogInfoActivity());
             date = new DateManager(vh.date, new LogDate());
             duration = new DurationManager(vh.duration, new LogDuration());
             intensity = new IntensityManager(vh.intensity, new LogIntensity());
             session = new SessionManager(vh.session, new LogSession());
+
+            distance = new DistanceManager(context, vh.distance, new LogDistance());
+            description = new DescriptionManager(context, vh.description, new LogDescription());
         }
     }
 }
