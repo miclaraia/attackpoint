@@ -64,6 +64,7 @@ public class LogInfo {
     private LogPace mPace;*/
 
     private Map<String, LogInfoItem> mItems;
+    private int mID;
 
     public LogInfo() {
         onCreate();
@@ -103,6 +104,8 @@ public class LogInfo {
         mItems.put(KEY_ACTIVITY, activity);
         mItems.put(KEY_INTENSITY, intensity);
         mItems.put(KEY_PACE, pace);
+
+        mID = -1;
     }
     
     public LogInfoItem get(String key) {
@@ -152,6 +155,14 @@ public class LogInfo {
      */
     public Strings strings() {
         return new Strings(this);
+    }
+
+    public void setID(int id) {
+        mID = id;
+    }
+
+    public int getID() {
+        return mID;
     }
 
     /**

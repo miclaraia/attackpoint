@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training;
+package com.michael.attackpoint.training.request;
 
 import android.util.Log;
 
@@ -56,63 +56,77 @@ public class AddTrainingRequest extends Request<Boolean> {
     private static final String FIELD_DESCRIPTION = "description";
     private static final String FIELD_INTENSITY = "intensity";
 
-    private Map<String, String> mParams;
+    protected LogInfo mLogInfo;
     private Response.Listener mListener;
     private Singleton mSingleton;
 
-    public AddTrainingRequest(LogInfo training,
+    public AddTrainingRequest(LogInfo li,
                         Response.Listener<Boolean> listener,
                         Response.ErrorListener errorListener) {
         super(Request.Method.POST, URL, errorListener);
         mListener = listener;
         mSingleton = Singleton.getInstance();
 
-        LogInfo.Strings strings = training.strings();
-        mParams = new HashMap<String, String>();
+        mLogInfo = li;
+    }
+
+    public AddTrainingRequest(LogInfo li, String url,
+                              Response.Listener<Boolean> listener,
+                              Response.ErrorListener errorListener) {
+        super(Request.Method.POST, url, errorListener);
+        mListener = listener;
+        mSingleton = Singleton.getInstance();
+
+        mLogInfo = li;
+    }
+
+    public Map<String, String> createParams(LogInfo li) {
+        LogInfo.Strings strings = li.strings();
+        Map<String, String> params = new HashMap<>();
 
         // Date
-        Calendar d = (Calendar) training.get(LogInfo.KEY_DATE).get();
-        mParams.put(FIELD_YEAR, "" + d.get(Calendar.YEAR));
-        mParams.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
-        mParams.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
+        Calendar d = (Calendar) li.get(LogInfo.KEY_DATE).get();
+        params.put(FIELD_YEAR, "" + d.get(Calendar.YEAR));
+        params.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
+        params.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
 
         // Session
-        LogSession session = (LogSession) training.get(LogInfo.KEY_SESSION);
-        mParams.put(FIELD_SESSION, session.toFormString());
+        LogSession session = (LogSession) li.get(LogInfo.KEY_SESSION);
+        params.put(FIELD_SESSION, session.toFormString());
 
         // Activity type
-        Integer activity = ((LogInfoActivity) training.get(LogInfo.KEY_ACTIVITY)).getID();
-        mParams.put(FIELD_ACTIVITY, activity.toString());
+        Integer activity = ((LogInfoActivity) li.get(LogInfo.KEY_ACTIVITY)).getID();
+        params.put(FIELD_ACTIVITY, activity.toString());
 
         // Duration
-        String duration = training.get(LogInfo.KEY_DURATION).toFormString();
-        mParams.put(FIELD_DURATION, duration);
+        String duration = li.get(LogInfo.KEY_DURATION).toFormString();
+        params.put(FIELD_DURATION, duration);
 
         // Distance
-        LogDistance ld = (LogDistance) training.get(LogInfo.KEY_DISTANCE);
+        LogDistance ld = (LogDistance) li.get(LogInfo.KEY_DISTANCE);
         if (!ld.isEmpty()) {
-            mParams.put(FIELD_DISTANCE, ld.get().getDistance().toString());
-            mParams.put(FIELD_UNITS, ld.get().getUnit().toString());
+            params.put(FIELD_DISTANCE, ld.get().getDistance().toString());
+            params.put(FIELD_UNITS, ld.get().getUnit().toString());
         }
 
         // Description
-        if (!training.get(LogInfo.KEY_DESCRIPTION).isEmpty())
-            mParams.put(FIELD_DESCRIPTION, strings.description);
+        if (!li.get(LogInfo.KEY_DESCRIPTION).isEmpty())
+            params.put(FIELD_DESCRIPTION, strings.description);
 
         // Intensity
-        mParams.put(FIELD_INTENSITY, strings.intensity);
+        params.put(FIELD_INTENSITY, strings.intensity);
 
-        mParams.put("workouttypeid", "1");
-        mParams.put("isplan", "0");
-        //mParams.put("sessionstarthour", "-1");
-        mParams.put("shoes", "null");
+        params.put("workouttypeid", "1");
+        params.put("isplan", "0");
+        //params.put("sessionstarthour", "-1");
+        params.put("shoes", "null");
 
-
+        return params;
     }
 
     @Override
     public Map<String, String> getParams() {
-        return mParams;
+        return createParams(mLogInfo);
     }
 
     @Override

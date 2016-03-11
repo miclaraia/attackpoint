@@ -18,7 +18,7 @@ import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
-import com.michael.attackpoint.training.AddTrainingRequest;
+import com.michael.attackpoint.training.request.AddTrainingRequest;
 import com.michael.database.UserTable;
 import com.michael.network.FavoriteUsersRequest;
 import com.michael.network.MyCookieStore;

@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.drawer.NavGroupUsers;
 import com.michael.attackpoint.training.ActivityTable;
-import com.michael.attackpoint.training.TrainingTypeRequest;
+import com.michael.attackpoint.training.request.TrainingTypeRequest;
 import com.michael.network.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
 

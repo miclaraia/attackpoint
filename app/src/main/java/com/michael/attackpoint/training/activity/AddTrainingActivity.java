@@ -5,9 +5,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.attackpoint.training.AddTrainingRequest;
+import com.michael.attackpoint.training.request.AddTrainingRequest;
 import com.michael.attackpoint.training.details.ViewHolder;
 
 /**
