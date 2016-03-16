@@ -57,10 +57,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".log.LogDetailActivity"
+            android:name=".log.logdetail.LogDetailActivity"
             android:label="@string/title_activity_log_detail" />
         <activity
-            android:name=".log.LogActivity"
+            android:name=".log.loglist.LogActivity"
             android:label="@string/title_activity_log" />
         <activity
             android:name=".discussion.DiscussionActivity"

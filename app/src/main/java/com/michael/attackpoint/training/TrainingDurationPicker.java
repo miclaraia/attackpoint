@@ -1,34 +1,19 @@
 package com.michael.attackpoint.training;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.training.details.DurationManager;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -68,7 +53,7 @@ public class TrainingDurationPicker extends TrainingPicker {
         builder.setTitle("Select an Intensity");
 
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.time_picker, null);
+        View view = inflater.inflate(R.layout.picker_time, null);
 
         NumberPicker h = (NumberPicker) view.findViewById(R.id.np_picker_h);
         NumberPicker m = (NumberPicker) view.findViewById(R.id.np_picker_m);

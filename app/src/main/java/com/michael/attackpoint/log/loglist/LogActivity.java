@@ -1,4 +1,4 @@
-package com.michael.attackpoint.log;
+package com.michael.attackpoint.log.loglist;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;

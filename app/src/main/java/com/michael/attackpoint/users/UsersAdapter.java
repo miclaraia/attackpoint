@@ -14,8 +14,8 @@ import android.view.ViewOverlay;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.michael.attackpoint.log.LogActivity;
-import com.michael.attackpoint.log.LogFragment;
+import com.michael.attackpoint.log.loglist.LogActivity;
+import com.michael.attackpoint.log.loglist.LogFragment;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.util.Singleton;
 
@@ -113,7 +113,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.user_card, viewGroup, false);
+                inflate(R.layout.card_user, viewGroup, false);
 
         return new ViewHolder(itemView);
     }

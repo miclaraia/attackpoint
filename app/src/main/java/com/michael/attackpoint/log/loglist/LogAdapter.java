@@ -1,4 +1,4 @@
-package com.michael.attackpoint.log;
+package com.michael.attackpoint.log.loglist;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.ViewOverlay;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.log.ViewHolder;
+import com.michael.attackpoint.log.logdetail.LogDetailActivity;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;
 
@@ -81,7 +83,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     public LogViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.log_item, viewGroup, false);
+                inflate(R.layout.card_log, viewGroup, false);
 
         return new LogViewHolder(itemView);
     }

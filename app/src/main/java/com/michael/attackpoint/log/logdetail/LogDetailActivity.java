@@ -1,4 +1,4 @@
-package com.michael.attackpoint.log;
+package com.michael.attackpoint.log.logdetail;
 
 import android.app.Activity;
 import android.content.Intent;

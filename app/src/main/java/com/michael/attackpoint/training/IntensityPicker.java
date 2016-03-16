@@ -26,7 +26,7 @@ public class IntensityPicker extends TrainingPicker {
         builder.setTitle("Select an Intensity");
 
         LayoutInflater inflater = this.getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.number_picker, null);
+        View view = inflater.inflate(R.layout.picker_number, null);
 
         Activity activity = getActivity();
         view.findViewById(R.id.dialog_buttonA).setOnClickListener(new ClickListener(activity));

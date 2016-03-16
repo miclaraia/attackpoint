@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.michael.attackpoint.log.data.LogDatabase;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.account.CookieTable;
 import com.michael.attackpoint.users.UserTable;
@@ -14,9 +15,9 @@ import com.michael.attackpoint.users.UserTable;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "cookies.db";
+    private static final String DATABASE_NAME = "ap.database";
     // TODO updating database doesn't reset login status
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 1;
 
     private static DatabaseHelper mInstance = null;
     private Context mContext;
@@ -49,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(CookieTable.TABLE_CREATE);
         database.execSQL(UserTable.TABLE_CREATE);
         database.execSQL(ActivityTable.TABLE_CREATE);
+        database.execSQL(LogDatabase.CREATE);
     }
 
     @Override
@@ -60,6 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CookieTable.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ActivityTable.TABLE);
+        db.execSQL(LogDatabase.DROP);
+
         onCreate(db);
     }
 }

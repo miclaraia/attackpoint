@@ -3,13 +3,13 @@
     android:id="@+id/log_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".log.LogDetailActivity">
+    tools:context=".log.logdetail.LogDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/log_item" />
+        <include layout="@layout/card_log" />
     </ScrollView>
 
 </RelativeLayout>

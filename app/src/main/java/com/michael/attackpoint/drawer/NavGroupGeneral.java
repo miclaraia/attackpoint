@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.michael.attackpoint.discussion.DiscussionActivity;
-import com.michael.attackpoint.log.LogActivity;
-import com.michael.attackpoint.log.LogFragment;
+import com.michael.attackpoint.log.loglist.LogActivity;
+import com.michael.attackpoint.log.loglist.LogFragment;
 import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.util.Singleton;

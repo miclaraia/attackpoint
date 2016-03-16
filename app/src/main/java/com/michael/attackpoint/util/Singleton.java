@@ -36,7 +36,6 @@ public class Singleton extends Application {
     private NavDrawer mDrawer;
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
-    private Fragment mFragment;
     private Login mLogin;
 
     @Override
@@ -155,22 +154,6 @@ public class Singleton extends Application {
         String g = NavGroupUsers.GROUP_NAME;
         NavGroupUsers navGroup = (NavGroupUsers) mDrawer.getGroup(g);
         return navGroup;
-    }
-
-    /**
-     * Sets fragment currently being used
-     * @param fragment
-     */
-    public void setFragment(Fragment fragment) {
-        this.mFragment = fragment;
-    }
-
-    /**
-     * gets curreng fragment
-     * @return
-     */
-    public Fragment getFragment() {
-        return mFragment;
     }
 
     public Login getLogin() {
