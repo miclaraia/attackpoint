@@ -174,6 +174,7 @@ public class DebugDialog extends DialogFragment {
             void action() {
                 Log.d(DEBUG_TAG, "trying to update log entry");
                 LogInfo li = new LogInfo();
+                li.setID(4826868);
 
                 try {
                     li.set(LogInfo.KEY_DISTANCE, new LogDistance(5, "km"));
@@ -195,6 +196,8 @@ public class DebugDialog extends DialogFragment {
                         volleyError.printStackTrace();
                     }
                 });
+
+                mSingleton.add(request);
             }
         });
 

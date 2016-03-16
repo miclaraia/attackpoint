@@ -15,6 +15,7 @@ import com.michael.attackpoint.Preferences;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.Singleton;
 import com.michael.attackpoint.UsersFragment;
+import com.michael.attackpoint.training.activity.AddTrainingActivity;
 import com.michael.attackpoint.training.activity.TrainingActivity;
 import com.michael.database.CookieTable;
 import com.michael.network.MyCookieStore;
@@ -81,7 +82,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
         mNavItems.add(new NavItemReg("Add Training", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
             @Override
             public void click() {
-                Intent intent = new Intent(mActivity, TrainingActivity.class);
+                Intent intent = new Intent(mActivity, AddTrainingActivity.class);
                 mActivity.startActivity(intent);
             }
         }));
