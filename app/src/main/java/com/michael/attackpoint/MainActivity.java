@@ -13,6 +13,8 @@ import android.widget.ListView;
 
 import com.michael.attackpoint.drawer.NavDrawer;
 import com.michael.attackpoint.drawer.NavDrawerItem;
+import com.michael.attackpoint.users.UsersFragment;
+import com.michael.attackpoint.util.Singleton;
 
 import java.util.ArrayList;
 

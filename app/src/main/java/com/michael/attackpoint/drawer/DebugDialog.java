@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.drawer;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.michael.attackpoint.R;
 import com.michael.attackpoint.discussion.Discussion;
 import com.michael.attackpoint.discussion.DiscussionRequest;
 import com.michael.attackpoint.log.loginfo.LogDescription;
@@ -20,11 +21,12 @@ import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.training.request.AddTrainingRequest;
 import com.michael.attackpoint.training.request.UpdateTrainingRequest;
-import com.michael.database.UserTable;
-import com.michael.network.FavoriteUsersRequest;
-import com.michael.network.MyCookieStore;
-import com.michael.network.UserRequest;
-import com.michael.objects.User;
+import com.michael.attackpoint.util.Singleton;
+import com.michael.attackpoint.users.UserTable;
+import com.michael.attackpoint.users.FavoriteUsersRequest;
+import com.michael.attackpoint.account.MyCookieStore;
+import com.michael.attackpoint.users.UserRequest;
+import com.michael.attackpoint.users.User;
 
 import java.text.ParseException;
 import java.util.ArrayList;

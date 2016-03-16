@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.log;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.LogAdapter;
 import com.michael.attackpoint.log.LogRequest;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.util.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;

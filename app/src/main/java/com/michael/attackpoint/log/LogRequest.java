@@ -6,7 +6,6 @@ import android.util.Log;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.michael.attackpoint.LogActivity;
 import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogColor;
 import com.michael.attackpoint.log.loginfo.LogDate;

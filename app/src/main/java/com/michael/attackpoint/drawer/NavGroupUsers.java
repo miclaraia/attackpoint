@@ -1,20 +1,12 @@
 package com.michael.attackpoint.drawer;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 
-import com.michael.attackpoint.LogFragment;
-import com.michael.attackpoint.Preferences;
+import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.account.Login;
-import com.michael.attackpoint.dialogs.LoginActivity;
-import com.michael.network.MyCookieStore;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.michael.attackpoint.account.MyCookieStore;
 
 /**
  * Created by michael on 11/22/15.

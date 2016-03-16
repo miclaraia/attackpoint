@@ -1,4 +1,4 @@
-package com.michael.objects;
+package com.michael.attackpoint.users;
 
 /**
  * Created by michael on 12/29/15.

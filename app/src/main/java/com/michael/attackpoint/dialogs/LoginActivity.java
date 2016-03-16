@@ -1,7 +1,5 @@
 package com.michael.attackpoint.dialogs;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,11 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
-import com.michael.network.LoginRequest;
+import com.michael.attackpoint.util.Singleton;
 
 public class LoginActivity extends ActionBarActivity {
     private static final String DEBUG_TAG = "attackpoint.LoginA";

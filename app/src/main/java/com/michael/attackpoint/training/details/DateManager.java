@@ -1,9 +1,8 @@
 package com.michael.attackpoint.training.details;
 
-import android.app.DialogFragment;
 import android.view.View;
 
-import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.training.TrainingDatePicker;

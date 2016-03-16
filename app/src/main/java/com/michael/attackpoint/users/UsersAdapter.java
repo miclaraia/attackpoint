@@ -1,13 +1,10 @@
-package com.michael.attackpoint.adapters;
+package com.michael.attackpoint.users;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,17 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOverlay;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.michael.attackpoint.LogActivity;
-import com.michael.attackpoint.LogFragment;
+import com.michael.attackpoint.log.LogActivity;
+import com.michael.attackpoint.log.LogFragment;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
-import com.michael.database.CookieTable;
-import com.michael.objects.User;
-
-import org.w3c.dom.Text;
+import com.michael.attackpoint.util.Singleton;
 
 import java.util.List;
 

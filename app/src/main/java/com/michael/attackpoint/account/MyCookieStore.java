@@ -1,10 +1,9 @@
-package com.michael.network;
+package com.michael.attackpoint.account;
 
 import android.util.Log;
 
-import com.michael.attackpoint.Preferences;
-import com.michael.attackpoint.Singleton;
-import com.michael.database.CookieTable;
+import com.michael.attackpoint.util.Preferences;
+import com.michael.attackpoint.util.Singleton;
 
 import java.net.CookieStore;
 import java.net.HttpCookie;

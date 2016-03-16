@@ -1,8 +1,5 @@
 package com.michael.attackpoint.log.loginfo;
 
-import com.michael.attackpoint.Singleton;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**

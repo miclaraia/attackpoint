@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.util;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.util;
 
 import android.app.Activity;
 import android.app.Application;
@@ -14,7 +14,7 @@ import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.drawer.NavGroupUsers;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.request.TrainingTypeRequest;
-import com.michael.network.MyCookieStore;
+import com.michael.attackpoint.account.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
 
 import java.net.CookieHandler;

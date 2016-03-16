@@ -1,4 +1,4 @@
-package com.michael.network;
+package com.michael.attackpoint.users;
 
 import android.util.Log;
 
@@ -7,7 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.michael.objects.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;

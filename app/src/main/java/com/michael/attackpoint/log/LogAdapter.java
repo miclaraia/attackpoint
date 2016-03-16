@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOverlay;
 
-import com.michael.attackpoint.LogDetailActivity;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;

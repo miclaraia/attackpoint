@@ -1,13 +1,12 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.log;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.util.Singleton;
 
 public class LogActivity extends AppCompatActivity {
 

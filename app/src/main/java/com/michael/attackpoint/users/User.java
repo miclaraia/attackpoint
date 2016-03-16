@@ -1,10 +1,8 @@
-package com.michael.objects;
+package com.michael.attackpoint.users;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.michael.attackpoint.Singleton;
-import com.michael.database.UserTable;
-import com.michael.network.UserRequest;
+import com.michael.attackpoint.util.Singleton;
 
 /**
  * Created by michael on 11/11/15.

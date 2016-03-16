@@ -1,11 +1,11 @@
-package com.michael.database;
+package com.michael.attackpoint.users;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.michael.attackpoint.Singleton;
-import com.michael.objects.User;
+import com.michael.attackpoint.util.DatabaseHelper;
+import com.michael.attackpoint.util.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -25,7 +25,7 @@
     <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".Singleton"
+        android:name=".util.Singleton"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/main_icon"
@@ -57,10 +57,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".LogDetailActivity"
+            android:name=".log.LogDetailActivity"
             android:label="@string/title_activity_log_detail" />
         <activity
-            android:name=".LogActivity"
+            android:name=".log.LogActivity"
             android:label="@string/title_activity_log" />
         <activity
             android:name=".discussion.DiscussionActivity"

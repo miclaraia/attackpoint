@@ -1,4 +1,4 @@
-package com.michael.attackpoint;
+package com.michael.attackpoint.log;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Note;
+import com.michael.attackpoint.util.Singleton;
 
 public class LogDetailActivity extends Activity {
     private static final String DEBUG_TAG = "ap.logDetailActivity";

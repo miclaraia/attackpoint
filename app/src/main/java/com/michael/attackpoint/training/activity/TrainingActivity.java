@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;

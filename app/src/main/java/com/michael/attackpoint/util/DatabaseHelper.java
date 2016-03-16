@@ -1,4 +1,4 @@
-package com.michael.database;
+package com.michael.attackpoint.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.account.CookieTable;
+import com.michael.attackpoint.users.UserTable;
 
 /**
  * Created by michael on 10/20/15.

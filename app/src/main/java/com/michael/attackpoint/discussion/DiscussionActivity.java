@@ -13,10 +13,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.discussion.DiscussionAdapter;
-import com.michael.attackpoint.discussion.Discussion;
-import com.michael.attackpoint.discussion.DiscussionRequest;
+import com.michael.attackpoint.util.Singleton;
 
 public class DiscussionActivity extends AppCompatActivity {
     public final static String DISCUSSION_ID = "d_id";

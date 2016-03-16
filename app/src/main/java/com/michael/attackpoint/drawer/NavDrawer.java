@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
+import com.michael.attackpoint.util.Singleton;
 
 import java.util.ArrayList;
 

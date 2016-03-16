@@ -7,18 +7,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.michael.attackpoint.DebugDialog;
 import com.michael.attackpoint.discussion.DiscussionActivity;
-import com.michael.attackpoint.LogActivity;
-import com.michael.attackpoint.LogFragment;
-import com.michael.attackpoint.Preferences;
+import com.michael.attackpoint.log.LogActivity;
+import com.michael.attackpoint.log.LogFragment;
+import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.Singleton;
-import com.michael.attackpoint.UsersFragment;
+import com.michael.attackpoint.util.Singleton;
+import com.michael.attackpoint.users.UsersFragment;
 import com.michael.attackpoint.training.activity.AddTrainingActivity;
-import com.michael.attackpoint.training.activity.TrainingActivity;
-import com.michael.database.CookieTable;
-import com.michael.network.MyCookieStore;
+import com.michael.attackpoint.account.CookieTable;
+import com.michael.attackpoint.account.MyCookieStore;
 
 import java.util.ArrayList;
 
