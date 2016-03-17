@@ -16,9 +16,8 @@ import android.view.ViewOverlay;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.log.LogRequest;
+import com.michael.attackpoint.log.data.LogRequest;
 import com.michael.attackpoint.log.ViewHolder;
-import com.michael.attackpoint.log.loglist.LogAdapter;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.util.Singleton;
 

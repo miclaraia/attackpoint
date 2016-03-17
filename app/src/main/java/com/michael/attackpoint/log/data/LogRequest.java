@@ -1,4 +1,4 @@
-package com.michael.attackpoint.log;
+package com.michael.attackpoint.log.data;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -98,6 +98,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                     details.set(LogInfo.KEY_DESCRIPTION, text);
 
                     details.setPace();
+                    // TODO set ID from edit link
 
                     return details;
                 }
@@ -112,7 +113,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
 
     //splits document into activity entries and strips of confounding elements
     //returns list of LogInfo objects
-    public ArrayList<LogInfo> getActivities(Document soup) {
+    public List<LogInfo> getActivities(Document soup) {
         ArrayList<LogInfo> liList = new ArrayList<LogInfo>();
         Elements days = soup.getElementsByAttributeValue("class", "tlday");
 

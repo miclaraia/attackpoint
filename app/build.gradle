@@ -45,6 +45,7 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.google.android.gms:play-services:8.4.0'
+    compile "com.google.guava:guava:18.0"
     compile "com.android.support.test.espresso:espresso-idling-resource:2.2.1"
 
     // Dependencies for local unit tests

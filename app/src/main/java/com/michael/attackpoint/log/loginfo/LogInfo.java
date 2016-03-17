@@ -48,9 +48,11 @@ public class LogInfo {
      * Recreates LogInfo object from data serialized into JSON
      * @param jsonString JSON string output from tostring()
      */
-    public LogInfo(String jsonString) {
-        onCreate();
-        fromJSON(jsonString);
+    public static LogInfo getFromJSON(String jsonString) {
+        LogInfo logInfo = new LogInfo();
+        logInfo.fromJSON(jsonString);
+
+        return logInfo;
     }
 
     public void onCreate() {

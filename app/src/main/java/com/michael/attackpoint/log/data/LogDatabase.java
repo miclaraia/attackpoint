@@ -10,15 +10,16 @@ import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.util.Singleton;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by michael on 3/16/16.
  */
-public class LogDatabase implements LogDatabaseContract.Table{
+public class LogDatabase {
     static {
         String drop = String.format("%s; %s;", LogCache.TABLE_DROP, LogCacheUpdate.TABLE_DROP);
         String create = String.format("%s; %s;", LogCache.TABLE_CREATE, LogCacheUpdate.TABLE_CREATE);
@@ -31,68 +32,27 @@ public class LogDatabase implements LogDatabaseContract.Table{
     public static final String CREATE;
 
     private DatabaseHelper mDBHelper;
-    private LogCache mLogCache;
-    private LogCacheUpdate mLogCacheUpdate;
-    private String mUser;
+    protected LogCache mLogCache;
+    protected LogCacheUpdate mLogCacheUpdate;
 
 
-    public LogDatabase(String user) {
+    public LogDatabase() {
         mDBHelper = DatabaseHelper.getInstance(Singleton.getInstance().getContext());
         mLogCache = new LogCache(mDBHelper);
         mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
-        mUser = user;
     }
 
-    public LogDatabase(Context context, String user) {
+    public LogDatabase(Context context) {
         mDBHelper = DatabaseHelper.getInstance(context);
         mLogCache = new LogCache(mDBHelper);
         mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
-        mUser = user;
-    }
-
-    protected LogCache getLogCache() {
-        return mLogCache;
-    }
-
-    protected LogCacheUpdate getLogCacheUpdate() {
-        return mLogCacheUpdate;
-    }
-
-    @Override
-    public ArrayMap<Integer, String> getCachedLog(String user) {
-        return mLogCache.getCachedLog(user);
-    }
-
-    @Override
-    public String getCachedEntry(int id) {
-        return mLogCache.getCachedEntry(id);
-    }
-
-    @Override
-    public void putCache(String user, List<String> cache) {
-        mLogCache.putCache(user, cache);
-    }
-
-    @Override
-    public void addCacheEntry(String user, String entry) {
-        mLogCache.addCacheEntry(user, entry);
-    }
-
-    @Override
-    public boolean isStale(String user) {
-        boolean stale = mLogCacheUpdate.userIsStale(user);
-        /*if (stale) {
-            mLogCache.removeCache(user);
-            mLogCacheUpdate.removeUser(user);
-        }*/
-
-        return stale;
     }
 
     protected static class LogCache {
         public static final String TABLE = "logcache";
         public static final String COLUMN_ID = "_id";
-        public static final String COLUMN_USER = "user";
+        public static final String COLUMN_AP_ID = "ap_id";
+        public static final String COLUMN_USER = "userID";
         public static final String COLUMN_JSON = "json";
 
         public static final String DEBUG_TAG = "LogTable";
@@ -101,15 +61,14 @@ public class LogDatabase implements LogDatabaseContract.Table{
             StringBuilder builder = new StringBuilder();
             builder.append(String.format("CRETAE TABLE %s (", TABLE));
             builder.append(String.format("%s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
-            builder.append(String.format("%s TEXT NOT NULL", COLUMN_USER));
+            builder.append(String.format("%s INTEGER", COLUMN_AP_ID));
+            builder.append(String.format("%s INTEGER", COLUMN_USER));
             builder.append(String.format("%s TEXT NOT NULL", COLUMN_JSON));
             TABLE_CREATE = builder.toString();
 
-            String drop = String.format("DROP TABLE IF EXISTS %s", TABLE);
-            TABLE_DROP = drop;
         }
         public static final String TABLE_CREATE;
-        public static final String TABLE_DROP;
+        public static final String TABLE_DROP = String.format("DROP TABLE IF EXISTS %s", TABLE);
 
         private DatabaseHelper mDBHelper;
 
@@ -117,9 +76,9 @@ public class LogDatabase implements LogDatabaseContract.Table{
             mDBHelper = dbHelper;
         }
 
-        public ArrayMap<Integer, String> getCachedLog(String user) {
-            String sql = String.format("SELECT %s,%s FROM %s WHERE %s LIKE %s",
-                    COLUMN_ID, COLUMN_JSON, TABLE, COLUMN_USER, user);
+        public ArrayMap<Integer, String> getCachedLog(int userID) {
+            String sql = String.format(Locale.US, "SELECT %s,%s FROM %s WHERE %s=%d",
+                    COLUMN_ID, COLUMN_JSON, TABLE, COLUMN_USER, userID);
             Cursor cursor = open().rawQuery(sql, null);
 
             ArrayMap<Integer, String> cache = new ArrayMap<>();
@@ -129,41 +88,45 @@ public class LogDatabase implements LogDatabaseContract.Table{
                 cache.put(id, data);
             }
 
+            cursor.close();
             return cache;
         }
 
-        public String getCachedEntry(int id) {
-            String sql = String.format("SELECT %s FROM %s WHERE %s=%d",
-                    COLUMN_JSON, TABLE, COLUMN_ID, id);
+        public String getCachedEntry(int userID, int ap_id) {
+            String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d AND %s=%d",
+                    COLUMN_JSON, TABLE, COLUMN_USER, userID, COLUMN_AP_ID, ap_id);
             Cursor cursor = open().rawQuery(sql, null);
 
             cursor.moveToFirst();
             String entry = cursor.getString(0);
+            cursor.close();
 
             return entry;
         }
 
-        public void putCache(String user, List<String> cache) {
+        public void putCache(int userID, ArrayMap<Integer, String> cache) {
             SQLiteDatabase db = writer();
-            for (String json : cache) {
+            for (Map.Entry<Integer, String> entry: cache.entrySet()) {
                 ContentValues params = new ContentValues();
-                params.put(COLUMN_USER, user);
-                params.put(COLUMN_JSON, json);
+                params.put(COLUMN_USER, userID);
+                params.put(COLUMN_AP_ID, entry.getKey());
+                params.put(COLUMN_JSON, entry.getValue());
 
                 db.insert(TABLE, null, params);
             }
         }
 
-        public void removeCache(String user) {
-            String sql = String.format("DELETE FROM %s WHERE %s=%s",
-                    TABLE, COLUMN_USER, user);
+        public void removeCache(int userID) {
+            String sql = String.format(Locale.US, "DELETE FROM %s WHERE %s=%d",
+                    TABLE, COLUMN_USER, userID);
 
             writer().execSQL(sql);
         }
 
-        public void addCacheEntry(String user, String entry) {
+        public void addCacheEntry(int userID, int ap_id, String entry) {
             ContentValues params = new ContentValues();
-            params.put(COLUMN_USER, user);
+            params.put(COLUMN_USER, userID);
+            params.put(COLUMN_AP_ID, ap_id);
             params.put(COLUMN_JSON, entry);
 
             writer().insert(TABLE, null, params);
@@ -189,15 +152,12 @@ public class LogDatabase implements LogDatabaseContract.Table{
             StringBuilder builder = new StringBuilder();
             builder.append(String.format("CRETAE TABLE %s (", TABLE));
             builder.append(String.format("%s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
-            builder.append(String.format("%s TEXT NOT NULL", COLUMN_USER));
+            builder.append(String.format("%s INTEGER", COLUMN_USER));
             builder.append(String.format("%s TIMESTAMP DEFAULT CURRENT_TIMESTAMP", COLUMN_TIMESTAMP));
             TABLE_CREATE = builder.toString();
-
-            String drop = String.format("DROP TABLE IF EXISTS %s", TABLE);
-            TABLE_DROP = drop;
         }
         public static final String TABLE_CREATE;
-        public static final String TABLE_DROP;
+        public static final String TABLE_DROP = String.format("DROP TABLE IF EXISTS %s", TABLE);
 
         private DatabaseHelper mDBHelper;
 
@@ -205,17 +165,17 @@ public class LogDatabase implements LogDatabaseContract.Table{
             mDBHelper = dbHelper;
         }
 
-        public void updateUser(String user) {
+        public void updateUser(int userID) {
             SQLiteDatabase db = writer();
             ContentValues params = new ContentValues();
-            params.put(COLUMN_USER, user);
+            params.put(COLUMN_USER, userID);
 
             db.insert(TABLE, null, params);
         }
 
-        public Calendar getTimestamp(String user) {
-            String sql = String.format("SELECT %s FROM %s WHERE %s=%s",
-                    COLUMN_TIMESTAMP, TABLE, COLUMN_USER, user);
+        public Calendar getTimestamp(int userID) {
+            String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d",
+                    COLUMN_TIMESTAMP, TABLE, COLUMN_USER, userID);
             Cursor cursor = open().rawQuery(sql, null);
             Calendar timestamp = Calendar.getInstance();
             timestamp.set(0,0,0,0,0,0);
@@ -224,7 +184,7 @@ public class LogDatabase implements LogDatabaseContract.Table{
                 String time = cursor.getString(0);
                 timestamp.setTimeInMillis(Timestamp.valueOf(time).getTime());
             }
-
+            cursor.close();
             return timestamp;
         }
 
@@ -243,22 +203,22 @@ public class LogDatabase implements LogDatabaseContract.Table{
             return true;
         }
 
-        public boolean userIsStale(String user) {
-            Calendar timestamp = getTimestamp(user);
+        public boolean userIsStale(int userID) {
+            Calendar timestamp = getTimestamp(userID);
             return timestampIsStale(timestamp);
         }
 
-        public void removeUser(String user) {
-            String sql = String.format("DELETE FROM %s WHERE %s=%s",
-                    TABLE, COLUMN_USER, user);
+        public void removeUser(int userID) {
+            String sql = String.format(Locale.US, "DELETE FROM %s WHERE %s=%d",
+                    TABLE, COLUMN_USER, userID);
             writer().execSQL(sql);
         }
 
-        public SQLiteDatabase open() {
+        private SQLiteDatabase open() {
             return mDBHelper.getReadableDatabase();
         }
 
-        public SQLiteDatabase writer() {
+        private SQLiteDatabase writer() {
             return mDBHelper.getWritableDatabase();
         }
 
