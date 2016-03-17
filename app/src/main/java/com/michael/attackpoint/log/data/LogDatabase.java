@@ -1,6 +1,7 @@
 package com.michael.attackpoint.log.data;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
@@ -42,6 +43,21 @@ public class LogDatabase implements LogDatabaseContract.Table{
         mUser = user;
     }
 
+    public LogDatabase(Context context, String user) {
+        mDBHelper = DatabaseHelper.getInstance(context);
+        mLogCache = new LogCache(mDBHelper);
+        mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
+        mUser = user;
+    }
+
+    protected LogCache getLogCache() {
+        return mLogCache;
+    }
+
+    protected LogCacheUpdate getLogCacheUpdate() {
+        return mLogCacheUpdate;
+    }
+
     @Override
     public ArrayMap<Integer, String> getCachedLog(String user) {
         return mLogCache.getCachedLog(user);
@@ -65,14 +81,15 @@ public class LogDatabase implements LogDatabaseContract.Table{
     @Override
     public boolean isStale(String user) {
         boolean stale = mLogCacheUpdate.userIsStale(user);
-        if (stale) {
+        /*if (stale) {
             mLogCache.removeCache(user);
-        }
+            mLogCacheUpdate.removeUser(user);
+        }*/
 
         return stale;
     }
 
-    private static class LogCache {
+    protected static class LogCache {
         public static final String TABLE = "logcache";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USER = "user";
@@ -161,11 +178,12 @@ public class LogDatabase implements LogDatabaseContract.Table{
         }
     }
 
-    private static class LogCacheUpdate {
+    protected static class LogCacheUpdate {
         public static final String TABLE = "logcacheupdate";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USER = "user";
         public static final String COLUMN_TIMESTAMP = "timestamp";
+        public static final int STALE_DURATION = 10;
 
         static {
             StringBuilder builder = new StringBuilder();
@@ -195,34 +213,42 @@ public class LogDatabase implements LogDatabaseContract.Table{
             db.insert(TABLE, null, params);
         }
 
-        public boolean userIsStale(String user) {
+        public Calendar getTimestamp(String user) {
             String sql = String.format("SELECT %s FROM %s WHERE %s=%s",
                     COLUMN_TIMESTAMP, TABLE, COLUMN_USER, user);
             Cursor cursor = open().rawQuery(sql, null);
+            Calendar timestamp = Calendar.getInstance();
+            timestamp.set(0,0,0,0,0,0);
 
             if (cursor.moveToFirst()) {
-                Calendar timestamp = Calendar.getInstance();
-                timestamp.setTimeInMillis(Timestamp.valueOf(cursor.getString(0)).getTime());
-                int minutes = timestamp.get(Calendar.MINUTE) + 10;
-                timestamp.set(Calendar.MINUTE, minutes);
-
-                Calendar compare = Calendar.getInstance();
-
-                if (timestamp.compareTo(compare) < 0) {
-                    // timestamp is less than 10 minutes old, not stale yet
-                    return false;
-                } else {
-                    // timestamp is older than 10 minutes, stale
-                    // also stipulates that user exists in cache
-                    removeUser(user);
-                    return true;
-                }
+                String time = cursor.getString(0);
+                timestamp.setTimeInMillis(Timestamp.valueOf(time).getTime());
             }
 
+            return timestamp;
+        }
+
+        public boolean timestampIsStale(Calendar timestamp) {
+            int minutes = timestamp.get(Calendar.MINUTE) + STALE_DURATION;
+            timestamp.set(Calendar.MINUTE, minutes);
+
+            Calendar compare = Calendar.getInstance();
+
+            if (timestamp.compareTo(compare) < 0) {
+                // timestamp is less than 10 minutes old, not stale yet
+                return false;
+            }
+            // either timestamp is older than 10 minutes (stale)
+            // or user does not exist yet
             return true;
         }
 
-        private void removeUser(String user) {
+        public boolean userIsStale(String user) {
+            Calendar timestamp = getTimestamp(user);
+            return timestampIsStale(timestamp);
+        }
+
+        public void removeUser(String user) {
             String sql = String.format("DELETE FROM %s WHERE %s=%s",
                     TABLE, COLUMN_USER, user);
             writer().execSQL(sql);
