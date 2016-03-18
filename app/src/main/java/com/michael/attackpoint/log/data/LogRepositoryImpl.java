@@ -28,7 +28,7 @@ public class LogRepositoryImpl implements LogRepository {
 
     @Override
     public void getLog(@NonNull final int userID, final @NonNull LoadLogCallback callback) {
-        if (mLogDatabase.mLogCacheUpdate.userIsStale(userID)) {
+        if (mLogDatabase.userIsStale(userID)) {
             refreshData(userID, new RefreshCallback() {
                 @Override
                 public void done() {
@@ -36,34 +36,21 @@ public class LogRepositoryImpl implements LogRepository {
                 }
             });
         } else {
-            ArrayMap<Integer, String> cache = mLogDatabase.mLogCache.getCachedLog(userID);
-
-            List<LogInfo> processedCache = new ArrayList<>();
-            for (String entry : cache.values()) {
-                LogInfo logInfo = LogInfo.getFromJSON(entry);
-                processedCache.add(logInfo);
-            }
-
-            callback.onLoaded(processedCache);
+            List<LogInfo> cache = mLogDatabase.getCache(userID);
+            callback.onLoaded(cache);
         }
     }
 
     @Override
     public void getLogEntry(@NonNull int userID, @NonNull int id,
                             @NonNull LoadLogEntryCallback callback) {
-        if (mLogDatabase.mlc)
-        String entry = mLogDatabase.mLogCache.getCachedEntry(userID, id);
-
-        LogInfo logInfo = LogInfo.getFromJSON(entry);
-        logInfo.setID(id);
-
-        callback.onLoaded(logInfo);
+        LogInfo entry = mLogDatabase.getCacheEntry(userID, id);
+        callback.onLoaded(entry);
     }
 
     @Override
     public void saveLogEntry(@NonNull int userID, @NonNull LogInfo logInfo) {
-        mLogDatabase.mLogCache.addCacheEntry(userID,
-                logInfo.getID(), logInfo.toJSON().toString());
+        mLogDatabase.addCacheEntry(userID, logInfo);
     }
 
     @Override
@@ -96,15 +83,8 @@ public class LogRepositoryImpl implements LogRepository {
     }
 
     private void replaceCache(int userID, List<LogInfo> entries) {
-        ArrayMap<Integer, String> cache = new ArrayMap<>();
-        for (LogInfo entry : entries) {
-            String json = entry.toJSON().toString();
-            cache.put(entry.getID(), json);
-        }
-
-        mLogDatabase.mLogCache.removeCache(userID);
-        mLogDatabase.mLogCache.putCache(userID, cache);
-        mLogDatabase.mLogCacheUpdate.updateUser(userID);
+        mLogDatabase.removeCache(userID);
+        mLogDatabase.addCache(userID, entries);
     }
 
     private void addRequest(Request request) {
