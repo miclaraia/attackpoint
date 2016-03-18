@@ -15,6 +15,21 @@ public interface LogCacheApi {
         void onLoaded(T entries);
     }
 
+    interface Database {
+        List<LogInfo> getCache(int userID);
+
+        LogInfo getCacheEntry(int userID, int id);
+
+        void addCache(int userID, List<LogInfo> cache);
+
+        void addCacheEntry(int userID, LogInfo entry);
+
+        void removeCache(int userID);
+
+        boolean userIsStale(int userID);
+
+    }
+
     void getCachedLog(int userID, LogCacheCallback<List<LogInfo>> callback);
 
     void getCachedEntry(int userID, int id, LogCacheCallback<LogInfo> callback);
