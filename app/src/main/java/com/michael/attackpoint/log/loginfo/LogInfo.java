@@ -37,6 +37,8 @@ public class LogInfo {
     public static final String KEY_INTENSITY = "kintensity";
     public static final String KEY_PACE = "kpace";
 
+    private static final String JSON_ID = "_id";
+
     private Map<String, LogInfoItem> mItems;
     private int mID;
 
@@ -98,6 +100,8 @@ public class LogInfo {
             for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
                 entry.getValue().fromJSON(json);
             }
+
+            setID(json.getInt(JSON_ID));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -151,6 +155,13 @@ public class LogInfo {
         JSONObject json = new JSONObject();
         for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
              json = entry.getValue().toJSON(json);
+        }
+
+        try {
+            json.put(JSON_ID, mID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return json;
     }
