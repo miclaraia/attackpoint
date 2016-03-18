@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by michael on 3/17/16.
  */
-public final class LogDatabaseTest {
+public class LogDatabaseTest {
     private static final Integer TEST_USER = 199;
     private static final String TEST_TIMESTAMP = "2016-01-01 12:30:00"; // YYYY-MM-DD HH:MI:SS
     private static final Calendar TEST_TIMESTAMP_CAL;
@@ -63,15 +63,15 @@ public final class LogDatabaseTest {
     @Mock
     private Cursor mCursor;
 
-    private LogDatabase mLogDatabase;
     private LogCache mLogCache;
     private LogCacheUpdate mLogCacheUpdate;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mLogCache = new LogDatabase.LogCache(mDBHelper);
+        mLogCache = new LogCache(mDBHelper);
+        mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
     }
 
     @Test
