@@ -158,7 +158,7 @@ public class LogInfo {
         }
 
         try {
-            json.put(JSON_ID, mID);
+            json.put(JSON_ID, getID());
         } catch (JSONException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
