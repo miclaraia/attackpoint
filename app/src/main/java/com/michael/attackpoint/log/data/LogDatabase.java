@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
+import android.test.AndroidTestCase;
 import android.util.ArrayMap;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -41,14 +42,15 @@ public class LogDatabase implements LogCacheApi.Database{
 
     public LogDatabase() {
         mDBHelper = DatabaseHelper.getInstance(Singleton.getInstance().getContext());
-        mLogCache = new LogCache(mDBHelper);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
+        AndroidFactory factory = new AndroidFactory();
+        mLogCache = new LogCache(mDBHelper, factory);
+        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, factory);
     }
 
-    public LogDatabase(Context context) {
+    public LogDatabase(Context context, AndroidFactory factory) {
         mDBHelper = DatabaseHelper.getInstance(context);
-        mLogCache = new LogCache(mDBHelper);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
+        mLogCache = new LogCache(mDBHelper, factory);
+        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, factory);
     }
 
     @Override
@@ -106,9 +108,11 @@ public class LogDatabase implements LogCacheApi.Database{
         public static final String TABLE_DROP = String.format("DROP TABLE IF EXISTS %s", TABLE);
 
         private DatabaseHelper mDBHelper;
+        private AndroidFactory mAndroidFactory;
 
-        protected LogCache(DatabaseHelper dbHelper) {
+        protected LogCache(DatabaseHelper dbHelper, AndroidFactory factory) {
             mDBHelper = dbHelper;
+            mAndroidFactory = factory;
         }
 
         public List<LogInfo> getCachedLog(int userID) {
@@ -145,7 +149,7 @@ public class LogDatabase implements LogCacheApi.Database{
         public void addCache(int userID, List<LogInfo> cache) {
             SQLiteDatabase db = writer();
             for (LogInfo entry: cache) {
-                ContentValues params = new ContentValues();
+                ContentValues params = mAndroidFactory.genContentValues();
                 params.put(COLUMN_USER, userID);
                 params.put(COLUMN_AP_ID, entry.getID());
                 params.put(COLUMN_JSON, entry.toJSON().toString());
@@ -155,7 +159,7 @@ public class LogDatabase implements LogCacheApi.Database{
         }
 
         public void addCacheEntry(int userID, LogInfo entry) {
-            ContentValues params = new ContentValues();
+            ContentValues params = mAndroidFactory.genContentValues();
             params.put(COLUMN_USER, userID);
             params.put(COLUMN_AP_ID, entry.getID());
             params.put(COLUMN_JSON, entry.toJSON().toString());
@@ -198,16 +202,18 @@ public class LogDatabase implements LogCacheApi.Database{
         public static final String TABLE_DROP = String.format("DROP TABLE IF EXISTS %s", TABLE);
 
         private DatabaseHelper mDBHelper;
+        private AndroidFactory mAndroidFactory;
 
-        protected LogCacheUpdate(DatabaseHelper dbHelper) {
+        protected LogCacheUpdate(DatabaseHelper dbHelper, AndroidFactory factory) {
             mDBHelper = dbHelper;
+            mAndroidFactory = factory;
         }
 
         public void updateUser(int userID) {
             removeUser(userID);
 
             SQLiteDatabase db = writer();
-            ContentValues params = new ContentValues();
+            ContentValues params = mAndroidFactory.genContentValues();
             params.put(COLUMN_USER, userID);
 
             db.insert(TABLE, null, params);
@@ -263,5 +269,11 @@ public class LogDatabase implements LogCacheApi.Database{
         }
 
 
+    }
+
+    public static class AndroidFactory {
+        public ContentValues genContentValues() {
+            return new ContentValues();
+        }
     }
 }

@@ -28,7 +28,9 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -63,6 +65,12 @@ public class LogDatabaseTest {
     @Mock
     private Cursor mCursor;
 
+    @Mock
+    private LogDatabase.AndroidFactory mAndroidFactory;
+
+    @Mock
+    private ContentValues mContentValues;
+
     private LogCache mLogCache;
     private LogCacheUpdate mLogCacheUpdate;
 
@@ -70,8 +78,8 @@ public class LogDatabaseTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mLogCache = new LogCache(mDBHelper);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
+        mLogCache = new LogCache(mDBHelper, mAndroidFactory);
+        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, mAndroidFactory);
     }
 
     @Test
@@ -102,9 +110,13 @@ public class LogDatabaseTest {
     @Test
     public void addCache_addsListToDatabase() {
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
+        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
 
         mLogCache.addCache(TEST_USER, TEST_CACHE);
 
+        verify(mContentValues, times(3)).put(LogCache.COLUMN_USER, TEST_USER);
+        verify(mContentValues, times(3)).put(LogCache.COLUMN_AP_ID, anyInt());
+        verify(mContentValues, times(3)).put(LogCache.COLUMN_JSON, anyString());
         verify(mDatabaseObject, times(3))
                 .insert(LogCache.TABLE, null, any(ContentValues.class));
     }
@@ -112,21 +124,18 @@ public class LogDatabaseTest {
     @Test
     public void addCacheEntry_addsEntryToDatabase() {
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
+        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
 
         LogInfo entry = TEST_CACHE.get(0);
         String json = entry.toJSON().toString();
         int id = entry.getID();
 
-        ArgumentCaptor<ContentValues> argument = ArgumentCaptor.forClass(ContentValues.class);
-
         mLogCache.addCacheEntry(TEST_USER, TEST_CACHE.get(0));
 
-        verify(mDatabaseObject).insert(LogCache.TABLE, null, argument.capture());
-
-        ContentValues params = argument.getValue();
-        assertThat((Integer) params.get(LogCache.COLUMN_USER), is(TEST_USER));
-        assertThat((Integer) params.get(LogCache.COLUMN_AP_ID), is(id));
-        assertThat((String) params.get(LogCache.COLUMN_JSON), is(json));
+        verify(mContentValues).put(LogCache.COLUMN_USER, TEST_USER);
+        verify(mContentValues).put(LogCache.COLUMN_AP_ID, id);
+        verify(mContentValues).put(LogCache.COLUMN_JSON, json);
+        verify(mDatabaseObject).insert(LogCache.TABLE, null, any(ContentValues.class));
     }
 
     @Test
@@ -144,15 +153,12 @@ public class LogDatabaseTest {
     @Test
     public void updateUser_makesInsert() {
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
-
-        ArgumentCaptor<ContentValues> argument = ArgumentCaptor.forClass(ContentValues.class);
+        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
 
         mLogCacheUpdate.updateUser(TEST_USER);
 
-        verify(mDatabaseObject).insert(LogCache.TABLE, null, argument.capture());
-
-        ContentValues params = argument.getValue();
-        assertThat((Integer) params.get(LogCacheUpdate.COLUMN_USER), is(TEST_USER));
+        verify(mContentValues).put(LogCacheUpdate.COLUMN_USER, TEST_USER);
+        verify(mDatabaseObject).insert(LogCache.TABLE, null, any(ContentValues.class));
     }
 
     @Test
