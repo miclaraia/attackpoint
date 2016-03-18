@@ -130,9 +130,12 @@ public class LogDatabase implements LogCacheApi.Database{
                     COLUMN_JSON, TABLE, COLUMN_USER, userID, COLUMN_AP_ID, ap_id);
             Cursor cursor = open().rawQuery(sql, null);
 
-            cursor.moveToFirst();
-            LogInfo entry = LogInfo.getFromJSON(cursor.getString(0));
-            cursor.close();
+            LogInfo entry;
+            if (cursor.moveToFirst()) {
+                entry = LogInfo.getFromJSON(cursor.getString(0));
+                cursor.close();
+                // TODO bad error handling
+            } else entry = new LogInfo();
 
             return entry;
         }
