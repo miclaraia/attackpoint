@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.VisibleForTesting;
 import android.util.ArrayMap;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -106,7 +107,7 @@ public class LogDatabase implements LogCacheApi.Database{
 
         private DatabaseHelper mDBHelper;
 
-        private LogCache(DatabaseHelper dbHelper) {
+        protected LogCache(DatabaseHelper dbHelper) {
             mDBHelper = dbHelper;
         }
 
@@ -198,11 +199,13 @@ public class LogDatabase implements LogCacheApi.Database{
 
         private DatabaseHelper mDBHelper;
 
-        private LogCacheUpdate(DatabaseHelper dbHelper) {
+        protected LogCacheUpdate(DatabaseHelper dbHelper) {
             mDBHelper = dbHelper;
         }
 
         public void updateUser(int userID) {
+            removeUser(userID);
+
             SQLiteDatabase db = writer();
             ContentValues params = new ContentValues();
             params.put(COLUMN_USER, userID);
