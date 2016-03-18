@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
 
+import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.util.Singleton;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -19,7 +21,7 @@ import java.util.Set;
 /**
  * Created by michael on 3/16/16.
  */
-public class LogDatabase {
+public class LogDatabase implements LogCacheApi.Database{
     static {
         String drop = String.format("%s; %s;", LogCache.TABLE_DROP, LogCacheUpdate.TABLE_DROP);
         String create = String.format("%s; %s;", LogCache.TABLE_CREATE, LogCacheUpdate.TABLE_CREATE);
@@ -32,8 +34,8 @@ public class LogDatabase {
     public static final String CREATE;
 
     private DatabaseHelper mDBHelper;
-    protected LogCache mLogCache;
-    protected LogCacheUpdate mLogCacheUpdate;
+    private LogCache mLogCache;
+    private LogCacheUpdate mLogCacheUpdate;
 
 
     public LogDatabase() {
@@ -46,6 +48,37 @@ public class LogDatabase {
         mDBHelper = DatabaseHelper.getInstance(context);
         mLogCache = new LogCache(mDBHelper);
         mLogCacheUpdate = new LogCacheUpdate(mDBHelper);
+    }
+
+    @Override
+    public List<LogInfo> getCache(int userID) {
+        return mLogCache.getCachedLog(userID);
+    }
+
+    @Override
+    public LogInfo getCacheEntry(int userID, int id) {
+        return mLogCache.getCachedEntry(userID, id);
+    }
+
+    @Override
+    public void addCache(int userID, List<LogInfo> cache) {
+        mLogCache.addCache(userID, cache);
+        mLogCacheUpdate.updateUser(userID);
+    }
+
+    @Override
+    public void addCacheEntry(int userID, LogInfo entry) {
+        mLogCache.addCacheEntry(userID, entry);
+    }
+
+    @Override
+    public void removeCache(int userID) {
+        mLogCache.removeCache(userID);
+    }
+
+    @Override
+    public boolean userIsStale(int userID) {
+        return mLogCacheUpdate.userIsStale(userID);
     }
 
     protected static class LogCache {
@@ -76,44 +109,53 @@ public class LogDatabase {
             mDBHelper = dbHelper;
         }
 
-        public ArrayMap<Integer, String> getCachedLog(int userID) {
-            String sql = String.format(Locale.US, "SELECT %s,%s FROM %s WHERE %s=%d",
-                    COLUMN_ID, COLUMN_JSON, TABLE, COLUMN_USER, userID);
+        public List<LogInfo> getCachedLog(int userID) {
+            String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d",
+                    COLUMN_JSON, TABLE, COLUMN_USER, userID);
             Cursor cursor = open().rawQuery(sql, null);
 
-            ArrayMap<Integer, String> cache = new ArrayMap<>();
+            List<LogInfo> cache = new ArrayList<>();
             while(cursor.moveToNext()) {
-                Integer id = cursor.getInt(0);
-                String data = cursor.getString(1);
-                cache.put(id, data);
+                String data = cursor.getString(0);
+                LogInfo entry = LogInfo.getFromJSON(data);
+                cache.add(entry);
             }
 
             cursor.close();
             return cache;
         }
 
-        public String getCachedEntry(int userID, int ap_id) {
+        public LogInfo getCachedEntry(int userID, int ap_id) {
             String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d AND %s=%d",
                     COLUMN_JSON, TABLE, COLUMN_USER, userID, COLUMN_AP_ID, ap_id);
             Cursor cursor = open().rawQuery(sql, null);
 
             cursor.moveToFirst();
-            String entry = cursor.getString(0);
+            LogInfo entry = LogInfo.getFromJSON(cursor.getString(0));
             cursor.close();
 
             return entry;
         }
 
-        public void putCache(int userID, ArrayMap<Integer, String> cache) {
+        public void addCache(int userID, List<LogInfo> cache) {
             SQLiteDatabase db = writer();
-            for (Map.Entry<Integer, String> entry: cache.entrySet()) {
+            for (LogInfo entry: cache) {
                 ContentValues params = new ContentValues();
                 params.put(COLUMN_USER, userID);
-                params.put(COLUMN_AP_ID, entry.getKey());
-                params.put(COLUMN_JSON, entry.getValue());
+                params.put(COLUMN_AP_ID, entry.getID());
+                params.put(COLUMN_JSON, entry.toJSON().toString());
 
                 db.insert(TABLE, null, params);
             }
+        }
+
+        public void addCacheEntry(int userID, LogInfo entry) {
+            ContentValues params = new ContentValues();
+            params.put(COLUMN_USER, userID);
+            params.put(COLUMN_AP_ID, entry.getID());
+            params.put(COLUMN_JSON, entry.toJSON().toString());
+
+            writer().insert(TABLE, null, params);
         }
 
         public void removeCache(int userID) {
@@ -121,15 +163,6 @@ public class LogDatabase {
                     TABLE, COLUMN_USER, userID);
 
             writer().execSQL(sql);
-        }
-
-        public void addCacheEntry(int userID, int ap_id, String entry) {
-            ContentValues params = new ContentValues();
-            params.put(COLUMN_USER, userID);
-            params.put(COLUMN_AP_ID, ap_id);
-            params.put(COLUMN_JSON, entry);
-
-            writer().insert(TABLE, null, params);
         }
 
         private SQLiteDatabase open() {
