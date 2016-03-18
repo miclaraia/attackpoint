@@ -25,11 +25,14 @@ import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.times;
@@ -52,7 +55,8 @@ public class LogDatabaseTest {
         TEST_CACHE = cache;
 
         Calendar cal = Calendar.getInstance();
-        cal.set(2016,01,01,12,30,0);
+        cal.set(2016,0,01,12,30,0);
+        cal.set(Calendar.MILLISECOND, 0);
         TEST_TIMESTAMP_CAL = cal;
     }
 
@@ -85,18 +89,25 @@ public class LogDatabaseTest {
     @Test
     public void getCachedLog_makesQuery() {
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
+        when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
+        when(mCursor.moveToFirst()).thenReturn(true);
+        when(mCursor.getString(0)).thenReturn("");
+
         String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d",
                 LogCache.COLUMN_JSON, LogCache.TABLE,
                 LogCache.COLUMN_USER, TEST_USER);
 
         mLogCache.getCachedLog(TEST_USER);
 
-        verify(mDatabaseObject).rawQuery(sql, null);
+        verify(mDatabaseObject).rawQuery(eq(sql), isNull(String[].class));
     }
 
     @Test
     public void getCachedEntry_makesQuery() {
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
+        when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
+        when(mCursor.moveToFirst()).thenReturn(true);
+        when(mCursor.getString(0)).thenReturn("");
 
         int test_id = 999;
         String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d AND %s=%d",
@@ -104,7 +115,9 @@ public class LogDatabaseTest {
                 LogCache.COLUMN_USER, TEST_USER,
                 LogCache.COLUMN_AP_ID, test_id);
 
-        verify(mDatabaseObject).rawQuery(sql, null);
+        mLogCache.getCachedEntry(TEST_USER, test_id);
+
+        verify(mDatabaseObject).rawQuery(eq(sql), isNull(String[].class));
     }
 
     @Test
@@ -118,7 +131,7 @@ public class LogDatabaseTest {
         verify(mContentValues, times(3)).put(LogCache.COLUMN_AP_ID, anyInt());
         verify(mContentValues, times(3)).put(LogCache.COLUMN_JSON, anyString());
         verify(mDatabaseObject, times(3))
-                .insert(LogCache.TABLE, null, any(ContentValues.class));
+                .insert(eq(LogCache.TABLE), isNull(String.class), any(ContentValues.class));
     }
 
     @Test
@@ -135,7 +148,7 @@ public class LogDatabaseTest {
         verify(mContentValues).put(LogCache.COLUMN_USER, TEST_USER);
         verify(mContentValues).put(LogCache.COLUMN_AP_ID, id);
         verify(mContentValues).put(LogCache.COLUMN_JSON, json);
-        verify(mDatabaseObject).insert(LogCache.TABLE, null, any(ContentValues.class));
+        verify(mDatabaseObject).insert(eq(LogCache.TABLE), isNull(String.class), any(ContentValues.class));
     }
 
     @Test
@@ -158,29 +171,34 @@ public class LogDatabaseTest {
         mLogCacheUpdate.updateUser(TEST_USER);
 
         verify(mContentValues).put(LogCacheUpdate.COLUMN_USER, TEST_USER);
-        verify(mDatabaseObject).insert(LogCache.TABLE, null, any(ContentValues.class));
+        verify(mDatabaseObject).insert(eq(LogCacheUpdate.TABLE), isNull(String.class), eq(mContentValues));
     }
 
     @Test
     public void getTimestamp_makesQuery() {
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
+        when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
+        when(mCursor.moveToFirst()).thenReturn(true);
+        when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
 
         String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d",
                 LogCacheUpdate.COLUMN_TIMESTAMP, LogCacheUpdate.TABLE,
                 LogCacheUpdate.COLUMN_USER, TEST_USER);
 
-        verify(mDatabaseObject).rawQuery(sql, null);
+        mLogCacheUpdate.getTimestamp(TEST_USER);
+
+        verify(mDatabaseObject).rawQuery(eq(sql), isNull(String[].class));
     }
 
     @Test
     public void getTimestamp_parses() {
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
-        when(mDatabaseObject.rawQuery(anyString(), null)).thenReturn(mCursor);
+        when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
         when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
 
         Calendar timestamp = mLogCacheUpdate.getTimestamp(TEST_USER);
-        assertThat(timestamp, is(TEST_TIMESTAMP_CAL));
+        assertThat(timestamp.getTimeInMillis(), is(TEST_TIMESTAMP_CAL.getTimeInMillis()));
     }
 
     @Test
@@ -208,7 +226,7 @@ public class LogDatabaseTest {
     @Test
     public void userIsStale_true() {
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
-        when(mDatabaseObject.rawQuery(anyString(), null)).thenReturn(mCursor);
+        when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
         when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
 

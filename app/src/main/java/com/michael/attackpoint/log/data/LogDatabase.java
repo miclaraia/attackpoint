@@ -240,7 +240,7 @@ public class LogDatabase implements LogCacheApi.Database{
 
             Calendar compare = Calendar.getInstance();
 
-            if (timestamp.compareTo(compare) < 0) {
+            if (timestamp.compareTo(compare) > 0) {
                 // timestamp is less than 10 minutes old, not stale yet
                 return false;
             }
