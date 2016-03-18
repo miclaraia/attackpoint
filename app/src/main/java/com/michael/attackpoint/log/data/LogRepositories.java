@@ -19,7 +19,7 @@ public class LogRepositories {
     public synchronized static LogRepository getInMemoryRepoInstance(@NonNull LogCacheApi logCacheApi) {
         checkNotNull(logCacheApi);
         if (null == repository) {
-            repository = new LogRepositoryImpl(logCacheApi);
+            //repository = new LogRepositoryImpl(logCacheApi);
         }
         return repository;
     }

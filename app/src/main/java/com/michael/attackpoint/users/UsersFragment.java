@@ -33,7 +33,7 @@ public class UsersFragment extends Fragment {
                              Bundle savedInstanceState) {
         singleton = Singleton.getInstance();
         //TODO should be handled differently
-        singleton.setFragment(this);
+        //singleton.setFragment(this);
 
         View view = inflater.inflate(R.layout.fragment_users, container,false);
 

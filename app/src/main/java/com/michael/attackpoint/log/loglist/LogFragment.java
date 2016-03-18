@@ -54,7 +54,7 @@ public class LogFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mActionsListener.loadNotes(false);
+        //mActionsListener.loadNotes(false);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class LogFragment extends Fragment {
 
         setRetainInstance(true);
 
-        mActionsListener = new NotesPresenter(Injection.provideNotesRepository(), this);
+        //mActionsListener = new NotesPresenter(Injection.provideNotesRepository(), this);
 
     }
 
@@ -104,13 +104,13 @@ public class LogFragment extends Fragment {
     }
 
     private void initializeAdapter() {
-        adapter = new LogAdapter(this ,logInfoList);
+        /*adapter = new LogAdapter(this ,logInfoList);
         adapter.notifyDataSetChanged();
-        recList.setAdapter(adapter);
+        recList*//*.setAdapter(adapter);*/
     }
 
     public void getLog() {
-        int userID = (int) getArguments().get(USER_ID);
+        /*int userID = (int) getArguments().get(USER_ID);
         if (userID > 0) {
             LogRequest request = new LogRequest(userID,
                     new Response.Listener<List<LogInfo>>() {
@@ -130,7 +130,7 @@ public class LogFragment extends Fragment {
 
             // Add the request to the queue
             singleton.add(request);
-        }
+        }*/
     }
 
     public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {

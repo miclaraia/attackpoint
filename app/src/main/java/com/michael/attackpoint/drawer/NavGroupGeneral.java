@@ -57,14 +57,14 @@ public class NavGroupGeneral extends NavDrawerGroup {
         mHeader = new NavItemHeader(GROUP_NAME);
 
         //Open log of current user
-        mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+        /*mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
             @Override
             public void click() {
                 Intent intent = new Intent(mActivity, LogActivity.class);
                 intent.putExtra(LogFragment.USER_ID, CookieTable.getCurrentID());
                 mActivity.startActivity(intent);
             }
-        }));
+        }));*/
 
         //Start DiscussionActivity looking at thread 1111416
         mNavItems.add(new NavItemReg("Discussion", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
@@ -110,7 +110,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 transaction.commit();
             }
         }));
-        mNavItems.add(new NavItemReg("Log Fragment", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+        /*mNavItems.add(new NavItemReg("Log Fragment", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
             @Override
             public void click() {
                 Log.d(DEBUG_TAG, "swapping fragments");
@@ -129,6 +129,6 @@ public class NavGroupGeneral extends NavDrawerGroup {
                 // Commit the transaction
                 transaction.commit();
             }
-        }));
+        }));*/
     }
 }

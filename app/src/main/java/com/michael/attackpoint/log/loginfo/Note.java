@@ -16,9 +16,9 @@ public class Note extends LogInfo {
         set(KEY_DESCRIPTION, new LogDescription(text));
     }
 
-    public Note(String jsonString) {
+    /*public Note(String jsonString) {
         super(jsonString);
-    }
+    }*/
 
     /*@Override
     public void fromJSON(String jsonString) {

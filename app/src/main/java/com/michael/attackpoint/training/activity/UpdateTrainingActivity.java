@@ -16,7 +16,7 @@ public class UpdateTrainingActivity extends TrainingActivity {
     protected LogInfo initLogInfo() {
         Intent intent = getIntent();
         String json = intent.getStringExtra(INTENT_JSON);
-        return new LogInfo(json);
+        return new LogInfo();
     }
 
     @Override

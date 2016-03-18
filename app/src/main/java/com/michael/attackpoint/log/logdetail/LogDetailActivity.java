@@ -29,13 +29,13 @@ public class LogDetailActivity extends Activity {
         String name = intent.getStringExtra(NAME);
         String json = intent.getStringExtra(DETAILS);
 
-        LogInfo li;
+        /*LogInfo li;
         if (name.equals(Note.NAME)) li = new Note(json);
         else li = new LogInfo(json);
 
         View view = findViewById(R.id.log_details);
         ViewHolder vh = new ViewHolder(view);
-        vh.setFull(li);
+        vh.setFull(li);*/
 
         Log.d(DEBUG_TAG, json);
     }

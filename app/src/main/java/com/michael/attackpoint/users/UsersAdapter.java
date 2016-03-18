@@ -86,7 +86,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 Log.d(DEBUG_TAG, "opening log of user " + user.getName());
                 Activity activity = Singleton.getInstance().getActivity();
                 Intent intent = new Intent(activity, LogActivity.class);
-                intent.putExtra(LogFragment.USER_ID, user.getId());
+                //intent.putExtra(LogFragment.USER_ID, user.getId());
                 activity.startActivity(intent);
 
 
