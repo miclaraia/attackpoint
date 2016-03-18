@@ -74,6 +74,7 @@ public class LogDatabase implements LogCacheApi.Database{
     @Override
     public void removeCache(int userID) {
         mLogCache.removeCache(userID);
+        mLogCacheUpdate.removeUser(userID);
     }
 
     @Override
