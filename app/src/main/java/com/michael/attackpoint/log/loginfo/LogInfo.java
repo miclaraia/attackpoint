@@ -2,6 +2,8 @@ package com.michael.attackpoint.log.loginfo;
 
 import android.text.Html;
 
+import com.michael.attackpoint.util.AndroidFactory;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,7 @@ public class LogInfo {
 
     private Map<String, LogInfoItem> mItems;
     private int mID;
+    private AndroidFactory mFactory;
 
     public LogInfo() {
         onCreate();
@@ -58,6 +61,8 @@ public class LogInfo {
     }
 
     public void onCreate() {
+        mFactory = AndroidFactory.getInstance();
+
         LogInfoItem climb = new LogClimb();
         LogInfoItem color = new LogColor();
         LogInfoItem comment = new LogComment();
@@ -96,7 +101,7 @@ public class LogInfo {
 
     public void fromJSON(String jsonString) {
         try {
-            JSONObject json = new JSONObject(jsonString);
+            JSONObject json = mFactory.genJSONObject(jsonString);
             for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
                 entry.getValue().fromJSON(json);
             }
@@ -152,7 +157,7 @@ public class LogInfo {
      * @return json string
      */
     public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
+        JSONObject json = mFactory.genJSONObject();
         for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
              json = entry.getValue().toJSON(json);
         }

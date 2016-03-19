@@ -9,6 +9,7 @@ import android.test.AndroidTestCase;
 import android.util.ArrayMap;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.util.AndroidFactory;
 import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.util.Singleton;
 
@@ -42,7 +43,7 @@ public class LogDatabase implements LogCacheApi.Database{
 
     public LogDatabase() {
         mDBHelper = DatabaseHelper.getInstance(Singleton.getInstance().getContext());
-        AndroidFactory factory = new AndroidFactory();
+        AndroidFactory factory = AndroidFactory.getInstance();
         mLogCache = new LogCache(mDBHelper, factory);
         mLogCacheUpdate = new LogCacheUpdate(mDBHelper, factory);
     }
@@ -269,11 +270,5 @@ public class LogDatabase implements LogCacheApi.Database{
         }
 
 
-    }
-
-    public static class AndroidFactory {
-        public ContentValues genContentValues() {
-            return new ContentValues();
-        }
     }
 }
