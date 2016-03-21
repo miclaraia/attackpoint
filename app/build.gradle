@@ -55,6 +55,9 @@ dependencies {
     testCompile "org.powermock:powermock-module-junit4:1.6.2"
     testCompile "org.powermock:powermock-api-mockito:1.6.2"
 
+    // JSON library
+    testCompile 'org.json:json:20160212'
+
     // Android Testing Support Library's runner and rules
     androidTestCompile "com.android.support.test:runner:0.4.1"
     androidTestCompile "com.android.support.test:rules:0.4.1"

@@ -13,6 +13,7 @@ import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.log.data.LogDatabase.LogCache;
 import com.michael.attackpoint.log.data.LogDatabase.LogCacheUpdate;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.mockito.AdditionalMatchers.or;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -84,11 +86,10 @@ public class LogDatabaseTest {
     private LogCacheUpdate mLogCacheUpdate;
 
     @Before
-    public void setUp() {
+    public void setUp() throws JSONException {
         MockitoAnnotations.initMocks(this);
 
         when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
-        when(mAndroidFactory.genJSONObject()).thenReturn(mJSONObject);
 
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
@@ -118,7 +119,7 @@ public class LogDatabaseTest {
     public void getCachedEntry_makesQuery() {
         when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
-        when(mCursor.getString(0)).thenReturn("");
+        when(mCursor.getString(0)).thenReturn(new LogInfo().toJSON().toString());
 
         int test_id = 999;
         String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d AND %s=%d",
@@ -136,8 +137,8 @@ public class LogDatabaseTest {
         mLogCache.addCache(TEST_USER, TEST_CACHE);
 
         verify(mContentValues, times(3)).put(LogCache.COLUMN_USER, TEST_USER);
-        verify(mContentValues, times(3)).put(LogCache.COLUMN_AP_ID, anyInt());
-        verify(mContentValues, times(3)).put(LogCache.COLUMN_JSON, anyString());
+        verify(mContentValues, times(3)).put(eq(LogCache.COLUMN_AP_ID), anyInt());
+        verify(mContentValues, times(3)).put(eq(LogCache.COLUMN_JSON), anyString());
         verify(mDatabaseObject, times(3))
                 .insert(eq(LogCache.TABLE), isNull(String.class), any(ContentValues.class));
     }

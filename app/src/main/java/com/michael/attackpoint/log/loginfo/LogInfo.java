@@ -101,7 +101,7 @@ public class LogInfo {
 
     public void fromJSON(String jsonString) {
         try {
-            JSONObject json = mFactory.genJSONObject(jsonString);
+            JSONObject json = new JSONObject(jsonString);
             for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
                 entry.getValue().fromJSON(json);
             }
@@ -157,7 +157,7 @@ public class LogInfo {
      * @return json string
      */
     public JSONObject toJSON() {
-        JSONObject json = mFactory.genJSONObject();
+        JSONObject json = new JSONObject();
         for (Map.Entry<String, LogInfoItem> entry : mItems.entrySet()) {
              json = entry.getValue().toJSON(json);
         }
