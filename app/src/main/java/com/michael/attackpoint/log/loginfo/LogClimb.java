@@ -1,5 +1,7 @@
 package com.michael.attackpoint.log.loginfo;
 
+import android.support.annotation.VisibleForTesting;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,8 +12,8 @@ import java.util.Formatter;
  * @author Michael Laraia
  */
 public class LogClimb extends LogInfoItem<LogClimb.Climb> {
-    private static final String JSON_CLIMB = "climb_climb";
-    private static final String JSON_UNIT = "climb_unit";
+    protected static final String JSON_CLIMB = "climb_climb";
+    protected static final String JSON_UNIT = "climb_unit";
     private static final String FORMAT = "+%d%s";
 
     public LogClimb() {
@@ -101,7 +103,12 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
         public String unit;
 
         public Climb() {
-            climb = 0;
+            this.climb = 0;
+            this.unit = UNIT_DEFAULT;
+        }
+
+        public Climb(int climb) {
+            this.climb = climb;
             unit = UNIT_DEFAULT;
         }
 
@@ -109,6 +116,15 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
             this.climb = climb;
             this.unit = unit;
 
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Climb) {
+                Climb c = (Climb) o;
+                if (c.climb == this.climb && c.unit.equals(this.unit)) return true;
+            }
+            return false;
         }
     }
     //TODO allow conversion between units
