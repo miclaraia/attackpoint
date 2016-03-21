@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -203,7 +204,7 @@ public class LogDatabaseTest {
         when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
 
         Calendar timestamp = mLogCacheUpdate.getTimestamp(TEST_USER);
-        assertThat(timestamp.getTimeInMillis(), is(TEST_TIMESTAMP_CAL.getTimeInMillis()));
+        assertThat(timestamp.getTimeInMillis(), equalTo(TEST_TIMESTAMP_CAL.getTimeInMillis()));
     }
 
     @Test
@@ -214,7 +215,7 @@ public class LogDatabaseTest {
         cal.set(Calendar.MINUTE, minutes);
 
         boolean stale = mLogCacheUpdate.timestampIsStale(cal);
-        assertThat(stale, is(true));
+        assertThat(stale, equalTo(true));
     }
 
     @Test
@@ -225,7 +226,7 @@ public class LogDatabaseTest {
         cal.set(Calendar.MINUTE, minutes);
 
         boolean stale = mLogCacheUpdate.timestampIsStale(cal);
-        assertThat(stale, is(false));
+        assertThat(stale, equalTo(false));
     }
 
     @Test
@@ -235,7 +236,7 @@ public class LogDatabaseTest {
         when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
 
         boolean stale = mLogCacheUpdate.userIsStale(TEST_USER);
-        assertThat(stale, is(true));
+        assertThat(stale, equalTo(true));
     }
 
     @Test
