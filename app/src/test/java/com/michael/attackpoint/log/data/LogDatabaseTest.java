@@ -8,10 +8,12 @@ import android.test.RenamingDelegatingContext;
 import android.util.ArrayMap;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.util.AndroidFactory;
 import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.log.data.LogDatabase.LogCache;
 import com.michael.attackpoint.log.data.LogDatabase.LogCacheUpdate;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -70,10 +72,13 @@ public class LogDatabaseTest {
     private Cursor mCursor;
 
     @Mock
-    private LogDatabase.AndroidFactory mAndroidFactory;
+    private AndroidFactory mAndroidFactory;
 
     @Mock
     private ContentValues mContentValues;
+
+    @Mock
+    private JSONObject mJSONObject;
 
     private LogCache mLogCache;
     private LogCacheUpdate mLogCacheUpdate;
@@ -82,13 +87,20 @@ public class LogDatabaseTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
+        when(mAndroidFactory.genJSONObject()).thenReturn(mJSONObject);
+
+        when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
+        when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
+
+        AndroidFactory.setFactory(mAndroidFactory);
+
         mLogCache = new LogCache(mDBHelper, mAndroidFactory);
         mLogCacheUpdate = new LogCacheUpdate(mDBHelper, mAndroidFactory);
     }
 
     @Test
     public void getCachedLog_makesQuery() {
-        when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
         when(mCursor.getString(0)).thenReturn("");
@@ -104,7 +116,6 @@ public class LogDatabaseTest {
 
     @Test
     public void getCachedEntry_makesQuery() {
-        when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
         when(mCursor.getString(0)).thenReturn("");
@@ -122,9 +133,6 @@ public class LogDatabaseTest {
 
     @Test
     public void addCache_addsListToDatabase() {
-        when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
-        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
-
         mLogCache.addCache(TEST_USER, TEST_CACHE);
 
         verify(mContentValues, times(3)).put(LogCache.COLUMN_USER, TEST_USER);
@@ -136,8 +144,6 @@ public class LogDatabaseTest {
 
     @Test
     public void addCacheEntry_addsEntryToDatabase() {
-        when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
-        when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
 
         LogInfo entry = TEST_CACHE.get(0);
         String json = entry.toJSON().toString();
@@ -153,8 +159,6 @@ public class LogDatabaseTest {
 
     @Test
     public void removeCache_makesQuery() {
-        when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
-
         String sql = String.format(Locale.US, "DELETE FROM %s WHERE %s=%d",
                 LogCache.TABLE, LogCache.COLUMN_USER, TEST_USER);
 
@@ -225,7 +229,6 @@ public class LogDatabaseTest {
 
     @Test
     public void userIsStale_true() {
-        when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
         when(mCursor.getString(0)).thenReturn(TEST_TIMESTAMP);
@@ -236,8 +239,6 @@ public class LogDatabaseTest {
 
     @Test
     public void removeUser_makesQuery() {
-        when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
-
         String sql = String.format(Locale.US, "DELETE FROM %s WHERE %s=%d",
                 LogCacheUpdate.TABLE, LogCacheUpdate.COLUMN_USER,
                 TEST_USER);
