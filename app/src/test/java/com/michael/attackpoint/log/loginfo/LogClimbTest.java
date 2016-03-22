@@ -28,8 +28,6 @@ public class LogClimbTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-
         mLogClimb = new LogClimb();
     }
 

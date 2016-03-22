@@ -15,8 +15,8 @@ import java.util.Date;
  * @author Michael Laraia
  */
 public class LogDate extends LogInfoItem<Calendar> {
-    private static final String DATE_FORMAT = "ccc MMM d";
-    private static final String JSON_FORMAT = "yyyy-MM-dd";
+    protected static final String DATE_FORMAT = "EEE MMM d";
+    protected static final String JSON_FORMAT = "yyyy-MM-dd";
     //todo change to get date from link
     //private static final String LOG_FORMAT = "cccc MMM d #";
     private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
@@ -34,37 +34,6 @@ public class LogDate extends LogInfoItem<Calendar> {
         super();
         set(date);
     }
-
-    /**
-     * parses and sets date
-     * @param logDate must be either in
-     * the format 'ccc MMM d' used by the app or 'cccc MMM d #' used by
-     * attackpoint.org
-    public void set(String logDate) {
-        if (logDate.contains("enddate")) {
-            SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
-            try {
-                java.util.Date date = sdf.parse(logDate);
-                cal.setTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-            try {
-                java.util.Date date = sdf.parse(logDate);
-                cal.setTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void set(Calendar cal) {
-        this.cal = cal;
-    }
-
-    */
 
     @Override
     public void onCreate() {
