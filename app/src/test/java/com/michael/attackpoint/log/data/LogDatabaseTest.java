@@ -8,6 +8,7 @@ import android.test.RenamingDelegatingContext;
 import android.util.ArrayMap;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.util.AndroidFactory;
 import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.log.data.LogDatabase.LogCache;
@@ -51,14 +52,8 @@ public class LogDatabaseTest {
     private static final Integer TEST_USER = 199;
     private static final String TEST_TIMESTAMP = "2016-01-01 12:30:00"; // YYYY-MM-DD HH:MI:SS
     private static final Calendar TEST_TIMESTAMP_CAL;
-    private static final List<LogInfo> TEST_CACHE;
-    static {
-        List<LogInfo> cache = new ArrayList<>();
-        cache.add(new LogInfo());
-        cache.add(new LogInfo());
-        cache.add(new LogInfo());
-        TEST_CACHE = cache;
 
+    static {
         Calendar cal = Calendar.getInstance();
         cal.set(2016,0,01,12,30,0);
         cal.set(Calendar.MILLISECOND, 0);
@@ -83,6 +78,10 @@ public class LogDatabaseTest {
     @Mock
     private JSONObject mJSONObject;
 
+    @Mock
+    ActivityTable mActivityTable;
+
+    private List<LogInfo> mTestCache;
     private LogCache mLogCache;
     private LogCacheUpdate mLogCacheUpdate;
 
@@ -92,6 +91,9 @@ public class LogDatabaseTest {
 
         when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
         when(mAndroidFactory.genDatabaseHelper()).thenReturn(mDBHelper);
+        when(mAndroidFactory.genActivityTable()).thenReturn(mActivityTable);
+
+        when(mActivityTable.getFirst()).thenReturn("");
 
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
@@ -100,6 +102,12 @@ public class LogDatabaseTest {
 
         mLogCache = new LogCache();
         mLogCacheUpdate = new LogCacheUpdate();
+
+        List<LogInfo> cache = new ArrayList<>();
+        cache.add(new LogInfo());
+        cache.add(new LogInfo());
+        cache.add(new LogInfo());
+        mTestCache = cache;
     }
 
     @Test
@@ -121,7 +129,9 @@ public class LogDatabaseTest {
     public void getCachedEntry_makesQuery() {
         when(mDatabaseObject.rawQuery(anyString(), any(String[].class))).thenReturn(mCursor);
         when(mCursor.moveToFirst()).thenReturn(true);
-        when(mCursor.getString(0)).thenReturn(new LogInfo().toJSON().toString());
+
+        String json = new LogInfo().toJSON().toString();
+        when(mCursor.getString(0)).thenReturn(json);
 
         int test_id = 999;
         String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d AND %s=%d",
@@ -136,7 +146,7 @@ public class LogDatabaseTest {
 
     @Test
     public void addCache_addsListToDatabase() {
-        mLogCache.addCache(TEST_USER, TEST_CACHE);
+        mLogCache.addCache(TEST_USER, mTestCache);
 
         verify(mContentValues, times(3)).put(LogCache.COLUMN_USER, TEST_USER);
         verify(mContentValues, times(3)).put(eq(LogCache.COLUMN_AP_ID), anyInt());
@@ -148,11 +158,11 @@ public class LogDatabaseTest {
     @Test
     public void addCacheEntry_addsEntryToDatabase() {
 
-        LogInfo entry = TEST_CACHE.get(0);
+        LogInfo entry = mTestCache.get(0);
         String json = entry.toJSON().toString();
         int id = entry.getID();
 
-        mLogCache.addCacheEntry(TEST_USER, TEST_CACHE.get(0));
+        mLogCache.addCacheEntry(TEST_USER, mTestCache.get(0));
 
         verify(mContentValues).put(LogCache.COLUMN_USER, TEST_USER);
         verify(mContentValues).put(LogCache.COLUMN_AP_ID, id);

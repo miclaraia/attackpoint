@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.michael.attackpoint.util.AndroidFactory;
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.util.DatabaseHelper;
 
@@ -22,8 +23,8 @@ public class ActivityTable {
     public static final String COLUMN_VALUE = "value";
 
     public static final String DEBUG_TAG = "ap.ActivityTable";
-    private DatabaseHelper dbHelper;
-    private Singleton singleton;
+    private DatabaseHelper mDBHelper;
+    private AndroidFactory mFactory;
 
     public static final String TABLE_CREATE = "CREATE TABLE "
             + TABLE + "(" + COLUMN_ID
@@ -32,19 +33,14 @@ public class ActivityTable {
             COLUMN_VALUE + " INTEGER" +
             ");";
 
-    public static final String[] COLUMNS = {
-            COLUMN_NAME,
-            COLUMN_VALUE
-    };
-
     public ActivityTable() {
-        singleton = Singleton.getInstance();
-        dbHelper = DatabaseHelper.getInstance(singleton.getContext());
+        mFactory = AndroidFactory.getInstance();
+        mDBHelper = mFactory.genDatabaseHelper();
     }
 
     public void updateTable(Map<String, Integer> map) {
         flush();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME, entry.getKey());
@@ -56,7 +52,7 @@ public class ActivityTable {
     }
 
     public int getValue(String name) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
         String format = "SELECT %s FROM %s WHERE %s LIKE \"%s\"";
         Formatter f = new Formatter();
@@ -72,7 +68,7 @@ public class ActivityTable {
     }
 
     public Map<String, Integer> getAll() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
         String format = "SELECT %s,%s FROM %s";
         Formatter f = new Formatter();
@@ -94,7 +90,7 @@ public class ActivityTable {
     }
 
     public ArrayList<String> getAllNames() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
         String format = "SELECT %s FROM %s ORDER BY %s ASC";
         Formatter f = new Formatter();
@@ -114,7 +110,7 @@ public class ActivityTable {
     }
 
     public String getFirst() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
         String format = "SELECT %s FROM %s ORDER BY %s ASC LIMIT 1";
         Formatter f = new Formatter();
@@ -131,7 +127,7 @@ public class ActivityTable {
 
     public void flush() {
         String sql = "DELETE FROM " + TABLE + " WHERE 1";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
         db.execSQL(sql);
     }
 }

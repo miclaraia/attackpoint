@@ -43,7 +43,6 @@ public class LogInfo {
 
     private Map<String, LogInfoItem> mItems;
     private int mID;
-    private AndroidFactory mFactory;
 
     public LogInfo() {
         onCreate();
@@ -61,8 +60,6 @@ public class LogInfo {
     }
 
     public void onCreate() {
-        mFactory = AndroidFactory.getInstance();
-
         LogInfoItem climb = new LogClimb();
         LogInfoItem color = new LogColor();
         LogInfoItem comment = new LogComment();
@@ -71,7 +68,7 @@ public class LogInfo {
         LogInfoItem description = new LogDescription();
         LogInfoItem distance = new LogDistance();
         LogInfoItem duration = new LogDuration();
-//        LogInfoItem activity = new LogInfoActivity();
+        LogInfoItem activity = new LogInfoActivity();
         LogInfoItem intensity = new LogIntensity();
         LogInfoItem pace = new LogPace();
 
@@ -84,7 +81,7 @@ public class LogInfo {
         mItems.put(KEY_DESCRIPTION, description);
         mItems.put(KEY_DISTANCE, distance);
         mItems.put(KEY_DURATION, duration);
-//        mItems.put(KEY_ACTIVITY, activity);
+        mItems.put(KEY_ACTIVITY, activity);
         mItems.put(KEY_INTENSITY, intensity);
         mItems.put(KEY_PACE, pace);
 
