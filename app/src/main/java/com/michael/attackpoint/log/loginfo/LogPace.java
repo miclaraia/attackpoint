@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class LogPace extends LogInfoItem<LogPace.Pace> {
     private static final String FORMAT = "m''ss";
-    private static final String JSON_PACE = "pace_pace";
-    private static final String JSON_UNIT = "pace_unit";
+    protected static final String JSON_PACE = "pace_pace";
+    protected static final String JSON_UNIT = "pace_unit";
 
     public LogPace() {
         super();
@@ -119,14 +119,14 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         private Unit mUnit;
 
         public Pace() {
+            mUnit = Unit.UnitManager.getDefault();
             mPace = Calendar.getInstance();
             mPace.set(0,0,0,0,0,0);
-            mUnit = Unit.UnitManager.getDefault();
         }
 
         public Pace(Calendar pace, String unit) {
-            mPace = pace;
             mUnit = Unit.UnitManager.getUnit(unit);
+            mPace = mUnit.standard(pace);
         }
 
         public Calendar getPace() {
@@ -142,11 +142,12 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         }
 
         public void setPace(Calendar pace) {
-            mPace = pace;
+            mPace = mUnit.standard(pace);
         }
 
         public void setPace(Date time) {
             mPace.setTime(time);
+            mPace = mUnit.standard(mPace);
         }
 
         public void setUnit(Unit unit) {
