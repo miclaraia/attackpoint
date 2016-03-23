@@ -7,8 +7,8 @@ import org.json.JSONObject;
  * Created by michael on 2/28/16.
  */
 public class LogDescription extends LogInfoItem<String> {
-    private static final String JSON = "description";
-    private static final int MAX_SNIPPET = 200;
+    protected static final String JSON = "description";
+    protected static final int MAX_SNIPPET = 200;
 
     public LogDescription() {
         super();
