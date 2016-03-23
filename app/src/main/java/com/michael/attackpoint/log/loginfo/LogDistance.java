@@ -95,7 +95,7 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         }
 
         public void setDistance(Double distance) {
-            mDistance = distance;
+            mDistance = mUnit.standard(distance);
         }
 
         public Distance() {

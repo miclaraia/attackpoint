@@ -25,11 +25,24 @@ public class Unit {
         return distance;
     }
 
+    public Double standard(Double distance) {
+        distance = distance / multiplier;
+        return distance;
+    }
+
     public Calendar convert(Calendar pace) {
         CalendarTime ct = new CalendarTime(pace);
         int seconds = LogPace.paceToSeconds(ct);
 
         int p = (int) Math.floor(seconds / multiplier);
+        return LogPace.secondsToPace(p);
+    }
+
+    public Calendar standard(Calendar pace) {
+        CalendarTime ct = new CalendarTime(pace);
+        int seconds = LogPace.paceToSeconds(ct);
+
+        int p = (int) Math.floor(seconds * multiplier);
         return LogPace.secondsToPace(p);
     }
 
