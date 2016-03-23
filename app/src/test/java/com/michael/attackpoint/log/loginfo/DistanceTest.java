@@ -46,12 +46,4 @@ public class DistanceTest {
         mDistance.setDistance(DISTANCE_1);
         assertThat(mDistance.getDistanceStandard(), equalTo(DISTANCE_2));
     }
-
-    @Test
-    public void getDistanceStandard_convertsUnit() {
-        mDistance.setUnit(UNIT_M);
-        mDistance.setDistance(DISTANCE_1);
-
-        assertThat(mDistance.getDistanceStandard(), equalTo(DISTANCE_2));
-    }
 }
