@@ -1,6 +1,7 @@
 package com.michael.attackpoint.log.loginfo;
 
 import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.util.AndroidFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,23 +10,17 @@ import org.json.JSONObject;
  * Created by michael on 2/28/16.
  */
 public class LogInfoActivity extends LogInfoItem<String> {
-    private static String JSON = "activity";
-    private ActivityTable mTable = new ActivityTable();
+    protected static String JSON = "activity";
+    private ActivityTable mTable;
 
     public LogInfoActivity() {
         super();
-        mTable = new ActivityTable();
-        mItem = mTable.getFirst();
-    }
-
-    public LogInfoActivity(JSONObject json) {
-        super(json);
-        mTable = new ActivityTable();
+        mTable = AndroidFactory.getInstance().genActivityTable();
     }
 
     public LogInfoActivity(String name) {
         super();
-        mTable = new ActivityTable();
+        mTable = AndroidFactory.getInstance().genActivityTable();
         set(name);
 
     }
@@ -43,6 +38,7 @@ public class LogInfoActivity extends LogInfoItem<String> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return getDefault();
         return mItem;
     }
 
@@ -68,5 +64,9 @@ public class LogInfoActivity extends LogInfoItem<String> {
     public Integer getID() {
         Integer id = mTable.getValue(mItem);
         return id;
+    }
+
+    public String getDefault() {
+        return mTable.getFirst();
     }
 }

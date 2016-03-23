@@ -3,6 +3,7 @@ package com.michael.attackpoint.util;
 import android.content.ContentValues;
 
 import com.michael.attackpoint.log.data.LogDatabase;
+import com.michael.attackpoint.training.ActivityTable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,5 +45,9 @@ public class AndroidFactory {
 
     public DatabaseHelper genDatabaseHelper() {
         return DatabaseHelper.getInstance(Singleton.getInstance().getContext());
+    }
+
+    public ActivityTable genActivityTable() {
+        return new ActivityTable();
     }
 }
