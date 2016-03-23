@@ -41,4 +41,8 @@ public class AndroidFactory {
     public JSONObject genJSONObject() {
         return new JSONObject();
     }
+
+    public DatabaseHelper genDatabaseHelper() {
+        return DatabaseHelper.getInstance(Singleton.getInstance().getContext());
+    }
 }

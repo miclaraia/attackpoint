@@ -42,16 +42,8 @@ public class LogDatabase implements LogCacheApi.Database{
 
 
     public LogDatabase() {
-        mDBHelper = DatabaseHelper.getInstance(Singleton.getInstance().getContext());
-        AndroidFactory factory = AndroidFactory.getInstance();
-        mLogCache = new LogCache(mDBHelper, factory);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, factory);
-    }
-
-    public LogDatabase(Context context, AndroidFactory factory) {
-        mDBHelper = DatabaseHelper.getInstance(context);
-        mLogCache = new LogCache(mDBHelper, factory);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, factory);
+        mLogCache = new LogCache();
+        mLogCacheUpdate = new LogCacheUpdate();
     }
 
     @Override
@@ -111,9 +103,9 @@ public class LogDatabase implements LogCacheApi.Database{
         private DatabaseHelper mDBHelper;
         private AndroidFactory mAndroidFactory;
 
-        protected LogCache(DatabaseHelper dbHelper, AndroidFactory factory) {
-            mDBHelper = dbHelper;
-            mAndroidFactory = factory;
+        protected LogCache() {
+            mAndroidFactory = AndroidFactory.getInstance();
+            mDBHelper = mAndroidFactory.genDatabaseHelper();
         }
 
         public List<LogInfo> getCachedLog(int userID) {
@@ -205,9 +197,9 @@ public class LogDatabase implements LogCacheApi.Database{
         private DatabaseHelper mDBHelper;
         private AndroidFactory mAndroidFactory;
 
-        protected LogCacheUpdate(DatabaseHelper dbHelper, AndroidFactory factory) {
-            mDBHelper = dbHelper;
-            mAndroidFactory = factory;
+        protected LogCacheUpdate() {
+            mAndroidFactory = AndroidFactory.getInstance();
+            mDBHelper = mAndroidFactory.genDatabaseHelper();
         }
 
         public void updateUser(int userID) {

@@ -91,14 +91,15 @@ public class LogDatabaseTest {
         MockitoAnnotations.initMocks(this);
 
         when(mAndroidFactory.genContentValues()).thenReturn(mContentValues);
+        when(mAndroidFactory.genDatabaseHelper()).thenReturn(mDBHelper);
 
         when(mDBHelper.getReadableDatabase()).thenReturn(mDatabaseObject);
         when(mDBHelper.getWritableDatabase()).thenReturn(mDatabaseObject);
 
         AndroidFactory.setFactory(mAndroidFactory);
 
-        mLogCache = new LogCache(mDBHelper, mAndroidFactory);
-        mLogCacheUpdate = new LogCacheUpdate(mDBHelper, mAndroidFactory);
+        mLogCache = new LogCache();
+        mLogCacheUpdate = new LogCacheUpdate();
     }
 
     @Test
