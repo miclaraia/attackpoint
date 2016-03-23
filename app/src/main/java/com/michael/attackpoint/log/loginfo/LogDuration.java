@@ -113,5 +113,5 @@ public class LogDuration extends LogInfoItem<Calendar> {
         Calendar cal = Calendar.getInstance();
         cal.setTime(sdf.parse(durationString));
         return cal;
-    }git
+    }
 }
