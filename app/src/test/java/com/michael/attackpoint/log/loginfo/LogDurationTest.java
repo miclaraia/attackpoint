@@ -117,7 +117,7 @@ public class LogDurationTest {
         JSONObject json = mLogDuration.toJSON(new JSONObject());
         String duration = json.getString(LogDuration.JSON);
 
-        MatcherAssert.assertThat(duration, equalTo(NONEMPTY_JSON));
+        assertThat(duration, equalTo(NONEMPTY_JSON));
     }
 
     @Test
