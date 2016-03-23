@@ -13,7 +13,7 @@ import java.util.*;
 public class LogDuration extends LogInfoItem<Calendar> {
     private static final String FORMAT_JSON = "HH:mm:ss";
     private static final String FORMAT_FORM_OUT = "HHmmss";
-    private static final String JSON = "duration";
+    protected static final String JSON = "duration";
     private static final String FORMAT_S = "s";
     private static final String FORMAT_M = "m:ss";
     private static final String FORMAT_H = "H:mm:ss";
