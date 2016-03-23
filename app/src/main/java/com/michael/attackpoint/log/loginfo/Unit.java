@@ -54,6 +54,15 @@ public class Unit {
         return nickname;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Unit) {
+            Unit u = (Unit) o;
+            if (u.name.equals(this.name)) return true;
+        }
+        return false;
+    }
+
     public static class UnitManager {
         private static final ArrayList<Unit> mUnits;
         static {

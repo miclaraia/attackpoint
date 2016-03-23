@@ -107,5 +107,15 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
             mDistance = distance;
             mUnit = Unit.UnitManager.getUnit(unit);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Distance) {
+                Distance d = (Distance) o;
+                if (d.getDistanceStandard().equals(this.getDistanceStandard())
+                        && d.getUnit().equals(this.getUnit())) return true;
+            }
+            return false;
+        }
     }
 }

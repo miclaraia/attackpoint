@@ -2,6 +2,9 @@ package com.michael.attackpoint.log.loginfo;
 
 import com.michael.attackpoint.log.loginfo.LogDistance.Distance;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,5 +63,39 @@ public class LogDistanceTest {
     public void toString_returnsString() {
         mLogDistance.set(getDistance(NONEMPTY));
         assertThat(mLogDistance.toString(), equalTo(NONEMPTY_STRING));
+    }
+
+    @Test
+    public void toJSON_containskeys() {
+        JSONObject json = new JSONObject();
+        mLogDistance.set(getDistance(NONEMPTY));
+        json = mLogDistance.toJSON(json);
+
+        assertTrue(json.has(LogDistance.JSON_DISTANCE));
+        assertTrue(json.has(LogDistance.JSON_UNIT));
+    }
+
+    @Test
+    public void toJSON_goodData() throws JSONException {
+        Distance d = getDistance(NONEMPTY);
+        mLogDistance.set(d);
+        JSONObject json = mLogDistance.toJSON(new JSONObject());
+        String distance = json.getString(LogDistance.JSON_DISTANCE);
+        String unit = json.getString(LogDistance.JSON_UNIT);
+
+        assertThat(distance, equalTo(d.getDistanceStandard().toString()));
+        assertThat(unit, equalTo(d.getUnit().toString()));
+    }
+
+    @Test
+    public void fromJSON_setsData() {
+        Distance d = getDistance(NONEMPTY);
+        mLogDistance.set(d);
+        JSONObject json = mLogDistance.toJSON(new JSONObject());
+        mLogDistance.set(getDistance(EMPTY));
+
+        mLogDistance.fromJSON(json);
+
+        Assert.assertThat(mLogDistance.get(), equalTo(d));
     }
 }
