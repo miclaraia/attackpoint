@@ -131,4 +131,18 @@ public class LogDurationTest {
 
         Assert.assertThat(mLogDuration.get(), equalTo(cal));
     }
+
+    @Test
+    public void parseLog_parsesLogString() throws ParseException {
+        String test;
+
+        test = FORMAT.format(LogDuration.parseLog(NONEMPTY_STRING).getTime());
+        assertThat(test, equalTo(NONEMPTY));
+
+        test = FORMAT.format(LogDuration.parseLog(NONEMPTY_2_STRING).getTime());
+        assertThat(test, equalTo(NONEMPTY_2));
+
+        test = FORMAT.format(LogDuration.parseLog(NONEMPTY_3_STRING).getTime());
+        assertThat(test, equalTo(NONEMPTY_3));
+    }
 }
