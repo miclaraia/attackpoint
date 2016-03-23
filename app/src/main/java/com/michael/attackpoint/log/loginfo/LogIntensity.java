@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * Created by michael on 2/28/16.
  */
 public class LogIntensity extends LogInfoItem<Integer> {
-    private static final String JSON = "intensity";
+    protected static final String JSON = "intensity";
     private static final int DEFAULT = 3;
 
     public LogIntensity() {
