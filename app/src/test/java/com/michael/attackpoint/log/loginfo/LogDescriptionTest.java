@@ -83,13 +83,13 @@ public class LogDescriptionTest {
     }
 
     @Test
-    public void fromJSON_setsDate() {
+    public void fromJSON_setsData() {
         mLogDescription.set(NONEMPTY);
         JSONObject json = mLogDescription.toJSON(new JSONObject());
         mLogDescription.set(EMPTY);
 
         mLogDescription.fromJSON(json);
 
-        assertThat(mLogDescription.toSnippet(), equalTo(NONEMPTY));
+        assertThat(mLogDescription.toString(), equalTo(NONEMPTY));
     }
 }
