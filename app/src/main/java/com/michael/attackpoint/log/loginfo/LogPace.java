@@ -37,7 +37,7 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
     @Override
     public boolean isEmpty() {
         CalendarTime ct = new CalendarTime(mItem.getPaceStandard());
-        if (ct.h == 0 && ct.m == 0 && ct.s == 0) return true;
+        if (ct.equals(CalendarTime.getEmpty())) return true;
         return false;
     }
 
@@ -108,6 +108,7 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         int s = seconds % 60;
 
         Calendar pace = Calendar.getInstance();
+        pace.set(0,0,0,0,0,0);
         pace.set(Calendar.MINUTE, m);
         pace.set(Calendar.SECOND, s);
 
@@ -137,12 +138,18 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
             return mPace;
         }
 
+        public CalendarTime getCalendarTime() {
+            return new CalendarTime(mPace);
+        }
+
         public Unit getUnit() {
             return mUnit;
         }
 
         public void setPace(Calendar pace) {
             mPace = mUnit.standard(pace);
+            CalendarTime ct = new CalendarTime(mPace);
+            CalendarTime ct2 = new CalendarTime(pace);
         }
 
         public void setPace(Date time) {
@@ -152,6 +159,19 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
 
         public void setUnit(Unit unit) {
             mUnit = unit;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Pace) {
+                Pace p = (Pace) o;
+                if (p.getUnit() == this.getUnit()) {
+                    if (p.getCalendarTime().equals(this.getCalendarTime())) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
