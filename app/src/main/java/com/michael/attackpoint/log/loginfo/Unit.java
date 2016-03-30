@@ -58,7 +58,9 @@ public class Unit {
     public boolean equals(Object o) {
         if (o instanceof Unit) {
             Unit u = (Unit) o;
-            if (u.name.equals(this.name)) return true;
+            if (u.name.equals(this.name) &&
+                    u.nickname.equals(this.nickname) &&
+                    u.multiplier.equals(this.multiplier)) return true;
         }
         return false;
     }
