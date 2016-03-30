@@ -17,7 +17,7 @@ public class LogSession extends LogInfoItem<Calendar> {
     private static final String JSON_FORMAT = "kk:mm";
     //todo change to get date from link
     private static final String LOG_PARSE = "hh a";
-    public static final String JSON = "session";
+    protected static final String JSON = "session";
 
     public LogSession() {
         super();
@@ -47,6 +47,7 @@ public class LogSession extends LogInfoItem<Calendar> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
         return sdf.format(mItem.getTime());
     }
