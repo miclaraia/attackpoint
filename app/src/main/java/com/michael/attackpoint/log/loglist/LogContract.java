@@ -17,6 +17,8 @@ public interface LogContract {
         void showLog(List<LogInfo> entries);
 
         void showEntryDetail(String logId);
+
+        void showAddEntry();
     }
 
     interface Presenter {

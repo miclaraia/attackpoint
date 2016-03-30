@@ -2,12 +2,14 @@ package com.michael.attackpoint.log.loglist;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +21,28 @@ import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.data.LogRequest;
 import com.michael.attackpoint.log.ViewHolder;
+import com.michael.attackpoint.log.logdetail.LogDetailActivity;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.training.activity.AddTrainingActivity;
 import com.michael.attackpoint.util.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michael on 8/23/15.
  */
 public class LogFragment extends Fragment implements LogContract.View {
+    private static final String DEBUG_TAG = "logfragment";
+    public static final String USER_ID = "userid";
 
-    public static final String ARGUMENT_ID = "userid";
-
-    private List<LogInfo> mLogList;
     private LogAdapter mAdapter;
     private LogContract.Presenter mPresenter;
 
     public static LogFragment newInstance (String user_id) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_ID, user_id);
+        arguments.putString(USER_ID, user_id);
         LogFragment fragment = new LogFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -59,7 +63,7 @@ public class LogFragment extends Fragment implements LogContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        //mActionsListener.loadNotes(false);
+        mPresenter.loadLog(false);
     }
 
     @Override
@@ -68,7 +72,8 @@ public class LogFragment extends Fragment implements LogContract.View {
 
         setRetainInstance(true);
 
-        mPresenter = new LogPresenter(LogRepositories.getRepoInstance(), this);
+        int user = getArguments().getInt(USER_ID);
+        mPresenter = new LogPresenter(LogRepositories.getRepoInstance(), this, user);
     }
 
     @Override
@@ -80,61 +85,42 @@ public class LogFragment extends Fragment implements LogContract.View {
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // TODO initialize should actually initialize the network sequence and spawn an animation
-        initializeData();
-        initializeAdapter();
-
-        //TODO should be handled differently
-        mSingleton = Singleton.getInstance();
-        getLog();
+        // TODO Floating action button
+        // TODO pull to refresh
 
         return container;
     }
 
     /**
-     * Listener for clicks on notes in the RecyclerView.
+     * Listener for clicks on log entries.
      */
     LogItemListener mItemListener = new LogItemListener() {
         @Override
-        public void onNoteClick(LogInfo clickedItem) {
-            mActionsListener.openEntryDetails(clickedItem);
+        public void onLogEntryClick(LogInfo clickedItem) {
+            mPresenter.openEntryDetails(clickedItem);
         }
     };
 
-
-
-    private void initializeData() {
-        mLogList = new ArrayList<>();
+    @Override
+    public void setProgressIndicator(boolean state) {
+        // TODO
+        Log.d(DEBUG_TAG, String.format(Locale.US, "setting refresh indicator to %s", (state)?"true":"false"));
     }
 
-    private void initializeAdapter() {
-        /*adapter = new LogAdapter(this ,logInfoList);
-        adapter.notifyDataSetChanged();
-        recList*//*.setAdapter(adapter);*/
+    @Override
+    public void showLog(List<LogInfo> log) {
+        mAdapter.replaceData(log);
     }
 
-    public void getLog() {
-        /*int userID = (int) getArguments().get(USER_ID);
-        if (userID > 0) {
-            LogRequest request = new LogRequest(userID,
-                    new Response.Listener<List<LogInfo>>() {
-                        @Override
-                        public void onResponse(List<LogInfo> response) {
-                            adapter.setList(response);
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // Error handling
-                    System.out.println("Something went wrong!");
-                    error.printStackTrace();
-                }
-            });
+    @Override
+    public void showEntryDetail(String logId) {
+        Log.d(DEBUG_TAG, String.format(Locale.US, "starting activity for logid %s", logId));
+    }
 
-
-            // Add the request to the queue
-            singleton.add(request);
-        }*/
+    @Override
+    public void showAddEntry() {
+        Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
+        startActivity(intent);
     }
 
     public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
@@ -148,7 +134,7 @@ public class LogFragment extends Fragment implements LogContract.View {
             mItemListener = listener;
         }
 
-        public void updateList(List<LogInfo> entries) {
+        public void replaceData(List<LogInfo> entries) {
             setList(entries);
             this.notifyDataSetChanged();
         }
@@ -206,25 +192,14 @@ public class LogFragment extends Fragment implements LogContract.View {
 
                 int position = getAdapterPosition();
                 LogInfo item = getItem(position);
-                mItemListener.onNoteClick(item);
-
-                /*Intent intent = new Intent(fragment.getActivity(), LogDetailActivity.class);
-                LogInfo loginfo = logInfoList.get((int) v.getTag());
-                intent.putExtra(LogDetailActivity.DETAILS, loginfo.toJSON().toString());
-
-                String name;
-                if (loginfo instanceof Note) name = Note.NAME;
-                else name = loginfo.NAME;
-
-                intent.putExtra(LogDetailActivity.NAME, name);
-                fragment.startActivity(intent);*/
+                mItemListener.onLogEntryClick(item);
             }
         }
     }
 
     public interface LogItemListener {
 
-        void onNoteClick(LogInfo clickedItem);
+        void onLogEntryClick(LogInfo clickedItem);
     }
 
 }
