@@ -5,6 +5,7 @@ import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
+import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.util.AndroidFactory;
 
 import org.junit.Before;
@@ -21,23 +22,16 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by michael on 3/30/16.
  */
 public class LogPresenterTest {
 
-    static {
-        List<LogInfo> list = new ArrayList<>();
-        list.add(genLogInfo("4000", 5.0, "test1"));
-        list.add(genLogInfo("3000", 3.2, "test2"));
-        list.add(genLogInfo("4230", 1.6, "test3"));
-
-        LOGLIST = list;
-    }
-
-    private static final List<LogInfo> LOGLIST;
+    private static final List<LogInfo> LOGLIST = new ArrayList<>();
     private static final List<LogInfo> EMPTYLIST = new ArrayList<>(0);
     private static final int USER = 0;
 
@@ -62,6 +56,12 @@ public class LogPresenterTest {
     }
 
     @Mock
+    private AndroidFactory mAndroidFactory;
+
+    @Mock
+    private ActivityTable mActivityTable;
+
+    @Mock
     private LogRepository mLogRepository;
 
     @Mock
@@ -79,18 +79,25 @@ public class LogPresenterTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
+        AndroidFactory.setFactory(mAndroidFactory);
+        when(mAndroidFactory.genActivityTable()).thenReturn(mActivityTable);
+
+        LOGLIST.add(genLogInfo("4000", 5.0, "test1"));
+        LOGLIST.add(genLogInfo("3000", 3.2, "test2"));
+        LOGLIST.add(genLogInfo("4230", 1.6, "test3"));
+
         mPresenter = new LogPresenter(mLogRepository, mLogView, USER);
     }
 
     @Test
     public void loadLog_loadFromNetwork() {
         mPresenter.loadLog(true);
-        verify(mLogView).setProgressIndicator(false);
+        verify(mLogView).setProgressIndicator(true);
 
-        verify(mLogRepository).refreshData(USER, mRefreshCallbackCaptor.capture());
+        verify(mLogRepository).refreshData(eq(USER), mRefreshCallbackCaptor.capture());
         mRefreshCallbackCaptor.getValue().done();
 
-        verify(mLogRepository).getLog(USER, mLoadCallbackCaptor.capture());
+        verify(mLogRepository).getLog(eq(USER), mLoadCallbackCaptor.capture());
         mLoadCallbackCaptor.getValue().onLoaded(LOGLIST);
 
         verify(mLogView).showLog(LOGLIST);
@@ -99,10 +106,10 @@ public class LogPresenterTest {
 
     @Test
     public void loadLog_loadFromCache() {
-        mPresenter.loadLog(true);
-        verify(mLogView).setProgressIndicator(false);
+        mPresenter.loadLog(false);
+        verify(mLogView).setProgressIndicator(true);
 
-        verify(mLogRepository).getLog(USER, mLoadCallbackCaptor.capture());
+        verify(mLogRepository).getLog(eq(USER), mLoadCallbackCaptor.capture());
         mLoadCallbackCaptor.getValue().onLoaded(LOGLIST);
 
         verify(mLogView).showLog(LOGLIST);
