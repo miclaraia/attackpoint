@@ -24,7 +24,9 @@ public class Login {
     private NavGroupUsers mDrawerGroup;
     private boolean mLogin;
 
-    public Login() {
+    private static Login mInstance;
+
+    private Login() {
         mSingleton = Singleton.getInstance();
         mPreferences = mSingleton.getPreferences();
 
@@ -36,6 +38,14 @@ public class Login {
             mLogin = false;
             mUser = null;
         }
+    }
+
+    public static synchronized Login getInstance() {
+        if (mInstance == null) {
+            mInstance = new Login();
+        }
+
+        return mInstance;
     }
 
     public void loginDialog() {

@@ -10,7 +10,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.drawer.NavGroupUsers;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.request.TrainingTypeRequest;
@@ -36,7 +35,6 @@ public class Singleton extends Application {
     private NavDrawer mDrawer;
     private static Singleton mInstance;
     private MyCookieStore mCookieStore;
-    private Login mLogin;
 
     @Override
     public void onCreate() {
@@ -48,7 +46,6 @@ public class Singleton extends Application {
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mPreferences = new Preferences();
         mContext = getApplicationContext();
-        mLogin = new Login();
 
         initCookies();
         updateActivityTypes();
@@ -154,10 +151,6 @@ public class Singleton extends Application {
         String g = NavGroupUsers.GROUP_NAME;
         NavGroupUsers navGroup = (NavGroupUsers) mDrawer.getGroup(g);
         return navGroup;
-    }
-
-    public Login getLogin() {
-        return mLogin;
     }
 
     public void updateActivityTypes() {

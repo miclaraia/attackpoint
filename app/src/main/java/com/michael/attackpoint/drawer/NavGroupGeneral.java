@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.DiscussionActivity;
 import com.michael.attackpoint.log.loglist.LogActivity;
 import com.michael.attackpoint.log.loglist.LogFragment;
@@ -57,14 +58,14 @@ public class NavGroupGeneral extends NavDrawerGroup {
         mHeader = new NavItemHeader(GROUP_NAME);
 
         //Open log of current user
-        /*mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
+        mNavItems.add(new NavItemReg("Log", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {
             @Override
             public void click() {
                 Intent intent = new Intent(mActivity, LogActivity.class);
-                intent.putExtra(LogFragment.USER_ID, CookieTable.getCurrentID());
+                intent.putExtra(LogFragment.USER_ID, Login));
                 mActivity.startActivity(intent);
             }
-        }));*/
+        }));
 
         //Start DiscussionActivity looking at thread 1111416
         mNavItems.add(new NavItemReg("Discussion", GROUP_NAME, R.drawable.ic_log, new NavDrawerItem.DrawerListener() {

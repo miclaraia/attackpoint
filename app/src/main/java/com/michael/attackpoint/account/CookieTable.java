@@ -45,7 +45,7 @@ public class CookieTable {
     }
 
     public static int getCurrentID() {
-        String user = Singleton.getInstance().getLogin().getUser();
+        String user = Login.getInstance().getUser();
         CookieTable ct = new CookieTable();
         if (user.equals("")) return -1;
 

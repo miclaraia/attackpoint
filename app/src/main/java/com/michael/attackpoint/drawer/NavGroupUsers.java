@@ -37,9 +37,9 @@ public class NavGroupUsers extends NavDrawerGroup {
     public void loadItems() {
         mHeader = new NavItemHeader(GROUP_NAME);
 
-        Login l = mSingleton.getLogin();
-        if (l.isLoggedIn()) {
-            mNavItems.add(new NavItemReg(USER_PRE + l.getUser(), GROUP_NAME, R.drawable.ic_running, new NavDrawerItem.DrawerListener() {
+        final Login login = Login.getInstance();
+        if (login.isLoggedIn()) {
+            mNavItems.add(new NavItemReg(USER_PRE + login.getUser(), GROUP_NAME, R.drawable.ic_running, new NavDrawerItem.DrawerListener() {
                 @Override
                 public void click() {
                    // TODO some action when user is clicked
@@ -48,14 +48,14 @@ public class NavGroupUsers extends NavDrawerGroup {
             mNavItems.add(new NavItemReg("Logout", GROUP_NAME, R.drawable.ic_logout, new NavDrawerItem.DrawerListener() {
                 @Override
                 public void click() {
-                    mSingleton.getInstance().getLogin().doLogout();
+                    login.doLogout();
                 }
             }));
         } else {
             mNavItems.add(new NavItemReg("Login", GROUP_NAME, R.drawable.ic_person, new NavDrawerItem.DrawerListener() {
                 @Override
                 public void click() {
-                    mSingleton.getInstance().getLogin().loginDialog();
+                    login.loginDialog();
                 }
             }));
         }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.util.Singleton;
 
 public class LoginActivity extends ActionBarActivity {
@@ -40,7 +41,7 @@ public class LoginActivity extends ActionBarActivity {
                 String u = username.getText().toString();
                 String p = password.getText().toString();
 
-                singleton.getLogin().doLogin(u, p);
+                Login.getInstance().doLogin(u, p);
                 finish();
                 break;
         }
