@@ -62,7 +62,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
             @Override
             public void click() {
                 Intent intent = new Intent(mActivity, LogActivity.class);
-                intent.putExtra(LogFragment.USER_ID, Login));
+                intent.putExtra(LogFragment.USER_ID, Login.getInstance().getUserId());
                 mActivity.startActivity(intent);
             }
         }));

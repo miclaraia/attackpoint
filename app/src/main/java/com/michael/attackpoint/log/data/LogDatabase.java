@@ -13,28 +13,26 @@ import com.michael.attackpoint.util.AndroidFactory;
 import com.michael.attackpoint.util.DatabaseHelper;
 import com.michael.attackpoint.util.Singleton;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * Created by michael on 3/16/16.
  */
 public class LogDatabase implements LogCacheApi.Database{
-    static {
-        String drop = String.format("%s; %s;", LogCache.TABLE_DROP, LogCacheUpdate.TABLE_DROP);
-        String create = String.format("%s; %s;", LogCache.TABLE_CREATE, LogCacheUpdate.TABLE_CREATE);
-
-        DROP = drop;
-        CREATE = create;
-    }
-
-    public static final String DROP;
-    public static final String CREATE;
+    public static final String DROP_CACHE = LogCache.TABLE_DROP;
+    public static final String DROP_USER = LogCacheUpdate.TABLE_DROP;
+    public static final String CREATE_CACHE = LogCache.TABLE_CREATE;
+    public static final String CREATE_USER = LogCacheUpdate.TABLE_CREATE;
 
     private DatabaseHelper mDBHelper;
     private LogCache mLogCache;
@@ -78,7 +76,12 @@ public class LogDatabase implements LogCacheApi.Database{
         return mLogCacheUpdate.userIsStale(userID);
     }
 
-    protected static class LogCache {
+    public void emptyCache() {
+        mLogCache.empty();
+        mLogCacheUpdate.empty();
+    }
+
+    public static class LogCache {
         public static final String TABLE = "logcache";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_AP_ID = "ap_id";
@@ -89,11 +92,11 @@ public class LogDatabase implements LogCacheApi.Database{
 
         static {
             StringBuilder builder = new StringBuilder();
-            builder.append(String.format("CRETAE TABLE %s (", TABLE));
-            builder.append(String.format("%s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
-            builder.append(String.format("%s INTEGER", COLUMN_AP_ID));
-            builder.append(String.format("%s INTEGER", COLUMN_USER));
-            builder.append(String.format("%s TEXT NOT NULL", COLUMN_JSON));
+            builder.append(String.format("CREATE TABLE %s (", TABLE));
+            builder.append(String.format(" %s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
+            builder.append(String.format(" %s INTEGER,", COLUMN_AP_ID));
+            builder.append(String.format(" %s INTEGER,", COLUMN_USER));
+            builder.append(String.format(" %s TEXT NOT NULL);", COLUMN_JSON));
             TABLE_CREATE = builder.toString();
 
         }
@@ -103,7 +106,7 @@ public class LogDatabase implements LogCacheApi.Database{
         private DatabaseHelper mDBHelper;
         private AndroidFactory mAndroidFactory;
 
-        protected LogCache() {
+        public LogCache() {
             mAndroidFactory = AndroidFactory.getInstance();
             mDBHelper = mAndroidFactory.genDatabaseHelper();
         }
@@ -167,6 +170,28 @@ public class LogDatabase implements LogCacheApi.Database{
             writer().execSQL(sql);
         }
 
+        public List<String> dumpTable() {
+            String sql = String.format(Locale.US, "SELECT %s,%s FROM %s;", COLUMN_USER, COLUMN_JSON, TABLE);
+            Cursor cursor = open().rawQuery(sql, null);
+
+            List<String> dump = new ArrayList<>();
+
+            while (cursor.moveToNext()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(String.format(Locale.US, "user: %s\t", cursor.getString(0)));
+                sb.append(String.format(Locale.US, "json: %s\n", cursor.getString(1)));
+                dump.add(sb.toString());
+            }
+            cursor.close();
+
+            return dump;
+        }
+
+        public void empty() {
+            String sql = String.format(Locale.US, "DELETE FROM %s WHERE 1", TABLE);
+            writer().execSQL(sql);
+        }
+
         private SQLiteDatabase open() {
             return mDBHelper.getReadableDatabase();
         }
@@ -176,7 +201,7 @@ public class LogDatabase implements LogCacheApi.Database{
         }
     }
 
-    protected static class LogCacheUpdate {
+    public static class LogCacheUpdate {
         public static final String TABLE = "logcacheupdate";
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USER = "user";
@@ -185,10 +210,10 @@ public class LogDatabase implements LogCacheApi.Database{
 
         static {
             StringBuilder builder = new StringBuilder();
-            builder.append(String.format("CRETAE TABLE %s (", TABLE));
-            builder.append(String.format("%s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
-            builder.append(String.format("%s INTEGER", COLUMN_USER));
-            builder.append(String.format("%s TIMESTAMP DEFAULT CURRENT_TIMESTAMP", COLUMN_TIMESTAMP));
+            builder.append(String.format("CREATE TABLE %s (", TABLE));
+            builder.append(String.format(" %s INTEGER PRIMARY KEY AUTOINCREMENT,", COLUMN_ID));
+            builder.append(String.format(" %s INTEGER,", COLUMN_USER));
+            builder.append(String.format(" %s TIMESTAMP DEFAULT CURRENT_TIMESTAMP);", COLUMN_TIMESTAMP));
             TABLE_CREATE = builder.toString();
         }
         public static final String TABLE_CREATE;
@@ -197,7 +222,7 @@ public class LogDatabase implements LogCacheApi.Database{
         private DatabaseHelper mDBHelper;
         private AndroidFactory mAndroidFactory;
 
-        protected LogCacheUpdate() {
+        public LogCacheUpdate() {
             mAndroidFactory = AndroidFactory.getInstance();
             mDBHelper = mAndroidFactory.genDatabaseHelper();
         }
@@ -216,24 +241,30 @@ public class LogDatabase implements LogCacheApi.Database{
             String sql = String.format(Locale.US, "SELECT %s FROM %s WHERE %s=%d",
                     COLUMN_TIMESTAMP, TABLE, COLUMN_USER, userID);
             Cursor cursor = open().rawQuery(sql, null);
-            Calendar timestamp = Calendar.getInstance();
+            Calendar timestamp = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             timestamp.set(0,0,0,0,0,0);
 
             if (cursor.moveToFirst()) {
                 String time = cursor.getString(0);
-                timestamp.setTimeInMillis(Timestamp.valueOf(time).getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+                try {
+                    timestamp.setTime(sdf.parse(time));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
             cursor.close();
             return timestamp;
         }
 
         public boolean timestampIsStale(Calendar timestamp) {
-            int minutes = timestamp.get(Calendar.MINUTE) + STALE_DURATION;
-            timestamp.set(Calendar.MINUTE, minutes);
+            Calendar compare = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+            compare.set(Calendar.MINUTE, compare.get(Calendar.MINUTE) - STALE_DURATION);
 
-            Calendar compare = Calendar.getInstance();
-
-            if (timestamp.compareTo(compare) > 0) {
+            int c = timestamp.compareTo(compare);
+            if (c > 0) {
                 // timestamp is less than 10 minutes old, not stale yet
                 return false;
             }
@@ -250,6 +281,25 @@ public class LogDatabase implements LogCacheApi.Database{
         public void removeUser(int userID) {
             String sql = String.format(Locale.US, "DELETE FROM %s WHERE %s=%d",
                     TABLE, COLUMN_USER, userID);
+            writer().execSQL(sql);
+        }
+
+        public String dumpTable() {
+            String sql = String.format(Locale.US, "SELECT %s,%s FROM %s;", COLUMN_USER, COLUMN_TIMESTAMP, TABLE);
+            Cursor cursor = open().rawQuery(sql, null);
+
+            StringBuilder sb = new StringBuilder();
+
+            while (cursor.moveToNext()) {
+                sb.append(String.format(Locale.US, "user: %s\t", cursor.getString(0)));
+                sb.append(String.format(Locale.US, "timestamp: %s\n", cursor.getString(1)));
+            }
+
+            return sb.toString();
+        }
+
+        public void empty() {
+            String sql = String.format(Locale.US, "DELETE FROM %s WHERE 1", TABLE);
             writer().execSQL(sql);
         }
 

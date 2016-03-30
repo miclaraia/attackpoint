@@ -12,8 +12,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.Discussion;
 import com.michael.attackpoint.discussion.DiscussionRequest;
+import com.michael.attackpoint.log.data.LogDatabase;
+import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
@@ -28,8 +31,11 @@ import com.michael.attackpoint.account.MyCookieStore;
 import com.michael.attackpoint.users.UserRequest;
 import com.michael.attackpoint.users.User;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -48,6 +54,35 @@ public class DebugDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_AlertDialog);
 
         OptionsList options = new OptionsList();
+
+        options.add(new Option("Clear Log Cache") {
+            @Override
+            void action() {
+                LogDatabase db = new LogDatabase();
+                db.emptyCache();
+            }
+        });
+
+        options.add(new Option("Print Log Cache") {
+            @Override
+            void action() {
+                LogDatabase.LogCache lc = new LogDatabase.LogCache();
+                List<String> dump = lc.dumpTable();
+                for (String s : dump) {
+                    Log.d(DEBUG_TAG, s);
+                }
+            }
+        });
+
+        options.add(new Option("Print Log Cache User") {
+            @Override
+            void action() {
+                LogDatabase.LogCacheUpdate lcu = new LogDatabase.LogCacheUpdate();
+                //Timestamp timestamp = lcu.getTimestamp(Login.getInstance().getUserId());
+                //String debug = new SimpleDateFormat("yyyyMMFF-HHmmss").format(cal.getTime());
+                Log.d(DEBUG_TAG, lcu.dumpTable());
+            }
+        });
 
         options.add(new Option("Add Training Test") {
             @Override

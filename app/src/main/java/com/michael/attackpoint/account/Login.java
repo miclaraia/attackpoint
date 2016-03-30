@@ -108,6 +108,14 @@ public class Login {
         return mUser;
     }
 
+    public int getUserId() {
+        if (isLoggedIn()) {
+            CookieTable ct = new CookieTable();
+            return ct.getID(mUser);
+        }
+        return -1;
+    }
+
     private void restartActivity() {
         /*NavDrawer drawer = mSingleton.getDrawer();
         if (drawer != null) {

@@ -50,7 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(CookieTable.TABLE_CREATE);
         database.execSQL(UserTable.TABLE_CREATE);
         database.execSQL(ActivityTable.TABLE_CREATE);
-        database.execSQL(LogDatabase.CREATE);
+        database.execSQL(LogDatabase.CREATE_CACHE);
+        database.execSQL(LogDatabase.CREATE_USER);
     }
 
     @Override
@@ -62,7 +63,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CookieTable.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ActivityTable.TABLE);
-        db.execSQL(LogDatabase.DROP);
+        db.execSQL(LogDatabase.DROP_CACHE);
+        db.execSQL(LogDatabase.DROP_USER);
 
         onCreate(db);
     }
