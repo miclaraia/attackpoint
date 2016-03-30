@@ -206,7 +206,7 @@ public class LogDatabase implements LogCacheApi.Database{
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USER = "user";
         public static final String COLUMN_TIMESTAMP = "timestamp";
-        public static final int STALE_DURATION = 10;
+        public static final int STALE_DURATION = 15;
 
         static {
             StringBuilder builder = new StringBuilder();

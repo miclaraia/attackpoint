@@ -159,7 +159,6 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                 for (int j = 0; j < dArray.length; j++) {
                     char c = dArray[j];
                     if (c == '.' || c >= '0' && c <= '9') {
-                        //Log.d(DEBUG_TAG, ""+c);
                         d += c;
                     }
                 }
@@ -227,7 +226,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
                     String unit = climbString.substring(i + 1, l);
                     lc.set(new LogClimb.Climb(climb, unit));
 
-                    Log.d("CLIMB", lc.toString());
+                    Log.v("CLIMB", lc.toString());
                     break;
                 }
             }
@@ -284,7 +283,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
 
         for (int i = 0; i < nodes.size(); i++) {
             Node node = nodes.get(i);
-            Log.d("whitespace", node.toString());
+            Log.v("whitespace", node.toString());
             if (node instanceof TextNode) {
                 String text = ((TextNode) node).text();
                 if (text.equals("") || text.equals("\r") || text.equals(" ")) continue;
@@ -297,7 +296,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
 
         for (int i = nodes.size() - 1; i >= 0; i--) {
             Node node = nodes.get(i);
-            Log.d("whitespace", node.toString());
+            Log.v("whitespace", node.toString());
             if (node instanceof TextNode) {
                 String text = ((TextNode) node).text();
                 if (text.equals("") || text.equals("\r") || text.equals(" ")) continue;

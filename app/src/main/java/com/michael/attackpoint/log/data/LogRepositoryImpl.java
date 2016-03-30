@@ -2,6 +2,7 @@ package com.michael.attackpoint.log.data;
 
 import android.support.annotation.NonNull;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by michael on 3/17/16.
  */
 public class LogRepositoryImpl implements LogRepository {
+    private static final String DEBUG_TAG = "LogRepository";
     private LogDatabase mLogDatabase;
     private RequestQueue mRequestQueue;
 
@@ -29,6 +31,7 @@ public class LogRepositoryImpl implements LogRepository {
     @Override
     public void getLog(@NonNull final int userID, final @NonNull LoadLogCallback callback) {
         if (mLogDatabase.userIsStale(userID)) {
+            Log.d(DEBUG_TAG, "user is stale, refreshing from network");
             refreshData(userID, new RefreshCallback() {
                 @Override
                 public void done() {
