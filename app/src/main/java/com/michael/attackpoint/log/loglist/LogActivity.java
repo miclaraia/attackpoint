@@ -16,11 +16,12 @@ public class LogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log);
         Singleton.getInstance().setActivity(this);
 
-        Bundle extras = getIntent().getExtras();
+        if (savedInstanceState == null) {
+            initFragment(LogFragment.newInstance(getIntent().getExtras()));
+        }
+    }
 
-        Fragment fragment = new LogFragment();
-        fragment.setArguments(extras);
-
+    public void initFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
@@ -29,11 +30,4 @@ public class LogActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Singleton.getInstance().setActivity(this);
-    }
-
 }

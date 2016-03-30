@@ -16,10 +16,9 @@ public class LogRepositories {
 
     private static LogRepository repository = null;
 
-    public synchronized static LogRepository getInMemoryRepoInstance(@NonNull LogCacheApi logCacheApi) {
-        checkNotNull(logCacheApi);
+    public synchronized static LogRepository getRepoInstance() {
         if (null == repository) {
-            //repository = new LogRepositoryImpl(logCacheApi);
+            repository = new LogRepositoryImpl();
         }
         return repository;
     }

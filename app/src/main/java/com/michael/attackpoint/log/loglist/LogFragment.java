@@ -16,6 +16,7 @@ import android.view.ViewOverlay;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.data.LogRequest;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -27,21 +28,25 @@ import java.util.List;
 /**
  * Created by michael on 8/23/15.
  */
-public class LogFragment extends Fragment {
+public class LogFragment extends Fragment implements LogContract.View {
 
     public static final String ARGUMENT_ID = "userid";
 
     private List<LogInfo> mLogList;
-    //private RecyclerView mRecyclerView;
     private LogAdapter mAdapter;
-    private Singleton mSingleton;
-    private LogContract.Presenter mActionsListener;
+    private LogContract.Presenter mPresenter;
 
     public static LogFragment newInstance (String user_id) {
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_ID, user_id);
         LogFragment fragment = new LogFragment();
         fragment.setArguments(arguments);
+        return fragment;
+    }
+
+    public static LogFragment newInstance (Bundle args) {
+        LogFragment fragment = new LogFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -63,8 +68,7 @@ public class LogFragment extends Fragment {
 
         setRetainInstance(true);
 
-        //mActionsListener = new NotesPresenter(Injection.provideNotesRepository(), this);
-
+        mPresenter = new LogPresenter(LogRepositories.getRepoInstance(), this);
     }
 
     @Override

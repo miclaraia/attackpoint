@@ -12,13 +12,11 @@ import java.util.List;
 public interface LogContract {
 
     interface View {
-        void setProgressIndicator(boolean active);
+        void setProgressIndicator(boolean state);
 
         void showLog(List<LogInfo> entries);
 
-        void showAddEntry();
-
-        void showEntryDetailUi(String logId);
+        void showEntryDetail(String logId);
     }
 
     interface Presenter {
