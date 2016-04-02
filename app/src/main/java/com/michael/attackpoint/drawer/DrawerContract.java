@@ -1,8 +1,11 @@
 package com.michael.attackpoint.drawer;
 
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.michael.attackpoint.drawer.items.NavDrawerGroup;
 import com.michael.attackpoint.drawer.items.NavDrawerItem;
@@ -16,6 +19,11 @@ public interface DrawerContract {
         Context getContext();
 
         FragmentManager getFragmentManager();
+
+        ActionBarDrawerToggle getDrawerToggle(DrawerLayout drawerLayout);
+
+
+
 
         void startActivity(Intent intent);
     }
@@ -36,6 +44,8 @@ public interface DrawerContract {
         void removeItem(NavDrawerItem item);
 
         void refresh();
+
+        ActionBarDrawerToggle getDrawerToggle();
     }
 
 }

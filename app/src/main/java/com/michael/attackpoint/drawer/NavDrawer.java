@@ -3,8 +3,10 @@ package com.michael.attackpoint.drawer;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,7 +36,8 @@ public class NavDrawer implements DrawerContract.Drawer {
     private static final String DEBUG_TAG = "NavDrawer";
 
     private DrawerAdapter mAdapter;
-    private DrawerLayout mDrawer;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerContract.Activity mActivity;
 
@@ -42,17 +45,15 @@ public class NavDrawer implements DrawerContract.Drawer {
     private List<NavDrawerItem> mNavItems;
 
 
-    public NavDrawer(DrawerContract.Activity activity, DrawerLayout drawer,
+    public NavDrawer(DrawerContract.Activity activity, DrawerLayout drawerLayout,
                      ListView drawerList) {
-        mDrawer = drawer;
+        mDrawerLayout = drawerLayout;
         mActivity = activity;
 
-
-
-        /*drawer.setDrawerListener(mDrawerToggle);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerToggle.syncState();*/
+        mDrawerToggle = activity.getDrawerToggle(mDrawerLayout);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         mNavGroups = new ArrayList<>();
 
@@ -65,10 +66,6 @@ public class NavDrawer implements DrawerContract.Drawer {
         refresh();
         drawerList.setAdapter(mAdapter);
     }
-
-    /*public boolean checkToggleClick(MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item);
-    }*/
 
     public void addGroup(NavDrawerGroup group) {
         mNavGroups.add(group);
@@ -149,6 +146,11 @@ public class NavDrawer implements DrawerContract.Drawer {
         mAdapter.replaceData(mNavItems);
     }
 
+    @Override
+    public ActionBarDrawerToggle getDrawerToggle() {
+        return mDrawerToggle;
+    }
+
     public List<NavDrawerItem> refreshList() {
         ArrayList<NavDrawerItem> navItems = new ArrayList<>();
         for (NavDrawerGroup group : mNavGroups) {
@@ -165,7 +167,7 @@ public class NavDrawer implements DrawerContract.Drawer {
 
             NavItemReg item = (NavItemReg) mNavItems.get(position);
 
-            mDrawer.closeDrawer(Gravity.LEFT);
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
 
             //implement the items action
             item.click();

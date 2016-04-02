@@ -3,6 +3,7 @@ package com.michael.attackpoint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.michael.attackpoint.drawer.DrawerContract;
@@ -26,11 +28,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements DrawerContract.Activity {
     private static final String DEBUG_TAG = "attackpoint.Main";
     private Singleton mSingleton;
-    //private DrawerLayout mDrawer;
-    private MainActivity self = this;
+    private DrawerContract.Drawer mDrawer;
 
     private ArrayList<NavDrawerItem> navMenuItems;
-    private AppCompatActivity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +48,10 @@ public class MainActivity extends AppCompatActivity implements DrawerContract.Ac
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ListView drawerList = (ListView) findViewById(R.id.nav_list);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity, drawerLayout,
-                R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-
         NavDrawer drawer = new NavDrawer(this, drawerLayout, drawerList);
+        mDrawer = drawer;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         mSingleton = Singleton.getInstance();
         mSingleton.setDrawer(drawer);
@@ -63,11 +62,6 @@ public class MainActivity extends AppCompatActivity implements DrawerContract.Ac
     protected void onResume() {
         super.onResume();
         Singleton.getInstance().setActivity(this);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
     }
 
     @Override
@@ -98,7 +92,42 @@ public class MainActivity extends AppCompatActivity implements DrawerContract.Ac
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        mDrawer.getDrawerToggle().syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawer.getDrawerToggle().onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public ActionBarDrawerToggle getDrawerToggle(DrawerLayout drawerLayout) {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar,
+                R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                toolbar.setTitle("Attackpoint");
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                toolbar.setTitle("Menu");
+            }
+        };
+        return toggle;
     }
 }
