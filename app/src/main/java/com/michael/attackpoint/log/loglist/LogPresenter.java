@@ -1,8 +1,10 @@
 package com.michael.attackpoint.log.loglist;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 
+import com.android.volley.VolleyError;
 import com.michael.attackpoint.log.data.LogRepository;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.util.EspressoIdlingResource;
@@ -34,6 +36,11 @@ public class LogPresenter implements LogContract.Presenter {
                 public void done() {
                     loadLog(false);
                 }
+
+                @Override
+                public void error(VolleyError e) {
+                    // TODO set network error
+                }
             });
         } else {
             // The network request might be handled in a different thread so make sure Espresso knows
@@ -45,6 +52,11 @@ public class LogPresenter implements LogContract.Presenter {
                     EspressoIdlingResource.decrement(); // Set app as idle.
                     mLogView.showLog(logList);
                     mLogView.setProgressIndicator(false);
+                }
+
+                @Override
+                public void onNetworkError(VolleyError e) {
+                    // TODO set network error indicator
                 }
             });
         }

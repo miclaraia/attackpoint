@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogColor;
@@ -49,11 +50,11 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
         try {
             String data = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             activities = getActivities(Jsoup.parse(data));
+            return Response.success(activities, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             e.printStackTrace();
-            activities = new ArrayList();
+            return Response.error(new VolleyError(e));
         }
-        return Response.success(activities, HttpHeaderParser.parseCacheHeaders(response));
 
     }
 
