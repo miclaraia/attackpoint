@@ -291,6 +291,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
             } else if (node instanceof Element) {
                 Element e = (Element) node;
                 if (e.tagName().equals("br")) remove.add(e);
+                else break;
             } else break;
         }
 
@@ -304,6 +305,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
             } else if (node instanceof Element) {
                 Element e = (Element) node;
                 if (e.tagName().equals("br")) remove.add(e);
+                else break;
             } else break;
         }
 
