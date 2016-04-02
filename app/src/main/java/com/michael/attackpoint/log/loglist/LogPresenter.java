@@ -9,6 +9,7 @@ import com.michael.attackpoint.log.data.LogRepository;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.util.EspressoIdlingResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,7 @@ public class LogPresenter implements LogContract.Presenter {
     @Override
     public void loadLog(boolean forceUpdate) {
         mLogView.setProgressIndicator(true);
+        mLogView.showLog(new ArrayList<LogInfo>(0));
         if (forceUpdate) {
             mLogRepository.refreshData(mUser, new LogRepository.RefreshCallback() {
                 @Override
@@ -40,6 +42,7 @@ public class LogPresenter implements LogContract.Presenter {
                 @Override
                 public void error(VolleyError e) {
                     // TODO set network error
+                    loadLog(false);
                 }
             });
         } else {
