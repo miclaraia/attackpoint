@@ -4,9 +4,9 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.util.Singleton;
 
 public class LogActivity extends AppCompatActivity {
 
@@ -14,7 +14,8 @@ public class LogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
-        Singleton.getInstance().setActivity(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             initFragment(LogFragment.newInstance(getIntent().getExtras()));
