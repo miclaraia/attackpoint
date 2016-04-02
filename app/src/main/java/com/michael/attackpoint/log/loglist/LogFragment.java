@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -80,15 +82,28 @@ public class LogFragment extends Fragment implements LogContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
 
-        View container = inflater.inflate(R.layout.fragment_log, viewGroup, false);
-        RecyclerView recycler = (RecyclerView) container.findViewById(R.id.cardList);
+        View root = inflater.inflate(R.layout.fragment_log, viewGroup, false);
+        RecyclerView recycler = (RecyclerView) root.findViewById(R.id.cardList);
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // TODO Floating action button
         // TODO pull to refresh
+        // Pull-to-refresh
+        SwipeRefreshLayout swipeRefreshLayout =
+                (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadLog(true);
+            }
+        });
 
-        return container;
+        return root;
     }
 
     /**
@@ -102,9 +117,21 @@ public class LogFragment extends Fragment implements LogContract.View {
     };
 
     @Override
-    public void setProgressIndicator(boolean state) {
-        // TODO
+    public void setProgressIndicator(final boolean state) {
         Log.d(DEBUG_TAG, String.format(Locale.US, "setting refresh indicator to %s", (state)?"true":"false"));
+        if (getView() == null) {
+            return;
+        }
+        final SwipeRefreshLayout srl =
+                (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
+
+        // Make sure setRefreshing() is called after the layout is done with everything else.
+        srl.post(new Runnable() {
+            @Override
+            public void run() {
+                srl.setRefreshing(state);
+            }
+        });
     }
 
     @Override
