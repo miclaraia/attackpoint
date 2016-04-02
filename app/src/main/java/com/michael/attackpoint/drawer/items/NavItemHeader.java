@@ -1,16 +1,12 @@
-package com.michael.attackpoint.drawer;
+package com.michael.attackpoint.drawer.items;
 
 /**
  * Created by michael on 2/19/16.
  */
-public class NavItemHeader extends NavDrawerItem {
+public final class NavItemHeader extends NavDrawerItem {
 
     public NavItemHeader(String group) {
         super(group, group);
         setGroup(group);
-    }
-
-    public void action() {
-
     }
 }

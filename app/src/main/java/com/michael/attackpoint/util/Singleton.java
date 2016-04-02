@@ -2,7 +2,6 @@ package com.michael.attackpoint.util;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -10,7 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.michael.attackpoint.drawer.NavGroupUsers;
+import com.michael.attackpoint.drawer.items.NavGroupUsers;
 import com.michael.attackpoint.training.ActivityTable;
 import com.michael.attackpoint.training.request.TrainingTypeRequest;
 import com.michael.attackpoint.account.MyCookieStore;

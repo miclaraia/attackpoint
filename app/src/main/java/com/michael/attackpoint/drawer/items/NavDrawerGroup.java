@@ -1,6 +1,4 @@
-package com.michael.attackpoint.drawer;
-
-import android.support.v7.app.AppCompatActivity;
+package com.michael.attackpoint.drawer.items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +10,11 @@ public abstract class NavDrawerGroup {
     private static final String DEBUG_TAG = "NavGroup";
 
     protected List<NavDrawerItem> mNavItems;
-    protected NavDrawerItem mHeader;
+    protected String mName;
 
-    protected AppCompatActivity mActivity;
-    protected NavDrawer mNavDrawer;
-
-    public NavDrawerGroup(NavDrawer drawer, AppCompatActivity activity) {
+    public NavDrawerGroup(String name) {
         mNavItems = new ArrayList<>();
-        mNavDrawer = drawer;
-        mActivity = activity;
+        mName = name;
 
         init();
         loadItems();
@@ -46,8 +40,8 @@ public abstract class NavDrawerGroup {
         check();
     }
 
-    public void setHeader(NavDrawerItem header) {
-        mHeader = header;
+    public void remove(NavDrawerItem item) {
+        mNavItems.remove(item);
     }
 
     public int size() {
@@ -55,20 +49,19 @@ public abstract class NavDrawerGroup {
     }
 
     public void check() {
-        String group = mHeader.getName();
         for (NavDrawerItem item : mNavItems) {
-            item.setGroup(group);
+            item.setGroup(mName);
         }
     }
 
     public String name() {
-        return mHeader.getName();
+        return mName;
     }
 
     public List<NavDrawerItem> getAll() {
         check();
         List<NavDrawerItem> items = new ArrayList<>();
-        items.add(mHeader);
+        items.add(new NavItemHeader(mName));
         items.addAll(1, mNavItems);
         return items;
     }

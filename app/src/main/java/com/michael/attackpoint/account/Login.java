@@ -10,7 +10,7 @@ import com.michael.attackpoint.MainActivity;
 import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.dialogs.LoginActivity;
-import com.michael.attackpoint.drawer.NavGroupUsers;
+import com.michael.attackpoint.drawer.items.NavGroupUsers;
 import com.michael.attackpoint.training.ActivityTable;
 
 /**
@@ -48,10 +48,9 @@ public class Login {
         return mInstance;
     }
 
-    public void loginDialog() {
-        Activity activity = mSingleton.getActivity();
-        Intent intent = new Intent(activity, LoginActivity.class);
-        activity.startActivity(intent);
+    public void loginDialog(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 
     public void doLogin(String u, String p) {
