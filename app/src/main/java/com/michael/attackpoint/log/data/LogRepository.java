@@ -15,7 +15,7 @@ public interface LogRepository {
     interface LoadLogCallback {
         void onLoaded(List<LogInfo> logList);
 
-        void onNetworkError(VolleyError e);
+        void onError(Exception e);
     }
 
     interface LoadLogEntryCallback {

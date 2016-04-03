@@ -46,7 +46,7 @@ public class LogRepositoryImpl implements LogRepository {
 
                 @Override
                 public void error(VolleyError e) {
-                    callback.onNetworkError(e);
+                    callback.onError(e);
                 }
             });
         } else {
