@@ -72,6 +72,11 @@ public class LogDatabase implements LogCacheApi.Database{
     }
 
     @Override
+    public boolean userInCache(int userID) {
+        return mLogCache.userInCache(userID);
+    }
+
+    @Override
     public boolean userIsStale(int userID) {
         return mLogCacheUpdate.userIsStale(userID);
     }
@@ -168,6 +173,21 @@ public class LogDatabase implements LogCacheApi.Database{
                     TABLE, COLUMN_USER, userID);
 
             writer().execSQL(sql);
+        }
+
+        public boolean userInCache(int userId) {
+            String sql = String.format(Locale.US, "SELECT COUNT(*) FROM %s WHERE %s=%d",
+                    TABLE, COLUMN_USER, userId);
+
+            boolean exists = false;
+
+            Cursor cursor = open().rawQuery(sql, null);
+            if (cursor.moveToFirst()) {
+                if (cursor.getInt(0) > 0) exists = true;
+            }
+
+            cursor.close();
+            return exists;
         }
 
         public List<String> dumpTable() {

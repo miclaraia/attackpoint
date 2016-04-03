@@ -36,12 +36,13 @@ public class LogRepositoryImpl implements LogRepository {
 
     @Override
     public void getLog(boolean forceRefresh, @NonNull final int userID, @NonNull final LoadLogCallback callback) {
-        if (forceRefresh || mLogDatabase.userIsStale(userID)) {
-            Log.d(DEBUG_TAG, "user is stale, refreshing from network");
+        if (forceRefresh) {
+            // Force refresh, clears cache
+            mLogDatabase.removeCache(userID);
             refreshData(userID, new RefreshCallback() {
                 @Override
-                public void done() {
-                    getLog(userID, callback);
+                public void done(List<LogInfo> logList) {
+                    callback.onLoaded(logList);
                 }
 
                 @Override
@@ -49,9 +50,26 @@ public class LogRepositoryImpl implements LogRepository {
                     callback.onError(e);
                 }
             });
+        } else if (mLogDatabase.userIsStale(userID)) {
+            // Tries to load from network, but will try
+            // to load from cache if no network is available
+            refreshData(userID, new RefreshCallback() {
+                @Override
+                public void done(List<LogInfo> logList) {
+                    callback.onLoaded(logList);
+                }
+
+                @Override
+                public void error(VolleyError e) {
+                    callback.onError(e);
+                    if (e instanceof NoConnectionError && mLogDatabase.userInCache(userID)) {
+                        callback.onLoaded(mLogDatabase.getCache(userID));
+                    }
+                }
+            });
         } else {
-            List<LogInfo> cache = mLogDatabase.getCache(userID);
-            callback.onLoaded(cache);
+            // refresh not forced and user isn't stale
+            callback.onLoaded(mLogDatabase.getCache(userID));
         }
     }
 
@@ -74,7 +92,7 @@ public class LogRepositoryImpl implements LogRepository {
             @Override
             public void onResponse(List<LogInfo> logList) {
                 replaceCache(userID, logList);
-                callback.done();
+                callback.done(logList);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -90,6 +108,10 @@ public class LogRepositoryImpl implements LogRepository {
     private void replaceCache(int userID, List<LogInfo> entries) {
         mLogDatabase.removeCache(userID);
         mLogDatabase.addCache(userID, entries);
+    }
+
+    private List<LogInfo> getFromCache(int userID) {
+        return mLogDatabase.getCache(userID);
     }
 
     private void addRequest(Request request) {

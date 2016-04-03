@@ -23,7 +23,7 @@ public interface LogRepository {
     }
 
     interface RefreshCallback {
-        void done();
+        void done(List<LogInfo> logList);
 
         void error(VolleyError e);
     }

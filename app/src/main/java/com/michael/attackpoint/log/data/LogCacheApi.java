@@ -26,6 +26,8 @@ public interface LogCacheApi {
 
         void removeCache(int userID);
 
+        boolean userInCache(int userID);
+
         boolean userIsStale(int userID);
 
     }
