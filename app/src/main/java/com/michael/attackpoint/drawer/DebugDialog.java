@@ -63,6 +63,14 @@ public class DebugDialog extends DialogFragment {
             }
         });
 
+        options.add(new Option("Clear Log Cache Users") {
+            @Override
+            void action() {
+                LogDatabase.LogCacheUpdate lcu = new LogDatabase.LogCacheUpdate();
+                lcu.empty();
+            }
+        });
+
         options.add(new Option("Print Log Cache") {
             @Override
             void action() {
