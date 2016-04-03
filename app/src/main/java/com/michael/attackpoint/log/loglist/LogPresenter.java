@@ -3,6 +3,7 @@ package com.michael.attackpoint.log.loglist;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.VolleyError;
@@ -50,8 +51,10 @@ public class LogPresenter implements LogContract.Presenter {
                 if (e instanceof NoConnectionError) {
                     // No network connection
                     mLogView.setProgressIndicator(false);
+                    mLogView.showSnackbar("No Network");
                 } else {
                     // somethine went wrong getting user log
+                    mLogView.showSnackbar("Something went wrong :(");
                 }
             }
         });

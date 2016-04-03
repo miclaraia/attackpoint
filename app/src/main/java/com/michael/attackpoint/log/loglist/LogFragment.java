@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -132,6 +134,14 @@ public class LogFragment extends Fragment implements LogContract.View {
                 srl.setRefreshing(state);
             }
         });
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+        CoordinatorLayout coordinator = (CoordinatorLayout)
+                getActivity().findViewById(R.id.coordinator);
+        Snackbar snackbar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override

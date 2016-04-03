@@ -14,11 +14,14 @@ public interface LogContract {
     interface View {
         void setProgressIndicator(boolean state);
 
+        void showSnackbar(String message);
+
         void showLog(List<LogInfo> entries);
 
         void showEntryDetail(String logId);
 
         void showAddEntry();
+
     }
 
     interface Presenter {
