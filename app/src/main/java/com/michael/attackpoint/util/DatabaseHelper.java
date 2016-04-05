@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.michael.attackpoint.log.data.LogDatabase;
-import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.log.addentry.ActivityTable;
 import com.michael.attackpoint.account.CookieTable;
 import com.michael.attackpoint.users.UserTable;
 

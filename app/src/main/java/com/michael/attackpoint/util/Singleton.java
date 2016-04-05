@@ -10,8 +10,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.michael.attackpoint.drawer.items.NavGroupUsers;
-import com.michael.attackpoint.training.ActivityTable;
-import com.michael.attackpoint.training.request.TrainingTypeRequest;
+import com.michael.attackpoint.log.addentry.ActivityTable;
+import com.michael.attackpoint.log.addentry.request.TrainingTypeRequest;
 import com.michael.attackpoint.account.MyCookieStore;
 import com.michael.attackpoint.drawer.NavDrawer;
 

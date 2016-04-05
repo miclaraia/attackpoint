@@ -1,18 +1,11 @@
-package com.michael.attackpoint.training;
+package com.michael.attackpoint.log.addentry;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
-import com.michael.attackpoint.R;
-import com.michael.attackpoint.training.details.DateManager;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by michael on 8/25/15.

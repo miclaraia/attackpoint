@@ -3,22 +3,17 @@ package com.michael.attackpoint.drawer.items;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.DiscussionActivity;
 import com.michael.attackpoint.drawer.DebugDialog;
 import com.michael.attackpoint.drawer.DrawerContract;
-import com.michael.attackpoint.drawer.NavDrawer;
 import com.michael.attackpoint.log.loglist.LogActivity;
 import com.michael.attackpoint.log.loglist.LogFragment;
-import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.users.UsersFragment;
-import com.michael.attackpoint.training.activity.AddTrainingActivity;
-import com.michael.attackpoint.account.MyCookieStore;
+import com.michael.attackpoint.log.addentry.activity.AddTrainingActivity;
 
 import java.util.ArrayList;
 

@@ -12,18 +12,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.Discussion;
 import com.michael.attackpoint.discussion.DiscussionRequest;
 import com.michael.attackpoint.log.data.LogDatabase;
-import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
-import com.michael.attackpoint.training.request.AddTrainingRequest;
-import com.michael.attackpoint.training.request.UpdateTrainingRequest;
+import com.michael.attackpoint.log.addentry.request.AddTrainingRequest;
+import com.michael.attackpoint.log.addentry.request.UpdateTrainingRequest;
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.users.UserTable;
 import com.michael.attackpoint.users.FavoriteUsersRequest;
@@ -31,11 +29,8 @@ import com.michael.attackpoint.account.MyCookieStore;
 import com.michael.attackpoint.users.UserRequest;
 import com.michael.attackpoint.users.User;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**

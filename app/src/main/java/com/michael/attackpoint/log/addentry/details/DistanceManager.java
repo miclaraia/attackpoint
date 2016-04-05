@@ -1,7 +1,6 @@
-package com.michael.attackpoint.training.details;
+package com.michael.attackpoint.log.addentry.details;
 
 import android.content.Context;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;

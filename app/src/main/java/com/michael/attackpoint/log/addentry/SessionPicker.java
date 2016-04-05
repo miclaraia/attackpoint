@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training;
+package com.michael.attackpoint.log.addentry;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

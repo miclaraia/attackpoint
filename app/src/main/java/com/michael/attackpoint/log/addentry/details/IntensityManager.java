@@ -1,12 +1,12 @@
-package com.michael.attackpoint.training.details;
+package com.michael.attackpoint.log.addentry.details;
 
 import android.view.View;
 
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
-import com.michael.attackpoint.training.IntensityPicker;
-import com.michael.attackpoint.training.TrainingPicker;
+import com.michael.attackpoint.log.addentry.IntensityPicker;
+import com.michael.attackpoint.log.addentry.TrainingPicker;
 
 /**
  * Created by michael on 2/25/16.

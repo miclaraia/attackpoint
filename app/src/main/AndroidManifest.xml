@@ -43,12 +43,12 @@
             android:name=".dialogs.LoginActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".training.activity.UpdateTrainingActivity"
+            android:name=".log.addentry.activity.UpdateTrainingActivity"
             android:theme="@style/AppTheme"
             android:label="Add Training"/>
 
         <activity
-            android:name=".training.activity.AddTrainingActivity"
+            android:name=".log.addentry.activity.AddTrainingActivity"
             android:theme="@style/AppTheme"
             android:label="Add Training"/>
 

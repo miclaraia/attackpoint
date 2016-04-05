@@ -1,10 +1,8 @@
-package com.michael.attackpoint.training.request;
+package com.michael.attackpoint.log.addentry.request;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**

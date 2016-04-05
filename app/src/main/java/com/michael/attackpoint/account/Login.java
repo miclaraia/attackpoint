@@ -11,7 +11,7 @@ import com.michael.attackpoint.util.Preferences;
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.dialogs.LoginActivity;
 import com.michael.attackpoint.drawer.items.NavGroupUsers;
-import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.log.addentry.ActivityTable;
 
 /**
  * Created by michael on 2/19/16.

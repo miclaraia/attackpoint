@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training.activity;
+package com.michael.attackpoint.log.addentry.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,14 +20,14 @@ import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.log.loginfo.LogSession;
-import com.michael.attackpoint.training.details.ActivityManager;
-import com.michael.attackpoint.training.details.DateManager;
-import com.michael.attackpoint.training.details.DescriptionManager;
-import com.michael.attackpoint.training.details.DistanceManager;
-import com.michael.attackpoint.training.details.DurationManager;
-import com.michael.attackpoint.training.details.IntensityManager;
-import com.michael.attackpoint.training.details.SessionManager;
-import com.michael.attackpoint.training.details.ViewHolder;
+import com.michael.attackpoint.log.addentry.details.ActivityManager;
+import com.michael.attackpoint.log.addentry.details.DateManager;
+import com.michael.attackpoint.log.addentry.details.DescriptionManager;
+import com.michael.attackpoint.log.addentry.details.DistanceManager;
+import com.michael.attackpoint.log.addentry.details.DurationManager;
+import com.michael.attackpoint.log.addentry.details.IntensityManager;
+import com.michael.attackpoint.log.addentry.details.SessionManager;
+import com.michael.attackpoint.log.addentry.details.ViewHolder;
 
 /**
  * Created by michael on 3/11/16.

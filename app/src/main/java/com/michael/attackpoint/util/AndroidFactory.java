@@ -2,8 +2,7 @@ package com.michael.attackpoint.util;
 
 import android.content.ContentValues;
 
-import com.michael.attackpoint.log.data.LogDatabase;
-import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.log.addentry.ActivityTable;
 
 import org.json.JSONException;
 import org.json.JSONObject;

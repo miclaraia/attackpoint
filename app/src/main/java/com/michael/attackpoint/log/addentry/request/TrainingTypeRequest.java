@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training.request;
+package com.michael.attackpoint.log.addentry.request;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;

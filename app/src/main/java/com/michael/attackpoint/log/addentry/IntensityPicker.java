@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training;
+package com.michael.attackpoint.log.addentry;
 
 import android.app.Activity;
 import android.app.AlertDialog;

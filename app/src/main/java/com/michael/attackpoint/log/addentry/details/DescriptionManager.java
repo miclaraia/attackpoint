@@ -1,4 +1,4 @@
-package com.michael.attackpoint.training.details;
+package com.michael.attackpoint.log.addentry.details;
 
 import android.content.Context;
 

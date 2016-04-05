@@ -1,8 +1,4 @@
-package com.michael.attackpoint.training.details;
-
-import android.app.DialogFragment;
-import android.view.View;
-import android.widget.TextView;
+package com.michael.attackpoint.log.addentry.details;
 
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;

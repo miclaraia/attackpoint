@@ -19,16 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOverlay;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.data.LogRepositories;
-import com.michael.attackpoint.log.data.LogRequest;
 import com.michael.attackpoint.log.ViewHolder;
-import com.michael.attackpoint.log.logdetail.LogDetailActivity;
 import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.attackpoint.training.activity.AddTrainingActivity;
-import com.michael.attackpoint.util.Singleton;
+import com.michael.attackpoint.log.addentry.activity.AddTrainingActivity;
 
 import java.util.ArrayList;
 import java.util.List;

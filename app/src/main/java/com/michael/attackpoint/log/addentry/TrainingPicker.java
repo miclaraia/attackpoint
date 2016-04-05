@@ -1,8 +1,8 @@
-package com.michael.attackpoint.training;
+package com.michael.attackpoint.log.addentry;
 
 import android.app.DialogFragment;
 
-import com.michael.attackpoint.training.details.DetailManager;
+import com.michael.attackpoint.log.addentry.details.DetailManager;
 
 /**
  * Created by michael on 3/8/16.

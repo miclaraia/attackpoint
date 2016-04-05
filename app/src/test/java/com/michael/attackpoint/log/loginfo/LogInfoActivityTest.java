@@ -1,6 +1,6 @@
 package com.michael.attackpoint.log.loginfo;
 
-import com.michael.attackpoint.training.ActivityTable;
+import com.michael.attackpoint.log.addentry.ActivityTable;
 import com.michael.attackpoint.util.AndroidFactory;
 
 import org.json.JSONException;
@@ -14,7 +14,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
