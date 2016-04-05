@@ -87,6 +87,7 @@ public class ViewHolder {
         LogDescription ld = (LogDescription) li.get(LogInfo.KEY_DESCRIPTION);
         if (ld.isEmpty()) vText.setVisibility(View.GONE);
         else {
+            vText.setVisibility(View.VISIBLE);
             String text = ld.toSnippet();
             vText.setText(Html.fromHtml(text));
         }
