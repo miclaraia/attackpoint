@@ -1,9 +1,5 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
-import android.content.Context;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Activity;
 import com.michael.attackpoint.log.loginfo.LogDescription;
@@ -30,7 +26,7 @@ public class DescriptionManager implements ManagerContract.Manager {
 
     @Override
     public void setView(ViewHolder vh) {
-        mSubViewHolder = vh.date;
+        mSubViewHolder = vh.description;
     }
 
     @Override
