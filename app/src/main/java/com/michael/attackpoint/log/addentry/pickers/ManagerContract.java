@@ -34,6 +34,8 @@ public interface ManagerContract {
 
         void setClickListener(ViewHolder.SubViewHolder svh, View.OnClickListener listener);
 
+        void setClickListener_editText(ViewHolder.SubViewHolder svh);
+
         FragmentManager getFragmentManager();
 
         Context getContext();
