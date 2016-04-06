@@ -7,13 +7,13 @@ import android.app.DialogFragment;
  */
 public class PickerGenerator {
 
-    static DialogFragment genDatePicker(ManagerContract.PickerManager manager) {
+    static DialogFragment genDatePicker(ManagerContract.Manager manager) {
         DatePicker dialog = new DatePicker();
         dialog.setManager(manager);
         return dialog;
     }
 
-    static DialogFragment genActivityPicker(ManagerContract.PickerManager manager) {
+    static DialogFragment genActivityPicker(ManagerContract.Manager manager) {
         ActivityPicker dialog = new ActivityPicker();
         dialog.setManager(manager);
         return dialog;

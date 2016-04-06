@@ -22,6 +22,8 @@ public interface ManagerContract {
         LogInfoItem getItem();
 
         LogInfo updateLoginfo(LogInfo li);
+
+        void setClickListener();
     }
 
     interface Activity {
@@ -39,9 +41,5 @@ public interface ManagerContract {
 
     interface Picker  {
         void setManager(Manager manager);
-    }
-
-    interface PickerManager extends Manager {
-        void setClickListener();
     }
 }

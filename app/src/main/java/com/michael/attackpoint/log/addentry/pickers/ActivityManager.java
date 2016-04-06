@@ -10,7 +10,7 @@ import com.michael.attackpoint.log.loginfo.LogInfoActivity;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
 
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Activity;
-import com.michael.attackpoint.log.addentry.pickers.ManagerContract.PickerManager;
+import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Manager;
 import com.michael.attackpoint.util.AndroidFactory;
 
 import java.util.InputMismatchException;
@@ -18,7 +18,7 @@ import java.util.InputMismatchException;
 /**
  * Created by michael on 4/6/16.
  */
-public class ActivityManager implements PickerManager {
+public class ActivityManager implements Manager {
 
     private LogInfoActivity mLogInfoActivity;
     private ManagerContract.Activity mActivity;
@@ -66,7 +66,7 @@ public class ActivityManager implements PickerManager {
 
     @Override
     public void setClickListener() {
-        final PickerManager manager = this;
+        final Manager manager = this;
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

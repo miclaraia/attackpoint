@@ -5,7 +5,7 @@ import android.view.View;
 import com.michael.attackpoint.log.addentry.TrainingDatePicker;
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Activity;
-import com.michael.attackpoint.log.addentry.pickers.ManagerContract.PickerManager;
+import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Manager;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoItem;
@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
 /**
  * Created by michael on 4/5/16.
  */
-public class DateManager implements PickerManager {
+public class DateManager implements Manager {
 
     private LogDate mLogDate;
     private Activity mActivity;
@@ -55,7 +55,7 @@ public class DateManager implements PickerManager {
 
     @Override
     public void setClickListener() {
-        final PickerManager manager = this;
+        final Manager manager = this;
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
