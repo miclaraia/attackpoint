@@ -1,6 +1,7 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
@@ -32,6 +33,8 @@ public interface ManagerContract {
         void setClickListener(ViewHolder.SubViewHolder svh, View.OnClickListener listener);
 
         FragmentManager getFragmentManager();
+
+        Context getContext();
     }
 
     interface Picker  {

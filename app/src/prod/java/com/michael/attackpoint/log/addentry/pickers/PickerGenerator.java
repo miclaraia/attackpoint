@@ -10,4 +10,8 @@ public class PickerGenerator {
     static DialogFragment genDatePicker(ManagerContract.PickerManager manager) {
         return new DialogFragment();
     }
+
+    static DialogFragment genActivityPicker(ManagerContract.PickerManager manager) {
+        return new DialogFragment();
+    }
 }
