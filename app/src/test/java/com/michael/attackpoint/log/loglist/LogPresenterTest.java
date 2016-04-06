@@ -94,8 +94,7 @@ public class LogPresenterTest {
         mPresenter.loadLog(true);
         verify(mLogView).setProgressIndicator(true);
 
-        verify(mLogRepository).refreshData(eq(USER), mRefreshCallbackCaptor.capture());
-        mRefreshCallbackCaptor.getValue().done();
+        verify(mLogRepository).getLog(eq(true), eq(USER), mLoadCallbackCaptor.capture());
 
         verify(mLogRepository).getLog(eq(USER), mLoadCallbackCaptor.capture());
         mLoadCallbackCaptor.getValue().onLoaded(LOGLIST);
