@@ -1,5 +1,7 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.ActivityTable;
@@ -43,10 +45,13 @@ public class ActivityManager extends GenericPickerManager<LogInfoActivity> imple
     @Override
     public void setClickListener() {
         final Manager manager = this;
+        final FragmentManager fm = mActivity.getFragmentManager();
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PickerGenerator.genActivityPicker(manager);
+                ActivityPicker dialog = new ActivityPicker();
+                dialog.setManager(manager);
+                dialog.show(fm, "activitymanager");
             }
         };
         mSubViewHolder.setClickListener(listener);

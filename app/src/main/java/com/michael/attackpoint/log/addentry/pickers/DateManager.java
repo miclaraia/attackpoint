@@ -1,5 +1,6 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
+import android.app.FragmentManager;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
@@ -20,10 +21,13 @@ public class DateManager extends GenericPickerManager<LogDate> implements Manage
     @Override
     public void setClickListener() {
         final Manager manager = this;
+        final FragmentManager fm = mActivity.getFragmentManager();
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PickerGenerator.genDatePicker(manager);
+                DatePicker dialog = new DatePicker();
+                dialog.setManager(manager);
+                dialog.show(fm, "datemanager");
             }
         };
         mSubViewHolder.setClickListener(listener);
