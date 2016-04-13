@@ -79,8 +79,8 @@ public class LogClimbTest {
         mLogClimb.set(NONEMPTY);
         json = mLogClimb.toJSON(json);
 
-        assertThat(json.getInt(LogClimb.JSON_CLIMB), equalTo(NONEMPTY.climb));
-        assertThat(json.getString(LogClimb.JSON_UNIT), equalTo(NONEMPTY.unit));
+        assertThat(json.getInt(LogClimb.JSON_CLIMB), equalTo(NONEMPTY.getClimb()));
+        assertThat(json.getString(LogClimb.JSON_UNIT), equalTo(NONEMPTY.getUnit()));
     }
 
     @Test
@@ -92,8 +92,8 @@ public class LogClimbTest {
         mLogClimb.set(new LogClimb.Climb());
         mLogClimb.fromJSON(json);
 
-        assertThat(mLogClimb.mItem.climb, equalTo(NONEMPTY.climb));
-        assertThat(mLogClimb.mItem.unit, equalTo(NONEMPTY.unit));
+        assertThat(mLogClimb.mItem.getClimb(), equalTo(NONEMPTY.getClimb()));
+        assertThat(mLogClimb.mItem.getUnit(), equalTo(NONEMPTY.getUnit()));
     }
 
     @Test
