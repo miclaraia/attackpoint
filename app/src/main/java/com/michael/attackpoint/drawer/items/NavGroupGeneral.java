@@ -9,11 +9,11 @@ import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.DiscussionActivity;
 import com.michael.attackpoint.drawer.DebugDialog;
 import com.michael.attackpoint.drawer.DrawerContract;
+import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
 import com.michael.attackpoint.log.loglist.LogActivity;
 import com.michael.attackpoint.log.loglist.LogFragment;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.users.UsersFragment;
-import com.michael.attackpoint.log.addentry.activity.AddTrainingActivity;
 
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
         mNavItems.add(new NavItemReg("Add Training", GROUP_NAME, R.drawable.ic_person) {
             @Override
             public void click() {
-                Intent intent = new Intent(mActivity.getContext(), AddTrainingActivity.class);
+                Intent intent = new Intent(mActivity.getContext(), TrainingActivity.class);
                 mActivity.startActivity(intent);
             }
         });

@@ -20,10 +20,10 @@ import android.view.ViewGroup;
 import android.view.ViewOverlay;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.attackpoint.log.addentry.activity.AddTrainingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +151,7 @@ public class LogFragment extends Fragment implements LogContract.View {
 
     @Override
     public void showAddEntry() {
-        Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
+        Intent intent = new Intent(getActivity(), TrainingActivity.class);
         startActivity(intent);
     }
 
