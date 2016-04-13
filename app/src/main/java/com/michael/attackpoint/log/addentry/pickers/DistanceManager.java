@@ -16,12 +16,12 @@ import java.util.InputMismatchException;
  * Created by michael on 4/6/16.
  */
 public class DistanceManager implements ManagerContract.Manager {
-    protected LogDistance mLogDistance;
+    protected LogDistance mItem;
     private ManagerContract.Activity mActivity;
     private ViewHolder.SubViewHolder_Distance mSubViewHolder;
 
     public DistanceManager(Activity activity, LogDistance logDistance) {
-        mLogDistance = logDistance;
+        mItem = logDistance;
         mActivity = activity;
         mSubViewHolder = (ViewHolder.SubViewHolder_Distance) activity.getViewHolder().distance;
         setClickListener();
@@ -35,9 +35,9 @@ public class DistanceManager implements ManagerContract.Manager {
     @Override
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDistance) {
-            mLogDistance = (LogDistance) item;
+            mItem = (LogDistance) item;
 
-            LogDistance.Distance distance = mLogDistance.get();
+            LogDistance.Distance distance = mItem.get();
             mSubViewHolder.setText(distance.getDistance().toString());
         }
         else throw new InputMismatchException();
@@ -46,12 +46,12 @@ public class DistanceManager implements ManagerContract.Manager {
     @Override
     public LogInfoItem getItem() {
         updateDistance();
-        return mLogDistance;
+        return mItem;
     }
 
     @Override
     public LogInfo updateLoginfo(LogInfo li) {
-        li.set(LogInfo.KEY_DISTANCE, mLogDistance);
+        li.set(LogInfo.KEY_DISTANCE, mItem);
         updateDistance();
         return li;
     }
@@ -71,12 +71,12 @@ public class DistanceManager implements ManagerContract.Manager {
     }
 
     public void setUnit(Unit unit) {
-        mLogDistance.setUnit(unit);
+        mItem.setUnit(unit);
         mSubViewHolder.setUnit(unit.toNickname());
     }
 
     protected void updateDistance() {
         Double distance = Double.parseDouble(mSubViewHolder.getEditTextInput());
-        mLogDistance.setDistance(distance);
+        mItem.setDistance(distance);
     }
 }

@@ -13,12 +13,12 @@ import java.util.InputMismatchException;
  */
 public class DescriptionManager implements ManagerContract.Manager {
 
-    private LogDescription mLogDescription;
+    protected LogDescription mItem;
     private ManagerContract.Activity mActivity;
     private ViewHolder.SubViewHolder mSubViewHolder;
 
     public DescriptionManager(Activity activity, LogDescription logDescription) {
-        mLogDescription = logDescription;
+        mItem = logDescription;
         mActivity = activity;
         mSubViewHolder = activity.getViewHolder().description;
         setClickListener();
@@ -32,20 +32,20 @@ public class DescriptionManager implements ManagerContract.Manager {
     @Override
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDescription) {
-            mLogDescription = (LogDescription) item;
-            mSubViewHolder.setText(mLogDescription.toString());
+            mItem = (LogDescription) item;
+            mSubViewHolder.setText(mItem.toString());
         }
         else throw new InputMismatchException();
     }
 
     @Override
     public LogInfoItem getItem() {
-        return mLogDescription;
+        return mItem;
     }
 
     @Override
     public LogInfo updateLoginfo(LogInfo li) {
-        li.set(LogInfo.KEY_DESCRIPTION, mLogDescription);
+        li.set(LogInfo.KEY_DESCRIPTION, mItem);
         return li;
     }
 

@@ -18,50 +18,26 @@ import java.util.InputMismatchException;
 /**
  * Created by michael on 4/6/16.
  */
-public class ActivityManager implements Manager {
+public class ActivityManager extends GenericPickerManager<LogInfoActivity> implements Manager {
 
-    private LogInfoActivity mLogInfoActivity;
-    private ManagerContract.Activity mActivity;
-    private ViewHolder.SubViewHolder mSubViewHolder;
-
-    public ActivityManager(Activity activity, LogInfoActivity logInfoActivity) {
-        mLogInfoActivity = logInfoActivity;
-        mActivity = activity;
-        mSubViewHolder = activity.getViewHolder().activity;
-
-        mLogInfoActivity.set(getFirstActivity());
-
-        setClickListener();
+    public ActivityManager(Activity activity, LogInfoActivity logItem) {
+        super(activity, logItem);
+        mItem.set(getFirstActivity());
     }
 
     @Override
-    public void setView(ViewHolder vh) {
-        mSubViewHolder = vh.activity;
+    public Class<LogInfoActivity> getTClass() {
+        return LogInfoActivity.class;
     }
 
     @Override
-    public void setItem(LogInfoItem item) {
-        if (item instanceof LogInfoActivity) {
-            mLogInfoActivity = (LogInfoActivity) item;
-            mSubViewHolder.setText(mLogInfoActivity.toString());
-        }
-        else throw new InputMismatchException();
+    public String getLogInfoKey() {
+        return LogInfo.KEY_ACTIVITY;
     }
 
     @Override
-    public LogInfoItem getItem() {
-        return mLogInfoActivity;
-    }
-
-    @Override
-    public LogInfo updateLoginfo(LogInfo li) {
-        li.set(LogInfo.KEY_ACTIVITY, mLogInfoActivity);
-        return li;
-    }
-
-    private String getFirstActivity() {
-        ActivityTable table = AndroidFactory.getInstance().genActivityTable();
-        return table.getFirst();
+    public ViewHolder.SubViewHolder getViewHolder(ViewHolder vh) {
+        return vh.activity;
     }
 
     @Override
@@ -74,5 +50,10 @@ public class ActivityManager implements Manager {
             }
         };
         mSubViewHolder.setClickListener(listener);
+    }
+
+    private String getFirstActivity() {
+        ActivityTable table = AndroidFactory.getInstance().genActivityTable();
+        return table.getFirst();
     }
 }

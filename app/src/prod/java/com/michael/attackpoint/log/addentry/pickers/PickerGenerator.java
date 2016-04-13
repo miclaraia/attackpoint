@@ -24,4 +24,10 @@ public class PickerGenerator {
         dialog.setManager(manager);
         return dialog;
     }
+
+    static DialogFragment genDurationPicker(ManagerContract.Manager manager) {
+        DurationPicker dialog = new DurationPicker();
+        dialog.setManager(manager);
+        return dialog;
+    }
 }

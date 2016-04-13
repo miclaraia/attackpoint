@@ -1,9 +1,10 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
-import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import org.junit.Before;
@@ -16,20 +17,19 @@ import java.util.InputMismatchException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by michael on 4/6/16.
+ * Created by michael on 4/13/16.
  */
-public class DateManagerTest {
+public class DurationManagerTest {
 
     @Mock
     ManagerContract.Activity mActivity;
 
     @Mock
-    private LogDate mItem;
+    private LogDuration mItem;
 
     @Mock
     private LogInfo mLogInfo;
@@ -40,7 +40,7 @@ public class DateManagerTest {
     @Mock
     private ViewHolder.SubViewHolder mSubViewHolder;
 
-    private DateManager mManager;
+    private DurationManager mManager;
 
     @Before
     public void setup() {
@@ -48,9 +48,9 @@ public class DateManagerTest {
 
         when(mActivity.getFragmentManager()).thenReturn(null);
         when(mActivity.getViewHolder()).thenReturn(mViewHolder);
-        mViewHolder.date = mSubViewHolder;
+        mViewHolder.duration = mSubViewHolder;
 
-        mManager = new DateManager(mActivity, mItem);
+        mManager = new DurationManager(mActivity, mItem);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class DateManagerTest {
 
         mManager.setItem(mItem);
         assertThat(mManager.mItem, equalTo(mItem));
-        assertThat((LogDate) mManager.getItem(), equalTo(mItem));
+        assertThat((LogDuration) mManager.getItem(), equalTo(mItem));
 
         verify(mSubViewHolder).setText(testString);
     }
@@ -75,7 +75,7 @@ public class DateManagerTest {
     @Test
     public void updateLogInfo_test() {
         mManager.updateLoginfo(mLogInfo);
-        verify(mLogInfo).set(LogInfo.KEY_DATE, mItem);
+        verify(mLogInfo).set(LogInfo.KEY_DURATION, mItem);
     }
 
     @Test

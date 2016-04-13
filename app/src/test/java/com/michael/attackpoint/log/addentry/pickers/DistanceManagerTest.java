@@ -60,10 +60,12 @@ public class DistanceManagerTest {
         LogDistance.Distance testDistance = new LogDistance.Distance();
         testDistance.setDistance(1.6);
 
+        mManager.mItem = null;
+
         when(mItem.get()).thenReturn(testDistance);
 
         mManager.setItem(mItem);
-        assertThat(mManager.mLogDistance, equalTo(mItem));
+        assertThat(mManager.mItem, equalTo(mItem));
         verify(mSubViewHolder).setText(testString);
     }
 

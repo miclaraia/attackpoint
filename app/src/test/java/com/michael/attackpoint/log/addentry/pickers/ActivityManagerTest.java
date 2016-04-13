@@ -37,10 +37,7 @@ public class ActivityManagerTest {
     ManagerContract.Activity mActivity;
 
     @Mock
-    private LogInfoActivity mLogInfoActivity;
-
-    @Mock
-    private LogInfoActivity mLogInfoActivity2;
+    private LogInfoActivity mItem;
 
     @Mock
     private LogInfo mLogInfo;
@@ -51,7 +48,7 @@ public class ActivityManagerTest {
     @Mock
     private ViewHolder.SubViewHolder mSubViewHolder;
 
-    private ActivityManager mActivityManager;
+    private ActivityManager mManager;
 
     @Before
     public void setup() {
@@ -64,32 +61,31 @@ public class ActivityManagerTest {
         when(mActivity.getViewHolder()).thenReturn(mViewHolder);
         mViewHolder.activity = mSubViewHolder;
 
-        mActivityManager = new ActivityManager(mActivity, mLogInfoActivity);
+        mManager = new ActivityManager(mActivity, mItem);
     }
 
     @Test
     public void setItem_test() {
-        mActivityManager.setItem(mLogInfoActivity2);
-        assertThat((LogInfoActivity) mActivityManager.getItem(), equalTo(mLogInfoActivity2));
+        mManager.mItem = null;
 
         String dateTest = "test activity";
-        when(mLogInfoActivity.toString()).thenReturn(dateTest);
+        when(mItem.toString()).thenReturn(dateTest);
 
-        mActivityManager.setItem(mLogInfoActivity);
-        assertThat((LogInfoActivity) mActivityManager.getItem(), equalTo(mLogInfoActivity));
+        mManager.setItem(mItem);
+        assertThat((LogInfoActivity) mManager.getItem(), equalTo(mItem));
 
         verify(mSubViewHolder).setText(dateTest);
     }
 
     @Test(expected = InputMismatchException.class)
     public void setNull_fail() {
-        mActivityManager.setItem(null);
+        mManager.setItem(null);
     }
 
     @Test
     public void updateLogInfo_test() {
-        mActivityManager.updateLoginfo(mLogInfo);
-        verify(mLogInfo).set(LogInfo.KEY_ACTIVITY, mLogInfoActivity);
+        mManager.updateLoginfo(mLogInfo);
+        verify(mLogInfo).set(LogInfo.KEY_ACTIVITY, mItem);
     }
 
     @Test

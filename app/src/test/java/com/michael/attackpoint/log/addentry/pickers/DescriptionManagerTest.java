@@ -31,10 +31,7 @@ public class DescriptionManagerTest {
     ManagerContract.Activity mActivity;
 
     @Mock
-    private LogDescription mLogDescription;
-
-    @Mock
-    private LogDescription mLogDescription2;
+    private LogDescription mItem;
 
     @Mock
     private LogInfo mLogInfo;
@@ -55,19 +52,19 @@ public class DescriptionManagerTest {
         when(mActivity.getViewHolder()).thenReturn(mViewHolder);
         mViewHolder.description = mSubViewHolder;
 
-        mManager = new DescriptionManager(mActivity, mLogDescription);
+        mManager = new DescriptionManager(mActivity, mItem);
     }
 
     @Test
     public void setItem_test() {
-        mManager.setItem(mLogDescription2);
-        assertThat((LogDescription) mManager.getItem(), equalTo(mLogDescription2));
+        mManager.mItem = null;
 
         String dateTest = "test description";
-        when(mLogDescription.toString()).thenReturn(dateTest);
+        when(mItem.toString()).thenReturn(dateTest);
 
-        mManager.setItem(mLogDescription);
-        assertThat((LogDescription) mManager.getItem(), equalTo(mLogDescription));
+        mManager.setItem(mItem);
+        assertThat(mManager.mItem, equalTo(mItem));
+        assertThat((LogDescription) mManager.getItem(), equalTo(mItem));
 
         verify(mSubViewHolder).setText(dateTest);
     }
@@ -80,7 +77,7 @@ public class DescriptionManagerTest {
     @Test
     public void updateLogInfo_test() {
         mManager.updateLoginfo(mLogInfo);
-        verify(mLogInfo).set(LogInfo.KEY_DESCRIPTION, mLogDescription);
+        verify(mLogInfo).set(LogInfo.KEY_DESCRIPTION, mItem);
     }
 
     @Test
