@@ -18,6 +18,7 @@ import java.util.InputMismatchException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -68,7 +69,7 @@ public class DescriptionManagerTest {
         mManager.setItem(mLogDescription);
         assertThat((LogDescription) mManager.getItem(), equalTo(mLogDescription));
 
-        verify(mActivity).setText(mSubViewHolder, dateTest);
+        verify(mSubViewHolder).setText(dateTest);
     }
 
     @Test(expected = InputMismatchException.class)
@@ -84,6 +85,6 @@ public class DescriptionManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mActivity).setClickListener(eq(mSubViewHolder), Matchers.<View.OnClickListener>any());
+        verify(mSubViewHolder).setEditTextListener(mActivity);
     }
 }

@@ -78,7 +78,7 @@ public class ActivityManagerTest {
         mActivityManager.setItem(mLogInfoActivity);
         assertThat((LogInfoActivity) mActivityManager.getItem(), equalTo(mLogInfoActivity));
 
-        verify(mActivity).setText(mSubViewHolder, dateTest);
+        verify(mSubViewHolder).setText(dateTest);
     }
 
     @Test(expected = InputMismatchException.class)
@@ -94,6 +94,6 @@ public class ActivityManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mActivity).setClickListener(eq(mSubViewHolder), Matchers.<View.OnClickListener>any());
+        verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
     }
 }

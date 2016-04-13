@@ -37,7 +37,7 @@ public class DateManager implements Manager {
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDate) {
             mLogDate = (LogDate) item;
-            mActivity.setText(mSubViewHolder, mLogDate.toString());
+            mSubViewHolder.setText(mLogDate.toString());
         }
         else throw new InputMismatchException();
     }
@@ -62,6 +62,6 @@ public class DateManager implements Manager {
                 PickerGenerator.genDatePicker(manager);
             }
         };
-        mActivity.setClickListener(mSubViewHolder, listener);
+        mSubViewHolder.setClickListener(listener);
     }
 }

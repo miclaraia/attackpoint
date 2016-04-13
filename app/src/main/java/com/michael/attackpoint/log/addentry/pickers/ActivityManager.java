@@ -43,7 +43,7 @@ public class ActivityManager implements Manager {
     public void setItem(LogInfoItem item) {
         if (item instanceof LogInfoActivity) {
             mLogInfoActivity = (LogInfoActivity) item;
-            mActivity.setText(mSubViewHolder, mLogInfoActivity.toString());
+            mSubViewHolder.setText(mLogInfoActivity.toString());
         }
         else throw new InputMismatchException();
     }
@@ -73,6 +73,6 @@ public class ActivityManager implements Manager {
                 PickerGenerator.genActivityPicker(manager);
             }
         };
-        mActivity.setClickListener(mSubViewHolder, listener);
+        mSubViewHolder.setClickListener(listener);
     }
 }

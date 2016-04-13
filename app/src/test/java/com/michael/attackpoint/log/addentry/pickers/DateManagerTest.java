@@ -67,7 +67,7 @@ public class DateManagerTest {
         mDateManager.setItem(mLogDate);
         assertThat((LogDate) mDateManager.getItem(), equalTo(mLogDate));
 
-        verify(mActivity).setText(mSubViewHolder, dateTest);
+        verify(mSubViewHolder).setText(dateTest);
     }
 
     @Test(expected = InputMismatchException.class)
@@ -83,7 +83,7 @@ public class DateManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mActivity).setClickListener(eq(mSubViewHolder), Matchers.<View.OnClickListener>any());
+        verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
     }
 
 
