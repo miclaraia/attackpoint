@@ -3,7 +3,15 @@ package com.michael.attackpoint.log.addentry.activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
+import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -16,9 +24,10 @@ import java.util.ArrayList;
  */
 public class TrainingFragment extends Fragment implements TrainingContract.View,
         ManagerContract.Activity {
+    private static final String DEBUG_TAG = "trainingfragment";
 
     private TrainingContract.Presenter mPresenter;
-    private SubV
+    private ViewHolder mViewHolder;
 
     public static TrainingFragment newInstance () {
         //Bundle arguments = new Bundle();
@@ -35,8 +44,15 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.onPause();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        mPresenter.onResume();
         //mPresenter.loadLog(false);
     }
 
@@ -55,6 +71,51 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
 
         View root = inflater.inflate(R.layout.fragment_log, viewGroup, false);
 
+        final ViewHolder vh = mViewHolder;
+
+        View workout = vh.workout.parent;
+        workout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.findViewById(R.id.item).performClick();
+            }
+        });
+        Spinner workoutSpinner = (Spinner) vh.workout.item;
+        ArrayAdapter<CharSequence> workoutAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.training_workout, android.R.layout.simple_spinner_item);
+        workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        workoutSpinner.setAdapter(workoutAdapter);
+
+        // initialize submit button
+        vh.submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(DEBUG_TAG, "submit button clicked, submitting training");
+                mPresenter.onSubmit();
+            }
+        });
+
+        mPresenter.onResume();
         return root;
+    }
+
+    @Override
+    public ViewHolder getViewHolder() {
+        return mViewHolder;
+    }
+
+    @Override
+    public void showNoNetworkError() {
+        // TODO
+    }
+
+    @Override
+    public void showInvalidEntryError() {
+        // TODO
+    }
+
+    @Override
+    public ManagerContract.Activity getManagerActivity() {
+        return this;
     }
 }

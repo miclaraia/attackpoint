@@ -4,7 +4,6 @@ import android.content.Intent;
 
 import com.android.volley.Request;
 import com.michael.attackpoint.log.loginfo.LogInfo;
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
 
 /**
  * Created by michael on 3/11/16.

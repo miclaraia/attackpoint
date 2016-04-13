@@ -18,7 +18,9 @@ public interface TrainingContract {
 
     interface Presenter {
 
-        void updateFields();
+        void onPause();
+
+        void onResume();
 
         void onSubmit();
 

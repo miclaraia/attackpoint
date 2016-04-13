@@ -95,8 +95,8 @@ public class LogDateTest {
 
     @Test
     public void parseLogDate_parsesLogString() throws ParseException {
-        String test = FORMATTER.format(LogDate.parseLogDate(LOG_DATE_STRING).getTime());
-        assertThat(test, equalTo(LOG_DATE));
+        String test = FORMATTER.format(LogDate.parseLogDate("enddate-2016-03-20").getTime());
+        assertThat(test, equalTo("20160320-00"));
     }
 
     @Test

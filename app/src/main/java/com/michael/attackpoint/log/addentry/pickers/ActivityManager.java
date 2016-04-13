@@ -1,21 +1,16 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.ActivityTable;
-import com.michael.attackpoint.log.addentry.TrainingPicker;
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
-import com.michael.attackpoint.log.loginfo.LogInfoItem;
 
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Activity;
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract.Manager;
 import com.michael.attackpoint.util.AndroidFactory;
-
-import java.util.InputMismatchException;
 
 /**
  * Created by michael on 4/6/16.
@@ -57,7 +52,7 @@ public class ActivityManager extends GenericPickerManager<LogInfoActivity> imple
         mSubViewHolder.setClickListener(listener);
     }
 
-    private String getFirstActivity() {
+    private static String getFirstActivity() {
         ActivityTable table = AndroidFactory.getInstance().genActivityTable();
         return table.getFirst();
     }

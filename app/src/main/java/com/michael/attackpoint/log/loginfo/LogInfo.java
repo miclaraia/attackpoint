@@ -155,4 +155,32 @@ public class LogInfo {
         }
         return json;
     }
+
+    public Strings strings() {
+        return new Strings(this);
+    }
+
+    public static class Strings {
+        public String activity;
+        public String climb;
+        public Integer color;
+        public String date;
+        public String description;
+        public String distance;
+        public String duration;
+        public String intensity;
+        public String pace;
+
+        public Strings(LogInfo logInfo) {
+            activity = logInfo.get(LogInfo.KEY_ACTIVITY).toString();
+            climb = logInfo.get(LogInfo.KEY_CLIMB).toString();
+            color = (Integer) logInfo.get(LogInfo.KEY_ACTIVITY).get();
+            date = logInfo.get(LogInfo.KEY_DATE).toString();
+            description = logInfo.get(LogInfo.KEY_DESCRIPTION).toString();
+            distance = logInfo.get(LogInfo.KEY_DISTANCE).toString();
+            duration = logInfo.get(LogInfo.KEY_DURATION).toString();
+            intensity = logInfo.get(LogInfo.KEY_INTENSITY).toString();
+            pace = logInfo.get(LogInfo.KEY_PACE).toString();
+        }
+    }
 }
