@@ -1,4 +1,4 @@
-package com.michael.attackpoint.log.addentry.details;
+package com.michael.attackpoint.log.addentry.activity;
 
 import android.content.Context;
 import android.view.View;
@@ -81,7 +81,7 @@ public class ViewHolder {
 
         public SubViewHolder_Distance(View v, int id) {
             super(v, id);
-            unit = parent.findViewById(R.id.unit);
+            unit = parent.findViewById(R.id.item_secondary);
         }
 
         public void setUnit(String unitString) {

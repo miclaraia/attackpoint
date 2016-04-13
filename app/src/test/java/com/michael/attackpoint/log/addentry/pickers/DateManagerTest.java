@@ -2,7 +2,7 @@ package com.michael.attackpoint.log.addentry.pickers;
 
 import android.view.View;
 
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
@@ -38,7 +38,7 @@ public class DateManagerTest {
     private ViewHolder mViewHolder;
 
     @Mock
-    private ViewHolder.SubViewHolder mSubViewHolder;
+    private ViewHolder.DoubleSubViewHolder mSubViewHolder;
 
     private DateManager mManager;
 
@@ -57,14 +57,17 @@ public class DateManagerTest {
     public void setItem_test() {
         mManager.mItem = null;
 
-        String testString = "test string";
-        when(mItem.toString()).thenReturn(testString);
+        String testDate = "test date";
+        String testSession = "test session";
+        when(mItem.getDate()).thenReturn(testDate);
+        when(mItem.getSession()).thenReturn(testSession);
 
         mManager.setItem(mItem);
         assertThat(mManager.mItem, equalTo(mItem));
         assertThat((LogDate) mManager.getItem(), equalTo(mItem));
 
-        verify(mSubViewHolder).setText(testString);
+        verify(mSubViewHolder).setText(testDate);
+        verify(mSubViewHolder).setTextSecondary(testSession);
     }
 
     @Test(expected = InputMismatchException.class)
@@ -80,6 +83,7 @@ public class DateManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
+        verify(mSubViewHolder).setItemClickListener(Matchers.<View.OnClickListener>any());
+        verify(mSubViewHolder).setSecondaryClickListener(Matchers.<View.OnClickListener>any());
     }
 }

@@ -2,7 +2,7 @@ package com.michael.attackpoint.log.addentry.pickers;
 
 import android.view.View;
 
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 

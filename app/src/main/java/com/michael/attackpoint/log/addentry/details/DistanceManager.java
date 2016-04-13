@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.Unit;
@@ -29,7 +30,7 @@ public class DistanceManager extends EditTextManager<LogDistance> {
         if (!text.equals("")) {
             distance.setDistance(Double.parseDouble(text));
 
-            String unit = ((TextView) mSVH.parent.findViewById(R.id.unit)).getText().toString();
+            String unit = ((TextView) mSVH.parent.findViewById(R.id.item_secondary)).getText().toString();
             distance.setUnit(Unit.UnitManager.getUnit(unit));
 
         } else distance.setDistance(0.0);

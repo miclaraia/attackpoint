@@ -1,15 +1,11 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
-import android.view.View;
-
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
-import com.michael.attackpoint.log.loginfo.LogDate;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,7 +14,6 @@ import java.util.InputMismatchException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

@@ -3,9 +3,10 @@ package com.michael.attackpoint.log.addentry.pickers;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.ActivityTable;
-import com.michael.attackpoint.log.addentry.details.ViewHolder;
+import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
+import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.util.AndroidFactory;
 
 import org.junit.Before;
@@ -79,7 +80,7 @@ public class ActivityManagerTest {
 
     @Test(expected = InputMismatchException.class)
     public void setNull_fail() {
-        mManager.setItem(null);
+        mManager.setItem((LogInfoItem) null);
     }
 
     @Test
