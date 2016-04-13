@@ -96,6 +96,11 @@ public class LogDate extends LogInfoItem<Calendar> {
         return sdf.format(mItem.getTime());
     }
 
+    public String getSession_form() {
+        SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT_FORM);
+        return sdf.format(mItem.getTime());
+    }
+
     public String getDate() {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         return sdf.format(mItem.getTime());

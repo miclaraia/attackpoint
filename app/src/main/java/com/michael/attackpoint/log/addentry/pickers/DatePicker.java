@@ -21,10 +21,6 @@ public class DatePicker extends DialogFragment implements ManagerContract.Picker
     public void setManager(ManagerContract.Manager manager) {
         mManager = manager;
     }
-
-    private static final String DATE_FORMAT = "dd MMM, yyyy";
-    private static final int PICK_TODAY = 1;
-    private static final int RESULT_OK = 10;
     private DatePickerDialog mDialog;
 
     @Override

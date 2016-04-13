@@ -7,11 +7,11 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.util.Singleton;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
-import com.michael.attackpoint.log.loginfo.LogSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -85,14 +85,14 @@ public class AddTrainingRequest extends Request<LogInfo> {
         Map<String, String> params = new HashMap<>();
 
         // Date
-        Calendar d = (Calendar) li.get(LogInfo.KEY_DATE).get();
+        LogDate logDate = (LogDate) li.get(LogInfo.KEY_DATE);
+        Calendar d = (Calendar) logDate.get();
         params.put(FIELD_YEAR, "" + d.get(Calendar.YEAR));
         params.put(FIELD_MONTH, "" + (new SimpleDateFormat("MM").format(d.getTime())));
         params.put(FIELD_DAY, "" + (new SimpleDateFormat("dd").format(d.getTime())));
 
         // Session
-        LogSession session = (LogSession) li.get(LogInfo.KEY_SESSION);
-        params.put(FIELD_SESSION, session.toFormString());
+        params.put(FIELD_SESSION, logDate.getSession_form());
 
         // Activity type
         Integer activity = ((LogInfoActivity) li.get(LogInfo.KEY_ACTIVITY)).getID();
@@ -118,7 +118,6 @@ public class AddTrainingRequest extends Request<LogInfo> {
 
         params.put("workouttypeid", "1");
         params.put("isplan", "0");
-        //params.put("sessionstarthour", "-1");
         params.put("shoes", "null");
 
         return params;

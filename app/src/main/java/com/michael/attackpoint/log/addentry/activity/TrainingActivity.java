@@ -26,7 +26,6 @@ import com.michael.attackpoint.log.addentry.details.DescriptionManager;
 import com.michael.attackpoint.log.addentry.details.DistanceManager;
 import com.michael.attackpoint.log.addentry.details.DurationManager;
 import com.michael.attackpoint.log.addentry.details.IntensityManager;
-import com.michael.attackpoint.log.addentry.details.SessionManager;
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
 
 /**

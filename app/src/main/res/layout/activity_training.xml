@@ -36,6 +36,16 @@
             android:textSize="@dimen/training_item_size"
             android:textColor="@color/white"
             android:layout_toRightOf="@id/label"/>
+        <TextView
+            android:id="@id/item_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="10:00 AM"
+            android:layout_marginLeft="30dp"
+            android:textSize="@dimen/training_item_size"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@id/item"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -179,7 +189,7 @@
             android:inputType="numberDecimal"
             />-->
         <TextView
-            android:id="@id/unit"
+            android:id="@id/item_secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="km"

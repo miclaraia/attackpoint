@@ -25,7 +25,7 @@ public class ViewHolder {
     public Button submit;
 
     public ViewHolder(View v) {
-        date = new SubViewHolder(v, R.id.training_date);
+        date = new DoubleSubViewHolder(v, R.id.training_date);
         session = new SubViewHolder(v, R.id.training_session);
         activity = new SubViewHolder(v, R.id.training_activity);
         workout = new SubViewHolder(v, R.id.training_workout);
@@ -44,11 +44,6 @@ public class ViewHolder {
         public SubViewHolder(View v, int id) {
             parent = v.findViewById(id);
             item = parent.findViewById(R.id.item);
-        }
-
-        public SubViewHolder(View parent, View item) {
-            this.parent = parent;
-            this.item = item;
         }
 
         public void setText(String text) {
@@ -95,6 +90,27 @@ public class ViewHolder {
 
         public void setUnitClickListener(View.OnClickListener listener) {
             unit.setOnClickListener(listener);
+        }
+    }
+
+    public class DoubleSubViewHolder extends SubViewHolder {
+        public View secondary;
+
+        public DoubleSubViewHolder(View v, int id) {
+            super(v, id);
+            secondary = parent.findViewById(R.id.item_secondary);
+        }
+
+        public void setTextSecondary(String text) {
+            ((TextView) secondary).setText(text);
+        }
+
+        public void setItemClickListener(View.OnClickListener listener) {
+            item.setOnClickListener(listener);
+        }
+
+        public void setSecondaryClickListener(View.OnClickListener listener) {
+            secondary.setOnClickListener(listener);
         }
     }
 }

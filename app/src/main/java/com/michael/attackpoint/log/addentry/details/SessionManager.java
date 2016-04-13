@@ -34,7 +34,8 @@ public class SessionManager extends PickerManager<LogSession> {
 
     @Override
     protected String getKey() {
-        return LogInfo.KEY_SESSION;
+        throw new RuntimeException();
+        //return LogInfo.KEY_SESSION;
     }
 
     @Override

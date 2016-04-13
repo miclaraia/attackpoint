@@ -3,6 +3,7 @@
 
     <item type="id" name="label" />
     <item type="id" name="item" />
+    <item type="id" name="item_secondary" />
     <item type="id" name="training_intensity"/>
     <item type="id" name="training_duration"/>
     <item type="id" name="training_distance"/>
@@ -13,7 +14,6 @@
     <item type="id" name="training_session"/>
     <item type="id" name="training_parent"/>
 
-    <item type="id" name="unit"/>
 
     <dimen name="training_item_height">55dp</dimen>
     <dimen name="training_label_width">60dp</dimen>
