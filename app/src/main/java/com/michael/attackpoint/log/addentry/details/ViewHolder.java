@@ -31,7 +31,7 @@ public class ViewHolder {
         workout = new SubViewHolder(v, R.id.training_workout);
         intensity = new SubViewHolder(v, R.id.training_intensity);
         duration = new SubViewHolder(v, R.id.training_duration);
-        distance = new SubViewHolder(v, R.id.training_distance);
+        distance = new SubViewHolder_Distance(v, R.id.training_distance);
         description = new SubViewHolder(v, R.id.training_description);
 
         submit = (Button) v.findViewById(R.id.training_submit);
@@ -46,8 +46,17 @@ public class ViewHolder {
             item = parent.findViewById(R.id.item);
         }
 
+        public SubViewHolder(View parent, View item) {
+            this.parent = parent;
+            this.item = item;
+        }
+
         public void setText(String text) {
-            ((TextView) item).setText(text);
+            if (item instanceof EditText) {
+                ((EditText) item).setText(text);
+            } else if (item instanceof TextView) {
+                ((TextView) item).setText(text);
+            }
         }
 
         public void setClickListener(View.OnClickListener listener) {
@@ -67,8 +76,25 @@ public class ViewHolder {
             });
         }
 
-        public String getEditText() {
+        public String getEditTextInput() {
             return ((EditText) item).getText().toString();
+        }
+    }
+
+    public class SubViewHolder_Distance extends SubViewHolder {
+        public View unit;
+
+        public SubViewHolder_Distance(View v, int id) {
+            super(v, id);
+            unit = parent.findViewById(R.id.unit);
+        }
+
+        public void setUnit(String unitString) {
+            ((TextView) unit).setText(unitString);
+        }
+
+        public void setUnitClickListener(View.OnClickListener listener) {
+            unit.setOnClickListener(listener);
         }
     }
 }

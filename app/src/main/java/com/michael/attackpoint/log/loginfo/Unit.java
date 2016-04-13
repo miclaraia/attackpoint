@@ -3,6 +3,7 @@ package com.michael.attackpoint.log.loginfo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,9 +67,9 @@ public class Unit {
     }
 
     public static class UnitManager {
-        private static final ArrayList<Unit> mUnits;
+        private static final List<Unit> mUnits;
         static {
-            ArrayList<Unit> list = new ArrayList<>();
+            List<Unit> list = new ArrayList<>();
             list.add(new Unit("kilometers", "km", 1));
             list.add(new Unit("miles", "mi", 0.625));
             list.add(new Unit("league", "lg", .2083));
@@ -82,6 +83,10 @@ public class Unit {
             }
 
             return getDefault();
+        }
+
+        public static List<Unit> getUnitList() {
+            return mUnits;
         }
 
         public static Unit getDefault() {

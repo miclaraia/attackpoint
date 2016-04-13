@@ -18,4 +18,10 @@ public class PickerGenerator {
         dialog.setManager(manager);
         return dialog;
     }
+
+    static DialogFragment genUnitPicker(ManagerContract.Manager manager) {
+        DistanceUnitPicker dialog = new DistanceUnitPicker();
+        dialog.setManager(manager);
+        return dialog;
+    }
 }
