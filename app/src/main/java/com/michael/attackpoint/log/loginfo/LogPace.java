@@ -115,6 +115,14 @@ public class LogPace extends LogInfoItem<LogPace.Pace> {
         return pace;
     }
 
+    public void setUnit(Unit unit) {
+        mItem.setUnit(unit);
+    }
+
+    public void setPace(Calendar pace) {
+        mItem.setPace(pace);
+    }
+
     public static class Pace {
         private Calendar mPace;
         private Unit mUnit;

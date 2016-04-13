@@ -36,21 +36,21 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
 
     @Override
     public boolean isEmpty() {
-        if (mItem.climb == 0) return true;
+        if (mItem.getClimb() == 0) return true;
         return false;
     }
 
     @Override
     public String toString() {
         Formatter f = new Formatter();
-        return f.format(FORMAT, mItem.climb, mItem.unit).toString();
+        return f.format(FORMAT, mItem.getClimb(), mItem.getUnit()).toString();
     }
 
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {
-            json.put(JSON_CLIMB, mItem.climb);
-            json.put(JSON_UNIT, mItem.unit);
+            json.put(JSON_CLIMB, mItem.getClimb());
+            json.put(JSON_UNIT, mItem.getUnit());
             return json;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -63,8 +63,8 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
             int c = (int) json.get(JSON_CLIMB);
             String u = (String) json.get(JSON_UNIT);
 
-            mItem.climb = c;
-            mItem.unit = u;
+            mItem.setClimb(c);
+            mItem.setUnit(u);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -87,11 +87,19 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
         }
 
         if (n_found) {
-            climb.climb = Integer.parseInt(sb.toString());
-            climb.unit = sb_unit.toString();
+            climb.setClimb(Integer.parseInt(sb.toString()));
+            climb.setUnit(sb_unit.toString());
         }
 
         return climb;
+    }
+
+    public void setClimb(int climb) {
+        mItem.setClimb(climb);
+    }
+
+    public void setUnit(String unit) {
+        mItem.setUnit(unit);
     }
 
     public static class Climb {
@@ -99,30 +107,46 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
         public static final String UNIT_IMPERIAL = "ft";
         public static final String UNIT_DEFAULT = UNIT_METRIC;
 
-        public int climb;
-        public String unit;
+        private int mClimb;
+        private String mUnit;
 
         public Climb() {
-            this.climb = 0;
-            this.unit = UNIT_DEFAULT;
+            mClimb = 0;
+            mUnit = UNIT_DEFAULT;
         }
 
         public Climb(int climb) {
-            this.climb = climb;
-            unit = UNIT_DEFAULT;
+            mClimb = climb;
+            mUnit = UNIT_DEFAULT;
         }
 
         public Climb(int climb, String unit) {
-            this.climb = climb;
-            this.unit = unit;
+            mClimb = climb;
+            mUnit = unit;
 
+        }
+
+        public void setClimb(int climb) {
+            mClimb = climb;
+        }
+
+        public void setUnit(String unit) {
+            mUnit = unit;
+        }
+
+        public int getClimb() {
+            return mClimb;
+        }
+
+        public String getUnit() {
+            return mUnit;
         }
 
         @Override
         public boolean equals(Object o) {
             if (o instanceof Climb) {
                 Climb c = (Climb) o;
-                if (c.climb == this.climb && c.unit.equals(this.unit)) return true;
+                if (c.mClimb == this.mClimb && c.mUnit.equals(this.mUnit)) return true;
             }
             return false;
         }

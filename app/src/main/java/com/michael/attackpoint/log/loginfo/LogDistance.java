@@ -74,6 +74,14 @@ public class LogDistance extends LogInfoItem<LogDistance.Distance> {
         }
     }
 
+    public void setDistance(double distance) {
+        mItem.setDistance(distance);
+    }
+
+    public void setUnit(Unit unit) {
+        mItem.setUnit(unit);
+    }
+
     public static class Distance {
         private Double mDistance;
         private Unit mUnit;
