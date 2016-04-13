@@ -15,12 +15,18 @@ import java.util.Date;
  * @author Michael Laraia
  */
 public class LogDate extends LogInfoItem<Calendar> {
+    protected static final String FULL_FORMAT = "EEE MMM d - h a";
     protected static final String DATE_FORMAT = "EEE MMM d";
-    protected static final String JSON_FORMAT = "yyyy-MM-dd";
+    protected static final String SESSION_FORMAT = "h a";
+    protected static final String SESSION_FORMAT_FORM = "H";
     //todo change to get date from link
-    //private static final String LOG_FORMAT = "cccc MMM d #";
-    private static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
+    protected static final String LOG_PARSE = "'enddate-'yyyy-MM-dd";
+    protected static final String LOG_PARSE_SESSION = "hh a";
+
     public static final String JSON = "date";
+    protected static final String JSON_FORMAT = "yyyy-MM-dd-kk:mm";
+    //todo change to get date from link
+
 
     public LogDate() {
         super();
@@ -47,7 +53,7 @@ public class LogDate extends LogInfoItem<Calendar> {
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(FULL_FORMAT);
         return sdf.format(mItem.getTime());
     }
 
@@ -76,10 +82,37 @@ public class LogDate extends LogInfoItem<Calendar> {
         }
     }
 
-    public static Calendar parseLog(String dateString) throws ParseException{
+    public void setSession(int hour) {
+        mItem.set(Calendar.HOUR_OF_DAY, hour);
+    }
+
+    public void setDate(Calendar date) {
+        date.set(Calendar.HOUR_OF_DAY, mItem.get(Calendar.HOUR_OF_DAY));
+        mItem = date;
+    }
+
+    public String getSession() {
+        SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT);
+        return sdf.format(mItem.getTime());
+    }
+
+    public String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(mItem.getTime());
+    }
+
+    public static Calendar parseLogDate(String dateString) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE);
         Calendar cal = Calendar.getInstance();
         cal.setTime(sdf.parse(dateString));
+        cal.set(Calendar.HOUR_OF_DAY, 0);
         return cal;
+    }
+
+    public static int parseLogSession(String sessionString) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(LOG_PARSE_SESSION);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(sdf.parse(sessionString));
+        return cal.get(Calendar.HOUR_OF_DAY);
     }
 }

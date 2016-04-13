@@ -2,6 +2,7 @@ package com.michael.attackpoint.log.loginfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,10 +20,10 @@ import static org.junit.Assert.assertFalse;
  * Created by michael on 3/21/16.
  */
 public class LogDateTest {
-    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyyMMdd");
-    private static final String DATE = "20160301";
-    private static final String LOG_STRING = "enddate-2016-03-20";
-    private static final String LOG_DATE = "20160320";
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyyMMdd-HH");
+    private static final String DATE = "20160301-00";
+    private static final String LOG_DATE_STRING = "enddate-2016-03-20";
+    private static final String LOG_DATE = "20160320-00";
 
     private LogDate mLogDate;
 
@@ -48,13 +49,12 @@ public class LogDateTest {
     }
 
     @Test
-    public void toString_returnsDateString() {
-        Calendar cal = getCal(DATE);
+    public void toString_returnsFullString() {
+        Calendar cal = getCal("20160301-15");
         mLogDate.set(cal);
-        SimpleDateFormat sdf = new SimpleDateFormat(LogDate.DATE_FORMAT);
 
         String date = mLogDate.toString();
-        assertThat(date, equalTo(sdf.format(cal.getTime())));
+        assertThat(date, equalTo("Tue Mar 1 - 3 PM"));
     }
 
     @Test
@@ -94,8 +94,46 @@ public class LogDateTest {
     }
 
     @Test
-    public void parseLog_parsesLogString() throws ParseException {
-        String test = FORMATTER.format(LogDate.parseLog(LOG_STRING).getTime());
+    public void parseLogDate_parsesLogString() throws ParseException {
+        String test = FORMATTER.format(LogDate.parseLogDate(LOG_DATE_STRING).getTime());
         assertThat(test, equalTo(LOG_DATE));
+    }
+
+    @Test
+    public void parseLogSession_parsesLogString() throws ParseException {
+        assertThat(LogDate.parseLogSession("7 AM"), equalTo(7));
+        assertThat(LogDate.parseLogSession("7 PM"), equalTo(19));
+    }
+
+    @Test
+    public void setSession_preservesDate() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = getCal("20160301-00");
+        mLogDate.setDate(cal);
+
+        String date_before = sdf.format(mLogDate.get().getTime());
+
+        mLogDate.setSession(7);
+        String date_after = sdf.format(mLogDate.get().getTime());
+
+        assertThat(date_before, equalTo(date_after));
+    }
+
+    @Test
+    public void getSession_formatsSession() {
+        mLogDate.setSession(7);
+        assertThat(mLogDate.getSession(), equalTo("7 AM"));
+
+        mLogDate.setSession(19);
+        assertThat(mLogDate.getSession(), equalTo("7 PM"));
+    }
+
+    @Test
+    public void getDate_formatsDate() {
+        mLogDate.setDate(getCal("20160301-00"));
+        assertThat(mLogDate.getDate(), equalTo("Tue Mar 1"));
+
+        mLogDate.setDate(getCal("20160410-05"));
+        assertThat(mLogDate.getDate(), equalTo("Sun Apr 10"));
     }
 }

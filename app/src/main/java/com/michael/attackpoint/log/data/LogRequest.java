@@ -256,7 +256,7 @@ public class LogRequest extends com.android.volley.Request<List<LogInfo>> {
 
         LogDate ld = new LogDate();
         try {
-            Calendar cal = LogDate.parseLog(dateString);
+            Calendar cal = LogDate.parseLogDate(dateString);
             ld.set(cal);
         } catch (ParseException e) {
             e.printStackTrace();
