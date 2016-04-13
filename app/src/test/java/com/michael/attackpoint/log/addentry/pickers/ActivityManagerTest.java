@@ -68,13 +68,13 @@ public class ActivityManagerTest {
     public void setItem_test() {
         mManager.mItem = null;
 
-        String dateTest = "test activity";
-        when(mItem.toString()).thenReturn(dateTest);
+        String testString = "test string";
+        when(mItem.toString()).thenReturn(testString);
 
         mManager.setItem(mItem);
         assertThat((LogInfoActivity) mManager.getItem(), equalTo(mItem));
 
-        verify(mSubViewHolder).setText(dateTest);
+        verify(mSubViewHolder).setText(testString);
     }
 
     @Test(expected = InputMismatchException.class)

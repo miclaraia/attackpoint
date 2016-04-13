@@ -1,5 +1,6 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
+import android.app.FragmentManager;
 import android.view.View;
 
 import com.michael.attackpoint.log.addentry.details.ViewHolder;
@@ -61,10 +62,13 @@ public class DistanceManager implements ManagerContract.Manager {
         mSubViewHolder.setEditTextListener(mActivity);
 
         final ManagerContract.Manager manager = this;
+        final FragmentManager fm = mActivity.getFragmentManager();
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PickerGenerator.genUnitPicker(manager);
+                DistanceUnitPicker dialog = new DistanceUnitPicker();
+                dialog.setManager(manager);
+                dialog.show(fm, "durationmanager");
             }
         };
         mSubViewHolder.setUnitClickListener(listener);
