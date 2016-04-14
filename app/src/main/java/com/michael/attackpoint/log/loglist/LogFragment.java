@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.ViewOverlay;
 
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
 import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
@@ -43,7 +44,7 @@ public class LogFragment extends Fragment implements LogContract.View {
     private LogAdapter mAdapter;
     private LogContract.Presenter mPresenter;
 
-    public static LogFragment newInstance (String user_id) {
+    public static LogFragment newInstance(String user_id) {
         Bundle arguments = new Bundle();
         arguments.putString(USER_ID, user_id);
         LogFragment fragment = new LogFragment();
@@ -88,28 +89,8 @@ public class LogFragment extends Fragment implements LogContract.View {
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // TODO Floating action button
-        FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setVisibility(View.VISIBLE);
-            fab.setImageResource(R.drawable.ic_playlist_add);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Activity activity = getActivity();
-                    Fragment fragment = TrainingFragment.newInstance();
-                    FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+        initFloatingActionButton();
 
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                }
-            });
-        }
-
-        // TODO pull to refresh
         // Pull-to-refresh
         SwipeRefreshLayout swipeRefreshLayout =
                 (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
@@ -125,6 +106,41 @@ public class LogFragment extends Fragment implements LogContract.View {
         });
 
         return root;
+    }
+
+    private void initFloatingActionButton() {
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            if (isMyAccount()) {
+                // Own log, button opens window to add training
+                fab.setVisibility(View.VISIBLE);
+                fab.setImageResource(R.drawable.ic_playlist_add);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Activity activity = getActivity();
+                        Fragment fragment = TrainingFragment.newInstance();
+                        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                    }
+                });
+            } else {
+                // Someone else's log, button opens window to add comment
+                // TODO
+                fab.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private boolean isMyAccount() {
+        int myUser = Login.getInstance().getUserId();
+        if (myUser == getArguments().getInt(USER_ID)) return true;
+        return false;
     }
 
     /**
