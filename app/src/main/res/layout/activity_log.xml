@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_map" />
+        android:src="@drawable/ic_playlist_add" />
 
         <RelativeLayout
             android:id="@+id/fragment_container"

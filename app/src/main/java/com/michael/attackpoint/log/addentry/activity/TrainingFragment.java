@@ -3,6 +3,7 @@ package com.michael.attackpoint.log.addentry.activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,19 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_training, viewGroup, false);
+
+        // Hide floating action button
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setVisibility(View.GONE);
+        }
+
+        // Initialize view holder for input fields
         mViewHolder = new ViewHolder(root);
 
+        // Initialize workout spinner
+        // TODO
         final ViewHolder vh = mViewHolder;
         View workout = vh.workout.parent;
         workout.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +106,7 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
         workoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         workoutSpinner.setAdapter(workoutAdapter);
 
-        // initialize submit button
+        // Initialize submit button
         vh.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

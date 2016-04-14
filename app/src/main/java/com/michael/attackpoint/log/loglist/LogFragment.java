@@ -1,6 +1,8 @@
 package com.michael.attackpoint.log.loglist;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +24,7 @@ import android.view.ViewOverlay;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
+import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogInfo;
@@ -85,6 +89,26 @@ public class LogFragment extends Fragment implements LogContract.View {
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // TODO Floating action button
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setImageResource(R.drawable.ic_playlist_add);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity activity = getActivity();
+                    Fragment fragment = TrainingFragment.newInstance();
+                    FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                }
+            });
+        }
+
         // TODO pull to refresh
         // Pull-to-refresh
         SwipeRefreshLayout swipeRefreshLayout =

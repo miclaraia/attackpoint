@@ -1,6 +1,7 @@
 package com.michael.attackpoint;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements DrawerContract.Ac
         Fragment fragment = new UsersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,9 +60,13 @@ public class MainActivity extends AppCompatActivity implements DrawerContract.Ac
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Singleton.getInstance().setActivity(this);
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
