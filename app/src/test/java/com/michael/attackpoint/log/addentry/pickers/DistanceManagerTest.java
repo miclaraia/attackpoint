@@ -18,7 +18,9 @@ import java.util.InputMismatchException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -106,22 +108,7 @@ public class DistanceManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
-    }
-
-    @Test
-    public void updateDistance_parsesDouble() {
-        String testString = "1.6";
-        Double testDouble = 1.6;
-        Distance distance = new Distance();
-
-        when(mSubViewHolder.getEditTextInput()).thenReturn(testString);
-        when(mItem.get()).thenReturn(distance);
-
-        mManager.setItem(mItem);
-        mManager.updateDistance();
-        verify(mSubViewHolder).getEditTextInput();
-        verify(mItem).setDistance(testDouble);
+        verify(mSubViewHolder, never()).setClickListener(Matchers.<View.OnClickListener>any());
     }
 
     @Test
@@ -155,8 +142,8 @@ public class DistanceManagerTest {
         mManager.mItem = mItem;
 
         mManager.update();
-        mSubViewHolder.setText(testDouble.toString());
-        mSubViewHolder.setUnit(testUnit);
+        verify(mSubViewHolder).setText(testDouble.toString());
+        verify(mSubViewHolder).setUnit(testUnit);
     }
 
     @Test
@@ -169,7 +156,48 @@ public class DistanceManagerTest {
         mManager.mItem = mItem;
 
         mManager.setView(mViewHolder);
-        mSubViewHolder.setText(testDouble.toString());
-        mSubViewHolder.setUnit(testUnit);
+        verify(mSubViewHolder).setText(testDouble.toString());
+        verify(mSubViewHolder).setUnit(testUnit);
+    }
+
+    @Test
+    public void updateDistance_parsesDouble() {
+        Double testDouble = 1.6;
+        Distance distance = new Distance();
+
+        when(mSubViewHolder.getEditTextInput()).thenReturn(testDouble.toString());
+        when(mItem.get()).thenReturn(distance);
+
+        mManager.setItem(mItem);
+        mManager.updateDistance();
+        verify(mSubViewHolder).getEditTextInput();
+        verify(mItem).setDistance(testDouble);
+    }
+
+    @Test
+    public void updateDistance_emptyInputTest() {
+        when(mSubViewHolder.getEditTextInput()).thenReturn("");
+        mManager.mItem = mItem;
+
+        mManager.updateDistance();
+        verify(mItem, never()).setDistance(anyDouble());
+    }
+
+    @Test
+    public void updateDistance_invalidInputTest() {
+        when(mSubViewHolder.getEditTextInput()).thenReturn("asdf");
+        mManager.mItem = mItem;
+
+        mManager.updateDistance();
+        verify(mItem, never()).setDistance(anyDouble());
+    }
+
+    @Test
+    public void updateDistance_nullInputTest() {
+        when(mSubViewHolder.getEditTextInput()).thenReturn(null);
+        mManager.mItem = mItem;
+
+        mManager.updateDistance();
+        verify(mItem, never()).setDistance(anyDouble());
     }
 }

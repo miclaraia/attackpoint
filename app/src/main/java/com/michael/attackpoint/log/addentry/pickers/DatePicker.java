@@ -49,7 +49,7 @@ public class DatePicker extends DialogFragment implements ManagerContract.Picker
         cal.set(year, monthOfYear, dayOfMonth);
 
         LogDate logDate = (LogDate) mManager.getItem();
-        logDate.set(cal);
+        logDate.setDate(cal);
         mManager.setItem(logDate);
     }
 }

@@ -49,12 +49,21 @@ public class LogDateTest {
     }
 
     @Test
-    public void toString_returnsFullString() {
+    public void toString_nonemptySession() {
         Calendar cal = getCal("20160301-15");
         mLogDate.set(cal);
 
         String date = mLogDate.toString();
         assertThat(date, equalTo("Tue Mar 1 - 3 PM"));
+    }
+
+    @Test
+    public void toString_emptySession() {
+        Calendar cal = getCal("20160301-00");
+        mLogDate.set(cal);
+
+        String date = mLogDate.toString();
+        assertThat(date, equalTo("Tue Mar 1"));
     }
 
     @Test
@@ -120,6 +129,14 @@ public class LogDateTest {
     }
 
     @Test
+    public void setDate_preservesDate() throws ParseException {
+        mLogDate.set(getCal("20160301-05"));
+        mLogDate.setDate(getCal("20160301-00"));
+
+        assertThat(mLogDate.getSession(), equalTo("5 AM"));
+    }
+
+    @Test
     public void getSession_formatsSession() {
         mLogDate.setSession(7);
         assertThat(mLogDate.getSession(), equalTo("7 AM"));
@@ -129,11 +146,37 @@ public class LogDateTest {
     }
 
     @Test
+    public void getSession_formTest() {
+        mLogDate.setSession(7);
+        String test = mLogDate.getSession_form();
+        assertThat(test, equalTo("7"));
+    }
+
+    @Test
+    public void getSession_emptyFormTest() {
+        mLogDate.setSession(0);
+        String test = mLogDate.getSession_form();
+        assertThat(test, equalTo("-1"));
+    }
+
+    @Test
     public void getDate_formatsDate() {
         mLogDate.setDate(getCal("20160301-00"));
         assertThat(mLogDate.getDate(), equalTo("Tue Mar 1"));
 
         mLogDate.setDate(getCal("20160410-05"));
         assertThat(mLogDate.getDate(), equalTo("Sun Apr 10"));
+    }
+
+    @Test
+    public void isEmptySession_true() {
+        mLogDate.setSession(0);
+        assertTrue(mLogDate.isEmptySession());
+    }
+
+    @Test
+    public void isEmptySession_false() {
+        mLogDate.setSession(5);
+        assertFalse(mLogDate.isEmptySession());
     }
 }

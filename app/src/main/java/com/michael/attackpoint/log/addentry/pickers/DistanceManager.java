@@ -83,7 +83,15 @@ public class DistanceManager implements ManagerContract.Manager {
     }
 
     protected void updateDistance() {
-        Double distance = Double.parseDouble(mSubViewHolder.getEditTextInput());
-        mItem.setDistance(distance);
+        String input = mSubViewHolder.getEditTextInput();
+        if (input != null && !input.equals("")) {
+            try {
+                Double distance = Double.parseDouble(input);
+                mItem.setDistance(distance);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                // input somehow invalid
+            }
+        }
     }
 }

@@ -174,7 +174,7 @@ public class LogInfo {
         public Strings(LogInfo logInfo) {
             activity = logInfo.get(LogInfo.KEY_ACTIVITY).toString();
             climb = logInfo.get(LogInfo.KEY_CLIMB).toString();
-            color = (Integer) logInfo.get(LogInfo.KEY_ACTIVITY).get();
+            color = (Integer) logInfo.get(LogInfo.KEY_COLOR).get();
             date = logInfo.get(LogInfo.KEY_DATE).toString();
             description = logInfo.get(LogInfo.KEY_DESCRIPTION).toString();
             distance = logInfo.get(LogInfo.KEY_DISTANCE).toString();

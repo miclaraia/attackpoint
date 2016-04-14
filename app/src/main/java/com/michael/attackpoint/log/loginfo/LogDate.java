@@ -51,9 +51,17 @@ public class LogDate extends LogInfoItem<Calendar> {
         return false;
     }
 
+    public boolean isEmptySession() {
+        int session = mItem.get(Calendar.HOUR_OF_DAY);
+        if (session == 0) return true;
+        return false;
+    }
+
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat(FULL_FORMAT);
+        SimpleDateFormat sdf;
+        if (!isEmptySession()) sdf = new SimpleDateFormat(FULL_FORMAT);
+        else sdf = new SimpleDateFormat(DATE_FORMAT);
         return sdf.format(mItem.getTime());
     }
 
@@ -92,13 +100,19 @@ public class LogDate extends LogInfoItem<Calendar> {
     }
 
     public String getSession() {
-        SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT);
-        return sdf.format(mItem.getTime());
+        if (!isEmptySession()) {
+            SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT);
+            return sdf.format(mItem.getTime());
+        }
+        return "";
     }
 
     public String getSession_form() {
-        SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT_FORM);
-        return sdf.format(mItem.getTime());
+        if (!isEmptySession()) {
+            SimpleDateFormat sdf = new SimpleDateFormat(SESSION_FORMAT_FORM);
+            return sdf.format(mItem.getTime());
+        }
+        return "-1";
     }
 
     public String getDate() {
