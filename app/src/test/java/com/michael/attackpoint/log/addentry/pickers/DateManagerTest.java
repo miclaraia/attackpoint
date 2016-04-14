@@ -99,4 +99,17 @@ public class DateManagerTest {
         verify(mSubViewHolder).setText(testDate);
         verify(mSubViewHolder).setTextSecondary(testSession);
     }
+
+    @Test
+    public void setView_updatesText() {
+        String testDate = "test date";
+        String testSession = "test session";
+        when(mItem.getDate()).thenReturn(testDate);
+        when(mItem.getSession()).thenReturn(testSession);
+        mManager.mItem = mItem;
+
+        mManager.setView(mViewHolder);
+        verify(mSubViewHolder).setText(testDate);
+        verify(mSubViewHolder).setTextSecondary(testSession);
+    }
 }

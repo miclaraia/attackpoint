@@ -91,4 +91,14 @@ public class DurationManagerTest {
         mManager.update();
         verify(mSubViewHolder).setText(testString);
     }
+
+    @Test
+    public void setView_updatesText() {
+        String testString = "test string";
+        when(mItem.toString()).thenReturn(testString);
+        mManager.mItem = mItem;
+
+        mManager.setView(mViewHolder);
+        verify(mSubViewHolder).setText(testString);
+    }
 }

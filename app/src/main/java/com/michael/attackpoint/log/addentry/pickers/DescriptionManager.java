@@ -27,6 +27,7 @@ public class DescriptionManager implements ManagerContract.Manager {
     @Override
     public void setView(ViewHolder vh) {
         mSubViewHolder = vh.description;
+        update();
     }
 
     @Override

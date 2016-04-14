@@ -26,6 +26,7 @@ public abstract class GenericPickerManager<T extends LogInfoItem> implements Man
     @Override
     public void setView(ViewHolder vh) {
         mSubViewHolder = getViewHolder(vh);
+        update();
     }
 
     @Override

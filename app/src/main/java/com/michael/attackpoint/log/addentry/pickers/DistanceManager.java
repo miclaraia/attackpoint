@@ -30,6 +30,7 @@ public class DistanceManager implements ManagerContract.Manager {
     @Override
     public void setView(ViewHolder vh) {
         mSubViewHolder = (ViewHolder.SubViewHolder_Distance) vh.distance;
+        update();
     }
 
     @Override
