@@ -8,7 +8,6 @@ import com.michael.attackpoint.log.loginfo.LogInfo;
  * Created by michael on 4/13/16.
  */
 public class TrainingPresenter implements TrainingContract.Presenter {
-
     private TrainingContract.View mView;
     private ManagerContract.Activity mManagerActivity;
     protected Managers mManagers;
@@ -33,9 +32,7 @@ public class TrainingPresenter implements TrainingContract.Presenter {
     @Override
     public void onSubmit() {
         // TODO submits loginfo to attackpoint
-        /*mLogInfo = updateLogInfo(mLogInfo);
-
-        Request request = performRequest(mLogInfo);
-        Singleton.getInstance().add(request);*/
+        mLogInfo = mManagers.updateLogInfo(mLogInfo);
+        mView.createRequest(mLogInfo);
     }
 }

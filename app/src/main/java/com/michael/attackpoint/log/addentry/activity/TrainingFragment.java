@@ -11,8 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.log.addentry.pickers.ManagerContract;
+import com.michael.attackpoint.log.addentry.request.AddTrainingRequest;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loglist.LogPresenter;
@@ -28,6 +34,7 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
 
     private TrainingContract.Presenter mPresenter;
     private ViewHolder mViewHolder;
+    private RequestQueue mRequestQueue;
 
     public static TrainingFragment newInstance () {
         //Bundle arguments = new Bundle();
@@ -63,6 +70,7 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
         setRetainInstance(true);
 
         mPresenter = new TrainingPresenter(this);
+        mRequestQueue = Volley.newRequestQueue(getActivity());
     }
 
     @Override
@@ -115,5 +123,23 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
     @Override
     public ManagerContract.Activity getManagerActivity() {
         return this;
+    }
+
+    @Override
+    public void createRequest(LogInfo logInfo) {
+        Request request = new AddTrainingRequest(logInfo, new Response.Listener<LogInfo>() {
+            @Override
+            public void onResponse(LogInfo response) {
+                Log.d(DEBUG_TAG, response.toString());
+                getActivity().finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        });
+
+        mRequestQueue.add(request);
     }
 }
