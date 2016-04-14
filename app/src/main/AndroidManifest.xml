@@ -44,7 +44,6 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".log.addentry.activity.TrainingActivity"
-            android:theme="@style/AppTheme"
             android:label="Add Training"/>
 
         <meta-data

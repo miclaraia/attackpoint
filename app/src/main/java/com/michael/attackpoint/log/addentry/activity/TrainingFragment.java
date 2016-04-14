@@ -69,10 +69,10 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_log, viewGroup, false);
+        View root = inflater.inflate(R.layout.fragment_training, viewGroup, false);
+        mViewHolder = new ViewHolder(root);
 
         final ViewHolder vh = mViewHolder;
-
         View workout = vh.workout.parent;
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +94,6 @@ public class TrainingFragment extends Fragment implements TrainingContract.View,
                 mPresenter.onSubmit();
             }
         });
-
-        mPresenter.onResume();
         return root;
     }
 
