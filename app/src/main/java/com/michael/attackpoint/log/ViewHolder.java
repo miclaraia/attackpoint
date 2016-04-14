@@ -69,10 +69,10 @@ public class ViewHolder {
             vClimb.hide();
             vEffort.hide();
         } else {
-            if (!li.get(LogInfo.KEY_DURATION).isEmpty()) vTime.setText(text.duration);
-            if (!li.get(LogInfo.KEY_DISTANCE).isEmpty()) vDist.setText(text.distance);
-            if (!li.get(LogInfo.KEY_PACE).isEmpty()) vPace.setText(text.pace);
-            if (!li.get(LogInfo.KEY_CLIMB).isEmpty()) vClimb.setText(text.climb);
+            vTime.setText(text.duration);
+            vDist.setText(text.distance);
+            vPace.setText(text.pace);
+            vClimb.setText(text.climb);
         }
     }
 
