@@ -76,11 +76,6 @@ public class DescriptionManagerTest {
     }
 
     @Test
-    public void setClickListener_attachesToActivity() {
-        verify(mSubViewHolder).setEditTextListener(mActivity);
-    }
-
-    @Test
     public void update_updatesText() {
         String testString = "test string";
         when(mItem.toString()).thenReturn(testString);

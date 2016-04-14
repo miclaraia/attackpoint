@@ -1,5 +1,7 @@
 package com.michael.attackpoint.log.addentry.pickers;
 
+import android.view.View;
+
 import com.michael.attackpoint.log.addentry.activity.ViewHolder;
 import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDistance.Distance;
@@ -8,6 +10,7 @@ import com.michael.attackpoint.log.loginfo.Unit;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -103,7 +106,7 @@ public class DistanceManagerTest {
 
     @Test
     public void setClickListener_attachesToActivity() {
-        verify(mSubViewHolder).setEditTextListener(mActivity);
+        verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
     }
 
     @Test

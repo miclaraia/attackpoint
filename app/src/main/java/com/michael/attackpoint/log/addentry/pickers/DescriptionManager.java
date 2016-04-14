@@ -52,7 +52,6 @@ public class DescriptionManager implements ManagerContract.Manager {
 
     @Override
     public void setClickListener() {
-        mSubViewHolder.setEditTextListener(mActivity);
     }
 
     @Override

@@ -57,8 +57,6 @@ public class DistanceManager implements ManagerContract.Manager {
 
     @Override
     public void setClickListener() {
-        mSubViewHolder.setEditTextListener(mActivity);
-
         final ManagerContract.Manager manager = this;
         final FragmentManager fm = mActivity.getFragmentManager();
         View.OnClickListener listener = new View.OnClickListener() {

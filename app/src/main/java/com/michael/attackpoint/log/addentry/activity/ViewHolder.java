@@ -26,7 +26,6 @@ public class ViewHolder {
 
     public ViewHolder(View v) {
         date = new DoubleSubViewHolder(v, R.id.training_date);
-        session = new SubViewHolder(v, R.id.training_session);
         activity = new SubViewHolder(v, R.id.training_activity);
         workout = new SubViewHolder(v, R.id.training_workout);
         intensity = new SubViewHolder(v, R.id.training_intensity);
@@ -56,19 +55,6 @@ public class ViewHolder {
 
         public void setClickListener(View.OnClickListener listener) {
             parent.setOnClickListener(listener);
-        }
-
-        public void setEditTextListener(final ManagerContract.Activity activity) {
-
-            final View fItem = item;
-            parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fItem.requestFocusFromTouch();
-                    InputMethodManager lManager = (InputMethodManager) activity.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    lManager.showSoftInput(fItem, 0);
-                }
-            });
         }
 
         public String getEditTextInput() {
