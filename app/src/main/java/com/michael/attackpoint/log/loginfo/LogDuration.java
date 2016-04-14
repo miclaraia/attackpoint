@@ -47,6 +47,7 @@ public class LogDuration extends LogInfoItem<Calendar> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         String format;
         CalendarTime ct = new CalendarTime(mItem);
         if (ct.h == 0) {

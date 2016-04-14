@@ -36,6 +36,7 @@ public class LogIntensity extends LogInfoItem<Integer> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         return mItem.toString();
     }
 

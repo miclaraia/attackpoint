@@ -38,6 +38,7 @@ public class LogColor extends LogInfoItem<Integer> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         return Integer.toString(mItem);
     }
 

@@ -59,6 +59,7 @@ public class LogDate extends LogInfoItem<Calendar> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         SimpleDateFormat sdf;
         if (!isEmptySession()) sdf = new SimpleDateFormat(FULL_FORMAT);
         else sdf = new SimpleDateFormat(DATE_FORMAT);

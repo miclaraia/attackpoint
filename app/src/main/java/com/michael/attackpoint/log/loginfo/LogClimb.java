@@ -42,6 +42,7 @@ public class LogClimb extends LogInfoItem<LogClimb.Climb> {
 
     @Override
     public String toString() {
+        if (isEmpty()) return "";
         Formatter f = new Formatter();
         return f.format(FORMAT, mItem.getClimb(), mItem.getUnit()).toString();
     }
