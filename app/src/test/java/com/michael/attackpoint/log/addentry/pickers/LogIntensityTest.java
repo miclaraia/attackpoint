@@ -81,4 +81,14 @@ public class LogIntensityTest {
     public void setClickListener_attachesToActivity() {
         verify(mSubViewHolder).setClickListener(Matchers.<View.OnClickListener>any());
     }
+
+    @Test
+    public void update_updatesText() {
+        String testString = "test string";
+        when(mItem.toString()).thenReturn(testString);
+        mManager.mItem = mItem;
+
+        mManager.update();
+        verify(mSubViewHolder).setText(testString);
+    }
 }

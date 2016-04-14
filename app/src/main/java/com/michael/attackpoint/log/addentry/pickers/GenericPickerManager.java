@@ -32,7 +32,7 @@ public abstract class GenericPickerManager<T extends LogInfoItem> implements Man
     public void setItem(LogInfoItem item) {
         if (getTClass().isInstance(item)) {
             mItem = (T) item;
-            mSubViewHolder.setText(mItem.toString());
+            update();
         }
         else throw new InputMismatchException();
     }
@@ -46,6 +46,11 @@ public abstract class GenericPickerManager<T extends LogInfoItem> implements Man
     public LogInfo updateLoginfo(LogInfo li) {
         li.set(getLogInfoKey(), mItem);
         return li;
+    }
+
+    @Override
+    public void update() {
+        mSubViewHolder.setText(mItem.toString());
     }
 
     public abstract Class<T> getTClass();

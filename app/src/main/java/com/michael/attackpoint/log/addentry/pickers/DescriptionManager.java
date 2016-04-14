@@ -33,7 +33,7 @@ public class DescriptionManager implements ManagerContract.Manager {
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDescription) {
             mItem = (LogDescription) item;
-            mSubViewHolder.setText(mItem.toString());
+            update();
         }
         else throw new InputMismatchException();
     }
@@ -52,5 +52,10 @@ public class DescriptionManager implements ManagerContract.Manager {
     @Override
     public void setClickListener() {
         mSubViewHolder.setEditTextListener(mActivity);
+    }
+
+    @Override
+    public void update() {
+        mSubViewHolder.setText(mItem.toString());
     }
 }

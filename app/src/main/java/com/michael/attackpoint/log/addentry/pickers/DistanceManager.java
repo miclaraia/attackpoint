@@ -36,9 +36,7 @@ public class DistanceManager implements ManagerContract.Manager {
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDistance) {
             mItem = (LogDistance) item;
-
-            LogDistance.Distance distance = mItem.get();
-            mSubViewHolder.setText(distance.getDistance().toString());
+            update();
         }
         else throw new InputMismatchException();
     }
@@ -71,6 +69,13 @@ public class DistanceManager implements ManagerContract.Manager {
             }
         };
         mSubViewHolder.setUnitClickListener(listener);
+    }
+
+    @Override
+    public void update() {
+        LogDistance.Distance distance = mItem.get();
+        mSubViewHolder.setText(distance.getDistance().toString());
+        mSubViewHolder.setUnit(distance.getUnit().toNickname());
     }
 
     public void setUnit(Unit unit) {

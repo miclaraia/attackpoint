@@ -86,4 +86,17 @@ public class DateManagerTest {
         verify(mSubViewHolder).setItemClickListener(Matchers.<View.OnClickListener>any());
         verify(mSubViewHolder).setSecondaryClickListener(Matchers.<View.OnClickListener>any());
     }
+
+    @Test
+    public void update_updatesText() {
+        String testDate = "test date";
+        String testSession = "test session";
+        when(mItem.getDate()).thenReturn(testDate);
+        when(mItem.getSession()).thenReturn(testSession);
+        mManager.mItem = mItem;
+
+        mManager.update();
+        verify(mSubViewHolder).setText(testDate);
+        verify(mSubViewHolder).setTextSecondary(testSession);
+    }
 }

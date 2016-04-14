@@ -27,8 +27,7 @@ public class DateManager extends GenericPickerManager<LogDate> implements Manage
     public void setItem(LogInfoItem item) {
         if (item instanceof LogDate) {
             mItem = (LogDate) item;
-            mSubViewHolder.setText(mItem.getDate());
-            mDoubleSubViewHolder.setTextSecondary(mItem.getSession());
+            update();
         }
         else throw new InputMismatchException();
     }
@@ -71,5 +70,11 @@ public class DateManager extends GenericPickerManager<LogDate> implements Manage
     public ViewHolder.SubViewHolder getViewHolder(ViewHolder vh) {
         mDoubleSubViewHolder = (ViewHolder.DoubleSubViewHolder) vh.date;
         return vh.date;
+    }
+
+    @Override
+    public void update() {
+        mSubViewHolder.setText(mItem.getDate());
+        mDoubleSubViewHolder.setTextSecondary(mItem.getSession());
     }
 }

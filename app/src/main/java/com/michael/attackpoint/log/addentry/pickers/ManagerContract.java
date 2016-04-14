@@ -23,6 +23,8 @@ public interface ManagerContract {
         LogInfo updateLoginfo(LogInfo li);
 
         void setClickListener();
+
+        void update();
     }
 
     interface Activity {

@@ -141,4 +141,18 @@ public class DistanceManagerTest {
 
         verify(mItem).setUnit(testUnit);
     }
+
+    @Test
+    public void update_updatesText() {
+        Double testDouble = 1.6;
+        String testUnit = "km";
+        Distance distance = new Distance(testDouble, testUnit);
+
+        when(mItem.get()).thenReturn(distance);
+        mManager.mItem = mItem;
+
+        mManager.update();
+        mSubViewHolder.setText(testDouble.toString());
+        mSubViewHolder.setUnit(testUnit);
+    }
 }
