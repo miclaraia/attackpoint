@@ -16,6 +16,11 @@ public class Note extends LogInfo {
         set(KEY_DESCRIPTION, new LogDescription(text));
     }
 
+    public Note(String type) {
+        super();
+        set(KEY_ACTIVITY, new LogInfoActivity(type));
+    }
+
     /*public Note(String jsonString) {
         super(jsonString);
     }*/
