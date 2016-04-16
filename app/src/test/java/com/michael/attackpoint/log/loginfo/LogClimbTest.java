@@ -1,7 +1,5 @@
 package com.michael.attackpoint.log.loginfo;
 
-import com.michael.attackpoint.log.data.LogRepository;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
