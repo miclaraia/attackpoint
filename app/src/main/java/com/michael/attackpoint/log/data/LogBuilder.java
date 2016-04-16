@@ -162,7 +162,7 @@ public class LogBuilder {
     // ++++ Color ++++
     protected LogInfo getColor(Element element, LogInfo logInfo) {
         LogColor item = getColor(element, new LogColor());
-        logInfo.set(LogInfo.KEY_CLIMB, item);
+        logInfo.set(LogInfo.KEY_COLOR, item);
         return logInfo;
     }
 
@@ -209,7 +209,6 @@ public class LogBuilder {
             e.printStackTrace();
             logDate.setSession(0);
         } catch (NullPointerException e) {
-            e.printStackTrace();
             logDate.setSession(0);
         }
 

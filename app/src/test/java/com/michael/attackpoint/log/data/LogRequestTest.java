@@ -15,6 +15,7 @@ import com.michael.attackpoint.log.loginfo.LogDistance;
 import com.michael.attackpoint.log.loginfo.LogDuration;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.log.loginfo.LogInfoActivity;
+import com.michael.attackpoint.log.loginfo.LogInfoItem;
 import com.michael.attackpoint.log.loginfo.LogIntensity;
 import com.michael.attackpoint.log.loginfo.Unit;
 import com.michael.attackpoint.util.AndroidFactory;
@@ -26,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -43,8 +45,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -60,6 +66,9 @@ public class LogRequestTest {
 
     @Mock
     private ActivityTable mActivityTable;
+
+    @Mock
+    private LogInfo mFakeLogInfo;
 
     private Document mDocument;
 
@@ -115,11 +124,23 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getActivity_LogInfoKeyTest() {
+        mLogBuilder.getActivity(mLogEntry, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_ACTIVITY), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
     public void getClimb_test() {
         LogClimb logClimb = new LogClimb();
         logClimb = mLogBuilder.getClimb(mMeta, logClimb);
 
         assertThat(logClimb.toString(), equalTo("+414m"));
+    }
+
+    @Test
+    public void getClimb_LogInfoKeyTest() {
+        mLogBuilder.getClimb(mMeta, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_CLIMB), Matchers.<LogInfoItem>any());
     }
 
     @Test
@@ -135,6 +156,15 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getColor_LogInfoKeyTest() {
+        PowerMockito.mockStatic(Color.class);
+        Mockito.when(Color.parseColor(anyString())).thenReturn(0);
+
+        mLogBuilder.getColor(mLogEntry, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_COLOR), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
     public void getDate_test() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -143,6 +173,13 @@ public class LogRequestTest {
 
         String test = sdf.format(logDate.get().getTime());
         assertThat(test, equalTo("20160412"));
+    }
+
+    @Test
+    public void getDate_LogInfoKeyTest() {
+        Element session = mDay.select(".tlssh").first();
+        mLogBuilder.getDate(mDay, session, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_DATE), Matchers.<LogInfoItem>any());
     }
 
     @Test
@@ -160,11 +197,33 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getSession_nosessionTest() throws IOException {
+        Element day = getDocument(this, "sample-day-nosession.html");
+        Element session = day.select(".tlssh").first();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(0,0,0,0,0,0);
+        LogDate logDate = new LogDate();
+        logDate.set(cal);
+
+        logDate = mLogBuilder.getSession(session, logDate);
+
+        assertTrue(logDate.isEmptySession());
+        assertThat(logDate.getSession(), equalTo(""));
+    }
+
+    @Test
     public void getDescription_test() {
         LogDescription logDescription = new LogDescription();
         logDescription = mLogBuilder.getDescription(mLogEntry, logDescription);
 
         assertThat(logDescription.get(), equalTo("The usual"));
+    }
+
+    @Test
+    public void getDescription_LogInfoKeyTest() {
+        mLogBuilder.getDescription(mLogEntry, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_DESCRIPTION), Matchers.<LogInfoItem>any());
     }
 
     @Test
@@ -176,6 +235,12 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getDistance_LogInfoKeyTest() {
+        mLogBuilder.getDistance(mMeta, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_DISTANCE), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
     public void getDuration_test() {
         LogDuration logDuration = new LogDuration();
         logDuration = mLogBuilder.getDuration(mMeta, logDuration);
@@ -184,11 +249,23 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getDuration_LogInfoKeyTest() {
+        mLogBuilder.getDuration(mMeta, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_DURATION), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
     public void getIntensity_test() {
         LogIntensity logIntensity = new LogIntensity();
         logIntensity = mLogBuilder.getIntensity(mMeta, logIntensity);
 
         assertThat(logIntensity.get(), equalTo(5));
+    }
+
+    @Test
+    public void getIntensity_LogInfoKeyTest() {
+        mLogBuilder.getIntensity(mMeta, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_INTENSITY), Matchers.<LogInfoItem>any());
     }
 
     @Test
