@@ -2,6 +2,7 @@ package com.michael.attackpoint.log.data;
 
 import android.util.Log;
 
+import com.michael.attackpoint.log.addentry.pickers.IntensityManager;
 import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogColor;
 import com.michael.attackpoint.log.loginfo.LogComment;
@@ -48,15 +49,12 @@ public class LogBuilder {
                 for (Element logEntry : logEntries) {
 
                     //checks if item is a comment
-                    if (logEntry.select(".descrowtype1").size() > 0){
-                        /*LogInfo last = liList.get(liList.size() - 1);
+                    if (logEntry.select(".descrowtype1").size() > 0) {
+                        int index = logList.size() - 1;
+                        LogInfo last = logList.get(index);
 
-                        //adds comment to previous activity
-                        Element c = activity.select(".descrowtype1").first();
-                        Element a = c.getElementsByTag("a").first();
-                        String id = a.attr("href").split("_")[1];
-                        String title = a.text().substring(4);
-                        last.addComment(title, id);*/
+                        last = getComment(logEntry, last);
+                        logList.set(index, last);
                     } else {
                         // not a comment
                         LogInfo info = getLogEntry(logEntry, day, session);
@@ -186,8 +184,27 @@ public class LogBuilder {
         return logInfo;
     }
 
-    public LogComment getComment(Element logEntry, LogComment logComment) {
-        throw new RuntimeException();
+    public LogComment getComment(Element comment, LogComment logComment) {
+        Element link = comment
+                .select(".descrowtype1")
+                .first()
+                .getElementsByTag("a").first();
+
+        // link like '/discussionthread.jsp/message_1153596'
+        String idString = link.attr("href").split("_")[1];
+        int id = Integer.parseInt(idString);
+
+        // link text like 'C • Great Workout!'
+        // title starts here   ^ index 4
+        String title = link.text().substring(4);
+
+        LogComment.Comment c = new LogComment.Comment(title, "", id);
+
+        List<LogComment.Comment> comments = logComment.get();
+        comments.add(c);
+        logComment.set(comments);
+
+        return logComment;
     }
 
     // ++++ Date ++++

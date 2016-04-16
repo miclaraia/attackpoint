@@ -9,6 +9,8 @@ import com.google.android.gms.maps.internal.MapLifecycleDelegate;
 import com.michael.attackpoint.log.addentry.ActivityTable;
 import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogColor;
+import com.michael.attackpoint.log.loginfo.LogComment;
+import com.michael.attackpoint.log.loginfo.LogComment.Comment;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
@@ -79,6 +81,8 @@ public class LogRequestTest {
 
     private Element mDay;
 
+    private Element mComment;
+
     private Element mWhitespace;
 
     private LogBuilder mLogBuilder;
@@ -102,6 +106,7 @@ public class LogRequestTest {
         mMeta = getDocument(this, "sample-meta.html");
         mLogEntry = getDocument(this, "sample-entry.html");
         mDay = getDocument(this, "sample-day.html");
+        mComment = getDocument(this, "sample-comment.html");
         mWhitespace = getDocument(this, "sample-whitespace.html");
 
         mLogBuilder = new LogBuilder();
@@ -163,6 +168,22 @@ public class LogRequestTest {
 
         mLogBuilder.getColor(mLogEntry, mFakeLogInfo);
         verify(mFakeLogInfo).set(eq(LogInfo.KEY_COLOR), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
+    public void getComment_test() {
+        LogComment logComment = new LogComment();
+        logComment = mLogBuilder.getComment(mComment, logComment);
+
+        Comment test = logComment.get().get(0);
+        Comment compare = new Comment("Great Workout!", "", 1153596);
+        assertThat(test, equalTo(compare));
+    }
+
+    @Test
+    public void getComment_LogInfoKeyTest() {
+        mLogBuilder.getComment(mComment, mFakeLogInfo);
+        verify(mFakeLogInfo).set(eq(LogInfo.KEY_COMMENT), Matchers.<LogInfoItem>any());
     }
 
     @Test
