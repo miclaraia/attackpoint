@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.michael.attackpoint.log.loginfo.LogClimb;
 import com.michael.attackpoint.log.loginfo.LogColor;
+import com.michael.attackpoint.log.loginfo.LogComment;
 import com.michael.attackpoint.log.loginfo.LogDate;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
@@ -96,6 +97,7 @@ public class LogBuilder {
                     logInfo = getDescription(logEntry, logInfo);
                     logInfo = getDistance(meta, logInfo);
                     logInfo = getDuration(meta, logInfo);
+                    logInfo = getID(logEntry, logInfo);
                     logInfo = getIntensity(meta, logInfo);
 
                     logInfo.setPace();
@@ -175,6 +177,17 @@ public class LogBuilder {
         logColor.set(color);
 
         return logColor;
+    }
+
+    // ++++ Comment ++++
+    protected LogInfo getComment(Element element, LogInfo logInfo) {
+        LogComment item = getComment(element, new LogComment());
+        logInfo.set(LogInfo.KEY_COMMENT, item);
+        return logInfo;
+    }
+
+    public LogComment getComment(Element logEntry, LogComment logComment) {
+        throw new RuntimeException();
     }
 
     // ++++ Date ++++
@@ -283,6 +296,29 @@ public class LogBuilder {
             e.printStackTrace();
         }
         return logDuration;
+    }
+
+    // ++++ ID ++++
+    protected LogInfo getID(Element element, LogInfo logInfo) {
+        Integer item = getID(element);
+        logInfo.setID(item);
+        return logInfo;
+    }
+
+    public Integer getID(Element logEntry) {
+        Element element = logEntry.select(".editutils a").last();
+        if (element != null) {
+            String link = element.attr("href");
+            // link should be like /newmessage.jsp?refs=3.4885990+8.11778
+            // trying to get 4885990
+            int left = link.indexOf('=');
+            int start = link.indexOf('.', left) + 1;
+            int end = link.indexOf('+', left);
+
+            String id = link.substring(start, end);
+            return Integer.parseInt(id);
+        }
+        return -1;
     }
 
     // ++++ Intensity ++++

@@ -48,6 +48,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -252,6 +253,19 @@ public class LogRequestTest {
     public void getDuration_LogInfoKeyTest() {
         mLogBuilder.getDuration(mMeta, mFakeLogInfo);
         verify(mFakeLogInfo).set(eq(LogInfo.KEY_DURATION), Matchers.<LogInfoItem>any());
+    }
+
+    @Test
+    public void getID_test() {
+        Integer id = mLogBuilder.getID(mLogEntry);
+
+        assertThat(id, equalTo(4882484));
+    }
+
+    @Test
+    public void getID_LogInfoKeyTest() {
+        mLogBuilder.getID(mMeta, mFakeLogInfo);
+        verify(mFakeLogInfo).setID(anyInt());
     }
 
     @Test
