@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_entry"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/logCard_marginV"
+    android:padding="10dp"
+    android:background="@color/colorCardDialog">
+
+    <Button
+        android:id="@+id/log_comment_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        android:text="+"/>
+
+    <TextView
+        android:id="@+id/log_comment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment 1"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/log_comment_button"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/log_comment_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="miclaraia"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/textColorAccent"
+        android:layout_marginRight="15dp"/>
+</RelativeLayout>

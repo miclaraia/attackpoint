@@ -1,13 +1,22 @@
 package com.michael.attackpoint.log.loginfo;
 
+import com.michael.attackpoint.log.loginfo.LogComment.Comment;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michael on 2/11/16.
  */
-public class LogComment extends LogInfoItem<LogComment.Comment> {
+public class LogComment extends LogInfoItem<List<Comment>> {
+    private static final String JSON = "comment";
     private static final String JSON_TITLE = "comment_title";
+    private static final String JSON_AUTHOR = "comment_author";
     private static final String JSON_ID = "comment_id";
 
     public LogComment() {
@@ -18,32 +27,46 @@ public class LogComment extends LogInfoItem<LogComment.Comment> {
         super(json);
     }
 
-    public LogComment(Comment comment) {
+    public LogComment(List<Comment> comment) {
         super();
         set(comment);
     }
 
     @Override
     public void onCreate() {
-        mItem = new Comment();
+        mItem = new ArrayList<>();
     }
 
     @Override
     public boolean isEmpty() {
-        if (mItem.id < 0) return true;
+        if (mItem.size() < 1) return true;
         return false;
     }
 
     @Override
     public String toString() {
-        return mItem.title;
+        StringBuilder builder = new StringBuilder();
+        for (Comment comment : mItem) {
+            builder.append(comment.toString());
+            builder.append("\n");
+        }
+
+        return builder.toString();
     }
 
     @Override
     public JSONObject toJSON(JSONObject json) {
         try {
-            json.put(JSON_TITLE, mItem.title);
-            json.put(JSON_ID, mItem.id);
+            JSONArray jsonArray = new JSONArray();
+            for (Comment comment : mItem) {
+                JSONObject object = new JSONObject();
+                object.put(JSON_TITLE, comment.getTitle());
+                object.put(JSON_AUTHOR, comment.getAuthor());
+                object.put(JSON_ID, comment.getID());
+                jsonArray.put(object);
+            }
+
+            json.put(JSON, jsonArray);
             return json;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -53,77 +76,49 @@ public class LogComment extends LogInfoItem<LogComment.Comment> {
     @Override
     public void fromJSON(JSONObject json) {
         try {
-            mItem.title = (String) json.get(JSON_TITLE);
-            mItem.id = (int) json.get(JSON_ID);
+            mItem = new ArrayList<>();
+
+            JSONArray jsonArray = json.getJSONArray(JSON);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+
+                String title = object.getString(JSON_TITLE);
+                String author = object.getString(JSON_AUTHOR);
+                int id = object.getInt(JSON_ID);
+
+                Comment comment = new Comment(title, author, id);
+                mItem.add(comment);
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static class Comment {
-        public String title;
-        public int id;
+        private String title;
+        private String author;
+        private int id;
 
-        public Comment() {
-            title = new String();
-            id = -1;
-        }
-
-        public Comment(String title, int id) {
+        public Comment(String title, String author, int id) {
             this.title = title;
+            this.author = author;
             this.id = id;
         }
-    }
-    /*private String mTitle;
-    private int mId;
 
-    public static final String JSON_TITLE = "title";
-    public static final String JSON_ID = "id";
+        public String getTitle() {
+            return title;
+        }
 
-    public LogComment(String title, int id) {
-        mTitle = title;
-        mId = id;
-    }
+        public String getAuthor() {
+            return author;
+        }
 
-    public LogComment(String title, String id) {
-        mTitle = title;
-        mId = Integer.parseInt(id);
-    }
+        public int getID() {
+            return id;
+        }
 
-    public LogComment(JSONObject json) {
-        try {
-            mTitle = (String) json.get(JSON_TITLE);
-            mId = (int) json.get(JSON_ID);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        public String toString() {
+            return String.format(Locale.US, "%s %d", title, id);
         }
     }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
-    }
-
-    public JSONObject getJSON() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(JSON_TITLE, mTitle);
-            json.put(JSON_ID, mId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } finally {
-            return json;
-        }
-    }*/
 }

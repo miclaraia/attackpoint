@@ -228,7 +228,7 @@ public class LogFragment extends Fragment implements LogContract.View {
         public LogViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             Context context = viewGroup.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View itemView = inflater.inflate(R.layout.card_log, viewGroup, false);
+            View itemView = inflater.inflate(R.layout.log_card, viewGroup, false);
 
             return new LogViewHolder(itemView, mItemListener);
         }

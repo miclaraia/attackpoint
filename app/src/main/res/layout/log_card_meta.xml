@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_entry"
+    android:id="@id/logInfo_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/colorCardSecondary"
+    android:orientation="horizontal" >
+    <TextView
+        android:id="@id/log_distance"
+        style="@style/logCardItem_data"
+        android:text="@string/log_distance" />
+    <TextView
+        android:id="@id/log_time"
+        style="@style/logCardItem_data"
+        android:text="@string/log_time" />
+    <TextView
+        android:id="@id/log_pace"
+        style="@style/logCardItem_data"
+        android:text="@string/log_pace" />
+    <TextView
+        android:id="@+id/log_climb"
+        style="@style/logCardItem_data"
+        android:text="494m" />
+    <TextView
+        android:id="@+id/log_intensity"
+        style="@style/logCardItem_data"
+        android:textColor="@color/textColorPrimary"
+        android:text="1" />
+    <TextView
+        android:id="@+id/log_effort"
+        style="@style/logCardItem_data"
+        android:text="3:00/km"
+        android:textStyle="italic"/>
+</LinearLayout>

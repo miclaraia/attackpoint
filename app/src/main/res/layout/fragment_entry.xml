@@ -1,15 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@id/log_container"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/logCard_marginV"
-    android:layout_marginLeft="@dimen/logCard_marginH"
-    android:layout_marginRight="@dimen/logCard_marginH"
-    android:clickable="true"
-    android:focusable="true"
-    android:addStatesFromChildren="true"
-    android:foreground="@drawable/ripple_rectangle" >
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/logCard_marginV"
+    android:paddingLeft="@dimen/logCard_marginH"
+    android:paddingRight="@dimen/logCard_marginH" >
 
     <LinearLayout
         android:id="@id/log_item"
@@ -21,7 +18,8 @@
         <RelativeLayout
             android:id="@id/logInfo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/logTitle_barHeight" >
+            android:layout_height="@dimen/logTitle_barHeight"
+            android:background="@color/colorCardSecondary">
 
             <View
                 android:id="@id/log_color"
@@ -71,6 +69,8 @@
                 android:background="@color/white"/-->
         </RelativeLayout>
 
+        <include layout="@layout/log_card_meta"/>
+
         <TextView
             android:id="@id/log_text"
             android:layout_width="wrap_content"
@@ -82,41 +82,22 @@
             android:layout_marginTop="@dimen/logCardItem_marginV"
             android:layout_marginBottom="@dimen/logCardItem_marginV"
             android:text="@string/content_test" />
-
-        <LinearLayout
-            android:id="@id/logInfo_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@color/colorCardSecondary"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/log_intensity"
-                style="@style/logCardItem_data"
-                android:textColor="@color/textColorPrimary"
-                android:text="1" />
-            <TextView
-                android:id="@id/log_time"
-                style="@style/logCardItem_data"
-                android:text="@string/log_time" />
-
-            <TextView
-                android:id="@id/log_distance"
-                style="@style/logCardItem_data"
-                android:text="@string/log_distance" />
-            <TextView
-                android:id="@id/log_pace"
-                style="@style/logCardItem_data"
-                android:text="@string/log_pace" />
-            <TextView
-                android:id="@+id/log_climb"
-                style="@style/logCardItem_data"
-                android:text="494m" />
-            <TextView
-                android:id="@+id/log_effort"
-                style="@style/logCardItem_data"
-                android:text="3:00/km"
-                android:textStyle="italic"/>
-        </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+    
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/log_card_comment"
+        tools:visibility="gone" />
+
+    <include
+        layout="@layout/log_card_comment"
+        android:visibility="gone"
+        tools:visibility="visible" />
+    <include
+        layout="@layout/log_card_comment"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

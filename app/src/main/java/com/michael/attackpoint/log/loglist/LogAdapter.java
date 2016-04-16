@@ -83,7 +83,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     public LogViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.card_log, viewGroup, false);
+                inflate(R.layout.log_card, viewGroup, false);
 
         return new LogViewHolder(itemView);
     }
