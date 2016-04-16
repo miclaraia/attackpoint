@@ -14,10 +14,10 @@ import java.util.Locale;
  * Created by michael on 2/11/16.
  */
 public class LogComment extends LogInfoItem<List<Comment>> {
-    private static final String JSON = "comment";
-    private static final String JSON_TITLE = "comment_title";
-    private static final String JSON_AUTHOR = "comment_author";
-    private static final String JSON_ID = "comment_id";
+    protected static final String JSON = "comment";
+    protected static final String JSON_TITLE = "comment_title";
+    protected static final String JSON_AUTHOR = "comment_author";
+    protected static final String JSON_ID = "comment_id";
 
     public LogComment() {
         super();
@@ -119,6 +119,17 @@ public class LogComment extends LogInfoItem<List<Comment>> {
 
         public String toString() {
             return String.format(Locale.US, "%s %d", title, id);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Comment) {
+                Comment c = (Comment) o;
+                if (c.title.equals(this.title)
+                        && c.author.equals(this.author)
+                        && c.id == this.id) return true;
+            }
+            return false;
         }
     }
 }
