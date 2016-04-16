@@ -122,6 +122,16 @@ public class LogRequestTest {
     }
 
     @Test
+    public void getLog_commentTest() {
+        PowerMockito.mockStatic(Color.class);
+        Mockito.when(Color.parseColor(anyString())).thenReturn(0);
+
+        List<LogInfo> list = mLogBuilder.getLog(mDocument);
+        List<Comment> comments = (List<Comment>) list.get(1).get(LogInfo.KEY_COMMENT).get();
+        assertThat(comments.size(), equalTo(1));
+    }
+
+    @Test
     public void getActivity_test() {
         LogInfoActivity logInfoActivity = new LogInfoActivity();
         logInfoActivity = mLogBuilder.getActivity(mLogEntry, logInfoActivity);
