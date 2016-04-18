@@ -28,6 +28,7 @@ import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
 import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.ViewHolder;
+import com.michael.attackpoint.log.logentry.EntryFragment;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
 import java.util.ArrayList;
@@ -185,8 +186,16 @@ public class LogFragment extends Fragment implements LogContract.View {
     }
 
     @Override
-    public void showEntryDetail(String logId) {
+    public void showEntryDetail(int userid, int logId) {
         Log.d(DEBUG_TAG, String.format(Locale.US, "starting activity for logid %s", logId));
+
+        Activity activity = getActivity();
+        Fragment fragment = EntryFragment.newInstance(userid, logId);
+        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

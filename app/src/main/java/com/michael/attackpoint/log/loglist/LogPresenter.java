@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.VolleyError;
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.log.data.LogRepository;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 import com.michael.attackpoint.util.EspressoIdlingResource;
@@ -67,7 +68,8 @@ public class LogPresenter implements LogContract.Presenter {
 
     @Override
     public void openEntryDetails(@NonNull LogInfo requestedEntry) {
-        String id = Integer.valueOf(requestedEntry.getID()).toString();
-        mLogView.showEntryDetail(id);
+        int logid = requestedEntry.getID();
+        int userid = Login.getInstance().getUserId();
+        mLogView.showEntryDetail(userid, logid);
     }
 }

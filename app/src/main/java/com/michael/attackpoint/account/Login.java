@@ -48,6 +48,10 @@ public class Login {
         return mInstance;
     }
 
+    public static synchronized void setInstance(Login instance) {
+        mInstance = instance;
+    }
+
     public void loginDialog(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);

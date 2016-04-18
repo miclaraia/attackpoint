@@ -18,7 +18,7 @@ public interface LogContract {
 
         void showLog(List<LogInfo> entries);
 
-        void showEntryDetail(String logId);
+        void showEntryDetail(int userid, int logId);
 
         void showAddEntry();
 

@@ -1,5 +1,6 @@
 package com.michael.attackpoint.log.loglist;
 
+import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.log.data.LogRepository;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
@@ -67,6 +68,9 @@ public class LogPresenterTest {
     @Mock
     private LogContract.View mLogView;
 
+    @Mock
+    private Login mFakeLogin;
+
     @Captor
     private ArgumentCaptor<LogRepository.LoadLogCallback> mLoadCallbackCaptor;
 
@@ -95,8 +99,6 @@ public class LogPresenterTest {
         verify(mLogView).setProgressIndicator(true);
 
         verify(mLogRepository).getLog(eq(true), eq(USER), mLoadCallbackCaptor.capture());
-
-        verify(mLogRepository).getLog(eq(USER), mLoadCallbackCaptor.capture());
         mLoadCallbackCaptor.getValue().onLoaded(LOGLIST);
 
         verify(mLogView).showLog(LOGLIST);
@@ -108,7 +110,7 @@ public class LogPresenterTest {
         mPresenter.loadLog(false);
         verify(mLogView).setProgressIndicator(true);
 
-        verify(mLogRepository).getLog(eq(USER), mLoadCallbackCaptor.capture());
+        verify(mLogRepository).getLog(eq(false), eq(USER), mLoadCallbackCaptor.capture());
         mLoadCallbackCaptor.getValue().onLoaded(LOGLIST);
 
         verify(mLogView).showLog(LOGLIST);
@@ -123,9 +125,12 @@ public class LogPresenterTest {
 
     @Test
     public void openEntryDetails_callbackToView() {
+        Login.setInstance(mFakeLogin);
+        when(mFakeLogin.getUserId()).thenReturn(USER);
+
         LogInfo li = LOGLIST.get(0);
         mPresenter.openEntryDetails(li);
-        String id = "" + li.getID();
-        verify(mLogView).showEntryDetail(id);
+        int id = li.getID();
+        verify(mLogView).showEntryDetail(USER, id);
     }
 }

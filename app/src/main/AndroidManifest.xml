@@ -51,8 +51,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".log.logdetail.LogDetailActivity"
-            android:label="@string/title_activity_log_detail" />
+            android:name=".log.logentry.EntryActivity"
+            android:label="Attackpoint" />
         <activity
             android:name=".log.loglist.LogActivity"
             android:label="@string/title_activity_log" />

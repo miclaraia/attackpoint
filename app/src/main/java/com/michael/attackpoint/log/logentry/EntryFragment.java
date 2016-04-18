@@ -19,8 +19,10 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.account.Login;
+import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
+import com.michael.attackpoint.log.loginfo.LogComment;
 import com.michael.attackpoint.log.loginfo.LogComment.Comment;
 import com.michael.attackpoint.log.loginfo.LogInfo;
 
@@ -36,11 +38,12 @@ public class EntryFragment extends Fragment implements EntryContract.View {
 
     private EntryContract.Presenter mPresenter;
     private CommentsAdapter mAdapter;
+    private ViewHolder mViewHolder;
 
-    public static EntryFragment newInstance(String user_id, String log_id) {
+    public static EntryFragment newInstance(int user_id, int log_id) {
         Bundle arguments = new Bundle();
-        arguments.putString(USER_ID, user_id);
-        arguments.putString(LOG_ID, log_id);
+        arguments.putInt(USER_ID, user_id);
+        arguments.putInt(LOG_ID, log_id);
 
         EntryFragment fragment = new EntryFragment();
         fragment.setArguments(arguments);
@@ -61,12 +64,18 @@ public class EntryFragment extends Fragment implements EntryContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadEntry();
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
         int user = args.getInt(USER_ID);
-        String logId = args.getString(LOG_ID);
+        int logId = args.getInt(LOG_ID);
         mPresenter = new EntryPresenter(LogRepositories.getRepoInstance(), this, user, logId);
     }
 
@@ -74,13 +83,14 @@ public class EntryFragment extends Fragment implements EntryContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_log, viewGroup, false);
+        View root = inflater.inflate(R.layout.fragment_entry, viewGroup, false);
 
         RecyclerView recycler = (RecyclerView) root.findViewById(R.id.comments_list);
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        
+
         initFloatingActionButton();
+        mViewHolder = new ViewHolder(root);
 
         return root;
     }
@@ -127,7 +137,10 @@ public class EntryFragment extends Fragment implements EntryContract.View {
 
     @Override
     public void ShowEntry(LogInfo logInfo) {
+        mViewHolder.setFull(logInfo);
 
+        LogComment logComment = (LogComment) logInfo.get(LogInfo.KEY_COMMENT);
+        mAdapter.replaceData(logComment.get());
     }
 
     private class CommentsAdapter extends RecyclerView.Adapter<CommentViewHolder> {
