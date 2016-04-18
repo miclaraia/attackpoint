@@ -51,11 +51,12 @@ public class LogPresenter implements LogContract.Presenter {
             public void onError(Exception e) {
                 if (e instanceof NoConnectionError) {
                     // No network connection
-                    mLogView.setProgressIndicator(false);
                     mLogView.showSnackbar("No Network");
+                    mLogView.setProgressIndicator(false);
                 } else {
                     // somethine went wrong getting user log
                     mLogView.showSnackbar("Something went wrong :(");
+                    mLogView.setProgressIndicator(false);
                 }
             }
         });
