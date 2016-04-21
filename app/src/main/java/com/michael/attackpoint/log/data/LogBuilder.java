@@ -382,7 +382,9 @@ public class LogBuilder {
                 else break;
             } else if (node instanceof Element) {
                 Element e = (Element) node;
-                if (e.tagName().equals("br")) remove.add(e);
+                if (e.tagName().equals("br")) {
+                    if (remove.indexOf(e) < 0) remove.add(e);
+                }
                 else break;
             } else break;
         }
