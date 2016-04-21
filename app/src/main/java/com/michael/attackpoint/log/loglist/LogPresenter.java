@@ -70,7 +70,6 @@ public class LogPresenter implements LogContract.Presenter {
     @Override
     public void openEntryDetails(@NonNull LogInfo requestedEntry) {
         int logid = requestedEntry.getID();
-        int userid = Login.getInstance().getUserId();
-        mLogView.showEntryDetail(userid, logid);
+        mLogView.showEntryDetail(mUser, logid);
     }
 }

@@ -58,7 +58,7 @@ public class LogClimbTest {
     @Test
     public void toString_empty() {
         mLogClimb.set(EMPTY);
-        assertThat(mLogClimb.toString(), equalTo("+0m"));
+        assertThat(mLogClimb.toString(), equalTo(""));
     }
 
     @Test
