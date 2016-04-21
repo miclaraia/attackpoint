@@ -23,6 +23,7 @@ public class ViewHolder {
     public TextViewDetail vDist;
     public TextViewDetail vPace;
     public TextViewDetail vClimb;
+    public TextViewDetail vIntensity;
     public TextViewDetail vEffort;
 
     public TextView vSession;
@@ -40,6 +41,7 @@ public class ViewHolder {
         vDist = new TextViewDetail(v.findViewById(R.id.log_distance));
         vPace = new TextViewDetail(v.findViewById(R.id.log_pace));
         vClimb = new TextViewDetail(v.findViewById(R.id.log_climb));
+        vIntensity = new TextViewDetail(v.findViewById(R.id.log_intensity));
         vEffort = new TextViewDetail(v.findViewById(R.id.log_effort));
 
 
@@ -67,11 +69,13 @@ public class ViewHolder {
             vDist.hide();
             vPace.hide();
             vClimb.hide();
+            vIntensity.hide();
             vEffort.hide();
         } else {
             vTime.setText(text.duration);
             vDist.setText(text.distance);
             vPace.setText(text.pace);
+            vIntensity.setText(text.intensity);
             vClimb.setText(text.climb);
         }
     }
