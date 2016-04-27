@@ -190,7 +190,7 @@ public class LogBuilder {
                 .first()
                 .getElementsByTag("a").first();
 
-        // link like '/discussionthread.jsp/message_1153596'
+        // link href like '/discussionthread.jsp/message_1153596'
         String idString = link.attr("href").split("_")[1];
         int id = Integer.parseInt(idString);
 

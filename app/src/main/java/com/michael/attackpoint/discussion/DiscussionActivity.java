@@ -88,14 +88,6 @@ public class DiscussionActivity extends AppCompatActivity {
         return header;
     }
 
-    private class ViewHolder {
-        private TextView title;
-        private TextView category;
 
-        private ViewHolder(View v) {
-            title = (TextView) v.findViewById(R.id.discussion_title);
-            category = (TextView) v.findViewById(R.id.discussion_category);
-        }
-    }
 
 }
