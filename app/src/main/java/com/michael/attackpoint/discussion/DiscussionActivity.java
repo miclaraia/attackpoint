@@ -8,11 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.michael.attackpoint.R;
+import com.michael.attackpoint.discussion.data.DiscussionRequest;
 import com.michael.attackpoint.util.Singleton;
 
 public class DiscussionActivity extends AppCompatActivity {

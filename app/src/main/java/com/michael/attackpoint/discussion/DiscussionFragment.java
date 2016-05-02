@@ -14,10 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
-import com.michael.attackpoint.discussion.DiscussionContract.*;
-import com.michael.attackpoint.discussion.DiscussionContract.View;
+import com.michael.attackpoint.discussion.DiscussionContract.Presenter;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.data.LogRepositories;
+import com.michael.attackpoint.log.logentry.EntryFragment;
 import com.michael.attackpoint.log.logentry.EntryPresenter;
 import com.michael.attackpoint.log.loginfo.LogComment;
 
@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * Created by michael on 4/26/16.
  */
-public class DiscussionFragment extends Fragment implements View {
+public class DiscussionFragment extends Fragment implements DiscussionContract.View {
+    public static final String DISCUSSION_ID = "discussionid";
 
     private Presenter mPresenter;
     private DiscussionAdapter mAdapter;
@@ -35,13 +36,13 @@ public class DiscussionFragment extends Fragment implements View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mAdapter = new DiscussionAdapter();
+        mAdapter = new DiscussionAdapter(new ArrayList<Comment>(0), mItemListener);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //mPresenter.loadEntry();
+        mPresenter.loadDiscussion();
     }
 
     @Override
@@ -49,9 +50,8 @@ public class DiscussionFragment extends Fragment implements View {
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
-//        int user = args.getInt(USER_ID);
-//        int logId = args.getInt(LOG_ID);
-//        mPresenter = new EntryPresenter(LogRepositories.getRepoInstance(), this, user, logId);
+        int id = args.getInt(DISCUSSION_ID);
+        mPresenter = new DiscussionPresenter(LogRepositories.getRepoInstance(), this, id);
     }
 
     @Override
@@ -67,37 +67,54 @@ public class DiscussionFragment extends Fragment implements View {
         ListView listView = (ListView) root.findViewById(R.id.discussion_list);
         listView.setAdapter(mAdapter);
 
-//        View header = inflateHeader(discussion);
-//        listView.addHeaderView(header);
-//
-//        mViewHolder = new com.michael.attackpoint.log.ViewHolder(root);
+        View header = inflateHeader(inflater, discussion);
+        listView.addHeaderView(header);
+
+        mViewHolder = new com.michael.attackpoint.log.ViewHolder(root);
 
         return root;
     }
 
-//    private View inflateHeader(Discussion discussion) {
-//        View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
-//        ViewHolder vh = new ViewHolder(header);
-//        vh.title.setText(discussion.getTitle());
-//        vh.category.setText(discussion.getCategory());
-//
-//        return header;
-//    }
+    private View inflateHeader(LayoutInflater inflater, Discussion discussion) {
+        View header = inflater.inflate(R.layout.content_discussion_header, null);
+        ViewHolder vh = new ViewHolder(header);
+        vh.title.setText(discussion.getTitle());
+        vh.category.setText(discussion.getCategory());
+
+        return header;
+    }
+
+    View.OnClickListener mItemListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //TODO
+        }
+    };
+
+
+
 
     public static class DiscussionAdapter extends BaseAdapter {
         private static final String DEBUG_TAG = "discussion.A";
 
         private List<Comment> mComments;
+        private View.OnClickListener mListener;
 
-        public DiscussionAdapter(List<Comment> comments) {
+        public DiscussionAdapter(List<Comment> comments, View.OnClickListener listener) {
+            mComments = comments;
+            mListener = listener;
+        }
+
+        public void replaceData(List<Comment> comments) {
+            setList(comments);
+            this.notifyDataSetChanged();
+        }
+
+        private void setList(List<Comment> comments) {
             mComments = comments;
         }
 
-        public DiscussionAdapter(Activity activity) {
-            mComments = new ArrayList<Comment>();
-        }
-
-        public void updateList(int position, Comment comment) {
+        /*public void updateList(int position, Comment comment) {
             mComments.set(position, comment);
             this.notifyDataSetChanged();
         }
@@ -109,12 +126,7 @@ public class DiscussionFragment extends Fragment implements View {
                     break;
                 }
             }
-        }
-
-        public void setList(List<Comment> update) {
-            mComments = update;
-            this.notifyDataSetChanged();
-        }
+        }*/
 
         @Override
         public int getCount() {
@@ -154,6 +166,7 @@ public class DiscussionFragment extends Fragment implements View {
                 color = res.getColor(R.color.colorBackground);
             }
             vh.container.setBackgroundColor(color);
+            vh.container.setOnClickListener(mListener);
 
             return convertView;
         }
