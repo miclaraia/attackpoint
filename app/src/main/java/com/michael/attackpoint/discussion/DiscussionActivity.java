@@ -61,7 +61,7 @@ public class DiscussionActivity extends AppCompatActivity {
     }
 
     private void initList(Discussion discussion) {
-        mListView = (ListView) findViewById(R.id.discussion);
+        mListView = (ListView) findViewById(R.id.discussion_list);
         mAdapter = new DiscussionAdapter(this, discussion.getComments());
         mListView.setAdapter(mAdapter);
 
@@ -81,9 +81,9 @@ public class DiscussionActivity extends AppCompatActivity {
 
     private View inflateHeader(Discussion discussion) {
         View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
-        ViewHolder vh = new ViewHolder(header);
-        vh.title.setText(discussion.getTitle());
-        vh.category.setText(discussion.getCategory());
+//        ViewHolder vh = new ViewHolder(header);
+//        vh.title.setText(discussion.getTitle());
+//        vh.category.setText(discussion.getCategory());
 
         return header;
     }

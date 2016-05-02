@@ -35,13 +35,13 @@ public class DiscussionFragment extends Fragment implements View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new DiscussionAdapter();
+        //mAdapter = new DiscussionAdapter();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.loadEntry();
+        //mPresenter.loadEntry();
     }
 
     @Override
@@ -49,9 +49,9 @@ public class DiscussionFragment extends Fragment implements View {
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
-        int user = args.getInt(USER_ID);
-        int logId = args.getInt(LOG_ID);
-        mPresenter = new EntryPresenter(LogRepositories.getRepoInstance(), this, user, logId);
+//        int user = args.getInt(USER_ID);
+//        int logId = args.getInt(LOG_ID);
+//        mPresenter = new EntryPresenter(LogRepositories.getRepoInstance(), this, user, logId);
     }
 
     @Override
@@ -67,22 +67,22 @@ public class DiscussionFragment extends Fragment implements View {
         ListView listView = (ListView) root.findViewById(R.id.discussion_list);
         listView.setAdapter(mAdapter);
 
-        View header = inflateHeader(discussion);
-        listView.addHeaderView(header);
-
-        mViewHolder = new com.michael.attackpoint.log.ViewHolder(root);
+//        View header = inflateHeader(discussion);
+//        listView.addHeaderView(header);
+//
+//        mViewHolder = new com.michael.attackpoint.log.ViewHolder(root);
 
         return root;
     }
 
-    private View inflateHeader(Discussion discussion) {
-        View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
-        ViewHolder vh = new ViewHolder(header);
-        vh.title.setText(discussion.getTitle());
-        vh.category.setText(discussion.getCategory());
-
-        return header;
-    }
+//    private View inflateHeader(Discussion discussion) {
+//        View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
+//        ViewHolder vh = new ViewHolder(header);
+//        vh.title.setText(discussion.getTitle());
+//        vh.category.setText(discussion.getCategory());
+//
+//        return header;
+//    }
 
     public static class DiscussionAdapter extends BaseAdapter {
         private static final String DEBUG_TAG = "discussion.A";
