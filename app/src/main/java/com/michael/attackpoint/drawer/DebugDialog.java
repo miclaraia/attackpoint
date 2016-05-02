@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.discussion.Discussion;
-import com.michael.attackpoint.discussion.DiscussionRequest;
+import com.michael.attackpoint.discussion.data.DiscussionRequest;
 import com.michael.attackpoint.log.data.LogDatabase;
 import com.michael.attackpoint.log.loginfo.LogDescription;
 import com.michael.attackpoint.log.loginfo.LogDistance;
