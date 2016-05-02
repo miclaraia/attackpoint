@@ -35,7 +35,8 @@ public class LogRepositoryImpl implements LogRepository {
     }
 
     @Override
-    public void getLog(boolean forceRefresh, @NonNull final int userID, @NonNull final LoadLogCallback callback) {
+    public void getLog(final boolean forceRefresh, @NonNull final int userID, @NonNull final LoadLogCallback callback) {
+        //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         if (forceRefresh) {
             // Force refresh, clears cache
             mLogDatabase.removeCache(userID);

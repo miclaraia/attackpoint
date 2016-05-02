@@ -32,34 +32,40 @@ public class LogPresenter implements LogContract.Presenter {
     }
 
     @Override
-    public void loadLog(boolean forceUpdate) {
+    public void loadLog(final boolean forceUpdate) {
         mLogView.setProgressIndicator(true);
         mLogView.showLog(new ArrayList<LogInfo>(0));
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
         EspressoIdlingResource.increment(); // App is busy until further notice
-        mLogRepository.getLog(forceUpdate, mUser, new LogRepository.LoadLogCallback() {
+        new Thread(new Runnable() {
             @Override
-            public void onLoaded(List<LogInfo> logList) {
-                EspressoIdlingResource.decrement(); // Set app as idle.
-                mLogView.showLog(logList);
-                mLogView.setProgressIndicator(false);
-            }
+            public void run() {
+                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                mLogRepository.getLog(forceUpdate, mUser, new LogRepository.LoadLogCallback() {
+                    @Override
+                    public void onLoaded(List<LogInfo> logList) {
+                        EspressoIdlingResource.decrement(); // Set app as idle.
+                        mLogView.showLog(logList);
+                        mLogView.setProgressIndicator(false);
+                    }
 
-            @Override
-            public void onError(Exception e) {
-                if (e instanceof NoConnectionError) {
-                    // No network connection
-                    mLogView.showSnackbar("No Network");
-                    mLogView.setProgressIndicator(false);
-                } else {
-                    // somethine went wrong getting user log
-                    mLogView.showSnackbar("Something went wrong :(");
-                    mLogView.setProgressIndicator(false);
-                }
+                    @Override
+                    public void onError(Exception e) {
+                        if (e instanceof NoConnectionError) {
+                            // No network connection
+                            mLogView.showSnackbar("No Network");
+                            mLogView.setProgressIndicator(false);
+                        } else {
+                            // somethine went wrong getting user log
+                            mLogView.showSnackbar("Something went wrong :(");
+                            mLogView.setProgressIndicator(false);
+                        }
+                    }
+                });
             }
-        });
+        }).start();
     }
 
     @Override
