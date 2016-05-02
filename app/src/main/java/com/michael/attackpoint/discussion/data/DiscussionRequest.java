@@ -1,4 +1,4 @@
-package com.michael.attackpoint.discussion;
+package com.michael.attackpoint.discussion.data;
 
 import android.text.Html;
 import android.util.Log;
@@ -7,6 +7,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.michael.attackpoint.discussion.Comment;
+import com.michael.attackpoint.discussion.Discussion;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
