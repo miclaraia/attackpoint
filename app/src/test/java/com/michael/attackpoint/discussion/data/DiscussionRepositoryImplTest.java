@@ -52,6 +52,9 @@ public class DiscussionRepositoryImplTest {
     private DiscussionRequest mDiscussionRequest;
 
     @Captor
+    private ArgumentCaptor<Response.Listener<Discussion>> mRequestListenerCaptor;
+
+    @Captor
     private ArgumentCaptor<Discussion> mDiscussionCaptor;
 
     private DiscussionRepositoryImpl mRepository;
@@ -115,6 +118,21 @@ public class DiscussionRepositoryImplTest {
         mRepository.refreshDiscussion(103, mRefreshCallback);
 
         verify(mRequestQueue).add(any(DiscussionRequest.class));
+    }
+
+    @Test
+    public void getDiscussion_refreshStoresDiscussion() {
+        PowerMockito.mockStatic(DiscussionRequest.class);
+        Mockito.when(DiscussionRequest.newInstance(anyInt(),
+                mRequestListenerCaptor.capture(),
+                any(Response.ErrorListener.class))).thenReturn(mDiscussionRequest);
+
+        mRepository.mDiscussions.clear();
+        mRepository.getDiscussionWorker(true, 104, mFakeCallback);
+
+        mRequestListenerCaptor.getValue().onResponse(mDiscussion);
+
+        assertThat(mRepository.mDiscussions.get(104), equalTo(mDiscussion));
     }
 
     public void mockDiscussionRequest() {
