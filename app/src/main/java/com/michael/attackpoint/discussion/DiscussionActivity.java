@@ -46,7 +46,7 @@ public class DiscussionActivity extends AppCompatActivity {
 
     private void getDiscussion() {
         int id = getIntent().getExtras().getInt(DISCUSSION_ID);
-        DiscussionRequest request = new DiscussionRequest(id, new Response.Listener<Discussion>() {
+        DiscussionRequest request = DiscussionRequest.newInstance(id, new Response.Listener<Discussion>() {
             @Override
             public void onResponse(Discussion discussion) {
                 initList(discussion);

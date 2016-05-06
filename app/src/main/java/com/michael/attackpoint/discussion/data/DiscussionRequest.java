@@ -31,6 +31,13 @@ public class DiscussionRequest extends com.android.volley.Request<Discussion> {
         mId = id;
     }
 
+    public static DiscussionRequest newInstance(int id, Response.Listener<Discussion> listener,
+                                         Response.ErrorListener errorListener) {
+        return new DiscussionRequest(id, listener, errorListener);
+    }
+
+
+
     @Override
     protected Response<Discussion> parseNetworkResponse(NetworkResponse response) {
         try {

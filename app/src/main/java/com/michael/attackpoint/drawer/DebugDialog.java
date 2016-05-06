@@ -173,7 +173,7 @@ public class DebugDialog extends DialogFragment {
             @Override
             void action() {
                 Log.d(DEBUG_TAG, "Testing discussion request");
-                Request request = new DiscussionRequest(1132702, new Response.Listener<Discussion>() {
+                Request request = DiscussionRequest.newInstance(1132702, new Response.Listener<Discussion>() {
                     @Override
                     public void onResponse(Discussion discussion) {
                         Log.d(DEBUG_TAG, "Got response");

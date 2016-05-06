@@ -36,26 +36,7 @@ public class DiscussionRepositoryImpl implements DiscussionRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (forceRefresh || !inLocalCache(id)) {
-                    removeLocalCache(id);
-
-                    refreshDiscussion(id, new RefreshCallback() {
-                        @Override
-                        public void onLoaded(Discussion discussion) {
-                            callback.onLoaded(discussion);
-                        }
-
-                        @Override
-                        public void onError(VolleyError e) {
-                            callback.onError(e);
-                            if (e instanceof NoConnectionError && inLocalCache(id)) {
-                                callback.onLoaded(getLocalCache(id));
-                            }
-                        }
-                    });
-                } else {
-                    callback.onLoaded(getLocalCache(id));
-                }
+                getDiscussionWorker(forceRefresh, id, callback);
             }
         }).start();
     }
@@ -67,7 +48,7 @@ public class DiscussionRepositoryImpl implements DiscussionRepository {
 
     @Override
     public void refreshDiscussion(final int id, final RefreshCallback callback) {
-        DiscussionRequest request = new DiscussionRequest(id, new Response.Listener<Discussion>() {
+        DiscussionRequest request = DiscussionRequest.newInstance(id, new Response.Listener<Discussion>() {
             @Override
             public void onResponse(Discussion discussion) {
                 mDiscussions.put(id, discussion);
@@ -80,6 +61,32 @@ public class DiscussionRepositoryImpl implements DiscussionRepository {
             }
         });
         mRequestQueue.add(request);
+    }
+
+    protected void getDiscussionWorker (final boolean forceRefresh,
+                                        final int id,
+                                        final LoadCallback callback) {
+
+        if (forceRefresh || !inLocalCache(id)) {
+            removeLocalCache(id);
+
+            refreshDiscussion(id, new RefreshCallback() {
+                @Override
+                public void onLoaded(Discussion discussion) {
+                    callback.onLoaded(discussion);
+                }
+
+                @Override
+                public void onError(VolleyError e) {
+                    callback.onError(e);
+                    if (e instanceof NoConnectionError && inLocalCache(id)) {
+                        callback.onLoaded(getLocalCache(id));
+                    }
+                }
+            });
+        } else {
+            callback.onLoaded(getLocalCache(id));
+        }
     }
 
     protected boolean inLocalCache(int id) {

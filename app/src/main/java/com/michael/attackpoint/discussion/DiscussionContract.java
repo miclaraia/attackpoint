@@ -12,7 +12,7 @@ public interface DiscussionContract {
 
         void showSnackbar(String message);
 
-        void showDiscussion(List<Comment> comments);
+        void showDiscussion(Discussion discussion);
 
         void showNewComment();
     }
