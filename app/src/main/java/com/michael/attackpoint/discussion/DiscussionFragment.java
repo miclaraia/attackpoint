@@ -2,11 +2,13 @@ package com.michael.attackpoint.discussion;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.discussion.DiscussionContract.Presenter;
+import com.michael.attackpoint.discussion.data.DiscussionRepositoryImpl;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.data.LogRepositories;
 import com.michael.attackpoint.log.logentry.EntryFragment;
@@ -32,6 +35,7 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
 
     private Presenter mPresenter;
     private DiscussionAdapter mAdapter;
+    private ListView mListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
 
         Bundle args = getArguments();
         int id = args.getInt(DISCUSSION_ID);
-        mPresenter = new DiscussionPresenter(LogRepositories.getRepoInstance(), this, id);
+        mPresenter = new DiscussionPresenter(this, id);
     }
 
     @Override
@@ -64,24 +68,10 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
         recycler.setAdapter(mAdapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));*/
 
-        ListView listView = (ListView) root.findViewById(R.id.discussion_list);
-        listView.setAdapter(mAdapter);
-
-        View header = inflateHeader(inflater, discussion);
-        listView.addHeaderView(header);
-
-        mViewHolder = new com.michael.attackpoint.log.ViewHolder(root);
+        mListView = (ListView) root.findViewById(R.id.discussion_list);
+        mListView.setAdapter(mAdapter);
 
         return root;
-    }
-
-    private View inflateHeader(LayoutInflater inflater, Discussion discussion) {
-        View header = inflater.inflate(R.layout.content_discussion_header, null);
-        ViewHolder vh = new ViewHolder(header);
-        vh.title.setText(discussion.getTitle());
-        vh.category.setText(discussion.getCategory());
-
-        return header;
     }
 
     View.OnClickListener mItemListener = new View.OnClickListener() {
@@ -91,7 +81,39 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
         }
     };
 
+    @Override
+    public void setProgressIndicator(boolean state) {
 
+    }
+
+    @Override
+    public void showSnackbar(String message) {
+
+    }
+
+    @Override
+    public void showDiscussion(Discussion discussion) {
+        mListView.addHeaderView(inflateHeader(discussion));
+    }
+
+    @Override
+    public void showNewComment() {
+
+    }
+
+    private View inflateHeader(Discussion discussion) {
+        Context context = getActivity();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View header = inflater.inflate(R.layout.content_discussion_header, null);
+
+        TextView title = (TextView) header.findViewById(R.id.discussion_title);
+        TextView category = (TextView) header.findViewById(R.id.discussion_category);
+
+        title.setText(discussion.getTitle());
+        category.setText(discussion.getCategory());
+
+        return header;
+    }
 
 
     public static class DiscussionAdapter extends BaseAdapter {
@@ -183,16 +205,6 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
                 content = (TextView) v.findViewById(R.id.comment_content);
                 container = (RelativeLayout) v.findViewById(R.id.comment_container);
             }
-        }
-    }
-
-    private static class ViewHolder {
-        private TextView title;
-        private TextView category;
-
-        private ViewHolder(android.view.View v) {
-            title = (TextView) v.findViewById(R.id.discussion_title);
-            category = (TextView) v.findViewById(R.id.discussion_category);
         }
     }
 }
