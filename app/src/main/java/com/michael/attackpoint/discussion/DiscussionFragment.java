@@ -1,14 +1,13 @@
 package com.michael.attackpoint.discussion;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -17,12 +16,6 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.discussion.DiscussionContract.Presenter;
-import com.michael.attackpoint.discussion.data.DiscussionRepositoryImpl;
-import com.michael.attackpoint.log.ViewHolder;
-import com.michael.attackpoint.log.data.LogRepositories;
-import com.michael.attackpoint.log.logentry.EntryFragment;
-import com.michael.attackpoint.log.logentry.EntryPresenter;
-import com.michael.attackpoint.log.loginfo.LogComment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +29,21 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
     private Presenter mPresenter;
     private DiscussionAdapter mAdapter;
     private ListView mListView;
+
+    public static DiscussionFragment newInstance(int discussionId) {
+        Bundle args = new Bundle();
+        args.putInt(DISCUSSION_ID, discussionId);
+
+        DiscussionFragment fragment = new DiscussionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static DiscussionFragment newInstance(Bundle args) {
+        DiscussionFragment fragment = new DiscussionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,14 +63,14 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
 
         Bundle args = getArguments();
         int id = args.getInt(DISCUSSION_ID);
-        mPresenter = new DiscussionPresenter(this, id);
+        mPresenter = new DiscussionPresenter(DiscussionRepositories.getRepoInstance(), this, id);
     }
 
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
                                           Bundle savedInstanceState) {
 
-        android.view.View root = inflater.inflate(R.layout.fragment_entry, viewGroup, false);
+        android.view.View root = inflater.inflate(R.layout.fragment_discussion, viewGroup, false);
 
         /*RecyclerView recycler = (RecyclerView) root.findViewById(R.id.comments_list);
         recycler.setAdapter(mAdapter);
@@ -82,29 +90,45 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
     };
 
     @Override
-    public void setProgressIndicator(boolean state) {
+    public void setProgressIndicator(final boolean state) {
+        if (getView() == null) {
+            return;
+        }
+        final SwipeRefreshLayout srl =
+                (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
 
+        // Make sure setRefreshing() is called after the layout is done with everything else.
+        srl.post(new Runnable() {
+            @Override
+            public void run() {
+                srl.setRefreshing(state);
+            }
+        });
     }
 
     @Override
     public void showSnackbar(String message) {
-
+        CoordinatorLayout coordinator = (CoordinatorLayout)
+                getActivity().findViewById(R.id.coordinator);
+        Snackbar snackbar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override
     public void showDiscussion(Discussion discussion) {
         mListView.addHeaderView(inflateHeader(discussion));
+        mAdapter.setList(discussion.getComments());
     }
 
     @Override
     public void showNewComment() {
-
+        // TODO activity to add new comment
     }
 
     private View inflateHeader(Discussion discussion) {
         Context context = getActivity();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View header = inflater.inflate(R.layout.content_discussion_header, null);
+        View header = inflater.inflate(R.layout.discussion_header, null);
 
         TextView title = (TextView) header.findViewById(R.id.discussion_title);
         TextView category = (TextView) header.findViewById(R.id.discussion_category);
@@ -169,7 +193,7 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
         public android.view.View getView(int position, android.view.View convertView, ViewGroup parent) {
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                convertView = inflater.inflate(R.layout.adapter_comment, null);
+                convertView = inflater.inflate(R.layout.discussion_comment, null);
             }
 
             //set text inside convertView

@@ -1,5 +1,8 @@
 package com.michael.attackpoint.discussion;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,78 +19,44 @@ import com.michael.attackpoint.discussion.data.DiscussionRequest;
 import com.michael.attackpoint.util.Singleton;
 
 public class DiscussionActivity extends AppCompatActivity {
-    public final static String DISCUSSION_ID = "d_id";
-    private ListView mListView;
-    private DiscussionAdapter mAdapter;
-    private Singleton singleton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        singleton = Singleton.getInstance();
-        singleton.setActivity(this);
-
         setContentView(R.layout.activity_discussion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
-        getDiscussion();
+        if (savedInstanceState == null) {
+            initFragment(DiscussionFragment.newInstance(getIntent().getExtras()));
+        }
     }
 
-    private void getDiscussion() {
-        int id = getIntent().getExtras().getInt(DISCUSSION_ID);
-        DiscussionRequest request = DiscussionRequest.newInstance(id, new Response.Listener<Discussion>() {
-            @Override
-            public void onResponse(Discussion discussion) {
-                initList(discussion);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError e) {
-                e.printStackTrace();
-            }
-        });
-        singleton.add(request);
+    public void initFragment(Fragment fragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.add(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 
-    private void initList(Discussion discussion) {
-        mListView = (ListView) findViewById(R.id.discussion_list);
-        mAdapter = new DiscussionAdapter(this, discussion.getComments());
-        mListView.setAdapter(mAdapter);
-
-        View header = inflateHeader(discussion);
-        mListView.addHeaderView(header);
-
-        //get recyclerview from layout
-        /*mRecyclerView = (RecyclerView) findViewById(R.id.discussion);
-        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(linearLayout);*/
-
-        //create adapter and attach to recyclerview\
-        /*mAdapter = new DrawerAdapter(this, discussion.getComments());
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(mAdapter);*/
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
-
-    private View inflateHeader(Discussion discussion) {
-        View header = LayoutInflater.from(this).inflate(R.layout.content_discussion_header, null);
-//        ViewHolder vh = new ViewHolder(header);
-//        vh.title.setText(discussion.getTitle());
-//        vh.category.setText(discussion.getCategory());
-
-        return header;
-    }
-
-
-
 }

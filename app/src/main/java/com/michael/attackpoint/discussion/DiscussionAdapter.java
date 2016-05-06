@@ -1,8 +1,6 @@
 package com.michael.attackpoint.discussion;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.michael.attackpoint.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +69,7 @@ public class DiscussionAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_comment, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.discussion_comment, null);
         }
 
         //set text inside convertView
@@ -123,7 +119,7 @@ public class DiscussionAdapter extends BaseAdapter {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.adapter_comment, viewGroup, false);
+                inflate(R.layout.discussion_comment, viewGroup, false);
 
         return new ViewHolder(itemView);
     }

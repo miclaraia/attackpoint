@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/discussion_head"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,7 +7,8 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    tools:showIn="@layout/fragment_discussion" >
     <TextView
         android:id="@+id/discussion_title"
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/comment_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,7 +8,8 @@
     android:paddingBottom="10dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:background="@color/colorCardDialog">
+    android:background="@color/colorCardDialog"
+    tools:showIn="@layout/fragment_discussion">
     <TextView
         android:id="@+id/comment_user"
         android:layout_width="wrap_content"

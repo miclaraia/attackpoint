@@ -7,7 +7,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -31,6 +34,8 @@ public class DiscussionPresenterTest {
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this);
+
         mPresenter = new DiscussionPresenter(mRepository, mView, 100);
     }
 
@@ -39,7 +44,7 @@ public class DiscussionPresenterTest {
         mPresenter.loadDiscussion();
 
         verify(mView).setProgressIndicator(true);
-        verify(mRepository).getDiscussion(100, mCallbackCaptor.capture());
+        verify(mRepository).getDiscussion(eq(100), mCallbackCaptor.capture());
 
         mCallbackCaptor.getValue().onLoaded(mDiscussion);
 

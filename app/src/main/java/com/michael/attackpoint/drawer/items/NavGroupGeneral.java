@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.michael.attackpoint.account.Login;
 import com.michael.attackpoint.discussion.DiscussionActivity;
+import com.michael.attackpoint.discussion.DiscussionFragment;
 import com.michael.attackpoint.drawer.DebugDialog;
 import com.michael.attackpoint.drawer.DrawerContract;
 import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
@@ -51,7 +52,7 @@ public class NavGroupGeneral extends NavDrawerGroup {
             @Override
             public void click() {
                 Intent intent = new Intent(mActivity.getContext(), DiscussionActivity.class);
-                intent.putExtra(DiscussionActivity.DISCUSSION_ID, 1111416);
+                intent.putExtra(DiscussionFragment.DISCUSSION_ID, 1111416);
                 mActivity.startActivity(intent);
             }
         });
