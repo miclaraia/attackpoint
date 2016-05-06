@@ -84,7 +84,7 @@ public class DiscussionRepositoryImplTest {
         // even if cache contains discussion with id
         mockDiscussionRequest();
         mRepository.mDiscussions.put(100, mDiscussion);
-        mRepository.getDiscussionWorker(true, 100, mFakeCallback);
+        mRepository.getDiscussion(true, 100, mFakeCallback);
 
         verify(mRequestQueue).add(any(DiscussionRequest.class));
     }
@@ -94,7 +94,7 @@ public class DiscussionRepositoryImplTest {
         // returns discussion from cache
         // no refresh
         mRepository.mDiscussions.put(101, mDiscussion);
-        mRepository.getDiscussionWorker(false, 101, mFakeCallback);
+        mRepository.getDiscussion(false, 101, mFakeCallback);
 
         verify(mRequestQueue, never()).add(any(Request.class));
         verify(mFakeCallback).onLoaded(mDiscussionCaptor.capture());
@@ -107,7 +107,7 @@ public class DiscussionRepositoryImplTest {
         // cache not in memory, performs refresh
         mockDiscussionRequest();
         mRepository.mDiscussions.clear();
-        mRepository.getDiscussionWorker(false, 102, mFakeCallback);
+        mRepository.getDiscussion(false, 102, mFakeCallback);
 
         verify(mRequestQueue).add(any(DiscussionRequest.class));
     }
@@ -128,7 +128,7 @@ public class DiscussionRepositoryImplTest {
                 any(Response.ErrorListener.class))).thenReturn(mDiscussionRequest);
 
         mRepository.mDiscussions.clear();
-        mRepository.getDiscussionWorker(true, 104, mFakeCallback);
+        mRepository.getDiscussion(true, 104, mFakeCallback);
 
         mRequestListenerCaptor.getValue().onResponse(mDiscussion);
 

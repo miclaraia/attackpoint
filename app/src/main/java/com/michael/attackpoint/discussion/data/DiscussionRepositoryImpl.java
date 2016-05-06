@@ -33,12 +33,26 @@ public class DiscussionRepositoryImpl implements DiscussionRepository {
 
     @Override
     public void getDiscussion(final boolean forceRefresh, final int id, final LoadCallback callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getDiscussionWorker(forceRefresh, id, callback);
-            }
-        }).start();
+        if (forceRefresh || !inLocalCache(id)) {
+            removeLocalCache(id);
+
+            refreshDiscussion(id, new RefreshCallback() {
+                @Override
+                public void onLoaded(Discussion discussion) {
+                    callback.onLoaded(discussion);
+                }
+
+                @Override
+                public void onError(VolleyError e) {
+                    callback.onError(e);
+                    if (e instanceof NoConnectionError && inLocalCache(id)) {
+                        callback.onLoaded(getLocalCache(id));
+                    }
+                }
+            });
+        } else {
+            callback.onLoaded(getLocalCache(id));
+        }
     }
 
     @Override
@@ -61,32 +75,6 @@ public class DiscussionRepositoryImpl implements DiscussionRepository {
             }
         });
         mRequestQueue.add(request);
-    }
-
-    protected void getDiscussionWorker (final boolean forceRefresh,
-                                        final int id,
-                                        final LoadCallback callback) {
-
-        if (forceRefresh || !inLocalCache(id)) {
-            removeLocalCache(id);
-
-            refreshDiscussion(id, new RefreshCallback() {
-                @Override
-                public void onLoaded(Discussion discussion) {
-                    callback.onLoaded(discussion);
-                }
-
-                @Override
-                public void onError(VolleyError e) {
-                    callback.onError(e);
-                    if (e instanceof NoConnectionError && inLocalCache(id)) {
-                        callback.onLoaded(getLocalCache(id));
-                    }
-                }
-            });
-        } else {
-            callback.onLoaded(getLocalCache(id));
-        }
     }
 
     protected boolean inLocalCache(int id) {
