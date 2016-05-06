@@ -24,6 +24,7 @@ import android.view.ViewOverlay;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.account.Login;
+import com.michael.attackpoint.discussion.DiscussionFragment;
 import com.michael.attackpoint.log.addentry.activity.TrainingActivity;
 import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
@@ -205,7 +206,6 @@ public class LogFragment extends Fragment implements LogContract.View {
     }
 
     public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
-        private static final String DEBUG_TAG = "attackpoint.DrawerAdapter";
 
         private List<LogInfo> mEntries;
         private LogItemListener mItemListener;

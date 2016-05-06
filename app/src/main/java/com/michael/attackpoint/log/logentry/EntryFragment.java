@@ -6,7 +6,9 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.michael.attackpoint.R;
 import com.michael.attackpoint.account.Login;
+import com.michael.attackpoint.discussion.DiscussionFragment;
 import com.michael.attackpoint.log.ViewHolder;
 import com.michael.attackpoint.log.addentry.activity.TrainingFragment;
 import com.michael.attackpoint.log.data.LogRepositories;
@@ -128,9 +131,19 @@ public class EntryFragment extends Fragment implements EntryContract.View {
         return false;
     }
 
+    CommentListener mCommentListener = new CommentListener() {
+        @Override
+        public void onClick(Comment comment) {
+            mPresenter.showComment(comment.getID());
+        }
+    };
+
     @Override
     public void showSnackbar(String message) {
-
+        CoordinatorLayout coordinator = (CoordinatorLayout)
+                getActivity().findViewById(R.id.coordinator);
+        Snackbar snackbar = Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override
@@ -141,7 +154,18 @@ public class EntryFragment extends Fragment implements EntryContract.View {
         mAdapter.replaceData(logComment.get());
     }
 
-    private class CommentsAdapter extends RecyclerView.Adapter<CommentViewHolder> {
+    @Override
+    public void showComment(int id) {
+        Activity activity = getActivity();
+        Fragment fragment = DiscussionFragment.newInstance(id);
+        FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
         List<Comment> mItems;
 
@@ -183,27 +207,28 @@ public class EntryFragment extends Fragment implements EntryContract.View {
         public int getItemCount() {
             return mItems.size();
         }
-    }
 
-    public static class CommentViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
-        public Button button;
-        public TextView title;
-        public TextView author;
+        public class CommentViewHolder extends RecyclerView.ViewHolder
+                implements View.OnClickListener {
+            public Button button;
+            public TextView title;
+            public TextView author;
 
-        public CommentViewHolder(View itemView) {
-            super(itemView);
-            button = (Button) itemView.findViewById(R.id.log_comment_button);
-            title = (TextView) itemView.findViewById(R.id.log_comment_title);
-            author = (TextView) itemView.findViewById(R.id.log_comment_author);
+            public CommentViewHolder(View itemView) {
+                super(itemView);
+                button = (Button) itemView.findViewById(R.id.log_comment_button);
+                title = (TextView) itemView.findViewById(R.id.log_comment_title);
+                author = (TextView) itemView.findViewById(R.id.log_comment_author);
 
-            itemView.setOnClickListener(this);
-        }
+                itemView.setOnClickListener(this);
+            }
 
-        @Override
-        public void onClick(View v) {
-            
-        }
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                Comment comment = getItem(position);
+                mCommentListener.onClick(comment);
+            }
 
         /*public CommentViewHolder(View parent) {
             button = (Button) parent.findViewById(R.id.log_comment_button);
@@ -212,5 +237,10 @@ public class EntryFragment extends Fragment implements EntryContract.View {
 
             parent.setOnClickListener(this);
         }*/
+        }
+    }
+    public interface CommentListener {
+
+        void onClick(Comment comment);
     }
 }

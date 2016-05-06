@@ -29,4 +29,9 @@ public class EntryPresenter implements EntryContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void showComment(int id) {
+        mView.showComment(id);
+    }
 }

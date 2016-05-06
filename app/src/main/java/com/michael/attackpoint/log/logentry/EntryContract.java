@@ -11,9 +11,13 @@ public interface EntryContract {
         void showSnackbar(String message);
 
         void ShowEntry(LogInfo logInfo);
+
+        void showComment(int id);
     }
 
     interface Presenter {
         void loadEntry();
+
+        void showComment(int id);
     }
 }

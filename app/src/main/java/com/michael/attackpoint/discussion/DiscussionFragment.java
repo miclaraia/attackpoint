@@ -115,8 +115,13 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
     }
 
     @Override
-    public void showDiscussion(Discussion discussion) {
-        mListView.addHeaderView(inflateHeader(discussion));
+    public void showDiscussion(final Discussion discussion) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mListView.addHeaderView(inflateHeader(discussion));
+            }
+        });
         mAdapter.setList(discussion.getComments());
     }
 

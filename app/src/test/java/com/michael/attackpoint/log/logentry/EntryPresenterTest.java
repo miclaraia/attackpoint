@@ -102,4 +102,10 @@ public class EntryPresenterTest {
 
         verify(mView).ShowEntry(mFakeLogInfo);
     }
+
+    @Test
+    public void showComment_test() {
+        mPresenter.showComment(100);
+        verify(mView).showComment(100);
+    }
 }
