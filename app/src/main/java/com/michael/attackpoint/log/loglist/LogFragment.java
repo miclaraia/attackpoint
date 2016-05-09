@@ -182,8 +182,13 @@ public class LogFragment extends Fragment implements LogContract.View {
     }
 
     @Override
-    public void showLog(List<LogInfo> log) {
-        mAdapter.replaceData(log);
+    public void showLog(final List<LogInfo> log) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.replaceData(log);
+            }
+        });
     }
 
     @Override

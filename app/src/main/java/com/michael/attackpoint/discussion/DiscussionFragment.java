@@ -120,9 +120,9 @@ public class DiscussionFragment extends Fragment implements DiscussionContract.V
             @Override
             public void run() {
                 mListView.addHeaderView(inflateHeader(discussion));
+                mAdapter.setList(discussion.getComments());
             }
         });
-        mAdapter.setList(discussion.getComments());
     }
 
     @Override
